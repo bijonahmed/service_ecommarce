@@ -1,0 +1,857 @@
+[
+  {
+    "name": "changePassword",
+    "path": "/changePassword",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\changePassword.vue",
+    "chunkName": "pages/changePassword",
+    "_name": "_54dd41ab"
+  },
+  {
+    "name": "company-profile",
+    "path": "/company-profile",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\company-profile.vue",
+    "chunkName": "pages/company-profile",
+    "_name": "_3a40756e"
+  },
+  {
+    "path": "/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\dashboard.vue",
+    "chunkName": "pages/dashboard",
+    "children": [
+      {
+        "name": "dashboard",
+        "path": "",
+        "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\dashboard\\\\index.vue",
+        "chunkName": "pages/dashboard/index",
+        "_name": "_66fdc7fe"
+      },
+      {
+        "name": "dashboard-profile",
+        "path": "profile",
+        "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\dashboard\\\\profile.vue",
+        "chunkName": "pages/dashboard/profile",
+        "_name": "_cfb85f56"
+      }
+    ],
+    "_name": "_44f14004"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_5ac8034e"
+  },
+  {
+    "name": "profile",
+    "path": "/profile",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\profile.vue",
+    "chunkName": "pages/profile",
+    "_name": "_d27abace"
+  },
+  {
+    "name": "register",
+    "path": "/register",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\register.vue",
+    "chunkName": "pages/register",
+    "_name": "_d516603a"
+  },
+  {
+    "name": "blog-blog-cat",
+    "path": "/blog/blog-cat",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\blog\\\\blog-cat.vue",
+    "chunkName": "pages/blog/blog-cat",
+    "_name": "_2abdda0d"
+  },
+  {
+    "name": "blog-blog-list",
+    "path": "/blog/blog-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\blog\\\\blog-list.vue",
+    "chunkName": "pages/blog/blog-list",
+    "_name": "_7d1eb577"
+  },
+  {
+    "name": "blog-edit-blogCat",
+    "path": "/blog/edit-blogCat",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\blog\\\\edit-blogCat.vue",
+    "chunkName": "pages/blog/edit-blogCat",
+    "_name": "_b17b7a1a"
+  },
+  {
+    "name": "blog-new-blog",
+    "path": "/blog/new-blog",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\blog\\\\new-blog.vue",
+    "chunkName": "pages/blog/new-blog",
+    "_name": "_1703bede"
+  },
+  {
+    "name": "brands-brands-list",
+    "path": "/brands/brands-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\brands\\\\brands-list.vue",
+    "chunkName": "pages/brands/brands-list",
+    "_name": "_93cbd3ba"
+  },
+  {
+    "name": "brands-edit-brand",
+    "path": "/brands/edit-brand",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\brands\\\\edit-brand.vue",
+    "chunkName": "pages/brands/edit-brand",
+    "_name": "_7df58e10"
+  },
+  {
+    "name": "brands-new-brand",
+    "path": "/brands/new-brand",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\brands\\\\new-brand.vue",
+    "chunkName": "pages/brands/new-brand",
+    "_name": "_72e96e84"
+  },
+  {
+    "name": "coupons-all-coupons",
+    "path": "/coupons/all-coupons",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\coupons\\\\all-coupons.vue",
+    "chunkName": "pages/coupons/all-coupons",
+    "_name": "_2e592234"
+  },
+  {
+    "name": "coupons-new-coupons",
+    "path": "/coupons/new-coupons",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\coupons\\\\new-coupons.vue",
+    "chunkName": "pages/coupons/new-coupons",
+    "_name": "_5de3689a"
+  },
+  {
+    "name": "customer-customerList",
+    "path": "/customer/customerList",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\customer\\\\customerList.vue",
+    "chunkName": "pages/customer/customerList",
+    "_name": "_a92da78c"
+  },
+  {
+    "name": "customer-newCustomer",
+    "path": "/customer/newCustomer",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\customer\\\\newCustomer.vue",
+    "chunkName": "pages/customer/newCustomer",
+    "_name": "_7f452670"
+  },
+  {
+    "name": "ecommarce-attributes-list",
+    "path": "/ecommarce/attributes-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\attributes-list.vue",
+    "chunkName": "pages/ecommarce/attributes-list",
+    "_name": "_18315f60"
+  },
+  {
+    "name": "ecommarce-category-add",
+    "path": "/ecommarce/category-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\category-add.vue",
+    "chunkName": "pages/ecommarce/category-add",
+    "_name": "_5dd72f06"
+  },
+  {
+    "name": "ecommarce-category-edit",
+    "path": "/ecommarce/category-edit",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\category-edit.vue",
+    "chunkName": "pages/ecommarce/category-edit",
+    "_name": "_08d558f5"
+  },
+  {
+    "name": "ecommarce-category-list",
+    "path": "/ecommarce/category-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\category-list.vue",
+    "chunkName": "pages/ecommarce/category-list",
+    "_name": "_0ce59cee"
+  },
+  {
+    "name": "ecommarce-category-percentage-history",
+    "path": "/ecommarce/category-percentage-history",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\category-percentage-history.vue",
+    "chunkName": "pages/ecommarce/category-percentage-history",
+    "_name": "_026b1a8c"
+  },
+  {
+    "name": "ecommarce-Old-product-add",
+    "path": "/ecommarce/Old-product-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\Old-product-add.vue",
+    "chunkName": "pages/ecommarce/Old-product-add",
+    "_name": "_4c90e70e"
+  },
+  {
+    "name": "ecommarce-Old-product-edit",
+    "path": "/ecommarce/Old-product-edit",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\Old-product-edit.vue",
+    "chunkName": "pages/ecommarce/Old-product-edit",
+    "_name": "_0900a9e2"
+  },
+  {
+    "name": "ecommarce-product-add",
+    "path": "/ecommarce/product-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\product-add.vue",
+    "chunkName": "pages/ecommarce/product-add",
+    "_name": "_2d51163f"
+  },
+  {
+    "name": "ecommarce-product-edit",
+    "path": "/ecommarce/product-edit",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\product-edit.vue",
+    "chunkName": "pages/ecommarce/product-edit",
+    "_name": "_289858dc"
+  },
+  {
+    "name": "ecommarce-product-list",
+    "path": "/ecommarce/product-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\product-list.vue",
+    "chunkName": "pages/ecommarce/product-list",
+    "_name": "_19503170"
+  },
+  {
+    "name": "ecommarce-product-preview",
+    "path": "/ecommarce/product-preview",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\product-preview.vue",
+    "chunkName": "pages/ecommarce/product-preview",
+    "_name": "_6d6762e6"
+  },
+  {
+    "name": "ecommarce-product-varient",
+    "path": "/ecommarce/product-varient",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\ecommarce\\\\product-varient.vue",
+    "chunkName": "pages/ecommarce/product-varient",
+    "_name": "_2e85d627"
+  },
+  {
+    "name": "employee-attendance-status",
+    "path": "/employee/attendance-status",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\attendance-status.vue",
+    "chunkName": "pages/employee/attendance-status",
+    "_name": "_b959b050"
+  },
+  {
+    "name": "employee-change-of-circumstances-add",
+    "path": "/employee/change-of-circumstances-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-add.vue",
+    "chunkName": "pages/employee/change-of-circumstances-add",
+    "_name": "_75f328d1"
+  },
+  {
+    "name": "employee-change-of-circumstances-employee",
+    "path": "/employee/change-of-circumstances-employee",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-employee.vue",
+    "chunkName": "pages/employee/change-of-circumstances-employee",
+    "_name": "_ad5329a4"
+  },
+  {
+    "name": "employee-change-of-circumstances-list",
+    "path": "/employee/change-of-circumstances-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-list.vue",
+    "chunkName": "pages/employee/change-of-circumstances-list",
+    "_name": "_361f1dc4"
+  },
+  {
+    "name": "employee-dashboard",
+    "path": "/employee/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\dashboard.vue",
+    "chunkName": "pages/employee/dashboard",
+    "_name": "_7530de16"
+  },
+  {
+    "name": "employee-department-add",
+    "path": "/employee/department-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\department-add.vue",
+    "chunkName": "pages/employee/department-add",
+    "_name": "_568e3e94"
+  },
+  {
+    "name": "employee-department-list",
+    "path": "/employee/department-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\department-list.vue",
+    "chunkName": "pages/employee/department-list",
+    "_name": "_17b813bb"
+  },
+  {
+    "name": "employee-designation-add",
+    "path": "/employee/designation-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\designation-add.vue",
+    "chunkName": "pages/employee/designation-add",
+    "_name": "_4d67bb66"
+  },
+  {
+    "name": "employee-designation-list",
+    "path": "/employee/designation-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\designation-list.vue",
+    "chunkName": "pages/employee/designation-list",
+    "_name": "_2692b1bc"
+  },
+  {
+    "name": "employee-emp-assign-to-user",
+    "path": "/employee/emp-assign-to-user",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\emp-assign-to-user.vue",
+    "chunkName": "pages/employee/emp-assign-to-user",
+    "_name": "_4c211192"
+  },
+  {
+    "name": "employee-employee-add",
+    "path": "/employee/employee-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\employee-add.vue",
+    "chunkName": "pages/employee/employee-add",
+    "_name": "_6571a370"
+  },
+  {
+    "name": "employee-employee-list",
+    "path": "/employee/employee-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\employee-list.vue",
+    "chunkName": "pages/employee/employee-list",
+    "_name": "_357d6b42"
+  },
+  {
+    "name": "employee-leave-approval-list",
+    "path": "/employee/leave-approval-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\leave-approval-list.vue",
+    "chunkName": "pages/employee/leave-approval-list",
+    "_name": "_528d4d58"
+  },
+  {
+    "name": "employee-leavel-rquest-add",
+    "path": "/employee/leavel-rquest-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\leavel-rquest-add.vue",
+    "chunkName": "pages/employee/leavel-rquest-add",
+    "_name": "_52d9c284"
+  },
+  {
+    "name": "employee-migrant-employee-list",
+    "path": "/employee/migrant-employee-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\migrant-employee-list.vue",
+    "chunkName": "pages/employee/migrant-employee-list",
+    "_name": "_27e814d2"
+  },
+  {
+    "name": "holiday-add-holidays",
+    "path": "/holiday/add-holidays",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\add-holidays.vue",
+    "chunkName": "pages/holiday/add-holidays",
+    "_name": "_0f613ee2"
+  },
+  {
+    "name": "holiday-dashboard",
+    "path": "/holiday/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\dashboard.vue",
+    "chunkName": "pages/holiday/dashboard",
+    "_name": "_ad3e4b08"
+  },
+  {
+    "name": "holiday-holiday-add",
+    "path": "/holiday/holiday-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\holiday-add.vue",
+    "chunkName": "pages/holiday/holiday-add",
+    "_name": "_edd98cd8"
+  },
+  {
+    "name": "holiday-holiday-list",
+    "path": "/holiday/holiday-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\holiday-list.vue",
+    "chunkName": "pages/holiday/holiday-list",
+    "_name": "_35d278bb"
+  },
+  {
+    "name": "holiday-holiday-type-list",
+    "path": "/holiday/holiday-type-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\holiday-type-list.vue",
+    "chunkName": "pages/holiday/holiday-type-list",
+    "_name": "_fa685ff8"
+  },
+  {
+    "name": "hrm-dashboard",
+    "path": "/hrm/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\hrm\\\\dashboard.vue",
+    "chunkName": "pages/hrm/dashboard",
+    "_name": "_704442d1"
+  },
+  {
+    "name": "leave-add-allocation",
+    "path": "/leave/add-allocation",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\add-allocation.vue",
+    "chunkName": "pages/leave/add-allocation",
+    "_name": "_6db0589a"
+  },
+  {
+    "name": "leave-add-leaverole",
+    "path": "/leave/add-leaverole",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\add-leaverole.vue",
+    "chunkName": "pages/leave/add-leaverole",
+    "_name": "_d71e07ac"
+  },
+  {
+    "name": "leave-add-leavetype",
+    "path": "/leave/add-leavetype",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\add-leavetype.vue",
+    "chunkName": "pages/leave/add-leavetype",
+    "_name": "_7c0508ee"
+  },
+  {
+    "name": "leave-allocation-list",
+    "path": "/leave/allocation-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\allocation-list.vue",
+    "chunkName": "pages/leave/allocation-list",
+    "_name": "_873c7a58"
+  },
+  {
+    "name": "leave-dashboard",
+    "path": "/leave/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\dashboard.vue",
+    "chunkName": "pages/leave/dashboard",
+    "_name": "_f80e9786"
+  },
+  {
+    "name": "leave-leave-balance-list",
+    "path": "/leave/leave-balance-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-balance-list.vue",
+    "chunkName": "pages/leave/leave-balance-list",
+    "_name": "_52102e6c"
+  },
+  {
+    "name": "leave-leave-report",
+    "path": "/leave/leave-report",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-report.vue",
+    "chunkName": "pages/leave/leave-report",
+    "_name": "_17d5081e"
+  },
+  {
+    "name": "leave-leave-request-dashboard",
+    "path": "/leave/leave-request-dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-request-dashboard.vue",
+    "chunkName": "pages/leave/leave-request-dashboard",
+    "_name": "_196a6929"
+  },
+  {
+    "name": "leave-leave-request-list",
+    "path": "/leave/leave-request-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-request-list.vue",
+    "chunkName": "pages/leave/leave-request-list",
+    "_name": "_37872419"
+  },
+  {
+    "name": "leave-leave-role-list",
+    "path": "/leave/leave-role-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-role-list.vue",
+    "chunkName": "pages/leave/leave-role-list",
+    "_name": "_961c2130"
+  },
+  {
+    "name": "leave-leave-type-list",
+    "path": "/leave/leave-type-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\leave-type-list.vue",
+    "chunkName": "pages/leave/leave-type-list",
+    "_name": "_327b3d24"
+  },
+  {
+    "name": "manufacturer-edit-manufacturer",
+    "path": "/manufacturer/edit-manufacturer",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\manufacturer\\\\edit-manufacturer.vue",
+    "chunkName": "pages/manufacturer/edit-manufacturer",
+    "_name": "_0a9f53b3"
+  },
+  {
+    "name": "manufacturer-manufacturers-list",
+    "path": "/manufacturer/manufacturers-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\manufacturer\\\\manufacturers-list.vue",
+    "chunkName": "pages/manufacturer/manufacturers-list",
+    "_name": "_4ed7f75a"
+  },
+  {
+    "name": "manufacturer-new-manufacturer",
+    "path": "/manufacturer/new-manufacturer",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\manufacturer\\\\new-manufacturer.vue",
+    "chunkName": "pages/manufacturer/new-manufacturer",
+    "_name": "_7c8ee5a2"
+  },
+  {
+    "name": "mlm-report",
+    "path": "/mlm/report",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\mlm\\\\report.vue",
+    "chunkName": "pages/mlm/report",
+    "_name": "_51fb41d2"
+  },
+  {
+    "name": "models-edit-models",
+    "path": "/models/edit-models",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\models\\\\edit-models.vue",
+    "chunkName": "pages/models/edit-models",
+    "_name": "_7af265d3"
+  },
+  {
+    "name": "models-models-list",
+    "path": "/models/models-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\models\\\\models-list.vue",
+    "chunkName": "pages/models/models-list",
+    "_name": "_255bee67"
+  },
+  {
+    "name": "models-new-models",
+    "path": "/models/new-models",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\models\\\\new-models.vue",
+    "chunkName": "pages/models/new-models",
+    "_name": "_7c817e61"
+  },
+  {
+    "name": "orders-details",
+    "path": "/orders/details",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\orders\\\\details.vue",
+    "chunkName": "pages/orders/details",
+    "_name": "_e1788726"
+  },
+  {
+    "name": "orders-edit-orderstatus",
+    "path": "/orders/edit-orderstatus",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\orders\\\\edit-orderstatus.vue",
+    "chunkName": "pages/orders/edit-orderstatus",
+    "_name": "_e7a3033c"
+  },
+  {
+    "name": "orders-new-orderstatus",
+    "path": "/orders/new-orderstatus",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\orders\\\\new-orderstatus.vue",
+    "chunkName": "pages/orders/new-orderstatus",
+    "_name": "_5b50b284"
+  },
+  {
+    "name": "orders-order-list",
+    "path": "/orders/order-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\orders\\\\order-list.vue",
+    "chunkName": "pages/orders/order-list",
+    "_name": "_18e5fb3c"
+  },
+  {
+    "name": "orders-status-list",
+    "path": "/orders/status-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\orders\\\\status-list.vue",
+    "chunkName": "pages/orders/status-list",
+    "_name": "_f09c2278"
+  },
+  {
+    "name": "project-new-project",
+    "path": "/project/new-project",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\project\\\\new-project.vue",
+    "chunkName": "pages/project/new-project",
+    "_name": "_4acebf33"
+  },
+  {
+    "name": "project-project-list",
+    "path": "/project/project-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\project\\\\project-list.vue",
+    "chunkName": "pages/project/project-list",
+    "_name": "_bb7398ca"
+  },
+  {
+    "name": "role-newrole",
+    "path": "/role/newrole",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\role\\\\newrole.vue",
+    "chunkName": "pages/role/newrole",
+    "_name": "_b5adb360"
+  },
+  {
+    "name": "role-role_list",
+    "path": "/role/role_list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\role\\\\role_list.vue",
+    "chunkName": "pages/role/role_list",
+    "_name": "_3dbb2e01"
+  },
+  {
+    "name": "seller-allseller",
+    "path": "/seller/allseller",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\seller\\\\allseller.vue",
+    "chunkName": "pages/seller/allseller",
+    "_name": "_cbe7ea1e"
+  },
+  {
+    "name": "setting-add-salary",
+    "path": "/setting/add-salary",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\add-salary.vue",
+    "chunkName": "pages/setting/add-salary",
+    "_name": "_a7369694"
+  },
+  {
+    "name": "setting-ads-management",
+    "path": "/setting/ads-management",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\ads-management.vue",
+    "chunkName": "pages/setting/ads-management",
+    "_name": "_93789680"
+  },
+  {
+    "name": "setting-annual-pay-add",
+    "path": "/setting/annual-pay-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\annual-pay-add.vue",
+    "chunkName": "pages/setting/annual-pay-add",
+    "_name": "_2714304e"
+  },
+  {
+    "name": "setting-annual-pay-list",
+    "path": "/setting/annual-pay-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\annual-pay-list.vue",
+    "chunkName": "pages/setting/annual-pay-list",
+    "_name": "_57f05941"
+  },
+  {
+    "name": "setting-bank-master-add",
+    "path": "/setting/bank-master-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\bank-master-add.vue",
+    "chunkName": "pages/setting/bank-master-add",
+    "_name": "_21165657"
+  },
+  {
+    "name": "setting-bank-master-list",
+    "path": "/setting/bank-master-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\bank-master-list.vue",
+    "chunkName": "pages/setting/bank-master-list",
+    "_name": "_c39a1750"
+  },
+  {
+    "name": "setting-bank-short-code-add",
+    "path": "/setting/bank-short-code-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\bank-short-code-add.vue",
+    "chunkName": "pages/setting/bank-short-code-add",
+    "_name": "_6c06bc13"
+  },
+  {
+    "name": "setting-bank-short-code-list",
+    "path": "/setting/bank-short-code-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\bank-short-code-list.vue",
+    "chunkName": "pages/setting/bank-short-code-list",
+    "_name": "_9d6173c8"
+  },
+  {
+    "name": "setting-dashboard",
+    "path": "/setting/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\dashboard.vue",
+    "chunkName": "pages/setting/dashboard",
+    "_name": "_19bf4584"
+  },
+  {
+    "name": "setting-employee-type-add",
+    "path": "/setting/employee-type-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\employee-type-add.vue",
+    "chunkName": "pages/setting/employee-type-add",
+    "_name": "_0ca1ce3d"
+  },
+  {
+    "name": "setting-employee-type-list",
+    "path": "/setting/employee-type-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\employee-type-list.vue",
+    "chunkName": "pages/setting/employee-type-list",
+    "_name": "_24167932"
+  },
+  {
+    "name": "setting-pay-group-add",
+    "path": "/setting/pay-group-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\pay-group-add.vue",
+    "chunkName": "pages/setting/pay-group-add",
+    "_name": "_b9604144"
+  },
+  {
+    "name": "setting-pay-group-list",
+    "path": "/setting/pay-group-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\pay-group-list.vue",
+    "chunkName": "pages/setting/pay-group-list",
+    "_name": "_632a8c31"
+  },
+  {
+    "name": "setting-payment-type-add",
+    "path": "/setting/payment-type-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\payment-type-add.vue",
+    "chunkName": "pages/setting/payment-type-add",
+    "_name": "_70389235"
+  },
+  {
+    "name": "setting-payment-type-list",
+    "path": "/setting/payment-type-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\payment-type-list.vue",
+    "chunkName": "pages/setting/payment-type-list",
+    "_name": "_3358343a"
+  },
+  {
+    "name": "setting-payroll-payitem-add",
+    "path": "/setting/payroll-payitem-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\payroll-payitem-add.vue",
+    "chunkName": "pages/setting/payroll-payitem-add",
+    "_name": "_20803a57"
+  },
+  {
+    "name": "setting-payroll-payitem-list",
+    "path": "/setting/payroll-payitem-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\payroll-payitem-list.vue",
+    "chunkName": "pages/setting/payroll-payitem-list",
+    "_name": "_e7f4df50"
+  },
+  {
+    "name": "setting-salary-list",
+    "path": "/setting/salary-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\salary-list.vue",
+    "chunkName": "pages/setting/salary-list",
+    "_name": "_0d28459e"
+  },
+  {
+    "name": "setting-tax-master-add",
+    "path": "/setting/tax-master-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\tax-master-add.vue",
+    "chunkName": "pages/setting/tax-master-add",
+    "_name": "_91153550"
+  },
+  {
+    "name": "setting-tax-master-list",
+    "path": "/setting/tax-master-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\tax-master-list.vue",
+    "chunkName": "pages/setting/tax-master-list",
+    "_name": "_58947512"
+  },
+  {
+    "name": "setting-wedges-pay-add",
+    "path": "/setting/wedges-pay-add",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\wedges-pay-add.vue",
+    "chunkName": "pages/setting/wedges-pay-add",
+    "_name": "_ee02aaa4"
+  },
+  {
+    "name": "setting-wedges-pay-list",
+    "path": "/setting/wedges-pay-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\setting\\\\wedges-pay-list.vue",
+    "chunkName": "pages/setting/wedges-pay-list",
+    "_name": "_33552ae1"
+  },
+  {
+    "name": "task-add-task",
+    "path": "/task/add-task",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\task\\\\add-task.vue",
+    "chunkName": "pages/task/add-task",
+    "_name": "_31c77bb6"
+  },
+  {
+    "name": "task-dashboard",
+    "path": "/task/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\task\\\\dashboard.vue",
+    "chunkName": "pages/task/dashboard",
+    "_name": "_5a0a525f"
+  },
+  {
+    "name": "task-task-list",
+    "path": "/task/task-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\task\\\\task-list.vue",
+    "chunkName": "pages/task/task-list",
+    "_name": "_41de929e"
+  },
+  {
+    "name": "user-dashboard",
+    "path": "/user/dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\user\\\\dashboard.vue",
+    "chunkName": "pages/user/dashboard",
+    "_name": "_88acf14e"
+  },
+  {
+    "name": "user-newUser",
+    "path": "/user/newUser",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\user\\\\newUser.vue",
+    "chunkName": "pages/user/newUser",
+    "_name": "_248daa10"
+  },
+  {
+    "name": "user-user_list",
+    "path": "/user/user_list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\user\\\\user_list.vue",
+    "chunkName": "pages/user/user_list",
+    "_name": "_388e9257"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_08f45b42"
+  },
+  {
+    "name": "leave-edit-leaveallocation-id",
+    "path": "/leave/edit/leaveallocation/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\edit\\\\leaveallocation\\\\_id.vue",
+    "chunkName": "pages/leave/edit/leaveallocation/_id",
+    "_name": "_16c15af4"
+  },
+  {
+    "name": "leave-edit-leaverole-id",
+    "path": "/leave/edit/leaverole/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\edit\\\\leaverole\\\\_id.vue",
+    "chunkName": "pages/leave/edit/leaverole/_id",
+    "_name": "_998a04c4"
+  },
+  {
+    "name": "leave-edit-leavetype-id",
+    "path": "/leave/edit/leavetype/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\leave\\\\edit\\\\leavetype\\\\_id.vue",
+    "chunkName": "pages/leave/edit/leavetype/_id",
+    "_name": "_30c44b5a"
+  },
+  {
+    "name": "coupons-edit-id",
+    "path": "/coupons/edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\coupons\\\\edit\\\\_id.vue",
+    "chunkName": "pages/coupons/edit/_id",
+    "_name": "_0e387b03"
+  },
+  {
+    "name": "customer-edit-id",
+    "path": "/customer/edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\customer\\\\edit\\\\_id.vue",
+    "chunkName": "pages/customer/edit/_id",
+    "_name": "_95eff67c"
+  },
+  {
+    "name": "employee-cir-edit-id",
+    "path": "/employee/cir-edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\cir-edit\\\\_id.vue",
+    "chunkName": "pages/employee/cir-edit/_id",
+    "_name": "_24853bb1"
+  },
+  {
+    "name": "employee-emp-edit-id",
+    "path": "/employee/emp-edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\emp-edit\\\\_id.vue",
+    "chunkName": "pages/employee/emp-edit/_id",
+    "_name": "_cf2ccaa6"
+  },
+  {
+    "name": "employee-leaveRequest-id",
+    "path": "/employee/leaveRequest/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\employee\\\\leaveRequest\\\\_id.vue",
+    "chunkName": "pages/employee/leaveRequest/_id",
+    "_name": "_536cc038"
+  },
+  {
+    "name": "holiday-editholidaylist-id",
+    "path": "/holiday/editholidaylist/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\holiday\\\\editholidaylist\\\\_id.vue",
+    "chunkName": "pages/holiday/editholidaylist/_id",
+    "_name": "_6b54a154"
+  },
+  {
+    "name": "seller-edit-id",
+    "path": "/seller/edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\seller\\\\edit\\\\_id.vue",
+    "chunkName": "pages/seller/edit/_id",
+    "_name": "_23ee95fe"
+  },
+  {
+    "name": "task-edit-id",
+    "path": "/task/edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\task\\\\edit\\\\_id.vue",
+    "chunkName": "pages/task/edit/_id",
+    "_name": "_59ab983b"
+  },
+  {
+    "name": "user-changesPass-id",
+    "path": "/user/changesPass/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\user\\\\changesPass\\\\_id.vue",
+    "chunkName": "pages/user/changesPass/_id",
+    "_name": "_ac9fe7de"
+  },
+  {
+    "name": "user-edit-id",
+    "path": "/user/edit/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\admin\\\\pages\\\\user\\\\edit\\\\_id.vue",
+    "chunkName": "pages/user/edit/_id",
+    "_name": "_896a6596"
+  }
+]

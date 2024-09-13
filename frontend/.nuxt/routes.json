@@ -1,0 +1,597 @@
+[
+  {
+    "name": "allbrands",
+    "path": "/allbrands",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\allbrands.vue",
+    "chunkName": "pages/allbrands",
+    "_name": "_7d33d634"
+  },
+  {
+    "name": "allshop",
+    "path": "/allshop",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\allshop.vue",
+    "chunkName": "pages/allshop",
+    "_name": "_5f9cdd90"
+  },
+  {
+    "name": "blog",
+    "path": "/blog",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\blog.vue",
+    "chunkName": "pages/blog",
+    "_name": "_51f25b0e"
+  },
+  {
+    "name": "blog-details",
+    "path": "/blog-details",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\blog-details.vue",
+    "chunkName": "pages/blog-details",
+    "_name": "_6189746e"
+  },
+  {
+    "name": "cart",
+    "path": "/cart",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\cart.vue",
+    "chunkName": "pages/cart",
+    "_name": "_024da212"
+  },
+  {
+    "name": "changepassword",
+    "path": "/changepassword",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\changepassword.vue",
+    "chunkName": "pages/changepassword",
+    "_name": "_363001e2"
+  },
+  {
+    "name": "changepassword copy",
+    "path": "/changepassword%20copy",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\changepassword copy.vue",
+    "chunkName": "pages/changepassword copy",
+    "_name": "_68fb2ea3"
+  },
+  {
+    "name": "charity",
+    "path": "/charity",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\charity.vue",
+    "chunkName": "pages/charity",
+    "_name": "_2f5bd691"
+  },
+  {
+    "name": "checkout",
+    "path": "/checkout",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\checkout.vue",
+    "chunkName": "pages/checkout",
+    "_name": "_bd2872c6"
+  },
+  {
+    "name": "coupons",
+    "path": "/coupons",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\coupons.vue",
+    "chunkName": "pages/coupons",
+    "_name": "_546ff8f4"
+  },
+  {
+    "name": "customer-review",
+    "path": "/customer-review",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\customer-review.vue",
+    "chunkName": "pages/customer-review",
+    "_name": "_eade96c0"
+  },
+  {
+    "name": "flas-sale",
+    "path": "/flas-sale",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\flas-sale.vue",
+    "chunkName": "pages/flas-sale",
+    "_name": "_1cd47f96"
+  },
+  {
+    "name": "forget-password",
+    "path": "/forget-password",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\forget-password.vue",
+    "chunkName": "pages/forget-password",
+    "_name": "_0a69b4f4"
+  },
+  {
+    "name": "login",
+    "path": "/login",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\login.vue",
+    "chunkName": "pages/login",
+    "_name": "_6bc05c22"
+  },
+  {
+    "name": "login-old1.0",
+    "path": "/login-old1.0",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\login-old1.0.vue",
+    "chunkName": "pages/login-old1.0",
+    "_name": "_246399e7"
+  },
+  {
+    "name": "official-store",
+    "path": "/official-store",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\official-store.vue",
+    "chunkName": "pages/official-store",
+    "_name": "_d8ce95d4"
+  },
+  {
+    "name": "official-store-grid",
+    "path": "/official-store-grid",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\official-store-grid.vue",
+    "chunkName": "pages/official-store-grid",
+    "_name": "_9d44eb66"
+  },
+  {
+    "name": "OfficialStoreFilter",
+    "path": "/OfficialStoreFilter",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\OfficialStoreFilter.vue",
+    "chunkName": "pages/OfficialStoreFilter",
+    "_name": "_18cc3c27"
+  },
+  {
+    "name": "OfficialStoreFilterGrid",
+    "path": "/OfficialStoreFilterGrid",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\OfficialStoreFilterGrid.vue",
+    "chunkName": "pages/OfficialStoreFilterGrid",
+    "_name": "_5f66b90d"
+  },
+  {
+    "name": "order-confirm",
+    "path": "/order-confirm",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\order-confirm.vue",
+    "chunkName": "pages/order-confirm",
+    "_name": "_118a9a0c"
+  },
+  {
+    "name": "payment",
+    "path": "/payment",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\payment.vue",
+    "chunkName": "pages/payment",
+    "_name": "_11dee3ff"
+  },
+  {
+    "name": "product-grid",
+    "path": "/product-grid",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\product-grid.vue",
+    "chunkName": "pages/product-grid",
+    "_name": "_12f0e03b"
+  },
+  {
+    "name": "product-list",
+    "path": "/product-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\product-list.vue",
+    "chunkName": "pages/product-list",
+    "_name": "_50309993"
+  },
+  {
+    "name": "refund",
+    "path": "/refund",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\refund.vue",
+    "chunkName": "pages/refund",
+    "_name": "_1119538f"
+  },
+  {
+    "name": "required",
+    "path": "/required",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\required.vue",
+    "chunkName": "pages/required",
+    "_name": "_2dae5f14"
+  },
+  {
+    "name": "return-and-replacement",
+    "path": "/return-and-replacement",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\return-and-replacement.vue",
+    "chunkName": "pages/return-and-replacement",
+    "_name": "_66ea6716"
+  },
+  {
+    "name": "sell-on-ecommerce",
+    "path": "/sell-on-ecommerce",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\sell-on-ecommerce.vue",
+    "chunkName": "pages/sell-on-ecommerce",
+    "_name": "_ed7270b4"
+  },
+  {
+    "name": "sell-on-filter",
+    "path": "/sell-on-filter",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\sell-on-filter.vue",
+    "chunkName": "pages/sell-on-filter",
+    "_name": "_a832b3fc"
+  },
+  {
+    "name": "seller-form",
+    "path": "/seller-form",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller-form.vue",
+    "chunkName": "pages/seller-form",
+    "_name": "_360d6c6a"
+  },
+  {
+    "name": "sellerLogin",
+    "path": "/sellerLogin",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\sellerLogin.vue",
+    "chunkName": "pages/sellerLogin",
+    "_name": "_6ca422ba"
+  },
+  {
+    "name": "service",
+    "path": "/service",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\service.vue",
+    "chunkName": "pages/service",
+    "_name": "_0a82eda4"
+  },
+  {
+    "name": "signup",
+    "path": "/signup",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\signup.vue",
+    "chunkName": "pages/signup",
+    "_name": "_58a5152f"
+  },
+  {
+    "name": "today-deal",
+    "path": "/today-deal",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\today-deal.vue",
+    "chunkName": "pages/today-deal",
+    "_name": "_7a9d07e2"
+  },
+  {
+    "name": "update-password",
+    "path": "/update-password",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\update-password.vue",
+    "chunkName": "pages/update-password",
+    "_name": "_311e6398"
+  },
+  {
+    "name": "affiliate-affiliate-dashboard",
+    "path": "/affiliate/affiliate-dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\affiliate\\\\affiliate-dashboard.vue",
+    "chunkName": "pages/affiliate/affiliate-dashboard",
+    "_name": "_e0802204"
+  },
+  {
+    "name": "affiliate-affiliate-programe",
+    "path": "/affiliate/affiliate-programe",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\affiliate\\\\affiliate-programe.vue",
+    "chunkName": "pages/affiliate/affiliate-programe",
+    "_name": "_a6286332"
+  },
+  {
+    "name": "affiliate-affiliate-programe-register",
+    "path": "/affiliate/affiliate-programe-register",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\affiliate\\\\affiliate-programe-register.vue",
+    "chunkName": "pages/affiliate/affiliate-programe-register",
+    "_name": "_7f6e8d0e"
+  },
+  {
+    "name": "affiliate-affiliate-transfer",
+    "path": "/affiliate/affiliate-transfer",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\affiliate\\\\affiliate-transfer.vue",
+    "chunkName": "pages/affiliate/affiliate-transfer",
+    "_name": "_3e04021e"
+  },
+  {
+    "name": "brand-product-brand-grid",
+    "path": "/brand-product/brand-grid",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\brand-product\\\\brand-grid.vue",
+    "chunkName": "pages/brand-product/brand-grid",
+    "_name": "_268164ae"
+  },
+  {
+    "name": "category-all-categorys",
+    "path": "/category/all-categorys",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\category\\\\all-categorys.vue",
+    "chunkName": "pages/category/all-categorys",
+    "_name": "_dbfd4978"
+  },
+  {
+    "name": "category-category-grid",
+    "path": "/category/category-grid",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\category\\\\category-grid.vue",
+    "chunkName": "pages/category/category-grid",
+    "_name": "_4f09cc20"
+  },
+  {
+    "name": "category-category-list",
+    "path": "/category/category-list",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\category\\\\category-list.vue",
+    "chunkName": "pages/category/category-list",
+    "_name": "_15bad348"
+  },
+  {
+    "name": "chatbox-messages",
+    "path": "/chatbox/messages",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\chatbox\\\\messages.vue",
+    "chunkName": "pages/chatbox/messages",
+    "_name": "_4463a690"
+  },
+  {
+    "name": "chatbox-messages copy",
+    "path": "/chatbox/messages%20copy",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\chatbox\\\\messages copy.vue",
+    "chunkName": "pages/chatbox/messages copy",
+    "_name": "_26574ce6"
+  },
+  {
+    "name": "seller-change-password",
+    "path": "/seller/change-password",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\change-password.vue",
+    "chunkName": "pages/seller/change-password",
+    "_name": "_4fae9d1c"
+  },
+  {
+    "name": "seller-order-details",
+    "path": "/seller/order-details",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\order-details.vue",
+    "chunkName": "pages/seller/order-details",
+    "_name": "_611c0b1d"
+  },
+  {
+    "name": "seller-seller-account-setting",
+    "path": "/seller/seller-account-setting",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-account-setting.vue",
+    "chunkName": "pages/seller/seller-account-setting",
+    "_name": "_22a12e10"
+  },
+  {
+    "name": "seller-seller-comission-history",
+    "path": "/seller/seller-comission-history",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-comission-history.vue",
+    "chunkName": "pages/seller/seller-comission-history",
+    "_name": "_0bb1162f"
+  },
+  {
+    "name": "seller-seller-customer-returns",
+    "path": "/seller/seller-customer-returns",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-customer-returns.vue",
+    "chunkName": "pages/seller/seller-customer-returns",
+    "_name": "_5977dd3c"
+  },
+  {
+    "name": "seller-seller-dashboard",
+    "path": "/seller/seller-dashboard",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-dashboard.vue",
+    "chunkName": "pages/seller/seller-dashboard",
+    "_name": "_c6f37248"
+  },
+  {
+    "name": "seller-seller-leftsidebar",
+    "path": "/seller/seller-leftsidebar",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-leftsidebar.vue",
+    "chunkName": "pages/seller/seller-leftsidebar",
+    "_name": "_92730586"
+  },
+  {
+    "name": "seller-seller-message",
+    "path": "/seller/seller-message",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-message.vue",
+    "chunkName": "pages/seller/seller-message",
+    "_name": "_3b0cd262"
+  },
+  {
+    "name": "seller-seller-orders",
+    "path": "/seller/seller-orders",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-orders.vue",
+    "chunkName": "pages/seller/seller-orders",
+    "_name": "_1607b566"
+  },
+  {
+    "name": "seller-seller-payment-history",
+    "path": "/seller/seller-payment-history",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-payment-history.vue",
+    "chunkName": "pages/seller/seller-payment-history",
+    "_name": "_1c8a2795"
+  },
+  {
+    "name": "seller-seller-products",
+    "path": "/seller/seller-products",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-products.vue",
+    "chunkName": "pages/seller/seller-products",
+    "_name": "_0cf42f68"
+  },
+  {
+    "name": "seller-seller-products-post",
+    "path": "/seller/seller-products-post",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-products-post.vue",
+    "chunkName": "pages/seller/seller-products-post",
+    "_name": "_7507b931"
+  },
+  {
+    "name": "seller-seller-profile",
+    "path": "/seller/seller-profile",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-profile.vue",
+    "chunkName": "pages/seller/seller-profile",
+    "_name": "_211b7f71"
+  },
+  {
+    "name": "seller-seller-wallet",
+    "path": "/seller/seller-wallet",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-wallet.vue",
+    "chunkName": "pages/seller/seller-wallet",
+    "_name": "_59f06c61"
+  },
+  {
+    "name": "seller-seller-wishlist",
+    "path": "/seller/seller-wishlist",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\seller-wishlist.vue",
+    "chunkName": "pages/seller/seller-wishlist",
+    "_name": "_ab3a97a6"
+  },
+  {
+    "name": "user-account-statement",
+    "path": "/user/account-statement",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\account-statement.vue",
+    "chunkName": "pages/user/account-statement",
+    "_name": "_12432cc6"
+  },
+  {
+    "name": "user-my-reviews",
+    "path": "/user/my-reviews",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\my-reviews.vue",
+    "chunkName": "pages/user/my-reviews",
+    "_name": "_11e4aac8"
+  },
+  {
+    "name": "user-myPackages",
+    "path": "/user/myPackages",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\myPackages.vue",
+    "chunkName": "pages/user/myPackages",
+    "_name": "_34a0d64a"
+  },
+  {
+    "name": "user-mySalary",
+    "path": "/user/mySalary",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\mySalary.vue",
+    "chunkName": "pages/user/mySalary",
+    "_name": "_36db5e90"
+  },
+  {
+    "name": "user-old_user-withdrawal copy",
+    "path": "/user/old_user-withdrawal%20copy",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\old_user-withdrawal copy.vue",
+    "chunkName": "pages/user/old_user-withdrawal copy",
+    "_name": "_18404738"
+  },
+  {
+    "name": "user-order-details",
+    "path": "/user/order-details",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\order-details.vue",
+    "chunkName": "pages/user/order-details",
+    "_name": "_43494791"
+  },
+  {
+    "name": "user-track-order",
+    "path": "/user/track-order",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\track-order.vue",
+    "chunkName": "pages/user/track-order",
+    "_name": "_76386bcc"
+  },
+  {
+    "name": "user-user-bloglist",
+    "path": "/user/user-bloglist",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-bloglist.vue",
+    "chunkName": "pages/user/user-bloglist",
+    "_name": "_56a2cc50"
+  },
+  {
+    "name": "user-user-blogPost",
+    "path": "/user/user-blogPost",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-blogPost.vue",
+    "chunkName": "pages/user/user-blogPost",
+    "_name": "_37674772"
+  },
+  {
+    "name": "user-user-dashborad",
+    "path": "/user/user-dashborad",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-dashborad.vue",
+    "chunkName": "pages/user/user-dashborad",
+    "_name": "_bfd0d714"
+  },
+  {
+    "name": "user-user-mlm",
+    "path": "/user/user-mlm",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-mlm.vue",
+    "chunkName": "pages/user/user-mlm",
+    "_name": "_ec19a664"
+  },
+  {
+    "name": "user-user-orders",
+    "path": "/user/user-orders",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-orders.vue",
+    "chunkName": "pages/user/user-orders",
+    "_name": "_733dd375"
+  },
+  {
+    "name": "user-user-profile",
+    "path": "/user/user-profile",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-profile.vue",
+    "chunkName": "pages/user/user-profile",
+    "_name": "_6b0f9649"
+  },
+  {
+    "name": "user-user-requireProduct",
+    "path": "/user/user-requireProduct",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-requireProduct.vue",
+    "chunkName": "pages/user/user-requireProduct",
+    "_name": "_648675da"
+  },
+  {
+    "name": "user-user-security",
+    "path": "/user/user-security",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-security.vue",
+    "chunkName": "pages/user/user-security",
+    "_name": "_3e85f760"
+  },
+  {
+    "name": "user-user-whichlist",
+    "path": "/user/user-whichlist",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-whichlist.vue",
+    "chunkName": "pages/user/user-whichlist",
+    "_name": "_78c615db"
+  },
+  {
+    "name": "user-user-withdrawal",
+    "path": "/user/user-withdrawal",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\user-withdrawal.vue",
+    "chunkName": "pages/user/user-withdrawal",
+    "_name": "_290aed76"
+  },
+  {
+    "name": "seller-chatbox-messages",
+    "path": "/seller/chatbox/messages",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\chatbox\\\\messages.vue",
+    "chunkName": "pages/seller/chatbox/messages",
+    "_name": "_dcf95c4e"
+  },
+  {
+    "name": "seller-products-product-edit",
+    "path": "/seller/products/product-edit",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\products\\\\product-edit.vue",
+    "chunkName": "pages/seller/products/product-edit",
+    "_name": "_7e4e1cbc"
+  },
+  {
+    "name": "seller-products-product-preview",
+    "path": "/seller/products/product-preview",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\products\\\\product-preview.vue",
+    "chunkName": "pages/seller/products/product-preview",
+    "_name": "_3299cc60"
+  },
+  {
+    "name": "seller-products-product-varient",
+    "path": "/seller/products/product-varient",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\seller\\\\products\\\\product-varient.vue",
+    "chunkName": "pages/seller/products/product-varient",
+    "_name": "_188f80be"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\index.vue",
+    "chunkName": "pages/index",
+    "_name": "_bbce8dea"
+  },
+  {
+    "name": "user-invite-user-id",
+    "path": "/user/invite-user/:id?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\user\\\\invite-user\\\\_id.vue",
+    "chunkName": "pages/user/invite-user/_id",
+    "_name": "_88de45a6"
+  },
+  {
+    "name": "business-slug",
+    "path": "/business/:slug?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\business\\\\_slug.vue",
+    "chunkName": "pages/business/_slug",
+    "_name": "_1541cf43"
+  },
+  {
+    "name": "product-details-slug",
+    "path": "/product-details/:slug?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\product-details\\\\_slug.vue",
+    "chunkName": "pages/product-details/_slug",
+    "_name": "_49118986"
+  },
+  {
+    "name": "resetpassword-slug",
+    "path": "/resetpassword/:slug?",
+    "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\isumax_services\\\\frontend\\\\pages\\\\resetpassword\\\\_slug.vue",
+    "chunkName": "pages/resetpassword/_slug",
+    "_name": "_2a4ea9b7"
+  }
+]

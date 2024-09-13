@@ -1,0 +1,37 @@
+{
+  "name": "vue-chat-scroll",
+  "version": "1.4.0",
+  "description": "Automatic, yet conditional, scroll-to-bottom directive for Vue.js 2.0",
+  "main": "dist/vue-chat-scroll.js",
+  "scripts": {
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theomessin/vue-chat-scroll.git"
+  },
+  "bugs": {
+    "url": "https://github.com/theomessin/vue-chat-scroll/issues"
+  },
+  "homepage": "https://github.com/theomessin/vue-chat-scroll#readme",
+  "keywords": [
+    "vue",
+    "vue-directive",
+    "scroll",
+    "autoscroll",
+    "chat",
+    "room"
+  ],
+  "author": "Theodore Messinezis",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.4.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "rollup": "^2.3.3",
+    "rollup-plugin-babel": "^4.4.0"
+  }
+}

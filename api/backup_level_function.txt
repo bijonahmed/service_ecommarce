@@ -1,0 +1,106 @@
+  public function getCustomerCalculateLev(Request $request)
+    {
+
+        function getLevels($users, $level)
+        {
+
+            if (empty($users)) {
+                return [];
+            }
+            $userIdsArray = $users->pluck('id')->toArray();
+            return User::whereIn('join_id', $userIdsArray)->select('id', 'name', 'join_id')->get();
+        }
+
+        // dd($request->params);
+        $userid = $this->userid;
+        $userL1   = User::where('join_id', $userid)
+            ->select('id', 'name', 'join_id', 'email', 'created_at', 'status')
+            ->get();
+			
+ 
+		$userL2 = getLevels($userL1, 2);
+        $userL3 = getLevels($userL2, 3);
+        $userL4 = getLevels($userL3, 4);
+        $userL5 = getLevels($userL4, 2);
+
+        if ($request->params == 1) {
+            $levels = [];
+            foreach ($userL1 as $v) {
+                $uplineQr  = User::where('id', $v->join_id)->select('name', 'email')->first();
+                $levels[] = [
+                    'id'         => $v->id,
+                    'name'       => !empty($v->name) ? $v->name : "",
+                    'regDate'    => date_format(date_create($v->created_at), "Y-m-d"),
+                    'upline'     => !empty($uplineQr->name) ? $uplineQr->name : "",
+                    'status'     => $v->status,
+                ];
+            }
+
+        }
+
+
+        if ($request->params == 2) {
+            $levels  = [];
+            foreach ($userL2 as $v) {
+                $uplineQr  = User::where('id', $v->join_id)->select('name', 'email')->first();
+                $levels[] = [
+                    'id'         => $v->id,
+                    'name'       => !empty($v->name) ? $v->name : "",
+                    'regDate'    => date_format(date_create($v->created_at), "Y-m-d"),
+                    'upline'     => !empty($uplineQr->name) ? $uplineQr->name : "",
+                    'status'     => $v->status,
+                ];
+            }
+        }
+        if ($request->params == 3) {
+            $levels  = [];
+            foreach ($userL3 as $v) {
+                $uplineQr  = User::where('id', $v->join_id)->select('name', 'email')->first();
+                $levels[] = [
+                    'id'         => $v->id,
+                    'name'       => !empty($v->name) ? $v->name : "",
+                    'regDate'    => date_format(date_create($v->created_at), "Y-m-d"),
+                    'upline'     => !empty($uplineQr->name) ? $uplineQr->name : "",
+                    'status'     => $v->status,
+                ];
+            }
+
+        }
+        if ($request->params == 4) {
+            $levels  = [];
+            foreach ($userL4 as $v) {
+                $uplineQr  = User::where('id', $v->join_id)->select('name', 'email')->first();
+                $levels[] = [
+                    'id'         => $v->id,
+                    'name'       => !empty($v->name) ? $v->name : "",
+                    'regDate'    => date_format(date_create($v->created_at), "Y-m-d"),
+                    'upline'     => !empty($uplineQr->name) ? $uplineQr->name : "",
+                    'status'     => $v->status,
+                ];
+            }
+        }
+
+        if ($request->params == 5) {
+            $levels  = [];
+            foreach ($userL5 as $v) {
+                $uplineQr  = User::where('id', $v->join_id)->select('name', 'email')->first();
+                $levels[] = [
+                    'id'         => $v->id,
+                    'name'       => !empty($v->name) ? $v->name : "",
+                    'regDate'    => date_format(date_create($v->created_at), "Y-m-d"),
+                    'upline'     => !empty($uplineQr->name) ? $uplineQr->name : "",
+                    'status'     => $v->status,
+                ];
+            }
+        }
+
+
+        $data = [
+            'level'     => $levels,
+            'teamCount' => count($levels),
+            'teamProfit' => 0,
+        ];
+        return response()->json($data, 200);
+		
+		
+		}
