@@ -55,6 +55,13 @@
                                                 <td>{{ productData.product_tag }}</td>
                                             </tr>
 
+
+                                            <tr>
+                                                <td>Delivery Date</td>
+                                                <td><strong>:</strong></td>
+                                                <td>{{ productData.delivery_days }} Days</td>
+                                            </tr>
+
                                             <tr>
                                                 <td colspan="3">&nbsp;</td>
                                             </tr>
@@ -456,6 +463,7 @@ export default {
                 //console.log("product row:" + response.data);
                 this.productData.name = response.data.product.name;
                 this.productData.description = response.data.product.description;
+                this.productData.delivery_days = response.data.product.delivery_days;
                 this.productData.meta_title = response.data.product.meta_title;
                 this.productData.meta_description = response.data.product.meta_description;
                 this.productData.meta_keyword = response.data.product.meta_keyword;

@@ -42,6 +42,11 @@
                                                     <td>{{ productData.meta_keyword }}</td>
                                                 </tr>
                                                 <tr>
+                                                <td>Delivery Date</td>
+                                                <td><strong>:</strong></td>
+                                                <td>{{ productData.delivery_days }} Days</td>
+                                            </tr>
+                                                <tr>
                                                     <td>Product Tags</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.product_tag }}</td>
@@ -302,6 +307,7 @@ export default {
                 name: '',
                 description: '',
                 meta_title: '',
+                delivery_days:'',
                 meta_description: '',
                 meta_keyword: '',
                 description: '',
@@ -376,6 +382,7 @@ export default {
                 this.productData.name = response.data.product.name;
                 this.productData.description = response.data.product.description;
                 this.productData.meta_title = response.data.product.meta_title;
+                this.productData.delivery_days = response.data.product.delivery_days;
                 this.productData.meta_description = response.data.product.meta_description;
                 this.productData.meta_keyword = response.data.product.meta_keyword;
                 this.productData.product_tag = response.data.product.product_tag;

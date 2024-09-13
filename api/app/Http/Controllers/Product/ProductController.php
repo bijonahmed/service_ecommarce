@@ -45,8 +45,9 @@ class ProductController extends Controller
 
     public function productUpdate(Request $request)
     {
-
-        // dd($request->all());
+        
+        
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
             //  'category'       => 'required',
@@ -72,6 +73,7 @@ class ProductController extends Controller
             'meta_keyword'               => !empty($request->meta_keyword) ? $request->meta_keyword : "",
             'product_tag'                => !empty($request->product_tag) ? $request->product_tag : "",
             'brand'                      => !empty($request->brand) ? $request->brand : "",
+            'delivery_days'              => !empty($request->delivery_days) ? $request->delivery_days : "",
             'sku'                        => !empty($request->sku) ? $request->sku : "",
             'external_link'              => !empty($request->external_link) ? $request->external_link : "",
             'cash_dev_status'            => !empty($request->cash_dev_status) ? $request->cash_dev_status : "",
@@ -80,7 +82,6 @@ class ProductController extends Controller
             'stock_qty'                  => !empty($request->stock_qty) ? $request->stock_qty : "",
             'stock_mini_qty'             => !empty($request->stock_mini_qty) ? $request->stock_mini_qty : 0,
             'stock_status'               => !empty($request->stock_status) ? $request->stock_status : "",
-            'manufacturer'               => !empty($request->manufacturer) ? $request->manufacturer : "",
             'manufacturer'               => !empty($request->manufacturer) ? $request->manufacturer : "",
             'download_link'              => !empty($request->download_link) ? $request->download_link : "",
             'discount'                   => !empty($request->discount) ? $request->discount : "",
@@ -96,6 +97,7 @@ class ProductController extends Controller
             'status'                     => !empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
         );
+    //    dd($data);
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
             $fileName = Str::random(20);
@@ -192,6 +194,7 @@ class ProductController extends Controller
             'shipping_days'              => !empty($request->shipping_days) ? $request->shipping_days : "",
             'free_shopping'              => !empty($request->free_shopping) ? $request->free_shopping : "",
             'flat_rate_status'           => !empty($request->flat_rate_status) ? $request->flat_rate_status : "",
+            'delivery_days'              => !empty($request->delivery_days) ? $request->delivery_days : "",
             'flat_rate_price'            => !empty($request->flat_rate_price) ? $request->flat_rate_price : "",
             'vat'                        => !empty($request->vat) ? $request->vat : 0,
             'vat_status'                 => !empty($request->vat_status) ? $request->vat_status : "",
@@ -299,6 +302,40 @@ class ProductController extends Controller
         $pdata['colorGroup'] = $gdata;
         return response()->json($pdata);
     }
+
+    public function attributeValRows($attributes_id)
+    {
+
+        $attrValues = AttributeValues::where('attributes_id', $attributes_id)->select('id', 'attributes_id', 'name')->get();
+        $collection = collect($attrValues);
+        $modifiedCollection = $collection->map(function ($item) {
+            return [
+                'id' => $item['id'],
+                'name' => $item['name'],
+            ];
+        });
+
+        return response()->json($modifiedCollection, 200);
+    }
+
+    public function getAttrHistory($id)
+    {
+        $product_id = (int) $id;
+        $Attrdata = ProductAttributes::checkingAttrube($product_id);
+        $formatedData = [];
+        $categoriesData = $Attrdata; //Category::all(); // Assuming you have a Category model and table
+        foreach ($categoriesData as $val) {
+            $atthistory =  ProductAttributes::attribueHistory($val->attributes_id);
+            $subcategoryNames = $atthistory;
+            $formatedData[] = [
+                'id'             => $val->id,
+                'name'           => ucfirst($val->name),
+                'value_history'  => $subcategoryNames,
+            ];
+        }
+        return response()->json(array_values($formatedData));
+        //dd($categoriess);
+    }
     public function deleteValrient(Request $request)
     {
 
@@ -361,6 +398,7 @@ class ProductController extends Controller
             ->leftjoin('manufacturers', 'manufacturers.id', '=', 'product.manufacturer')
             ->select('product.*', 'brands.name as brand_name', 'manufacturers.name as manufac_name')
             ->where('product.id', $id)->first();
+        
         //dd($responseData['product']);
         $responseData['product_cat']       = $resulting_string;
         $responseData['product_edit_cat']  = $show_edit_cat;
@@ -637,9 +675,12 @@ class ProductController extends Controller
     }
     public function generateCombinations(Request $request)
     {
+
+      //  dd($request->all());
+
         $product_id = $request->input('product_id');
-        $colors     = $request->input('colors'); //['Red', 'Green', 'Black'];//$request->input('colors');
-        $sizes      = $request->input('sizes'); //['10', '12', '14', '16'];//$request->input('sizes');
+        $colors     = $request->input('colors');
+        $sizes      = $request->input('sizes');
         //$warranties = ['1 Y', '2 Y'];//$request->input('warranties');
         $combinations = [];
         // Iterate over colors

@@ -519,6 +519,8 @@
             },
 
             handleCheckboxClick(event, checkboxValue) {
+                console.log("==event=" + event);
+                console.log("=val==" + checkboxValue);
                 this.logValues(event, checkboxValue);
                 this.retrieveAttributeData();
             },
@@ -541,7 +543,6 @@
 
                     // Define the prefix for the keys
                     const keyPrefix = 'selectedAttribute_';
-
                     // Retrieve data for keys matching the prefix
                     const keys = Object.keys(localStorage);
                     keys.forEach(key => {
@@ -587,6 +588,7 @@
             },
 
             showAttrVal(attrId) {
+          
                 const selectedAttribute = this.attributeslist.find(attr => attr.id === this.insertdata.attr_id);
                 this.selectedAttributeName = selectedAttribute ? selectedAttribute.name : '';
 

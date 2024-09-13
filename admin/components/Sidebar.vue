@@ -33,11 +33,7 @@
                                     <i class="bx bx-right-arrow-alt"></i>Product
                                 </Nuxt-link>
                             </li>
-                            <li>
-                                <Nuxt-link to="/ecommarce/product-list">
-                                    <i class="bx bx-right-arrow-alt"></i>Product
-                                </Nuxt-link>
-                            </li>
+                           
                             <li>
                                 <Nuxt-link to="#"><i class="bx bx-right-arrow-alt"></i>Product Review</Nuxt-link>
                             </li>

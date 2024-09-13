@@ -129,7 +129,7 @@ Route::group([
     Route::get('blogs', [UserController::class,'getblogs']);
 });
 Route::group([
-    'middleware' => 'api',
+   // 'middleware' => 'api',
     'prefix' => 'category'
 ], function () {
     Route::post('save', [CategoryController::class, 'save']);
@@ -147,7 +147,7 @@ Route::group([
     Route::get('getSubCategoryChild/{id}', [CategoryController::class, 'getSubCategoryChild']);
     Route::get('attributeRow/{id}', [CategoryController::class, 'attributeRow']);
     Route::get('attributeValRow/{id}', [CategoryController::class, 'attributeValRow']);
-    Route::get('attributeValRows/{attributes_id}', [CategoryController::class, 'attributeValRows']);
+    Route::get('attributeValRows/{attributes_id}', [ProductController::class, 'attributeValRows']);
     Route::get('search', [CategoryController::class, 'searchCategory']);
     Route::get('attributes', [CategoryController::class, 'getAttribute']);
     Route::get('attributes-list', [CategoryController::class, 'getAttributeList']);

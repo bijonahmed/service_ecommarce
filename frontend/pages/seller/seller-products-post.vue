@@ -335,6 +335,17 @@
                                                                                 Days
                                                                             </div>
                                                                         </div>
+
+                                                                <div class="row mb-3 required">
+                                                                    <label for="input-meta-title-1" class="col-sm-4 col-form-label">Delivery  Days</label>
+                                                                    <div class="col-sm-4">
+                                                                        <input type="text" v-model="insertdata.delivery_days" class="form-control" @input="validateInput" />
+                                                                        <span class="text-danger" v-if="errors.delivery_days">{{ errors.delivery_days[0] }}</span>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        Days
+                                                                    </div>
+                                                                </div>
                                                                         <hr />
                                                                         <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
@@ -582,6 +593,7 @@ export default {
                 manufacturer: '',
                 download_link: '',
                 discount: 0,
+                delivery_days: '',
                 discount_status: 1,
                 shipping_days: 1,
                 free_shopping: 0,
@@ -664,6 +676,9 @@ export default {
 
         },
         validateInput() {
+            if (!/^[+-]?\d*\.?\d*$/.test(this.insertdata.delivery_days)) {
+                this.insertdata.delivery_days = this.insertdata.delivery_days.slice(0, -1);
+            }
             if (!/^[+-]?\d*\.?\d*$/.test(this.insertdata.price)) {
                 this.insertdata.price = this.insertdata.price.slice(0, -1);
             }
@@ -810,6 +825,7 @@ export default {
             formData.append('files', this.files);
             // formData.append('images', this.images); //multiple
             formData.append('category', this.multi_categories);
+            formData.append('delivery_days', this.insertdata.delivery_days);
             formData.append('name', this.insertdata.name);
             formData.append('description', this.insertdata.description);
             formData.append('meta_title', this.insertdata.meta_title);
@@ -852,7 +868,7 @@ export default {
                 this.success_noti();
                 const product_id = res.data.product_id;
                 this.$router.push({
-                    path: '/seller/products/product-varient',
+                    path: '/seller/products/product-preview',
                     query: {
                         parameter: product_id
                     }

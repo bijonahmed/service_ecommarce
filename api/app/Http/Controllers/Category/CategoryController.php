@@ -226,7 +226,7 @@ class CategoryController extends Controller
                 'meta_keyword'      => $request->input('meta_keyword'),
                 'parent_id'         => $request->input('parent_id') ? $request->input('parent_id') : 0,
                 'status'            => $request->input('status'),
-                'home_status'       => $request->home_status,
+                //'home_status'       => $request->home_status,
                 'commission'        => $request->input('commission'),
                 'keyword'           => $request->input('keyword'),
                 'mobile_view_class' => $request->input('mobile_view_class'),
@@ -255,7 +255,7 @@ class CategoryController extends Controller
             $data->meta_keyword      =  $request->input('meta_keyword');
             $data->parent_id         =  $request->input('parent_id');
             $data->status            =  $request->input('status');
-            $data->home_status       =  $request->home_status;
+          //  $data->home_status       =  $request->home_status;
             $data->commission        =  $request->input('commission');
             $data->keyword           =  $request->input('keyword');
             $data->mobile_view_class =  $request->input('mobile_view_class');
@@ -414,6 +414,7 @@ class CategoryController extends Controller
     }
     public function attributeValRows($attributes_id)
     {
+//dd($attributes_id);
 
         $attrValues = AttributeValues::where('attributes_id', $attributes_id)->select('id', 'attributes_id', 'name')->get();
         $collection = collect($attrValues);
