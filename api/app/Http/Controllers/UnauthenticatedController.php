@@ -15,7 +15,7 @@ use App\Models\Product;
 use App\Models\Setting;
 use App\Models\Sliders;
 use App\Models\Category;
-use App\Models\Attribute;
+use App\Models\Packages;
 use App\Models\Categorys;
 use App\Models\SellerAds;
 use App\Mail\ExampleEmail;
@@ -1281,4 +1281,14 @@ class UnauthenticatedController extends Controller
         // dd($data);
         return response()->json($data);
     }
+
+    public function getsPackUser()
+        {
+            $data = Packages::where('status', 1)->get();
+            // dd($data);
+            return response()->json($data);
+        }
+
+
+    
 }

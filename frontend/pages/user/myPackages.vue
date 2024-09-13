@@ -18,31 +18,36 @@
                                 <img src="/loader/loader.gif" alt="Loader" />
                             </div>
                         </div>
-                        <div class="main_profile">
-                            <div class="salary_card_container">
-                                <!-- {{ salaryall }} -->
-                                <div class="salary_card" v-for="(salary, index) in salaryall" :key="index" >
-                                    <div class="card_left">
-                                        <img src="/images/dotsTwo.png" alt="" class="img-fluid dotimg">
-                                        <img src="/images/logo.png" alt="" class="img-fluid card_logo">
-                                    </div>
-                                    <div class="card_middle">
-                                        <div class="price_box">
-                                            <h1>${{salary.amount}}</h1>
-                                            <h3>Monthly</h3>
-                                            <img src="/images/pricetag.png" alt="" class="img-fluid">
-                                        </div>
-                                        <p>Team size {{salary.team}}  </p>
-                                    </div>
-                                    <div class="card_right">
-                                        <img src="/images/qrcode.png" alt="" class="img-fluid qr_code">
-                                        <h2>Free</h2>
-                                        <h1>Delivery</h1>
-                                        <img src="/images/dotsOne.png" alt="" class="img-fluid dots">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
+                        <!-- start -->
+
+                        <div class="container">
+                            <br/><br/>
+   <div class="row">
+      <!-- Purple Table -->
+        <div class="col-md-4" v-for="data in salaryall" :key="data.id">
+            <div class="pricing-table purple">
+    <h2>{{ data.name }}</h2>
+    <div class="pricing-features">
+        <div class="feature">Number of Referrals<span>{{ data.number_of_referell }}</span></div>
+        <div class="feature">Number of Sales<span>{{ data.number_of_sales }}</span></div>
+        <div class="feature">Number of Blogs<span>{{ data.number_of_blogs }}</span></div>
+    </div>
+    <!-- Price -->
+    <div class="price-tag">
+        <span class="symbol">$</span>
+        <span class="amount">{{ data.salary_amount }}</span>
+        <span class="after">/Salary</span>
+    </div>
+</div>
+
+        </div>
+      <!-- Turquoise Table -->
+      
+   </div>
+</div>
+
+                        <!-- END -->
                         
                     </div>
                 </div>
@@ -79,7 +84,7 @@ export default {
 
     },
     head: {
-        title: 'My Packages',
+        title: 'My Sallary',
     },
     data() {
         return {
@@ -113,7 +118,7 @@ export default {
             })
         },
         getDefaultData(){
-            this.$axios.get('/unauthenticate/getsalaryuser')
+            this.$axios.get('/unauthenticate/getsPackUser')
             .then(response => {
                 console.log("========"+response.data);
                 this.salaryall = response.data;
@@ -200,4 +205,73 @@ export default {
 .loader-bottom {
     bottom: 0;
 }
+.pricing-table {
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 300px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.pricing-table:hover {
+    transform: translateY(-10px);
+}
+
+.pricing-table h2 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.pricing-features {
+    margin-bottom: 20px;
+}
+
+.feature {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.feature span {
+    font-weight: bold;
+}
+
+.price-tag {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    font-size: 2.5rem;
+    margin-top: 20px;
+}
+
+.symbol {
+    font-size: 1.5rem;
+    margin-right: 5px;
+}
+
+.amount {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.after {
+    font-size: 1rem;
+    color: #ddd;
+    margin-left: 5px;
+}
+
+.purple {
+    background: linear-gradient(135deg, #7b1fa2 0%, #ab47bc 100%);
+}
+
 </style>

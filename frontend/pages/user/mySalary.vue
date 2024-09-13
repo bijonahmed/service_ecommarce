@@ -22,79 +22,28 @@
                         <!-- start -->
 
                         <div class="container">
+                            <br/><br/>
    <div class="row">
       <!-- Purple Table -->
-      <div class="col-md-4">
-         <div class="pricing-table purple">
-            <!-- Table Head -->
-            <h2>BasicPack 2020</h2>
-            <h5>Made for starters</h5>
-            <!-- Features -->
-            <div class="pricing-features">
-               <div class="feature">Bandwith<span>50 GB</span></div>
-               <div class="feature">Add-On Domains<span>10</span></div>
-               <div class="feature">SSD Storage<span>250 GB</span></div>
-               <div class="feature">Mail Adresses<span>25</span></div>
-               <div class="feature">Support<span>Only Mail</span></div>
-            </div>
-            <!-- Price -->
-            <div class="price-tag">
-               <span class="symbol">$</span>
-               <span class="amount">7.99</span>
-               <span class="after">/month</span>
-            </div>
-            <!-- Button -->
-            <a class="price-button" href="#">Get Started</a>
-         </div>
-      </div>
+        <div class="col-md-4" v-for="data in salaryall" :key="data.id">
+            <div class="pricing-table purple">
+    <h2>{{ data.name }}</h2>
+    <div class="pricing-features">
+        <div class="feature">Number of Referrals<span>{{ data.number_of_referell }}</span></div>
+        <div class="feature">Number of Sales<span>{{ data.number_of_sales }}</span></div>
+        <div class="feature">Number of Blogs<span>{{ data.number_of_blogs }}</span></div>
+    </div>
+    <!-- Price -->
+    <div class="price-tag">
+        <span class="symbol">$</span>
+        <span class="amount">{{ data.salary_amount }}</span>
+        <span class="after">/Salary</span>
+    </div>
+</div>
+
+        </div>
       <!-- Turquoise Table -->
-      <div class="col-md-4">
-         <div class="pricing-table turquoise">
-            <!-- Table Head -->
-            <h2>ExtendedPack 2020</h2>
-            <h5>Made for experienced users</h5>
-            <!-- Features -->
-            <div class="pricing-features">
-               <div class="feature">Bandwith<span>150 GB</span></div>
-               <div class="feature">Add-On Domains<span>25</span></div>
-               <div class="feature">SSD Storage<span>500 GB</span></div>
-               <div class="feature">Mail Adresses<span>50</span></div>
-               <div class="feature">Support<span>Mail/Phone</span></div>
-            </div>
-            <!-- Price -->
-            <div class="price-tag">
-               <span class="symbol">$</span>
-               <span class="amount">9.99</span>
-               <span class="after">/month</span>
-            </div>
-            <!-- Button -->
-            <a class="price-button" href="#">Get Started</a>
-         </div>
-      </div>
-      <!-- Red Table -->
-      <div class="col-md-4">
-         <div class="pricing-table red">
-            <!-- Table Head -->
-            <h2>ProsPack 2020</h2>
-            <h5>Made for professionals/agencies</h5>
-            <!-- Features -->
-            <div class="pricing-features">
-               <div class="feature">Bandwith<span>250 GB</span></div>
-               <div class="feature">Add-On Domains<span>50</span></div>
-               <div class="feature">SSD Storage<span>1 TB</span></div>
-               <div class="feature">Mail Adresses<span>75</span></div>
-               <div class="feature">Support<span>7/24</span></div>
-            </div>
-            <!-- Price -->
-            <div class="price-tag">
-               <span class="symbol">$</span>
-               <span class="amount">12.99</span>
-               <span class="after">/month</span>
-            </div>
-            <!-- Button -->
-            <a class="price-button" href="#">Get Started</a>
-         </div>
-      </div>
+      
    </div>
 </div>
 
@@ -256,158 +205,73 @@ export default {
 .loader-bottom {
     bottom: 0;
 }
-
-body {
-	background: #e6e6e6;
-	font-family: Rubik;
-}
-
-.main-head {
-	background: #0D1440;
-	box-shadow: 0px 1px 10px -6px rgba(0, 0, 0, .15);
-	padding: 1rem;
-	margin-bottom: 0;
-	margin-top: 5rem;
-	color: #fff;
-	font-weight: 500;
-	text-transform: uppercase;
-	border-radius: 4px;
-	font-size: 16px;
-}
-
 .pricing-table {
-	background: #fff;
-	box-shadow: 0px 1px 10px -6px rgba(0, 0, 0, .15);
-	padding: 2rem;
-	border-radius: 4px;
-	transition: .3s;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    max-width: 300px;
+    margin: 20px auto;
+    text-align: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
 }
 
 .pricing-table:hover {
-	box-shadow: 0px 1px 10px -4px rgba(0, 0, 0, .15);
-}
-
-.pricing-table .pricing-label {
-	border-radius: 2px;
-	padding: .25rem .5rem;
-	margin-bottom: 1rem;
-	display: inline-block;
-	font-size: 12px;
-	font-weight: 500;
+    transform: translateY(-10px);
 }
 
 .pricing-table h2 {
-	color: #3b3b3b;
-	font-size: 24px;
-	font-weight: 500;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #fff;
+    font-weight: bold;
 }
 
-.pricing-table h5 {
-	color: #B3B3B3;
-	font-size: 14px;
-	font-weight: 400;
+.pricing-features {
+    margin-bottom: 20px;
 }
 
-.pricing-table .pricing-features {
-	margin-top: 2rem;
+.feature {
+    font-size: 1.1rem;
+    margin: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.2);
 }
 
-.pricing-table .pricing-features .feature {
-	font-size: 14px;
-	margin: .5rem 0;
-	color: #B3B3B3;
+.feature span {
+    font-weight: bold;
 }
 
-.pricing-table .pricing-features .feature span {
-	display: inline-block;
-	float: right;
-	color: #3b3b3b;
-	font-weight: 500;
+.price-tag {
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    font-size: 2.5rem;
+    margin-top: 20px;
 }
 
-.pricing-table 	.price-tag {
-	margin-top: 2rem;
-	text-align: center;
-	font-weight: 500;
+.symbol {
+    font-size: 1.5rem;
+    margin-right: 5px;
 }
 
-.pricing-table .price-tag .symbol {
-	font-size: 24px;
+.amount {
+    font-size: 3rem;
+    font-weight: bold;
 }
 
-.pricing-table .price-tag .amount {
-	letter-spacing: -2px;
-	font-size: 64px;
+.after {
+    font-size: 1rem;
+    color: #ddd;
+    margin-left: 5px;
 }
 
-.pricing-table .price-tag .after {
-	color: #3b3b3b;
-	font-weight: 500;
+.purple {
+    background: linear-gradient(135deg, #7b1fa2 0%, #ab47bc 100%);
 }
 
-.pricing-table .price-button {
-	display: block;
-	color: #fff;
-	margin-top: 2rem;
-	padding: .75rem;
-	border-radius: 2px;
-	text-align: center;
-	font-weight: 500;
-	transition: .3s;
-}
-
-.pricing-table .price-button:hover {
-	text-decoration: none;
-}
-
-.purple .pricing-label {
-	background: #cad2ff;
-	color: #627afe;
-}
-
-.purple .price-tag {
-	color: #627afe;
-}
-
-.purple .price-button {
-	background: #627afe;
-}
-
-.purple .price-button:hover {
-	background: #546dfe;
-}
-
-.turquoise .pricing-label {
-	background: #b9edee;
-	color: #44cdd2;
-}
-
-.turquoise .price-tag {
-	color: #44cdd2;
-}
-
-.turquoise .price-button {
-	background: #44cdd2;
-}
-
-.turquoise .price-button:hover {
-	background: #2dbcc4;
-}
-
-.red .pricing-label {
-	background: #ffc4c4;
-	color: #ff5e5e;
-}
-
-.red .price-tag {
-	color: #ff5e5e;
-}
-
-.red .price-button {
-	background: #ff5e5e;
-}
-
-.red .price-button:hover {
-	background: #f23c3c;
-}
 </style>

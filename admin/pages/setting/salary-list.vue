@@ -288,6 +288,7 @@ export default {
                         headers
                     }).then((res) => {
                     $('#formrest')[0].reset();
+                    this.fetchData();
                     this.success_noti();
                     this.$router.push('/setting/salary-list');
     

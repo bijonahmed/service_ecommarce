@@ -113,9 +113,8 @@ class SettingController extends Controller
     }
 
 
-    public function insertSalary(Request $request){
-
-
+    public function insertSalary(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'name'                  => 'required',
             'number_of_referell'    => 'required',
@@ -134,7 +133,7 @@ class SettingController extends Controller
             'number_of_blogs'           => !empty($request->number_of_blogs) ? $request->number_of_blogs : "",
             'salary_amount'             => !empty($request->salary_amount) ? $request->salary_amount : "",
             'status'                    => !empty($request->status) ? $request->status : "",
-           
+
         );
         // dd($data);
         if (empty($request->id)) {
@@ -146,13 +145,43 @@ class SettingController extends Controller
             'message' => 'Successfull',
         ];
         return response()->json($response);
-
-
     }
 
 
 
+    public function insertPack(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'                  => 'required',
+            'number_of_referell'    => 'required',
+            'number_of_sales'       => 'required',
+            'number_of_blogs'       => 'required',
+            'salary_amount'         => 'required',
+            'status'                => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'name'                      => !empty($request->name) ? $request->name : "",
+            'number_of_referell'        => !empty($request->number_of_referell) ? $request->number_of_referell : "",
+            'number_of_sales'           => !empty($request->number_of_sales) ? $request->number_of_sales : "",
+            'number_of_blogs'           => !empty($request->number_of_blogs) ? $request->number_of_blogs : "",
+            'salary_amount'             => !empty($request->salary_amount) ? $request->salary_amount : "",
+            'status'                    => !empty($request->status) ? $request->status : "",
 
+        );
+        // dd($data);
+        if (empty($request->id)) {
+            DB::table('packages')->insertGetId($data);
+        } else {
+            DB::table('packages')->where('id', $request->id)->update($data);
+        }
+        $response = [
+            'message' => 'Successfull',
+        ];
+        return response()->json($response);
+    }
 
     public function insertBankMaster(Request $request)
     {
@@ -330,6 +359,21 @@ class SettingController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+
+    public function checkrowPack($id)
+    {
+        $id = (int) $id;
+        $data = DB::table('packages')->where('id', $id)->first();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+
+
     public function getEmployeeTypeList(Request $request)
     {
         try {
@@ -381,30 +425,45 @@ class SettingController extends Controller
 
 
 
-        public function getsalary(Request $request)
-            {
-                try {
-                    $rows = DB::table('salary')->get();
-                    $response = [
-                        'data' => $rows,
-                        'message' => 'success'
-                    ];
-                } catch (\Throwable $th) {
-                    $response = [
-                        'data' => [],
-                        'message' => 'failed'
-                    ];
-                }
-                return response()->json($response, 200);
-            }
+    public function getsalary(Request $request)
+    {
+        try {
+            $rows = DB::table('salary')->get();
+            $response = [
+                'data' => $rows,
+                'message' => 'success'
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                'data' => [],
+                'message' => 'failed'
+            ];
+        }
+        return response()->json($response, 200);
+    }
+
+
+    public function getPack(Request $request)
+    {
+        try {
+            $rows = DB::table('packages')->get();
+            $response = [
+                'data' => $rows,
+                'message' => 'success'
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                'data' => [],
+                'message' => 'failed'
+            ];
+        }
+        return response()->json($response, 200);
+    }
 
 
 
 
 
-
-
-    
     public function getBankMasterlist(Request $request)
     {
         try {
@@ -533,7 +592,7 @@ class SettingController extends Controller
     }
 
 
-    
+
     public function checkrowBankMaster($id)
     {
         $id = (int) $id;
@@ -596,9 +655,7 @@ class SettingController extends Controller
     }
 
     // brands part start here 
-    public function addbrands()
-    {
-    }
+    public function addbrands() {}
     // ads part start here 
 
     public function getbannerTop()
@@ -1192,20 +1249,20 @@ class SettingController extends Controller
         $minShop = $request->query('minShop');
         $user_id = $request->query('user_id');
 
-        
+
         $couponList = coupons::where('min_shopping', '<', $minShop)
             ->where('status', 1)
             ->limit(3)
             ->get();
 
-            
+
         foreach ($couponList as $key => $coupon) {
-            
+
             $usageRecord = CouponUseHistory::where('user_id', $user_id)
                 ->where('coupon_id', $coupon->id)
                 ->first();
 
-                
+
             if ($usageRecord) {
                 unset($couponList[$key]);
             }
@@ -1213,7 +1270,7 @@ class SettingController extends Controller
 
         // dd($couponList);
         // return false;
-        
+
         return response()->json(['couponList' => array_values($couponList->toArray())]);
     }
 }

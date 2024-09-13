@@ -295,6 +295,7 @@ Route::group([
     Route::get('blogdetails', [UnauthenticatedController::class, 'blogdetails']);
     
     Route::get('getsalaryuser', [UnauthenticatedController::class, 'getsalaryuser']);
+    Route::get('getsPackUser', [UnauthenticatedController::class, 'getsPackUser']);
 });
 
 
@@ -313,8 +314,11 @@ Route::group([
     Route::get('checkrowPayGroup/{id}', [SettingController::class, 'checkrowPayGroup']);
    //salary
    Route::post('insertSalary', [SettingController::class, 'insertSalary']);
+   Route::post('insertPack', [SettingController::class, 'insertPack']);
    Route::get('checkrowsallary/{id}', [SettingController::class, 'checkrowsallary']);
+   Route::get('checkrowPack/{id}', [SettingController::class, 'checkrowPack']);
    Route::get('getsalary', [SettingController::class, 'getsalary']);
+   Route::get('getPack', [SettingController::class, 'getPack']);
 
     //Annual Pay 
     Route::post('insertAnnualPay', [SettingController::class, 'insertAnnualPay']);
