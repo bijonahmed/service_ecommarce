@@ -5,7 +5,7 @@
         <NavbarSecond />
         <!-- Main section start here  -->
 
-        <section class="main_content ">
+        <section class="main_content track_order_page">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-3">
@@ -34,6 +34,8 @@
                                 </div>
                             </div>
                         </div> -->
+
+
                         <div class="row">
                             <div class="col-md-8 ">
                                 <div class="main_profile">
@@ -124,6 +126,29 @@
                                         </div>
                                     </div>
                                 </div>
+                                <center>
+                                    <div class="countdown-timer">
+                                        <div class="countdown-item">
+                                        <span class="countdown-number">{{ days }}</span>
+                                        <span class="countdown-label">Days</span>
+                                        </div>
+                                        <div class="countdown-separator">:</div>
+                                        <div class="countdown-item">
+                                        <span class="countdown-number">{{ hours }}</span>
+                                        <span class="countdown-label">Hours</span>
+                                        </div>
+                                        <div class="countdown-separator">:</div>
+                                        <div class="countdown-item">
+                                        <span class="countdown-number">{{ minutes }}</span>
+                                        <span class="countdown-label">Minutes</span>
+                                        </div>
+                                        <div class="countdown-separator">:</div>
+                                        <div class="countdown-item">
+                                        <span class="countdown-number">{{ seconds }}</span>
+                                        <span class="countdown-label">Seconds</span>
+                                        </div>
+                                    </div>
+                                </center>
                                 <div class="main_profile">
                                     <!-- <div class="row mb-3">
                                         <div class="col-6">
@@ -269,22 +294,28 @@ import userSidebar from '~/components/userSidebar.vue';
 import NavbarSecond from '../../components/NavbarSecond.vue';
 
 export default {
-
     middleware: 'IsUser',
     components: {
         Common_MobileSidebar,
         Common_MiniTabNavbar,
         Common_MobileSearchProduct,
         userSidebar,
-
     },
     head: {
         title: 'My Orders',
     },
     data() {
         return {
+            days: 0,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            timer: null,
+            timeLeft: 0,
             loading: false,
-            orderstatus: '',
+            devliveryDate: '', // Number of days
+            orderDate: '',
+            orderStatus: '',
             orderData: '',
             orders: [],
             errors: {},
@@ -297,55 +328,89 @@ export default {
                 returned: '',
             },
             products: [],
-
-        }
+        };
     },
     mounted() {
-        const orderId = this.$route.query.orderId;
-        console.log("order I D: " + orderId);
         this.loadingOrders();
-
+    },
+    beforeDestroy() {
+        clearInterval(this.timer);
     },
     computed: {
         totalQuantity() {
-            // Calculate total quantity
-            return this.products.reduce((total, products) => total + products.qty, 0);
+            return this.products.reduce((total, product) => total + product.qty, 0);
         },
         totalAmount() {
-            // Calculate total amount
-            return this.products.reduce((total, products) => total + order.last_price, 0);
+            return this.products.reduce((total, product) => total + product.last_price, 0);
         },
     },
     methods: {
+        startCountdown() {
+            console.log("Starting countdown with devliveryDate (days):", this.devliveryDate);
+            if (this.devliveryDate) {
+                // Calculate the target time based on the number of days
+                const now = new Date().getTime();
+                this.timeLeft = this.devliveryDate * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+                this.targetTime = now + this.timeLeft;
+
+                this.timer = setInterval(this.calculateTimeLeft, 1000);
+            }
+        },
+        calculateTimeLeft() {
+            const now = new Date().getTime();
+            this.timeLeft = this.targetTime - now;
+
+            if (this.timeLeft > 0) {
+                this.days = Math.floor(this.timeLeft / (1000 * 60 * 60 * 24));
+                this.hours = Math.floor((this.timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                this.minutes = Math.floor((this.timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                this.seconds = Math.floor((this.timeLeft % (1000 * 60)) / 1000);
+            } else {
+                // Stop the countdown when it reaches 0
+                clearInterval(this.timer);
+                this.days = 0;
+                this.hours = 0;
+                this.minutes = 0;
+                this.seconds = 0;
+            }
+        },
         async loadingOrders() {
             this.loading = true;
             const orderId = this.$route.query.orderId;
-            await this.$axios.get(`/order/orderDetails/${orderId}`).then(response => {
+            try {
+                const response = await this.$axios.get(`/order/orderDetails/${orderId}`);
+                
+                console.log("Order response:", response.data);
+                
                 this.orders = response.data.orderdata;
                 this.orderStatus = response.data.orderrow;
                 this.orderData = response.data.orderData;
                 this.orderDate = response.data.create_at;
                 this.products = response.data.products;
-
+                this.devliveryDate = response.data.devliveryDate; // Now a number of days
+                
                 this.trackStatus.packed = response.data.packed_status;
                 this.trackStatus.dispatched = response.data.dispatched_status;
                 this.trackStatus.outForDelivery = response.data.outForDelivery_status;
                 this.trackStatus.deliverd = response.data.delivered_status;
                 this.trackStatus.canceled = response.data.cancel_status;
                 this.trackStatus.returned = response.data.return_status;
-            })
-                .finally(() => {
-                    this.loading = false; // Hide loader after response
-                });
 
+                // Start the countdown after setting devliveryDate
+                this.startCountdown();
+            } catch (error) {
+                console.error('Error fetching order details:', error);
+            } finally {
+                this.loading = false; // Hide loader after response
+            }
         },
         logout() {
             localStorage.removeItem('jwtToken');
             this.$router.push('/');
         },
+    },
+};
 
-    }
-}
 </script>
 
 <style scoped>
@@ -387,5 +452,40 @@ export default {
 
 .billing {
     font-size: 13px;
+}
+
+.track_order_page .main_profile {
+    min-height: auto;
+}
+.countdown-timer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Arial', sans-serif;
+  background-color: #282c34;
+  padding: 20px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.countdown-item {
+  text-align: center;
+}
+
+.countdown-number {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+.countdown-label {
+  display: block;
+  font-size: 0.8rem;
+  margin-top: 5px;
+}
+
+.countdown-separator {
+  font-size: 2.5rem;
+  padding: 0 10px;
 }
 </style>

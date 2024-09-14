@@ -305,6 +305,13 @@ class OrderController extends Controller
             ];
         }
 
+
+        $devlDate = OrderHistory::join('product', 'product.id', '=', 'order_history.product_id')
+        ->select('product.delivery_days','product.name as product_name', 'product.thumnail_img', 'product.discount_status', 'product.discount', 'product.vat_status', 'product.vat', 'order_history.*')
+        ->where('order_id', $findorder->id)->first();
+        $delivery_days =  (!empty($devlDate) && isset($devlDate->delivery_days)) ? $devlDate->delivery_days : "";
+        $order['devliveryDate'] = $delivery_days;
+
         $findCustomer = User::where('id', $findorder->customer_id)->first();
         $order['customername']  = !empty($findCustomer->name) ? $findCustomer->name : "";
         $order['customeremail'] = !empty($findCustomer->email) ? $findCustomer->email : "";

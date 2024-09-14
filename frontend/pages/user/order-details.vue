@@ -69,6 +69,7 @@
 
                                 <table width="100%" border="0" class="table table-bordered hover">
                                     <tr>
+										<th></th>
                                         <th width="30px">#</th>
                                         <th width="916">Item Description </th>
                                         <th width="63">
@@ -82,6 +83,7 @@
                                         </th>
                                     </tr>
                                     <tr v-for="(order, index) in products" :key="index" class="billing">
+										<td ><a :href="order.pro_img" target="_blank" class="btn btn-sm btn-default m-3 "><i class="fa-solid fa-download"></i></a></td>
                                         <th>{{ index + 1 }}</th>
                                         <td style="padding-bottom: 10px;">{{ order.pro_name }}</td>
                                         <td>
