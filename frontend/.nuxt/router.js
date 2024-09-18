@@ -70,10 +70,10 @@ const _4a914b62 = () => interopDefault(import('..\\pages\\user\\mySalary.vue' /*
 const _35d8ade2 = () => interopDefault(import('..\\pages\\user\\old_user-withdrawal copy.vue' /* webpackChunkName: "pages/user/old_user-withdrawal copy" */))
 const _aca331b2 = () => interopDefault(import('..\\pages\\user\\order-details.vue' /* webpackChunkName: "pages/user/order-details" */))
 const _2817d730 = () => interopDefault(import('..\\pages\\user\\track-order.vue' /* webpackChunkName: "pages/user/track-order" */))
+const _82f11dd2 = () => interopDefault(import('..\\pages\\user\\user-affiliate.vue' /* webpackChunkName: "pages/user/user-affiliate" */))
 const _85f02834 = () => interopDefault(import('..\\pages\\user\\user-bloglist.vue' /* webpackChunkName: "pages/user/user-bloglist" */))
 const _c46731f0 = () => interopDefault(import('..\\pages\\user\\user-blogPost.vue' /* webpackChunkName: "pages/user/user-blogPost" */))
 const _065667a0 = () => interopDefault(import('..\\pages\\user\\user-dashborad.vue' /* webpackChunkName: "pages/user/user-dashborad" */))
-const _201bb110 = () => interopDefault(import('..\\pages\\user\\user-mlm.vue' /* webpackChunkName: "pages/user/user-mlm" */))
 const _531c3eea = () => interopDefault(import('..\\pages\\user\\user-orders.vue' /* webpackChunkName: "pages/user/user-orders" */))
 const _6e5d2bf3 = () => interopDefault(import('..\\pages\\user\\user-profile.vue' /* webpackChunkName: "pages/user/user-profile" */))
 const _e981e620 = () => interopDefault(import('..\\pages\\user\\user-requireProduct.vue' /* webpackChunkName: "pages/user/user-requireProduct" */))
@@ -366,6 +366,10 @@ export const routerOptions = {
     component: _2817d730,
     name: "user-track-order"
   }, {
+    path: "/user/user-affiliate",
+    component: _82f11dd2,
+    name: "user-user-affiliate"
+  }, {
     path: "/user/user-bloglist",
     component: _85f02834,
     name: "user-user-bloglist"
@@ -377,10 +381,6 @@ export const routerOptions = {
     path: "/user/user-dashborad",
     component: _065667a0,
     name: "user-user-dashborad"
-  }, {
-    path: "/user/user-mlm",
-    component: _201bb110,
-    name: "user-user-mlm"
   }, {
     path: "/user/user-orders",
     component: _531c3eea,

@@ -3,13 +3,15 @@
     "name": "changePassword",
     "path": "/changePassword",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\changePassword.vue",
-    "chunkName": "pages/changePassword"
+    "chunkName": "pages/changePassword",
+    "_name": "_01e3517e"
   },
   {
     "name": "company-profile",
     "path": "/company-profile",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\company-profile.vue",
-    "chunkName": "pages/company-profile"
+    "chunkName": "pages/company-profile",
+    "_name": "_7ed16273"
   },
   {
     "path": "/dashboard",
@@ -20,722 +22,843 @@
         "name": "dashboard",
         "path": "",
         "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\dashboard\\\\index.vue",
-        "chunkName": "pages/dashboard/index"
+        "chunkName": "pages/dashboard/index",
+        "_name": "_493fd014"
       },
       {
         "name": "dashboard-profile",
         "path": "profile",
         "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\dashboard\\\\profile.vue",
-        "chunkName": "pages/dashboard/profile"
+        "chunkName": "pages/dashboard/profile",
+        "_name": "_1bf7aa2a"
       }
-    ]
+    ],
+    "_name": "_adfaf6a4"
   },
   {
     "name": "login",
     "path": "/login",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\login.vue",
-    "chunkName": "pages/login"
+    "chunkName": "pages/login",
+    "_name": "_348e2803"
   },
   {
     "name": "profile",
     "path": "/profile",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\profile.vue",
-    "chunkName": "pages/profile"
+    "chunkName": "pages/profile",
+    "_name": "_44d109c3"
   },
   {
     "name": "register",
     "path": "/register",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\register.vue",
-    "chunkName": "pages/register"
+    "chunkName": "pages/register",
+    "_name": "_ad99640e"
   },
   {
     "name": "blog-blog-cat",
     "path": "/blog/blog-cat",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\blog\\\\blog-cat.vue",
-    "chunkName": "pages/blog/blog-cat"
+    "chunkName": "pages/blog/blog-cat",
+    "_name": "_562220ba"
   },
   {
     "name": "blog-blog-list",
     "path": "/blog/blog-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\blog\\\\blog-list.vue",
-    "chunkName": "pages/blog/blog-list"
+    "chunkName": "pages/blog/blog-list",
+    "_name": "_191052a1"
   },
   {
     "name": "blog-edit-blogCat",
     "path": "/blog/edit-blogCat",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\blog\\\\edit-blogCat.vue",
-    "chunkName": "pages/blog/edit-blogCat"
+    "chunkName": "pages/blog/edit-blogCat",
+    "_name": "_01229d89"
   },
   {
     "name": "blog-new-blog",
     "path": "/blog/new-blog",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\blog\\\\new-blog.vue",
-    "chunkName": "pages/blog/new-blog"
+    "chunkName": "pages/blog/new-blog",
+    "_name": "_c2a193b2"
   },
   {
     "name": "brands-brands-list",
     "path": "/brands/brands-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\brands\\\\brands-list.vue",
-    "chunkName": "pages/brands/brands-list"
+    "chunkName": "pages/brands/brands-list",
+    "_name": "_cf75e366"
   },
   {
     "name": "brands-edit-brand",
     "path": "/brands/edit-brand",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\brands\\\\edit-brand.vue",
-    "chunkName": "pages/brands/edit-brand"
+    "chunkName": "pages/brands/edit-brand",
+    "_name": "_50542eb4"
   },
   {
     "name": "brands-new-brand",
     "path": "/brands/new-brand",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\brands\\\\new-brand.vue",
-    "chunkName": "pages/brands/new-brand"
+    "chunkName": "pages/brands/new-brand",
+    "_name": "_2c8a4368"
   },
   {
     "name": "coupons-all-coupons",
     "path": "/coupons/all-coupons",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\coupons\\\\all-coupons.vue",
-    "chunkName": "pages/coupons/all-coupons"
+    "chunkName": "pages/coupons/all-coupons",
+    "_name": "_dce5a16c"
   },
   {
     "name": "coupons-new-coupons",
     "path": "/coupons/new-coupons",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\coupons\\\\new-coupons.vue",
-    "chunkName": "pages/coupons/new-coupons"
+    "chunkName": "pages/coupons/new-coupons",
+    "_name": "_344258c9"
   },
   {
     "name": "customer-customerList",
     "path": "/customer/customerList",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\customer\\\\customerList.vue",
-    "chunkName": "pages/customer/customerList"
+    "chunkName": "pages/customer/customerList",
+    "_name": "_11ce4bd0"
   },
   {
     "name": "customer-newCustomer",
     "path": "/customer/newCustomer",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\customer\\\\newCustomer.vue",
-    "chunkName": "pages/customer/newCustomer"
+    "chunkName": "pages/customer/newCustomer",
+    "_name": "_fada87cc"
   },
   {
     "name": "ecommarce-attributes-list",
     "path": "/ecommarce/attributes-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\attributes-list.vue",
-    "chunkName": "pages/ecommarce/attributes-list"
+    "chunkName": "pages/ecommarce/attributes-list",
+    "_name": "_5ce6b4e6"
   },
   {
     "name": "ecommarce-category-add",
     "path": "/ecommarce/category-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\category-add.vue",
-    "chunkName": "pages/ecommarce/category-add"
+    "chunkName": "pages/ecommarce/category-add",
+    "_name": "_77d3fba0"
   },
   {
     "name": "ecommarce-category-edit",
     "path": "/ecommarce/category-edit",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\category-edit.vue",
-    "chunkName": "pages/ecommarce/category-edit"
+    "chunkName": "pages/ecommarce/category-edit",
+    "_name": "_6a70eb0b"
   },
   {
     "name": "ecommarce-category-list",
     "path": "/ecommarce/category-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\category-list.vue",
-    "chunkName": "pages/ecommarce/category-list"
+    "chunkName": "pages/ecommarce/category-list",
+    "_name": "_5b28c39f"
   },
   {
     "name": "ecommarce-category-percentage-history",
     "path": "/ecommarce/category-percentage-history",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\category-percentage-history.vue",
-    "chunkName": "pages/ecommarce/category-percentage-history"
+    "chunkName": "pages/ecommarce/category-percentage-history",
+    "_name": "_578b63bc"
   },
   {
     "name": "ecommarce-Old-product-add",
     "path": "/ecommarce/Old-product-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\Old-product-add.vue",
-    "chunkName": "pages/ecommarce/Old-product-add"
+    "chunkName": "pages/ecommarce/Old-product-add",
+    "_name": "_42b6f10f"
   },
   {
     "name": "ecommarce-Old-product-edit",
     "path": "/ecommarce/Old-product-edit",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\Old-product-edit.vue",
-    "chunkName": "pages/ecommarce/Old-product-edit"
+    "chunkName": "pages/ecommarce/Old-product-edit",
+    "_name": "_80244fe8"
   },
   {
     "name": "ecommarce-product-add",
     "path": "/ecommarce/product-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\product-add.vue",
-    "chunkName": "pages/ecommarce/product-add"
+    "chunkName": "pages/ecommarce/product-add",
+    "_name": "_d8939456"
   },
   {
     "name": "ecommarce-product-edit",
     "path": "/ecommarce/product-edit",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\product-edit.vue",
-    "chunkName": "pages/ecommarce/product-edit"
+    "chunkName": "pages/ecommarce/product-edit",
+    "_name": "_e251a7f4"
   },
   {
     "name": "ecommarce-product-list",
     "path": "/ecommarce/product-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\product-list.vue",
-    "chunkName": "pages/ecommarce/product-list"
+    "chunkName": "pages/ecommarce/product-list",
+    "_name": "_7f8f049a"
   },
   {
     "name": "ecommarce-product-preview",
     "path": "/ecommarce/product-preview",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\product-preview.vue",
-    "chunkName": "pages/ecommarce/product-preview"
+    "chunkName": "pages/ecommarce/product-preview",
+    "_name": "_53327108"
   },
   {
     "name": "ecommarce-product-varient",
     "path": "/ecommarce/product-varient",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\ecommarce\\\\product-varient.vue",
-    "chunkName": "pages/ecommarce/product-varient"
+    "chunkName": "pages/ecommarce/product-varient",
+    "_name": "_d0f58a86"
   },
   {
     "name": "employee-attendance-status",
     "path": "/employee/attendance-status",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\attendance-status.vue",
-    "chunkName": "pages/employee/attendance-status"
+    "chunkName": "pages/employee/attendance-status",
+    "_name": "_5a405602"
   },
   {
     "name": "employee-change-of-circumstances-add",
     "path": "/employee/change-of-circumstances-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-add.vue",
-    "chunkName": "pages/employee/change-of-circumstances-add"
+    "chunkName": "pages/employee/change-of-circumstances-add",
+    "_name": "_a377ab0a"
   },
   {
     "name": "employee-change-of-circumstances-employee",
     "path": "/employee/change-of-circumstances-employee",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-employee.vue",
-    "chunkName": "pages/employee/change-of-circumstances-employee"
+    "chunkName": "pages/employee/change-of-circumstances-employee",
+    "_name": "_5ad43878"
   },
   {
     "name": "employee-change-of-circumstances-list",
     "path": "/employee/change-of-circumstances-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\change-of-circumstances-list.vue",
-    "chunkName": "pages/employee/change-of-circumstances-list"
+    "chunkName": "pages/employee/change-of-circumstances-list",
+    "_name": "_9280b698"
   },
   {
     "name": "employee-dashboard",
     "path": "/employee/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\dashboard.vue",
-    "chunkName": "pages/employee/dashboard"
+    "chunkName": "pages/employee/dashboard",
+    "_name": "_575bd640"
   },
   {
     "name": "employee-department-add",
     "path": "/employee/department-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\department-add.vue",
-    "chunkName": "pages/employee/department-add"
+    "chunkName": "pages/employee/department-add",
+    "_name": "_8fac5eac"
   },
   {
     "name": "employee-department-list",
     "path": "/employee/department-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\department-list.vue",
-    "chunkName": "pages/employee/department-list"
+    "chunkName": "pages/employee/department-list",
+    "_name": "_2ce27736"
   },
   {
     "name": "employee-designation-add",
     "path": "/employee/designation-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\designation-add.vue",
-    "chunkName": "pages/employee/designation-add"
+    "chunkName": "pages/employee/designation-add",
+    "_name": "_a9ba5a12"
   },
   {
     "name": "employee-designation-list",
     "path": "/employee/designation-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\designation-list.vue",
-    "chunkName": "pages/employee/designation-list"
+    "chunkName": "pages/employee/designation-list",
+    "_name": "_55b60bb8"
   },
   {
     "name": "employee-emp-assign-to-user",
     "path": "/employee/emp-assign-to-user",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\emp-assign-to-user.vue",
-    "chunkName": "pages/employee/emp-assign-to-user"
+    "chunkName": "pages/employee/emp-assign-to-user",
+    "_name": "_72d9a8a8"
   },
   {
     "name": "employee-employee-add",
     "path": "/employee/employee-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\employee-add.vue",
-    "chunkName": "pages/employee/employee-add"
+    "chunkName": "pages/employee/employee-add",
+    "_name": "_685279f4"
   },
   {
     "name": "employee-employee-list",
     "path": "/employee/employee-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\employee-list.vue",
-    "chunkName": "pages/employee/employee-list"
+    "chunkName": "pages/employee/employee-list",
+    "_name": "_4b801d89"
   },
   {
     "name": "employee-leave-approval-list",
     "path": "/employee/leave-approval-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\leave-approval-list.vue",
-    "chunkName": "pages/employee/leave-approval-list"
+    "chunkName": "pages/employee/leave-approval-list",
+    "_name": "_f1d8b604"
   },
   {
     "name": "employee-leavel-rquest-add",
     "path": "/employee/leavel-rquest-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\leavel-rquest-add.vue",
-    "chunkName": "pages/employee/leavel-rquest-add"
+    "chunkName": "pages/employee/leavel-rquest-add",
+    "_name": "_e4ff6630"
   },
   {
     "name": "employee-migrant-employee-list",
     "path": "/employee/migrant-employee-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\migrant-employee-list.vue",
-    "chunkName": "pages/employee/migrant-employee-list"
+    "chunkName": "pages/employee/migrant-employee-list",
+    "_name": "_2ade1dfc"
   },
   {
     "name": "holiday-add-holidays",
     "path": "/holiday/add-holidays",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\add-holidays.vue",
-    "chunkName": "pages/holiday/add-holidays"
+    "chunkName": "pages/holiday/add-holidays",
+    "_name": "_08c6138e"
   },
   {
     "name": "holiday-dashboard",
     "path": "/holiday/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\dashboard.vue",
-    "chunkName": "pages/holiday/dashboard"
+    "chunkName": "pages/holiday/dashboard",
+    "_name": "_03413512"
   },
   {
     "name": "holiday-holiday-add",
     "path": "/holiday/holiday-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\holiday-add.vue",
-    "chunkName": "pages/holiday/holiday-add"
+    "chunkName": "pages/holiday/holiday-add",
+    "_name": "_277172ac"
   },
   {
     "name": "holiday-holiday-list",
     "path": "/holiday/holiday-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\holiday-list.vue",
-    "chunkName": "pages/holiday/holiday-list"
+    "chunkName": "pages/holiday/holiday-list",
+    "_name": "_39200e65"
   },
   {
     "name": "holiday-holiday-type-list",
     "path": "/holiday/holiday-type-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\holiday-type-list.vue",
-    "chunkName": "pages/holiday/holiday-type-list"
+    "chunkName": "pages/holiday/holiday-type-list",
+    "_name": "_286996cc"
   },
   {
     "name": "hrm-dashboard",
     "path": "/hrm/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\hrm\\\\dashboard.vue",
-    "chunkName": "pages/hrm/dashboard"
+    "chunkName": "pages/hrm/dashboard",
+    "_name": "_1a755867"
   },
   {
     "name": "leave-add-allocation",
     "path": "/leave/add-allocation",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\add-allocation.vue",
-    "chunkName": "pages/leave/add-allocation"
+    "chunkName": "pages/leave/add-allocation",
+    "_name": "_67152d46"
   },
   {
     "name": "leave-add-leaverole",
     "path": "/leave/add-leaverole",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\add-leaverole.vue",
-    "chunkName": "pages/leave/add-leaverole"
+    "chunkName": "pages/leave/add-leaverole",
+    "_name": "_10b5ed80"
   },
   {
     "name": "leave-add-leavetype",
     "path": "/leave/add-leavetype",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\add-leavetype.vue",
-    "chunkName": "pages/leave/add-leavetype"
+    "chunkName": "pages/leave/add-leavetype",
+    "_name": "_418dd3f8"
   },
   {
     "name": "leave-allocation-list",
     "path": "/leave/allocation-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\allocation-list.vue",
-    "chunkName": "pages/leave/allocation-list"
+    "chunkName": "pages/leave/allocation-list",
+    "_name": "_22c6e26a"
   },
   {
     "name": "leave-dashboard",
     "path": "/leave/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\dashboard.vue",
-    "chunkName": "pages/leave/dashboard"
+    "chunkName": "pages/leave/dashboard",
+    "_name": "_663abc53"
   },
   {
     "name": "leave-leave-balance-list",
     "path": "/leave/leave-balance-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-balance-list.vue",
-    "chunkName": "pages/leave/leave-balance-list"
+    "chunkName": "pages/leave/leave-balance-list",
+    "_name": "_23e6df16"
   },
   {
     "name": "leave-leave-report",
     "path": "/leave/leave-report",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-report.vue",
-    "chunkName": "pages/leave/leave-report"
+    "chunkName": "pages/leave/leave-report",
+    "_name": "_537f17ca"
   },
   {
     "name": "leave-leave-request-dashboard",
     "path": "/leave/leave-request-dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-request-dashboard.vue",
-    "chunkName": "pages/leave/leave-request-dashboard"
+    "chunkName": "pages/leave/leave-request-dashboard",
+    "_name": "_745992bf"
   },
   {
     "name": "leave-leave-request-list",
     "path": "/leave/leave-request-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-request-list.vue",
-    "chunkName": "pages/leave/leave-request-list"
+    "chunkName": "pages/leave/leave-request-list",
+    "_name": "_095dd4c3"
   },
   {
     "name": "leave-leave-role-list",
     "path": "/leave/leave-role-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-role-list.vue",
-    "chunkName": "pages/leave/leave-role-list"
+    "chunkName": "pages/leave/leave-role-list",
+    "_name": "_1b570efe"
   },
   {
     "name": "leave-leave-type-list",
     "path": "/leave/leave-type-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\leave-type-list.vue",
-    "chunkName": "pages/leave/leave-type-list"
+    "chunkName": "pages/leave/leave-type-list",
+    "_name": "_ce3f468c"
   },
   {
     "name": "manufacturer-edit-manufacturer",
     "path": "/manufacturer/edit-manufacturer",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\manufacturer\\\\edit-manufacturer.vue",
-    "chunkName": "pages/manufacturer/edit-manufacturer"
+    "chunkName": "pages/manufacturer/edit-manufacturer",
+    "_name": "_0d955cdd"
   },
   {
     "name": "manufacturer-manufacturers-list",
     "path": "/manufacturer/manufacturers-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\manufacturer\\\\manufacturers-list.vue",
-    "chunkName": "pages/manufacturer/manufacturers-list"
+    "chunkName": "pages/manufacturer/manufacturers-list",
+    "_name": "_aab9d920"
   },
   {
     "name": "manufacturer-new-manufacturer",
     "path": "/manufacturer/new-manufacturer",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\manufacturer\\\\new-manufacturer.vue",
-    "chunkName": "pages/manufacturer/new-manufacturer"
+    "chunkName": "pages/manufacturer/new-manufacturer",
+    "_name": "_1ca7b6c5"
   },
   {
     "name": "mlm-report",
     "path": "/mlm/report",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\mlm\\\\report.vue",
-    "chunkName": "pages/mlm/report"
+    "chunkName": "pages/mlm/report",
+    "_name": "_1263f808"
   },
   {
     "name": "models-edit-models",
     "path": "/models/edit-models",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\models\\\\edit-models.vue",
-    "chunkName": "pages/models/edit-models"
+    "chunkName": "pages/models/edit-models",
+    "_name": "_5d1d5dfd"
   },
   {
     "name": "models-models-list",
     "path": "/models/models-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\models\\\\models-list.vue",
-    "chunkName": "pages/models/models-list"
+    "chunkName": "pages/models/models-list",
+    "_name": "_0786e691"
   },
   {
     "name": "models-new-models",
     "path": "/models/new-models",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\models\\\\new-models.vue",
-    "chunkName": "pages/models/new-models"
+    "chunkName": "pages/models/new-models",
+    "_name": "_533c4e12"
   },
   {
     "name": "orders-details",
     "path": "/orders/details",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\orders\\\\details.vue",
-    "chunkName": "pages/orders/details"
+    "chunkName": "pages/orders/details",
+    "_name": "_2b355997"
   },
   {
     "name": "orders-edit-orderstatus",
     "path": "/orders/edit-orderstatus",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\orders\\\\edit-orderstatus.vue",
-    "chunkName": "pages/orders/edit-orderstatus"
+    "chunkName": "pages/orders/edit-orderstatus",
+    "_name": "_246bdf10"
   },
   {
     "name": "orders-new-orderstatus",
     "path": "/orders/new-orderstatus",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\orders\\\\new-orderstatus.vue",
-    "chunkName": "pages/orders/new-orderstatus"
+    "chunkName": "pages/orders/new-orderstatus",
+    "_name": "_389679e8"
   },
   {
     "name": "orders-order-list",
     "path": "/orders/order-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\orders\\\\order-list.vue",
-    "chunkName": "pages/orders/order-list"
+    "chunkName": "pages/orders/order-list",
+    "_name": "_4d6d5cf8"
   },
   {
     "name": "orders-status-list",
     "path": "/orders/status-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\orders\\\\status-list.vue",
-    "chunkName": "pages/orders/status-list"
+    "chunkName": "pages/orders/status-list",
+    "_name": "_69dce6ee"
   },
   {
     "name": "project-new-project",
     "path": "/project/new-project",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\project\\\\new-project.vue",
-    "chunkName": "pages/project/new-project"
+    "chunkName": "pages/project/new-project",
+    "_name": "_a3fa676e"
   },
   {
     "name": "project-project-list",
     "path": "/project/project-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\project\\\\project-list.vue",
-    "chunkName": "pages/project/project-list"
+    "chunkName": "pages/project/project-list",
+    "_name": "_b4d86d76"
   },
   {
     "name": "role-newrole",
     "path": "/role/newrole",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\role\\\\newrole.vue",
-    "chunkName": "pages/role/newrole"
+    "chunkName": "pages/role/newrole",
+    "_name": "_605405fa"
   },
   {
     "name": "role-role_list",
     "path": "/role/role_list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\role\\\\role_list.vue",
-    "chunkName": "pages/role/role_list"
+    "chunkName": "pages/role/role_list",
+    "_name": "_4ca669aa"
   },
   {
     "name": "seller-allseller",
     "path": "/seller/allseller",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\seller\\\\allseller.vue",
-    "chunkName": "pages/seller/allseller"
+    "chunkName": "pages/seller/allseller",
+    "_name": "_000b059b"
   },
   {
     "name": "setting-add-salary",
     "path": "/setting/add-salary",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\add-salary.vue",
-    "chunkName": "pages/setting/add-salary"
+    "chunkName": "pages/setting/add-salary",
+    "_name": "_e2e0a640"
   },
   {
     "name": "setting-ads-management",
     "path": "/setting/ads-management",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\ads-management.vue",
-    "chunkName": "pages/setting/ads-management"
+    "chunkName": "pages/setting/ads-management",
+    "_name": "_1c8287ea"
   },
   {
     "name": "setting-annual-pay-add",
     "path": "/setting/annual-pay-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\annual-pay-add.vue",
-    "chunkName": "pages/setting/annual-pay-add"
+    "chunkName": "pages/setting/annual-pay-add",
+    "_name": "_e559f910"
   },
   {
     "name": "setting-annual-pay-list",
     "path": "/setting/annual-pay-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\annual-pay-list.vue",
-    "chunkName": "pages/setting/annual-pay-list"
+    "chunkName": "pages/setting/annual-pay-list",
+    "_name": "_8ce82952"
   },
   {
     "name": "setting-bank-master-add",
     "path": "/setting/bank-master-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\bank-master-add.vue",
-    "chunkName": "pages/setting/bank-master-add"
+    "chunkName": "pages/setting/bank-master-add",
+    "_name": "_fa9c2f26"
   },
   {
     "name": "setting-bank-master-list",
     "path": "/setting/bank-master-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\bank-master-list.vue",
-    "chunkName": "pages/setting/bank-master-list"
+    "chunkName": "pages/setting/bank-master-list",
+    "_name": "_7009a502"
   },
   {
     "name": "setting-bank-short-code-add",
     "path": "/setting/bank-short-code-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\bank-short-code-add.vue",
-    "chunkName": "pages/setting/bank-short-code-add"
+    "chunkName": "pages/setting/bank-short-code-add",
+    "_name": "_da8159ae"
   },
   {
     "name": "setting-bank-short-code-list",
     "path": "/setting/bank-short-code-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\bank-short-code-list.vue",
-    "chunkName": "pages/setting/bank-short-code-list"
+    "chunkName": "pages/setting/bank-short-code-list",
+    "_name": "_61a991c6"
   },
   {
     "name": "setting-dashboard",
     "path": "/setting/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\dashboard.vue",
-    "chunkName": "pages/setting/dashboard"
+    "chunkName": "pages/setting/dashboard",
+    "_name": "_739fa01a"
   },
   {
     "name": "setting-employee-type-add",
     "path": "/setting/employee-type-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\employee-type-add.vue",
-    "chunkName": "pages/setting/employee-type-add"
+    "chunkName": "pages/setting/employee-type-add",
+    "_name": "_75a132d3"
   },
   {
     "name": "setting-employee-type-list",
     "path": "/setting/employee-type-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\employee-type-list.vue",
-    "chunkName": "pages/setting/employee-type-list"
+    "chunkName": "pages/setting/employee-type-list",
+    "_name": "_49f8b148"
   },
   {
     "name": "setting-packages-list",
     "path": "/setting/packages-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\packages-list.vue",
-    "chunkName": "pages/setting/packages-list"
+    "chunkName": "pages/setting/packages-list",
+    "_name": "_38f0d9f8"
   },
   {
     "name": "setting-pay-group-add",
     "path": "/setting/pay-group-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\pay-group-add.vue",
-    "chunkName": "pages/setting/pay-group-add"
+    "chunkName": "pages/setting/pay-group-add",
+    "_name": "_09b4fef4"
   },
   {
     "name": "setting-pay-group-list",
     "path": "/setting/pay-group-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\pay-group-list.vue",
-    "chunkName": "pages/setting/pay-group-list"
+    "chunkName": "pages/setting/pay-group-list",
+    "_name": "_6d2d414a"
   },
   {
     "name": "setting-payment-type-add",
     "path": "/setting/payment-type-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\payment-type-add.vue",
-    "chunkName": "pages/setting/payment-type-add"
+    "chunkName": "pages/setting/payment-type-add",
+    "_name": "_420f42df"
   },
   {
     "name": "setting-payment-type-list",
     "path": "/setting/payment-type-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\payment-type-list.vue",
-    "chunkName": "pages/setting/payment-type-list"
+    "chunkName": "pages/setting/payment-type-list",
+    "_name": "_c750ce60"
   },
   {
     "name": "setting-payroll-payitem-add",
     "path": "/setting/payroll-payitem-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\payroll-payitem-add.vue",
-    "chunkName": "pages/setting/payroll-payitem-add"
+    "chunkName": "pages/setting/payroll-payitem-add",
+    "_name": "_4738d16d"
   },
   {
     "name": "setting-payroll-payitem-list",
     "path": "/setting/payroll-payitem-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\payroll-payitem-list.vue",
-    "chunkName": "pages/setting/payroll-payitem-list"
+    "chunkName": "pages/setting/payroll-payitem-list",
+    "_name": "_3c5fdc02"
   },
   {
     "name": "setting-salary-list",
     "path": "/setting/salary-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\salary-list.vue",
-    "chunkName": "pages/setting/salary-list"
+    "chunkName": "pages/setting/salary-list",
+    "_name": "_5c9fea47"
   },
   {
     "name": "setting-tax-master-add",
     "path": "/setting/tax-master-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\tax-master-add.vue",
-    "chunkName": "pages/setting/tax-master-add"
+    "chunkName": "pages/setting/tax-master-add",
+    "_name": "_1db43882"
   },
   {
     "name": "setting-tax-master-list",
     "path": "/setting/tax-master-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\tax-master-list.vue",
-    "chunkName": "pages/setting/tax-master-list"
+    "chunkName": "pages/setting/tax-master-list",
+    "_name": "_3551578d"
   },
   {
     "name": "setting-wedges-pay-add",
     "path": "/setting/wedges-pay-add",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\wedges-pay-add.vue",
-    "chunkName": "pages/setting/wedges-pay-add"
+    "chunkName": "pages/setting/wedges-pay-add",
+    "_name": "_21850450"
   },
   {
     "name": "setting-wedges-pay-list",
     "path": "/setting/wedges-pay-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\setting\\\\wedges-pay-list.vue",
-    "chunkName": "pages/setting/wedges-pay-list"
+    "chunkName": "pages/setting/wedges-pay-list",
+    "_name": "_d61e8612"
   },
   {
     "name": "task-add-task",
     "path": "/task/add-task",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\task\\\\add-task.vue",
-    "chunkName": "pages/task/add-task"
+    "chunkName": "pages/task/add-task",
+    "_name": "_480edd68"
   },
   {
     "name": "task-dashboard",
     "path": "/task/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\task\\\\dashboard.vue",
-    "chunkName": "pages/task/dashboard"
+    "chunkName": "pages/task/dashboard",
+    "_name": "_140820ee"
   },
   {
     "name": "task-task-list",
     "path": "/task/task-list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\task\\\\task-list.vue",
-    "chunkName": "pages/task/task-list"
+    "chunkName": "pages/task/task-list",
+    "_name": "_7b0253db"
   },
   {
     "name": "user-dashboard",
     "path": "/user/dashboard",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\user\\\\dashboard.vue",
-    "chunkName": "pages/user/dashboard"
+    "chunkName": "pages/user/dashboard",
+    "_name": "_579b2483"
   },
   {
     "name": "user-newUser",
     "path": "/user/newUser",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\user\\\\newUser.vue",
-    "chunkName": "pages/user/newUser"
+    "chunkName": "pages/user/newUser",
+    "_name": "_408eec8c"
   },
   {
     "name": "user-user_list",
     "path": "/user/user_list",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\user\\\\user_list.vue",
-    "chunkName": "pages/user/user_list"
+    "chunkName": "pages/user/user_list",
+    "_name": "_56ffa0fe"
   },
   {
     "name": "index",
     "path": "/",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\index.vue",
-    "chunkName": "pages/index"
+    "chunkName": "pages/index",
+    "_name": "_6ae684ec"
   },
   {
     "name": "leave-edit-leaveallocation-id",
     "path": "/leave/edit/leaveallocation/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\edit\\\\leaveallocation\\\\_id.vue",
-    "chunkName": "pages/leave/edit/leaveallocation/_id"
+    "chunkName": "pages/leave/edit/leaveallocation/_id",
+    "_name": "_3459c19e"
   },
   {
     "name": "leave-edit-leaverole-id",
     "path": "/leave/edit/leaverole/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\edit\\\\leaverole\\\\_id.vue",
-    "chunkName": "pages/leave/edit/leaverole/_id"
+    "chunkName": "pages/leave/edit/leaverole/_id",
+    "_name": "_6a282bc8"
   },
   {
     "name": "leave-edit-leavetype-id",
     "path": "/leave/edit/leavetype/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\leave\\\\edit\\\\leavetype\\\\_id.vue",
-    "chunkName": "pages/leave/edit/leavetype/_id"
+    "chunkName": "pages/leave/edit/leavetype/_id",
+    "_name": "_309d0cf8"
   },
   {
     "name": "coupons-edit-id",
     "path": "/coupons/edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\coupons\\\\edit\\\\_id.vue",
-    "chunkName": "pages/coupons/edit/_id"
+    "chunkName": "pages/coupons/edit/_id",
+    "_name": "_6818d599"
   },
   {
     "name": "customer-edit-id",
     "path": "/customer/edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\customer\\\\edit\\\\_id.vue",
-    "chunkName": "pages/customer/edit/_id"
+    "chunkName": "pages/customer/edit/_id",
+    "_name": "_d19a0628"
   },
   {
     "name": "employee-cir-edit-id",
     "path": "/employee/cir-edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\cir-edit\\\\_id.vue",
-    "chunkName": "pages/employee/cir-edit/_id"
+    "chunkName": "pages/employee/cir-edit/_id",
+    "_name": "_ea77e24a"
   },
   {
     "name": "employee-emp-edit-id",
     "path": "/employee/emp-edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\emp-edit\\\\_id.vue",
-    "chunkName": "pages/employee/emp-edit/_id"
+    "chunkName": "pages/employee/emp-edit/_id",
+    "_name": "_02af2452"
   },
   {
     "name": "employee-leaveRequest-id",
     "path": "/employee/leaveRequest/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\employee\\\\leaveRequest\\\\_id.vue",
-    "chunkName": "pages/employee/leaveRequest/_id"
+    "chunkName": "pages/employee/leaveRequest/_id",
+    "_name": "_e59263e4"
   },
   {
     "name": "holiday-editholidaylist-id",
     "path": "/holiday/editholidaylist/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\holiday\\\\editholidaylist\\\\_id.vue",
-    "chunkName": "pages/holiday/editholidaylist/_id"
+    "chunkName": "pages/holiday/editholidaylist/_id",
+    "_name": "_7aaffb00"
   },
   {
     "name": "seller-edit-id",
     "path": "/seller/edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\seller\\\\edit\\\\_id.vue",
-    "chunkName": "pages/seller/edit/_id"
+    "chunkName": "pages/seller/edit/_id",
+    "_name": "_5407afab"
   },
   {
     "name": "task-edit-id",
     "path": "/task/edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\task\\\\edit\\\\_id.vue",
-    "chunkName": "pages/task/edit/_id"
+    "chunkName": "pages/task/edit/_id",
+    "_name": "_14c59536"
   },
   {
     "name": "user-changesPass-id",
     "path": "/user/changesPass/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\user\\\\changesPass\\\\_id.vue",
-    "chunkName": "pages/user/changesPass/_id"
+    "chunkName": "pages/user/changesPass/_id",
+    "_name": "_10152ba7"
   },
   {
     "name": "user-edit-id",
     "path": "/user/edit/:id?",
     "component": "D:\\\\xampp\\\\htdocs\\\\apps\\\\service_ecommarce\\\\admin\\\\pages\\\\user\\\\edit\\\\_id.vue",
-    "chunkName": "pages/user/edit/_id"
+    "chunkName": "pages/user/edit/_id",
+    "_name": "_573c6a5f"
   }
 ]

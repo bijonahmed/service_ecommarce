@@ -17,8 +17,8 @@
                 <li :class="{ active: $route.path === '/user/user-whichlist' }">
                     <Nuxt-link to="/user/user-whichlist" exact-active-class="active">Wishlist </Nuxt-link>
                 </li>
-                <li  :class="{ active: $route.path === '/user/user-mlm' }">
-                    <Nuxt-link to="/user/user-mlm" exact-active-class="active">MLM </Nuxt-link>
+                <li  :class="{ active: $route.path === '/user/user-affiliate' }">
+                    <Nuxt-link to="/user/user-affiliate" exact-active-class="active">Affiliate Program </Nuxt-link>
                 </li>
                 <!-- <li>
                     <a type="button" class="post_mdal_open">Post </a>
@@ -37,9 +37,9 @@
                 <li :class="{ active: $route.path === '/user/user-withdrawal' }">
                     <nuxt-link to="/user/user-withdrawal" exact-active-class="active">Withdrawal</Nuxt-link>
                 </li>
-                <li :class="{ active: $route.path === '/user/account-statement' }">
+                <!-- <li :class="{ active: $route.path === '/user/account-statement' }">
                     <nuxt-link to="/user/account-statement" exact-active-class="active">Account Statement</Nuxt-link>
-                </li>
+                </li> -->
                 <li :class="{ active: $route.path === '/user/user-security' }">
                     <nuxt-link to="/user/user-security" exact-active-class="active">Security </Nuxt-link>
                 </li>
