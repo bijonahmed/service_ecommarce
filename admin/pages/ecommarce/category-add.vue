@@ -124,6 +124,13 @@
                                                             </div>
 
                                                             <div class="row mb-3">
+                                                                <label for="input-meta-description-1" class="col-sm-2 col-form-label">Fix Commission</label>
+                                                                <div class="col-sm-10">
+                                                                    <input type="text" name="fixcommission" @input="handleInput" pattern="[0-9]*" onkeypress="return isNumberKey(event)" id="fixcommission" class="form-control" v-model="insertdata.fixcommission" placeholder="0" />
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="row mb-3">
                                                                 <label for="input-meta-description-1" class="col-sm-2 col-form-label">Icon (100x100)</label>
                                                                 <div class="col-sm-10">
                                                                     <input class="form-control form-control-sm" id="file" ref="file" @change="onFileSelected" type="file">
@@ -220,6 +227,7 @@ export default {
                 name: '',
                 description: '',
                 commission: '',
+                fixcommission:'',
                 meta_title: '',
                 meta_description: '',
                 meta_keyword: '',
@@ -281,6 +289,7 @@ export default {
             formData.append('meta_title', this.insertdata.meta_title);
             formData.append('meta_description', this.insertdata.meta_description);
             formData.append('meta_keyword', this.insertdata.meta_keyword);
+            formData.append('fixcommission', this.insertdata.fixcommission);
             formData.append('commission', this.insertdata.commission);
             formData.append('parent_id', this.insertdata.parent_id);
             formData.append('status', this.insertdata.status);

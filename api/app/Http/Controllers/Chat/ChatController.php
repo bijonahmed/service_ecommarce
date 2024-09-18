@@ -34,12 +34,24 @@ class ChatController extends Controller
             'message' => 'required',
             'community_slug' => 'required',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('files')) {
+            $file = $request->file('files'); // Use the 'file' method for individual files
+            $fileName = "/backend/files/" . time() . "." . $file->getClientOriginalExtension();
+            // Move the uploaded file to the specified directory
+            $file->move(public_path("backend/files"), $fileName);
+            $imagePath = $fileName;
+        }
+
+
         $rdata['user_id']        = $this->userid;
         $rdata['community_slug'] = $request->community_slug;
         $rdata['message']        = $request->message;
         $rdata['to_id']          = $request->userId;
         $rdata['sender_id']      = $this->userid;
         $rdata['username']       = $this->email;
+        $rdata['files']          = $imagePath;
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);
@@ -47,10 +59,21 @@ class ChatController extends Controller
 
     public function customerSendMessages(Request $request)
     {
+       // dd($request->all());
         $data = $request->validate([
             'message' => 'required',
 
         ]);
+
+
+        $imagePath = null;
+        if ($request->hasFile('files')) {
+            $file = $request->file('files'); // Use the 'file' method for individual files
+            $fileName = "/backend/files/" . time() . "." . $file->getClientOriginalExtension();
+            // Move the uploaded file to the specified directory
+            $file->move(public_path("backend/files"), $fileName);
+            $imagePath = $fileName;
+        }
         //event(new Message($this->email, $data['message'], $data['community_slug']));
         //event(new Message('b@gmail.com', $data['message'])); // Example message number
         //event(new Message($request->input('username'), $request->input('message')));
@@ -61,6 +84,8 @@ class ChatController extends Controller
         $rdata['to_id']          = $request->userId;
         $rdata['sender_id']      = $this->userid;
         $rdata['username']       = $this->email; ///$request->username;
+        $rdata['files']          = $imagePath;
+      //  dd($rdata);
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);
@@ -113,6 +138,7 @@ class ChatController extends Controller
                 'name'              => !empty($check) ? $check->name : "",
                 'community_slug'    => $v->community_slug,
                 'message'           => $v->message,
+                'files'             => !empty($v->files) ? url($v->files) : "",
                 'created_at'        => date("Y-m-d H:i:s", strtotime($v->created_at)),
                 'updated_at'        => $v->updated_at,
             ];

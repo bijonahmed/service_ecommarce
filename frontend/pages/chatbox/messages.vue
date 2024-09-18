@@ -50,7 +50,8 @@
                 </center>
                 <!-- Chat Messages Section -->
                 <section class="ok chat-messages scrollarea" ref="chatContainer">
-                  <div v-for="(message, index) in messages" :key="message.id" :class="{
+
+                  <div v-for="message in messages" :key="message.id" :class="{
                     'message-container': true,
                     sent: message.username === currentUser.username,
                     received: message.username !== currentUser.username,
@@ -61,13 +62,26 @@
                         {{ message.message }}
                         <small class="message-time">{{ message.created_at }}</small>
                       </div>
+
+                      <!-- Conditionally render the file if it exists -->
+                      <div v-if="message.files" class="message-file">
+                        <a :href="message.files" target="_blank"><i class="fa fa-file" style="font-size:24px"></i></a>
+                      </div>
                     </div>
                   </div>
                 </section>
 
                 <!-- Chat Footer with Input -->
-                <form @submit.prevent="submit" class="chat-footer-menu">
-                  <input class="message-input" placeholder="Write a message" v-model="message" />
+                <form @submit.prevent="submit" class="chat-footer-menu" enctype="multipart/form-data">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <input class="message-input" placeholder="Write a message" v-model="message" />
+                    </div>
+                    <div class="col-md-4">
+                      <input type="file" ref="files" @change="onFileChange" class="form-control mb-2">
+                    </div>
+                  </div>
+                  <button class="btn w-100 btn btn-primary">Send</button>
                 </form>
               </div>
             </div>
@@ -127,7 +141,7 @@ export default {
     title: "ChatBox",
   },
   mounted() {
-     
+
     this.getCurrentUser();
     this.scrollToBottom(); // Scroll to bottom when the component is mounted
     this.getSellerList();
@@ -144,7 +158,7 @@ export default {
     clearInterval(this.pollingInterval);
   },
   methods: {
-   
+
     selectUser(user) {
       this.message = "";
       this.selectedUser = user;
@@ -209,9 +223,20 @@ export default {
         this.fetchMessages();
       } catch (error) {
         console.error("Error fetching messages:", error);
-      } finally{
+      } finally {
         this.loading = false;
       }
+    },
+
+    onFileChange(event) {
+      // Log the event and $refs to check their values
+      console.log(event); // Check the event object
+      console.log(this.$refs.files); // Ensure the reference is correct
+
+      const file = this.$refs.files.files[0];
+
+      // Check if the file is captured
+      console.log(file); // Should log the selected file
     },
 
     async submit() {
@@ -221,13 +246,29 @@ export default {
       }
 
       try {
-        const response = await this.$axios.post("/customerSendMessages", {
-          username: this.username,
-          message: this.message,
-          userId: this.buyerId,
-          community_slug: this.name,
+
+        const file = this.$refs.files.files[0];
+        // Create a FormData object
+        const formData = new FormData();
+        formData.append('files', file);
+        formData.append('username', this.username);
+        formData.append('message', this.message);
+        formData.append('userId', this.buyerId);
+        formData.append('community_slug', this.name);
+
+        // Make the axios POST request with formData
+        this.$axios.post('/customerSendMessages', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }).then(response => {
+          this.$refs.files.value = '';
+          // Handle the response here
+          console.log(response.data);
+        }).catch(error => {
+          // Handle errors here
+          console.error(error);
         });
-        console.log("Message sent:", response.data);
 
         this.message = "";
         this.afterSubmitResponse();

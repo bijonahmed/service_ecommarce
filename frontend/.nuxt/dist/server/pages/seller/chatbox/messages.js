@@ -14,7 +14,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(9).default
 module.exports.__inject__ = function (context) {
-  add("4ce185af", content, true, context)
+  add("dc0a6750", content, true, context)
 };
 
 /***/ }),
@@ -24,9 +24,9 @@ module.exports.__inject__ = function (context) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_83e376e8_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_83e376e8_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_83e376e8_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_83e376e8_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_83e376e8_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_45422e66_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(133);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_45422e66_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_45422e66_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_45422e66_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_messages_vue_vue_type_style_index_0_id_45422e66_prod_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -38,7 +38,7 @@ __webpack_require__.r(__webpack_exports__);
 var ___CSS_LOADER_API_IMPORT___ = __webpack_require__(8);
 var ___CSS_LOADER_EXPORT___ = ___CSS_LOADER_API_IMPORT___(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.i, ".chat-box[data-v-83e376e8]{border:1px solid #ccc;height:400px}.ok.chat-messages.scrollarea[data-v-83e376e8]{flex:1;overflow-y:auto}.message-container[data-v-83e376e8]{margin-bottom:10px}.sent .message[data-v-83e376e8]{background-color:#e0ffe0}.received .message[data-v-83e376e8]{background-color:#e0e0ff}.message-time[data-v-83e376e8]{display:block;font-size:10px}.chat-footer-menu[data-v-83e376e8]{border-top:1px solid #ccc;padding:10px}.message-input[data-v-83e376e8]{border:1px solid #ccc}.container[data-v-83e376e8]{margin:50px auto;max-width:600px;padding:0 20px}.message-input[data-v-83e376e8]{flex:1}.chat-box[data-v-83e376e8]{background:#f9f9f9;border-radius:10px;border-radius:0;box-shadow:0 4px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;height:85vh;overflow:hidden}.chat-header[data-v-83e376e8]{background:linear-gradient(90deg,#122664,rgba(123,97,255,.141));padding:10px 15px}.username-input[data-v-83e376e8]{border:none;border-radius:5px;color:#333;font-size:16px;outline:none;padding:10px;width:100%}.scrollarea[data-v-83e376e8]{background:#fff;display:flex;flex-direction:column;flex-grow:1;overflow-y:auto;padding:20px}.message-container[data-v-83e376e8]{display:flex;margin:5px 0}.message-container.sent[data-v-83e376e8]{justify-content:flex-end}.message-container.received[data-v-83e376e8]{justify-content:flex-start}.message[data-v-83e376e8]{background:#333;border-radius:15px;color:#000;max-width:80%;padding:10px 15px;width:50%}.sent .message[data-v-83e376e8]{background:#fff;border-bottom-right-radius:0;box-shadow:0 0 10px rgba(0,0,0,.302);padding:3px 15px}.sent .message-text[data-v-83e376e8]{align-items:end;color:#000;display:flex;flex-direction:column;font-size:12px}.received .message[data-v-83e376e8]{background:#000;border-bottom-left-radius:0;box-shadow:0 0 10px rgba(0,0,0,.302);padding:5px 15px}.received .message-username[data-v-83e376e8]{margin-bottom:2px}.message-username[data-v-83e376e8]{color:green}.message-username[data-v-83e376e8],.received .message-username[data-v-83e376e8]{font-size:12px;font-weight:700;margin-bottom:5px}.received .message-username[data-v-83e376e8]{color:#ffc458}.message-text[data-v-83e376e8]{color:#474646;display:flex;flex-direction:column}.received .message-text[data-v-83e376e8]{color:#fff}.message-text small[data-v-83e376e8]{align-self:flex-end;color:#5c5a5a;font-size:10px}.message-input[data-v-83e376e8]{border:1px solid #ddd;border-radius:5px;font-size:16px;outline:none;padding:10px;transition:border-color .3s;width:100%}.message-input[data-v-83e376e8]:focus{border-color:#4a90e2}.chat-messages[data-v-83e376e8]{flex:1;overflow-y:auto;padding:10px}.message_box main[data-v-83e376e8]{margin-top:5px}.chat-form[data-v-83e376e8]{background:#f1f1f1;display:flex;gap:10px;padding:10px;position:fixed;width:100%!important}.message-input button[data-v-83e376e8]{background-color:#007bff;border:none;color:#fff;cursor:pointer;padding:5px 10px}.selected-item[data-v-83e376e8]{background-color:#f0f8ff;border-left:5px solid #007bff;font-weight:700}", ""]);
+___CSS_LOADER_EXPORT___.push([module.i, ".chat-box[data-v-45422e66]{border:1px solid #ccc;height:400px}.ok.chat-messages.scrollarea[data-v-45422e66]{flex:1;overflow-y:auto}.message-container[data-v-45422e66]{margin-bottom:10px}.sent .message[data-v-45422e66]{background-color:#e0ffe0}.received .message[data-v-45422e66]{background-color:#e0e0ff}.message-time[data-v-45422e66]{display:block;font-size:10px}.chat-footer-menu[data-v-45422e66]{border-top:1px solid #ccc;padding:10px}.message-input[data-v-45422e66]{border:1px solid #ccc}.container[data-v-45422e66]{margin:50px auto;max-width:600px;padding:0 20px}.message-input[data-v-45422e66]{flex:1}.chat-box[data-v-45422e66]{background:#f9f9f9;border-radius:10px;border-radius:0;box-shadow:0 4px 8px rgba(0,0,0,.1);display:flex;flex-direction:column;height:85vh;overflow:hidden}.chat-header[data-v-45422e66]{background:linear-gradient(90deg,#122664,rgba(123,97,255,.141));padding:10px 15px}.username-input[data-v-45422e66]{border:none;border-radius:5px;color:#333;font-size:16px;outline:none;padding:10px;width:100%}.scrollarea[data-v-45422e66]{background:#fff;display:flex;flex-direction:column;flex-grow:1;overflow-y:auto;padding:20px}.message-container[data-v-45422e66]{display:flex;margin:5px 0}.message-container.sent[data-v-45422e66]{justify-content:flex-end}.message-container.received[data-v-45422e66]{justify-content:flex-start}.message[data-v-45422e66]{background:#333;border-radius:15px;color:#000;max-width:80%;padding:10px 15px;width:50%}.sent .message[data-v-45422e66]{background:#fff;border-bottom-right-radius:0;box-shadow:0 0 10px rgba(0,0,0,.302);padding:3px 15px}.sent .message-text[data-v-45422e66]{align-items:end;color:#000;display:flex;flex-direction:column;font-size:12px}.received .message[data-v-45422e66]{background:#000;border-bottom-left-radius:0;box-shadow:0 0 10px rgba(0,0,0,.302);padding:5px 15px}.received .message-username[data-v-45422e66]{margin-bottom:2px}.message-username[data-v-45422e66]{color:green}.message-username[data-v-45422e66],.received .message-username[data-v-45422e66]{font-size:12px;font-weight:700;margin-bottom:5px}.received .message-username[data-v-45422e66]{color:#ffc458}.message-text[data-v-45422e66]{color:#474646;display:flex;flex-direction:column}.received .message-text[data-v-45422e66]{color:#fff}.message-text small[data-v-45422e66]{align-self:flex-end;color:#5c5a5a;font-size:10px}.message-input[data-v-45422e66]{border:1px solid #ddd;border-radius:5px;font-size:16px;outline:none;padding:10px;transition:border-color .3s;width:100%}.message-input[data-v-45422e66]:focus{border-color:#4a90e2}.chat-messages[data-v-45422e66]{flex:1;overflow-y:auto;padding:10px}.message_box main[data-v-45422e66]{margin-top:5px}.chat-form[data-v-45422e66]{background:#f1f1f1;display:flex;gap:10px;padding:10px;position:fixed;width:100%!important}.message-input button[data-v-45422e66]{background-color:#007bff;border:none;color:#fff;cursor:pointer;padding:5px 10px}.selected-item[data-v-45422e66]{background-color:#f0f8ff;border-left:5px solid #007bff;font-weight:700}", ""]);
 // Exports
 ___CSS_LOADER_EXPORT___.locals = {};
 module.exports = ___CSS_LOADER_EXPORT___;
@@ -53,17 +53,17 @@ module.exports = ___CSS_LOADER_EXPORT___;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/seller/chatbox/messages.vue?vue&type=template&id=83e376e8&scoped=true&
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/seller/chatbox/messages.vue?vue&type=template&id=45422e66&scoped=true&
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
-  return _c('div', [_vm._ssrNode("<title data-v-83e376e8>Chat Box</title> "), _c('LogoAndPayment'), _vm._ssrNode(" "), _c('NavbarSecond'), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"wrapper-inline message_box\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"container-fluid\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"row\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"col-md-2 mt-3\" data-v-83e376e8><h3 data-v-83e376e8>Messages</h3> <ul class=\"list-group\" data-v-83e376e8>" + _vm._ssrList(_vm.userList, function (user, index) {
+  return _c('div', [_vm._ssrNode("<title data-v-45422e66>Chat Box</title> "), _c('LogoAndPayment'), _vm._ssrNode(" "), _c('NavbarSecond'), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"wrapper-inline message_box\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"container-fluid\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"row\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"col-md-2 mt-3\" data-v-45422e66><h3 data-v-45422e66>Messages</h3> <ul class=\"list-group\" data-v-45422e66>" + _vm._ssrList(_vm.userList, function (user, index) {
     return "<li" + _vm._ssrClass("list-group-item", {
       'selected-item': _vm.selectedUser === user
-    }) + " data-v-83e376e8><a href=\"#\" style=\"color:black;\" data-v-83e376e8>" + _vm._ssrEscape("\n                " + _vm._s(user.name) + " [ " + _vm._s(user.email) + "]\n              ") + "</a></li>";
-  }) + "</ul></div> "), _vm._ssrNode("<div class=\"col-md-8 mt-3\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"conta\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"chat-box\" data-v-83e376e8>", "</div>", [_vm._ssrNode("<div class=\"chat-header\" data-v-83e376e8>", "</div>", [_c('center', [_c('u', {
+    }) + " data-v-45422e66><a href=\"#\" style=\"color:black;\" data-v-45422e66>" + _vm._ssrEscape("\n                " + _vm._s(user.name) + " [ " + _vm._s(user.email) + "]\n              ") + "</a></li>";
+  }) + "</ul></div> "), _vm._ssrNode("<div class=\"col-md-8 mt-3\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"conta\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"chat-box\" data-v-45422e66>", "</div>", [_vm._ssrNode("<div class=\"chat-header\" data-v-45422e66>", "</div>", [_c('center', [_c('u', {
     staticClass: "text-white"
-  }, [_vm._v("Seller Chatbox")]), _vm._v(" "), _vm.selectedEmail ? _c('span', [_vm._v(_vm._s(_vm.selectedEmail))]) : _vm._e()]), _vm._ssrNode(" <span class=\"d-none\" data-v-83e376e8><input type=\"text\" placeholder=\"Enter your username\" readonly=\"readonly\"" + _vm._ssrAttr("value", _vm.username) + " class=\"username-input\" data-v-83e376e8></span>")], 2), _vm._ssrNode(" "), _c('center', [_vm.loading ? _c('div', {
+  }, [_vm._v("Seller Chatbox")]), _vm._v(" "), _vm.selectedEmail ? _c('span', [_vm._v(_vm._s(_vm.selectedEmail))]) : _vm._e()]), _vm._ssrNode(" <span class=\"d-none\" data-v-45422e66><input type=\"text\" placeholder=\"Enter your username\" readonly=\"readonly\"" + _vm._ssrAttr("value", _vm.username) + " class=\"username-input\" data-v-45422e66></span>")], 2), _vm._ssrNode(" "), _c('center', [_vm.loading ? _c('div', {
     staticClass: "loading-indicator"
   }, [_c('div', {
     staticClass: "loader-container"
@@ -74,13 +74,13 @@ var render = function render() {
       "src": "/loader/loader.gif",
       "alt": "Loader"
     }
-  })], 1)]) : _vm._e()]), _vm._ssrNode(" <section class=\"ok chat-messages scrollarea\" data-v-83e376e8>" + _vm._ssrList(_vm.messages, function (message, index) {
+  })], 1)]) : _vm._e()]), _vm._ssrNode(" <section class=\"ok chat-messages scrollarea\" data-v-45422e66>" + _vm._ssrList(_vm.messages, function (message) {
     return "<div" + _vm._ssrClass(null, {
       'message-container': true,
       sent: message.username === _vm.currentUser.username,
       received: message.username !== _vm.currentUser.username
-    }) + " data-v-83e376e8><div class=\"message\" data-v-83e376e8><div class=\"message-username\" data-v-83e376e8>" + _vm._ssrEscape(_vm._s(message.name)) + "</div> <div class=\"message-text\" data-v-83e376e8>" + _vm._ssrEscape("\n                      " + _vm._s(message.message) + "\n                      ") + "<small class=\"message-time\" data-v-83e376e8>" + _vm._ssrEscape(_vm._s(message.created_at)) + "</small></div></div></div>";
-  }) + "</section> <form class=\"chat-footer-menu\" data-v-83e376e8><input placeholder=\"Write a message\"" + _vm._ssrAttr("value", _vm.message) + " class=\"message-input\" data-v-83e376e8></form>")], 2)])]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"col-md-2 mt-3\" data-v-83e376e8>", "</div>", [_c('center', [_c('b', [_c('u', [_vm._v("Profile")])]), _c('br')]), _vm._ssrNode(" "), _vm.buyerEmail ? _vm._ssrNode("<span data-v-83e376e8>", "</span>", [_c('center', [_c('img', {
+    }) + " data-v-45422e66><div class=\"message\" data-v-45422e66><div class=\"message-username\" data-v-45422e66>" + _vm._ssrEscape(_vm._s(message.name)) + "</div> <div class=\"message-text\" data-v-45422e66>" + _vm._ssrEscape("\n                      " + _vm._s(message.message) + "\n                      ") + "<small class=\"message-time\" data-v-45422e66>" + _vm._ssrEscape(_vm._s(message.created_at)) + "</small></div> " + (message.files ? "<div class=\"message-file\" data-v-45422e66><a" + _vm._ssrAttr("href", message.files) + " target=\"_blank\" data-v-45422e66><i class=\"fa fa-file\" style=\"font-size:24px\" data-v-45422e66></i></a></div>" : "<!---->") + "</div></div>";
+  }) + "</section> <form enctype=\"multipart/form-data\" class=\"chat-footer-menu\" data-v-45422e66><div class=\"row\" data-v-45422e66><div class=\"col-md-8\" data-v-45422e66><input placeholder=\"Write a message\"" + _vm._ssrAttr("value", _vm.message) + " class=\"message-input\" data-v-45422e66></div> <div class=\"col-md-4\" data-v-45422e66><input type=\"file\" class=\"form-control mb-2\" data-v-45422e66></div></div> <button class=\"btn w-100 btn btn-primary\" data-v-45422e66>Send</button></form>")], 2)])]), _vm._ssrNode(" "), _vm._ssrNode("<div class=\"col-md-2 mt-3\" data-v-45422e66>", "</div>", [_c('center', [_c('b', [_c('u', [_vm._v("Profile")])]), _c('br')]), _vm._ssrNode(" "), _vm.buyerEmail ? _vm._ssrNode("<span data-v-45422e66>", "</span>", [_c('center', [_c('img', {
     staticClass: "img-thumbnail mt-2",
     staticStyle: {
       "height": "60px",
@@ -89,11 +89,11 @@ var render = function render() {
     attrs: {
       "src": "/user-100.png"
     }
-  })]), _vm._ssrNode(_vm._ssrEscape("\n            Name : " + _vm._s(_vm.buyerName)) + "<br data-v-83e376e8>" + _vm._ssrEscape("\n            Email : " + _vm._s(_vm.buyerEmail)) + "<br data-v-83e376e8>" + _vm._ssrEscape("\n            Invite Code : " + _vm._s(_vm.buyerInviteCode)) + "<br data-v-83e376e8>")], 2) : _vm._e()], 2)], 2)])])], 2);
+  })]), _vm._ssrNode(_vm._ssrEscape("\n            Name : " + _vm._s(_vm.buyerName)) + "<br data-v-45422e66>" + _vm._ssrEscape("\n            Email : " + _vm._s(_vm.buyerEmail)) + "<br data-v-45422e66>" + _vm._ssrEscape("\n            Invite Code : " + _vm._s(_vm.buyerInviteCode)) + "<br data-v-45422e66>")], 2) : _vm._e()], 2)], 2)])])], 2);
 };
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./pages/seller/chatbox/messages.vue?vue&type=template&id=83e376e8&scoped=true&
+// CONCATENATED MODULE: ./pages/seller/chatbox/messages.vue?vue&type=template&id=45422e66&scoped=true&
 
 // EXTERNAL MODULE: external "axios"
 var external_axios_ = __webpack_require__(4);
@@ -214,19 +214,45 @@ var external_axios_ = __webpack_require__(4);
         this.loading = false;
       }
     },
+    onFileChange(event) {
+      // Log the event and $refs to check their values
+      console.log(event); // Check the event object
+      console.log(this.$refs.files); // Ensure the reference is correct
+
+      const file = this.$refs.files.files[0];
+
+      // Check if the file is captured
+      console.log(file); // Should log the selected file
+    },
+
     async submit() {
       if (this.message.trim() === "") {
         console.log("Message is empty, not sending.");
         return;
       }
       try {
-        const response = await this.$axios.post("/sellerSendMessages", {
-          username: this.username,
-          message: this.message,
-          userId: this.buyerId,
-          community_slug: this.name
+        const file = this.$refs.files.files[0];
+        // Create a FormData object
+        const formData = new FormData();
+        formData.append('files', file);
+        formData.append('username', this.username);
+        formData.append('message', this.message);
+        formData.append('userId', this.buyerId);
+        formData.append('community_slug', this.name);
+
+        // Make the axios POST request with formData
+        this.$axios.post('/sellerSendMessages', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(response => {
+          this.$refs.files.value = '';
+          // Handle the response here
+          console.log(response.data);
+        }).catch(error => {
+          // Handle errors here
+          console.error(error);
         });
-        console.log("Message sent:", response.data);
         this.message = "";
         this.afterSubmitResponse();
         this.$nextTick(() => {
@@ -235,7 +261,26 @@ var external_axios_ = __webpack_require__(4);
       } catch (error) {
         console.error("Error sending message:", error);
       }
+      // try {
+      //   const response = await this.$axios.post("/sellerSendMessages", {
+      //     username: this.username,
+      //     message: this.message,
+      //     userId: this.buyerId,
+      //     community_slug: this.name,
+      //   });
+      //   console.log("Message sent:", response.data);
+
+      //   this.message = "";
+      //   this.afterSubmitResponse();
+
+      //   this.$nextTick(() => {
+      //     this.scrollToBottom();
+      //   });
+      // } catch (error) {
+      //   console.error("Error sending message:", error);
+      // }
     },
+
     async afterSubmitResponse() {
       //After response stop redirect
       let buyerId = this.buyerId;
@@ -277,7 +322,7 @@ var component = Object(componentNormalizer["a" /* default */])(
   staticRenderFns,
   false,
   injectStyles,
-  "83e376e8",
+  "45422e66",
   "333bb0d5"
   
 )

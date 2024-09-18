@@ -168,7 +168,7 @@ class CategoryController extends Controller
         $validator = Validator::make(
             $request->all(),
             [
-                'name'      => 'required|unique:categorys,name',
+                'name'      => 'required',
                 'status'    => 'required',
             ],
             [
@@ -187,7 +187,7 @@ class CategoryController extends Controller
             $validator = Validator::make(
                 $request->all(),
                 [
-                    'name'      => 'required|unique:categorys,name',
+                    'name'      => 'required',
                     'status'    => 'required',
                 ],
                 [
@@ -228,6 +228,8 @@ class CategoryController extends Controller
                 'status'            => $request->input('status'),
                 //'home_status'       => $request->home_status,
                 'commission'        => $request->input('commission'),
+                'fixcommission'        => $request->input('fixcommission'),
+                'fixcommission'     => $request->input('fixcommission'),
                 'keyword'           => $request->input('keyword'),
                 'mobile_view_class' => $request->input('mobile_view_class'),
                 'file'              => $imagePath,
@@ -257,6 +259,7 @@ class CategoryController extends Controller
             $data->status            =  $request->input('status');
           //  $data->home_status       =  $request->home_status;
             $data->commission        =  $request->input('commission');
+            $data->fixcommission     =  $request->input('fixcommission');
             $data->keyword           =  $request->input('keyword');
             $data->mobile_view_class =  $request->input('mobile_view_class');
             $data->save();

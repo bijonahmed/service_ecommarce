@@ -6,9 +6,9 @@ exports.modules = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_12e6d1d3_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55);
-/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_12e6d1d3_prod_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_12e6d1d3_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_12e6d1d3_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_12e6d1d3_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_55a60c3a_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(55);
+/* harmony import */ var _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_55a60c3a_prod_lang_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_55a60c3a_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_55a60c3a_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_vue_style_loader_index_js_ref_3_oneOf_1_0_node_modules_css_loader_dist_cjs_js_ref_3_oneOf_1_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_dist_cjs_js_ref_3_oneOf_1_2_node_modules_nuxt_components_dist_loader_js_ref_0_0_node_modules_vue_loader_lib_index_js_vue_loader_options_category_edit_vue_vue_type_style_index_0_id_55a60c3a_prod_lang_css__WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
 
 
 /***/ }),
@@ -35,7 +35,7 @@ module.exports = ___CSS_LOADER_EXPORT___;
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
-// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/ecommarce/category-edit.vue?vue&type=template&id=12e6d1d3
+// CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/vue-loader/lib/loaders/templateLoader.js??ref--6!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/ecommarce/category-edit.vue?vue&type=template&id=55a60c3a
 var render = function render() {
   var _vm = this,
     _c = _vm._self._c;
@@ -101,7 +101,7 @@ var render = function render() {
         "value": data.id
       }
     }, [_vm._v(_vm._s(data.name) + "\r\n                                                                        ")]);
-  })], 2)])], 2), _vm._ssrNode(" <div class=\"row mb-3\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Commission</label> <div class=\"col-sm-10\"><input type=\"text\" name=\"commission\" pattern=\"[0-9]*\" onkeypress=\"return isNumberKey(event)\" id=\"commission\" placeholder=\"0\"" + _vm._ssrAttr("value", _vm.insertdata.commission) + " class=\"form-control\"></div></div> <div class=\"row mb-3\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Icon (100x100)</label> <div class=\"col-sm-10\"><input id=\"file\" type=\"file\" class=\"form-control form-control-sm\"> <a href=\"https://icons8.com/\" target=\"_blank\">https://icons8.com/</a></div></div> <div class=\"row mb-3 d-none\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">For Mobile View</label> <div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Add fontawsone class\"" + _vm._ssrAttr("value", _vm.insertdata.mobile_view_class) + " class=\"form-control form-control-sm\"> <a href=\"https://fontawesome.com/icons\" target=\"_blank\">https://fontawesome.com/icons</a></div></div> "), _vm._ssrNode("<div class=\"row mb-3\">", "</div>", [_vm._ssrNode("<label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Status</label> "), _vm._ssrNode("<div class=\"col-sm-10\">", "</div>", [_c('select', {
+  })], 2)])], 2), _vm._ssrNode(" <div class=\"row mb-3\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Commission</label> <div class=\"col-sm-10\"><input type=\"text\" name=\"commission\" pattern=\"[0-9]*\" onkeypress=\"return isNumberKey(event)\" id=\"commission\" placeholder=\"0\"" + _vm._ssrAttr("value", _vm.insertdata.commission) + " class=\"form-control\"></div></div> <div class=\"row mb-3\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Fix Commission</label> <div class=\"col-sm-10\"><input type=\"text\" name=\"fixcommission\"" + _vm._ssrAttr("value", _vm.insertdata.fixcommission) + " class=\"form-control\"></div></div> <div class=\"row mb-3\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Icon (100x100)</label> <div class=\"col-sm-10\"><input id=\"file\" type=\"file\" class=\"form-control form-control-sm\"> <a href=\"https://icons8.com/\" target=\"_blank\">https://icons8.com/</a></div></div> <div class=\"row mb-3 d-none\"><label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">For Mobile View</label> <div class=\"col-sm-10\"><input type=\"text\" placeholder=\"Add fontawsone class\"" + _vm._ssrAttr("value", _vm.insertdata.mobile_view_class) + " class=\"form-control form-control-sm\"> <a href=\"https://fontawesome.com/icons\" target=\"_blank\">https://fontawesome.com/icons</a></div></div> "), _vm._ssrNode("<div class=\"row mb-3\">", "</div>", [_vm._ssrNode("<label for=\"input-meta-description-1\" class=\"col-sm-2 col-form-label\">Status</label> "), _vm._ssrNode("<div class=\"col-sm-10\">", "</div>", [_c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -138,7 +138,7 @@ var render = function render() {
 };
 var staticRenderFns = [];
 
-// CONCATENATED MODULE: ./pages/ecommarce/category-edit.vue?vue&type=template&id=12e6d1d3
+// CONCATENATED MODULE: ./pages/ecommarce/category-edit.vue?vue&type=template&id=55a60c3a
 
 // CONCATENATED MODULE: ./node_modules/babel-loader/lib??ref--2-0!./node_modules/@nuxt/components/dist/loader.js??ref--0-0!./node_modules/vue-loader/lib??vue-loader-options!./pages/ecommarce/category-edit.vue?vue&type=script&lang=js
 /* harmony default export */ var category_editvue_type_script_lang_js = ({
@@ -167,6 +167,7 @@ var staticRenderFns = [];
         description: '',
         meta_title: '',
         meta_description: '',
+        fixcommission: '',
         commission: '',
         meta_keyword: '',
         parent_id: 0,
@@ -177,6 +178,7 @@ var staticRenderFns = [];
       categories: [],
       notifmsg: '',
       file: '',
+      fixcommission: '',
       errors: {}
     };
   },
@@ -227,6 +229,7 @@ var staticRenderFns = [];
       formData.append('meta_keyword', this.insertdata.meta_keyword);
       formData.append('parent_id', this.insertdata.parent_id);
       formData.append('commission', this.insertdata.commission);
+      formData.append('fixcommission', this.insertdata.fixcommission);
       formData.append('status', this.insertdata.status);
       formData.append('keyword', this.insertdata.keyword);
       // formData.append('status', this.insertdata.status);
@@ -257,6 +260,7 @@ var staticRenderFns = [];
         this.insertdata.meta_description = response.data.data.meta_description;
         this.insertdata.meta_keyword = response.data.data.meta_keyword;
         this.insertdata.commission = response.data.data.commission;
+        this.insertdata.fixcommission = response.data.data.fixcommission;
         this.insertdata.parent_id = response.data.data.parent_id;
         this.insertdata.status = response.data.data.status;
         this.insertdata.keyword = response.data.data.keyword;
@@ -319,7 +323,7 @@ if(content.locals) module.exports = content.locals;
 // add CSS to SSR context
 var add = __webpack_require__(11).default
 module.exports.__inject__ = function (context) {
-  add("a4cf1426", content, true, context)
+  add("03332556", content, true, context)
 };
 
 /***/ })
