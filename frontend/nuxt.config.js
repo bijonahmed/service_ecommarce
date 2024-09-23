@@ -113,7 +113,7 @@ export default {
     baseURL: process.env.NODE_ENV === 'production' ? 'https://api.isumax.com/api/' : 'http://127.0.0.1:8000/api/',
   },
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  // Build Configuration: https://go.nuxtjs.dev/config-build https://api.isumax.com/
   build: {
     transpile: ["defu"],
     vendor: ["jquery"],

@@ -52,11 +52,11 @@ class ProductController extends Controller
             'name'           => 'required',
             //  'category'       => 'required',
             'price'          => 'required',
-            'stock_qty'      => 'required|integer',
-            'stock_mini_qty' => 'required|integer',
-            'shipping_days'  => 'required',
+            //'stock_qty'      => 'required|integer',
+        //    'stock_mini_qty' => 'required|integer',
+         //   'shipping_days'  => 'required',
             'status'         => 'required',
-            'sku'            => 'required',
+        //    'sku'            => 'required',
             // 'files' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max:2048 is the maximum file size in kilobytes (2MB)
         ]);
         if ($validator->fails()) {
@@ -156,10 +156,10 @@ class ProductController extends Controller
             'name'           => 'required',
             'category'       => 'required',
             'price'          => 'required',
-            'sku'            => 'required',
-            'stock_qty'      => 'required|integer',
-            'stock_mini_qty' => 'required|integer',
-            'shipping_days'  => 'required',
+            //'sku'            => 'required',
+           // 'stock_qty'      => 'required|integer',
+          //  'stock_mini_qty' => 'required|integer',
+           // 'shipping_days'  => 'required',
             'status'         => 'required',
             'files' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // max:2048 is the maximum file size in kilobytes (2MB)
         ]);

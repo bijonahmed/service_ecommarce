@@ -32,7 +32,7 @@
                     <!-- Button to manually scroll to bottom -->
                     <!-- <button @click="scrollToBottom">Scroll Down</button> ----{{ currentUserEmail }}-->
                     <u class="text-white">Chatbox</u>
-                    <span v-if="selectedEmail">{{ selectedEmail }}</span>
+                    <span v-if="selectedName">{{ selectedName }}</span>
                     <!-- <button @click="getSellerList">Scroll Down</button> -->
                   </center>
                   <span class="d-none">
@@ -125,7 +125,7 @@ export default {
       isAtBottom: true,
       selectedUser: null,
       buyerId: null,
-      selectedEmail: null,
+      selectedName: null,
       chatMessagesRef: null,
       pollingInterval: null,
       currentUserEmail: null,
@@ -186,13 +186,13 @@ export default {
       this.loading = true;
       try {
         let buyerId = user.user_id;
-        this.selectedEmail = user.username;
+        this.selectedName = user.name;
         this.buyerId = user.user_id;
         //console.log("===" + user.name);
         this.buyerName = user.name;
         this.buyerEmail = user.username;
         this.buyerInviteCode = user.invite_code;
-        //console.log("Eamil:==========" + selectedEmail);
+        //console.log("Eamil:==========" + selectedName);
         const response = await this.$axios.get(`/getSellerMessages/${buyerId}`);
         this.messages = response.data;
       } catch (error) {

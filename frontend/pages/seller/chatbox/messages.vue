@@ -34,7 +34,7 @@
                     <!-- Button to manually scroll to bottom -->
                     <!-- <button @click="scrollToBottom">Scroll Down</button> ----{{ currentUserEmail }}-->
                     <u class="text-white">Seller Chatbox</u>
-                    <span v-if="selectedEmail">{{ selectedEmail }}</span>
+                    <span v-if="selectedName">{{ selectedName }}</span>
                   </center>
                   <span class="d-none">
                     <input type="text" v-model="username" class="username-input" placeholder="Enter your username"
@@ -144,7 +144,7 @@ export default {
       },
       isAtBottom: true,
       buyerId: null,
-      selectedEmail: null,
+      selectedName: null,
       chatMessagesRef: null,
       pollingInterval: null,
       currentUserEmail: null,
@@ -205,13 +205,13 @@ export default {
       try {
 
         let buyerId = user.user_id;
-        this.selectedEmail = user.username;
+        this.selectedName = user.name;
         this.buyerId = user.user_id;
         //console.log("===" + user.name);
         this.buyerName = user.name;
         this.buyerEmail = user.username;
         this.buyerInviteCode = user.invite_code;
-        //console.log("Eamil:==========" + selectedEmail);
+        //console.log("Eamil:==========" + selectedName);
         const response = await this.$axios.get(`/getSellerMessages/${buyerId}`);
         this.messages = response.data;
       } catch (error) {
@@ -300,24 +300,7 @@ export default {
       } catch (error) {
         console.error("Error sending message:", error);
       }
-      // try {
-      //   const response = await this.$axios.post("/sellerSendMessages", {
-      //     username: this.username,
-      //     message: this.message,
-      //     userId: this.buyerId,
-      //     community_slug: this.name,
-      //   });
-      //   console.log("Message sent:", response.data);
-
-      //   this.message = "";
-      //   this.afterSubmitResponse();
-
-      //   this.$nextTick(() => {
-      //     this.scrollToBottom();
-      //   });
-      // } catch (error) {
-      //   console.error("Error sending message:", error);
-      // }
+   
     },
 
     async afterSubmitResponse() {

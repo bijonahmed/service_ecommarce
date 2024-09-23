@@ -19,6 +19,8 @@
                     <nuxt-link :class="{ active: $route.path === '/required' }" to="/required" class="a_link">Required</nuxt-link>
                     <nuxt-link :class="{ active: $route.path === '/blog' }" to="/blog" class="a_link">Blog</nuxt-link>
 
+                    <nuxt-link to="/affiliate/affiliate-programe" class="a_link">Affiliate Program</nuxt-link>
+
                 </div>
             </div>
         </div>

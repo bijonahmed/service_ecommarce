@@ -21,37 +21,37 @@
                 <div class="col-12">
                     <div class="why_sell">
                         <div class="sell_title">
-                            <h5>Why sale on Ecommerce?</h5>
+                            <h5>Why join isumax ?</h5>
                         </div>
                         <div class="row">
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Connect with More Buyers</p>
+                                    <p>Buyers Sellers Meet Up </p>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Sell more products</p>
+                                    <p>Explore Your Skills</p>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Top notch seller support</p>
+                                    <p>Top Level Seller Support </p>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Expert product delivery</p>
+                                    <p>Buyer 100% Protection </p>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Improve revenue</p>
+                                    <p>Earn More Isumax</p>
                                 </div>
                             </div>
                             <div class="col-md-2 col-sm-6 col-6">
                                 <div class="info_box">
-                                    <p>Free online/offline training</p>
+                                    <p>Free Training</p>
                                 </div>
                             </div>
                         </div>
@@ -74,7 +74,7 @@
                             <div class="col-md-6">
                                 <div class="story_text">
                                     <p>Selling on Ecommerce has been very rewarding with higher turnover and good profit. <br>
-                                        - Amit & Rajat's</p>
+                                        -Amit & Rajat's</p>
                                 </div>
                             </div>
                         </div>

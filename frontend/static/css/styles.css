@@ -348,6 +348,9 @@ a {
 
 .nav_menu nav ul li:hover .sub_menu {
   display: block;
+  height: 100%;
+  overflow: auto;
+  scrollbar-width: none;
 }
 
 /* slider part start here  */
@@ -4394,7 +4397,7 @@ footer {
 }
 
 .rate:not(:checked)>label:before {
-  content: 'â˜… ';
+  content: 'Ã¢Ëœâ€¦ ';
 }
 
 .rate>input:checked~label {

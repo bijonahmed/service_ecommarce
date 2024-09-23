@@ -180,7 +180,7 @@
                                 </form>
                                 <hr />
 
-                                <div class="row">
+                                <div class="row d-none">
                                     <div class="col-md-4">
                                         <form @submit.prevent="banner1Upload()" ref="banner1Frm" class="forms-sample" enctype="multipart/form-data">
                                             <div>
@@ -385,7 +385,14 @@ export default {
 
         }
     },
+
+
+  
+
+
     mounted() {
+        this.loadCKEditor();
+        CKEDITOR.replace('editor');
         this.defaultLoading();
         this.defalutLoadingSellerAds();
     },
@@ -834,6 +841,20 @@ export default {
 
         popupOpenClose() {
             $(".modal_address_here").fadeOut();
+        },
+
+        loadCKEditor() {
+            return new Promise((resolve) => {
+                if (typeof CKEDITOR === 'undefined') {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js';
+                    script.async = true;
+                    script.onload = resolve;
+                    document.head.appendChild(script);
+                } else {
+                    resolve();
+                }
+            });
         },
 
     }

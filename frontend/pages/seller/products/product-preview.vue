@@ -55,7 +55,7 @@
                                                 <tr>
                                                     <td colspan="3">&nbsp;</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Brand</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.brand_name }}</td>
@@ -69,7 +69,7 @@
                                                     <td>External Link</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.external_link }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Description</td>
                                                     <td><strong>:</strong></td>
@@ -83,11 +83,11 @@
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.price }}</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Unit</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.unit }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Discount</td>
                                                     <td><strong>:</strong></td>
@@ -98,7 +98,7 @@
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.stock_qty }}</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Stock Minimum Quantity</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.stock_mini_qty }}</td>
@@ -113,13 +113,13 @@
                                                         <span v-if="productData.stock_status === 4" class="marleft">Pre-Order</span>
                                                         <span v-if="productData.stock_status === 5" class="marleft">Others</span>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Free Shipping</td>
                                                     <td><strong>:</strong></td>
                                                     <td>
@@ -165,18 +165,18 @@
                                                         <div v-if="productData.tax_status === 0" class="marleft">No</div>
                                                         <div v-if="productData.tax_status === 1" class="marleft">Yes</div>
                                                     </td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                     <td>&nbsp;</td>
                                                 </tr>
 
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Manufacturer</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.manufacturer }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Categories</td>
                                                     <td><strong>:</strong></td>
@@ -186,11 +186,11 @@
                                                         </div>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                <!-- <tr>
                                                     <td>Download Link</td>
                                                     <td><strong>:</strong></td>
                                                     <td>{{ productData.download_link }}</td>
-                                                </tr>
+                                                </tr> -->
                                                 <tr>
                                                     <td>Status</td>
                                                     <td><strong>:</strong></td>
@@ -227,7 +227,7 @@
 
                                         </div>
 
-                                        <div class="row" v-if="historVarient.length > 0">
+                                        <div class="row d-none"  v-if="historVarient.length > 0">
                                             <hr />
                                             <div class="alert-dark border-0 bg-dark alert-dismissible fade show">
                                                 <div class="text-white">Varient History</div>

@@ -147,22 +147,20 @@
                                                                 <!-- Data -->
                                                                 <div class="card">
                                                                     <div class="card-body">
-                                                                        <div class="row mb-3 required">
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-2 col-form-label">Brands</label>
                                                                             <div class="col-sm-10">
-                                                                                <!-- <input type="text" placeholder="Search Model..." id="model" v-model="insertdata.model" class="form-control" /> -->
                                                                                 <select v-model="insertdata.brand"
                                                                                     class="form-select model">
                                                                                     <option value="" selected>Select
                                                                                     </option>
-                                                                                    <option v-for='data in modelresults'
-                                                                                        :value='data.id'>{{ data.name }}
+                                                                                    <option v-for='data in modelresults' :value='data.id' :key="data.id">{{ data.name }}
                                                                                     </option>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
-                                                                        <div class="row mb-3 required">
+                                                                        </div> -->
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-2 col-form-label required-label">SKU</label>
                                                                             <div class="col-sm-10">
@@ -185,18 +183,23 @@
                                                                                     v-model="insertdata.external_link"
                                                                                     class="form-control" />
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <hr />
 
                                                                         <div class="row mb-3">
                                                                             <label for="input-description-1"
                                                                                 class="col-sm-2 col-form-label">Description</label>
                                                                             <div class="col-sm-10">
-                                                                                <client-only placeholder="loading...">
+                                                                                <!-- <client-only placeholder="loading...">
                                                                                     <ckeditor-nuxt
                                                                                         v-model="insertdata.description"
                                                                                         :config="editorConfig"
                                                                                         class="form-control" />
+                                                                                </client-only> -->
+                                                                                <client-only placeholder="loading...">
+                                                                                    <textarea
+                                                                                        v-model="insertdata.description"
+                                                                                        class="form-control pro_description"></textarea>
                                                                                 </client-only>
                                                                             </div>
                                                                         </div>
@@ -215,7 +218,7 @@
                                                                                     }}</span>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mb-3 required">
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-4 col-form-label">Unit</label>
                                                                             <div class="col-sm-8">
@@ -224,7 +227,7 @@
                                                                                     v-model="insertdata.unit"
                                                                                     class="form-control" />
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-4 col-form-label">Discount</label>
@@ -265,7 +268,7 @@
                                                                                     @input="validateInput" />
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mb-3 required">
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-4 col-form-label">Out Of Stock
                                                                                 Status</label>
@@ -274,7 +277,6 @@
                                                                                     aria-label=".form-select-sm example"
                                                                                     v-model="insertdata.stock_status">
                                                                                     <option selected>Select</option>
-                                                                                    <!-- categories -->
                                                                                     <option value="1">2-3 Days</option>
                                                                                     <option value="2">In Stock</option>
                                                                                     <option value="3">Out Of Stock</option>
@@ -317,7 +319,10 @@
                                                                                     class="form-control"
                                                                                     @input="validateInput" />
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
+
+
+
                                                                         <hr />
                                                                         <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
@@ -347,7 +352,7 @@
                                                                     </div>
                                                                 </div>
                                                                         <hr />
-                                                                        <div class="row mb-3 required">
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-4 col-form-label">Vat</label>
                                                                             <div class="col-sm-4">
@@ -382,9 +387,9 @@
                                                                                     <option value="2">Percent</option>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <hr />
-                                                                        <div class="row mb-3 required">
+                                                                        <!-- <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
                                                                                 class="col-sm-4 col-form-label">Tax.
                                                                                 Status</label>
@@ -397,7 +402,7 @@
                                                                                     <option value="2">No</option>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <hr />
                                                                         <div class="row mb-3 required">
                                                                             <label for="input-meta-title-1"
@@ -421,21 +426,19 @@
                                                                 <!-- SEO -->
                                                                 <div class="card">
                                                                     <div class="card-body">
-                                                                        <div class="row mb-3">
+                                                                        <!-- <div class="row mb-3">
                                                                             <label for="input-meta-description-1"
                                                                                 class="col-sm-2 col-form-label">Manufacturer</label>
                                                                             <div class="col-sm-10">
-                                                                                <!-- <input type="text" placeholder="Manufacturer" v-model="insertdata.manufacturer" class="form-control" /> -->
                                                                                 <select v-model="insertdata.manufacturer"
                                                                                     class="form-select manufacturer">
                                                                                     <option value="" selected>Select
                                                                                     </option>
-                                                                                    <option v-for='data in manufrresults'
-                                                                                        :value='data.id'>{{ data.name }}
+                                                                                    <option v-for='data in manufrresults' :value='data.id' :key="data.id">{{ data.name }}
                                                                                     </option>
                                                                                 </select>
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <div class="row mb-3">
                                                                             <label for="input-meta-description-1"
                                                                                 class="col-sm-2 col-form-label required-label">Categories</label>
@@ -494,7 +497,7 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        <div class="row mb-3">
+                                                                        <!-- <div class="row mb-3">
                                                                             <label for="input-meta-description-1"
                                                                                 class="col-sm-2 col-form-label">Download
                                                                                 Link</label>
@@ -504,7 +507,7 @@
                                                                                     v-model="insertdata.download_link"
                                                                                     class="form-control" />
                                                                             </div>
-                                                                        </div>
+                                                                        </div> -->
                                                                         <!-- <button type="submit" class="btn btn-success px-5 w-100"><i class="bx bx-check-circle mr-1"></i> Submit</button> -->
                                                                     </div>
                                                                 </div>
@@ -621,7 +624,7 @@ export default {
             insertdata: {
                 id: '',
                 name: '',
-                description: '',
+                
                 meta_title: '',
                 meta_description: '',
                 meta_keyword: '',
@@ -972,7 +975,8 @@ export default {
                 this.insertdata.id = response.data.product.id;
                 this.insertdata.name = response.data.product.name;
                 this.insertdata.delivery_days = response.data.product.delivery_days;
-                this.insertdata.description = response.data.product.description;
+                let testing = response.data.product.description.replace(/<[^>]*>?/gm, '');
+                this.insertdata.description = testing;
                 this.insertdata.meta_title = response.data.product.meta_title;
                 this.insertdata.meta_description = response.data.product.meta_description;
                 this.insertdata.meta_keyword = response.data.product.meta_keyword;
@@ -982,7 +986,9 @@ export default {
                 this.insertdata.model = response.data.product.model;
                 this.insertdata.sku = response.data.product.sku;
                 this.insertdata.external_link = response.data.product.external_link;
-                $(".pro_description").html(response.data.product.description);
+                console.log("===" + response.data.product.description);
+               
+           //    $(".pro_description").html(response.data.product.description);
                 this.insertdata.price = response.data.product.price;
                 this.insertdata.unit = response.data.product.unit;
                 this.insertdata.stock_qty = response.data.product.stock_qty;
