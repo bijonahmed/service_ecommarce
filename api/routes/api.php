@@ -109,11 +109,6 @@ Route::group([
     Route::get('getCountry', [UserController::class, 'getCountry']);
     Route::get('getTime', [UserController::class, 'getTime']);
     Route::get('inactiveEmployee', [UserController::class, 'inactiveEmployee']);
-    Route::post('saveCircumstances', [CircumstancesController::class, 'saveCircumstances']);
-    Route::get('getCircumstancesList', [CircumstancesController::class, 'getCircumstancesList']);
-    Route::get('circumstancesRow/{id}', [CircumstancesController::class, 'circumstancesRow']);
-    Route::get('getEmpType/{id}', [CircumstancesController::class, 'getEmpType']);
-    Route::get('chkContractAggData', [CircumstancesController::class, 'chkContractAggData']);
     Route::get('selectOrganisationProfile', [UserController::class, 'selectOrganisationProfile']);
     Route::post('organisationUpdateprofile', [UserController::class, 'organisationUpdateprofile']);
     Route::post('updateTopbanner', [UserController::class, 'updateTopbanner']);
@@ -155,44 +150,8 @@ Route::group([
     Route::post('speacialCatSave', [CategoryController::class, 'speacialCatSave']); 
 });
 
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'product'
-], function () {
 
-    Route::post('save', [ProductController::class, 'save']);
-    Route::post('product-update', [ProductController::class, 'productUpdate']);
-    Route::post('insertVarient', [ProductController::class, 'insertVarient']);
-    Route::post('insertVarientGroup', [ProductController::class, 'insertVarientGroup']);
-    Route::get('getProductList', [ProductController::class, 'getProductList']);
-    Route::get('sellerProductList', [ProductController::class, 'sellerProductList']);
-    Route::get('sellerOrderProductList', [ProductController::class, 'sellerOrderProductList']);
-    Route::get('insertProductAttrAndValues', [ProductController::class, 'insertProductAttrAndValues']);
-    Route::get('insertProductVarient', [ProductController::class, 'insertProductVarient']);
-    Route::get('deleteValrient', [ProductController::class, 'deleteValrient']);
-    Route::get('getAttrHistory/{id}', [ProductController::class, 'getAttrHistory']);
-    Route::get('productrow/{id}', [ProductController::class, 'productrow']);
-    Route::get('additionaIMagesDelete', [ProductController::class, 'additionaIMagesDelete']);
-    Route::get('deleteCategory', [ProductController::class, 'deleteCategory']);
-    Route::get('getVarientHistory', [ProductController::class, 'getVarientHistory']);
-    Route::get('removeProducts/{id}', [ProductController::class, 'removeProducts']);
-    Route::post('generate-combinations', [ProductController::class, 'generatecombinations']);
-    Route::post('deleteVarient', [ProductController::class, 'deleteVarient']);
-    Route::get('varient-list/{id}', [ProductController::class, 'varientList']);
-    Route::get('checkAttribue', [ProductController::class, 'checkAttribue']);
-    Route::post('addWarranty', [ProductController::class, 'addWarranty']);
-    Route::get('addWarranty/{product_id}', [ProductController::class, 'getaddWarranty']);
-    Route::get('deletewarranty/{id}', [ProductController::class, 'deletewarranty']);
-});
 
-Route::group([
-    //'middleware' => 'api',
-    'prefix' => 'manufacturers'
-], function () {
-    Route::post('save', [ManufacturesController::class, 'save']);
-    Route::get('allmanufacturers', [ManufacturesController::class, 'allmanufacturers']);
-    Route::get('manufacturersrow/{id}', [ManufacturesController::class, 'manufacturersrow']);
-});
 
 Route::group([
     //'middleware' => 'api',
@@ -216,15 +175,7 @@ Route::group([
     Route::get('checkProjectId/{id}', [ProjectController::class, 'editId']);
     Route::get('taskRow/{id}', [ProjectController::class, 'editTaskId']);
 });
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'documents'
-], function () {
-    Route::post('saveDocuments', [DocumentsController::class, 'saveDocuments']);
-    Route::get('getAllDocuments', [DocumentsController::class, 'getAllDocuments']);
-    Route::get('documents-row/{id}', [DocumentsController::class, 'editId']);
-});
-
+ 
 Route::group([
     'prefix' => 'order'
 ], function () {
@@ -246,56 +197,13 @@ Route::group([
     Route::get('orderTrackList/{orderid}', [OrderController::class, 'orderTrackaddList']);
 });
 
-Route::group([
-    //'middleware' => 'api',
-    'prefix' => 'unauthenticate'
-], function () {
-    //Add to cart 
-    Route::get('cart', [CartController::class, 'index']);
-    Route::get('getCartData', [CartController::class, 'getCartData']);
-    Route::post('addToCart', [CartController::class, 'addToCart']);
-    Route::get('searchProductCategory', [UnauthenticatedController::class, 'productCategory']);
-    Route::get('showCategoryTwo', [UnauthenticatedController::class, 'showCategoryTwo']);
-    Route::get('showCategoryThree', [UnauthenticatedController::class, 'showCategoryThree']);
-    Route::get('slidersImages', [UnauthenticatedController::class, 'slidersImages']);
-    Route::get('topSellingProducts', [UnauthenticatedController::class, 'topSellProducts']);
-    Route::get('limitedProducts', [UnauthenticatedController::class, 'limitedProducts']);
-    Route::get('pagniatedProducts', [UnauthenticatedController::class, 'pagniatedProducts']);
-    Route::get('filterCategorys', [UnauthenticatedController::class, 'filterCategory']);
+Route::group([ 'prefix' => 'unauthenticate' ], function () {
+    Route::get('getFindCategorys', [UnauthenticatedController::class, 'getFindCategorys']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
+    Route::get('filterCategoryesSlug', [UnauthenticatedController::class, 'filterCategoryesSlug']);
     Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
-    Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
-    Route::get('getSeller/{slug}', [UnauthenticatedController::class, 'getSeller']);
-    Route::get('getSellerCategoryFilter/{id}', [UnauthenticatedController::class, 'getSellerCategoryFilter']);
-    Route::post('forgetpassword', [UnauthenticatedController::class, 'forgetpassword']);
-    Route::post('getresetPasswords', [UnauthenticatedController::class, 'getresetPasswords']);
-    Route::post('updatePassword', [UnauthenticatedController::class, 'updatePassword']);
-    Route::get('allsellers', [UnauthenticatedController::class, 'allsellers']);
-    Route::get('countrylist', [UnauthenticatedController::class, 'countrylist']);
-    Route::get('allbrandsList', [UnauthenticatedController::class, 'allbrandlist']);
-    
-    Route::get('allsellerList', [UnauthenticatedController::class, 'getallsellerList']);
-    Route::get('allsellerListadmin', [UnauthenticatedController::class, 'allsellerListadmin']);
-
-    Route::get('readcoupons', [UnauthenticatedController::class, 'featchcoupon']);
-    Route::get('readcoupons/{code}', [UnauthenticatedController::class, 'getCoupon']);
-    Route::post('couponDiscount', [UnauthenticatedController::class, 'getcouponDiscount']);
-    Route::get('alldealsads', [UnauthenticatedController::class, 'getdealsbannersads']);
-    Route::get('headerbanner', [UnauthenticatedController::class, 'getbanner']);  
-    
-    Route::get('getAdsbanner', [UnauthenticatedController::class, 'topadsbanner']);
-    Route::get('brandproductList/{slug}', [UnauthenticatedController::class, 'getbrandproductList']);
-    Route::get('speacialCategory', [UnauthenticatedController::class, 'getSpeacialCatList']);
-    Route::get('checkAttribueDetails', [UnauthenticatedController::class, 'checkAttribueDetails']);
-    Route::get('products/search', [UnauthenticatedController::class, 'search']);
-
-    //blogs
-    Route::get('blogs', [UnauthenticatedController::class, 'getblogs']);
-    Route::get('blogCat', [UnauthenticatedController::class, 'blogCat']);
-    Route::get('blogdetails', [UnauthenticatedController::class, 'blogdetails']);
-    
-    Route::get('getsalaryuser', [UnauthenticatedController::class, 'getsalaryuser']);
-    Route::get('getsPackUser', [UnauthenticatedController::class, 'getsPackUser']);
+    Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
+    Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
 });
 
 
@@ -304,67 +212,6 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'setting'
 ], function () {
-    //emp type
-    Route::post('insertEmployeeType', [SettingController::class, 'insertEmployeeType']);
-    Route::get('getEmployeeTypeList', [SettingController::class, 'getEmployeeTypeList']);
-    Route::get('checkrowEmpleeType/{id}', [SettingController::class, 'checkrowEmpleeType']);
-    //pay group
-    Route::post('insertPayGroup', [SettingController::class, 'insertPayGroup']);
-    Route::get('getPayGroupList', [SettingController::class, 'getPayGroupList']);
-    Route::get('checkrowPayGroup/{id}', [SettingController::class, 'checkrowPayGroup']);
-   //salary
-   Route::post('insertSalary', [SettingController::class, 'insertSalary']);
-   Route::post('insertPack', [SettingController::class, 'insertPack']);
-   Route::get('checkrowsallary/{id}', [SettingController::class, 'checkrowsallary']);
-   Route::get('checkrowPack/{id}', [SettingController::class, 'checkrowPack']);
-   Route::get('getsalary', [SettingController::class, 'getsalary']);
-   Route::get('getPack', [SettingController::class, 'getPack']);
-
-    //Annual Pay 
-    Route::post('insertAnnualPay', [SettingController::class, 'insertAnnualPay']);
-    Route::get('getAnnualPayist', [SettingController::class, 'getAnnualPayist']);
-    Route::get('checkrowAnnualPay/{id}', [SettingController::class, 'checkrowAnnualPay']);
-    //Bank Master
-    Route::post('insertBankMaster', [SettingController::class, 'insertBankMaster']);
-    Route::get('getBankMasterlist', [SettingController::class, 'getBankMasterlist']);
-    Route::get('checkrowBankMaster/{id}', [SettingController::class, 'checkrowBankMaster']);
-    //Bank Short Code 
-    Route::post('insertBankCode', [SettingController::class, 'insertBankCode']);
-    Route::get('getBankShortCodelist', [SettingController::class, 'getBankShortCodelist']);
-    Route::get('checkrowBankShortCode/{id}', [SettingController::class, 'checkrowBankShortCode']);
-    //Tax Master
-    Route::post('insertTaxMaster', [SettingController::class, 'insertTaxMaster']);
-    Route::get('gettxtMastlist', [SettingController::class, 'gettxtMastlist']);
-    Route::get('checkrowtxtmaster/{id}', [SettingController::class, 'checkrowtxtmaster']);
-    //Payment type
-    Route::post('insertPaymentType', [SettingController::class, 'insertPaymentType']);
-    Route::get('getPaymentType', [SettingController::class, 'getPaymentType']);
-    Route::get('checkrowPaymenttype/{id}', [SettingController::class, 'checkrowPaymenttype']);
-    //Wedges pay mode
-    Route::post('insertWedges', [SettingController::class, 'insertWedges']);
-    Route::get('getWdges', [SettingController::class, 'getWdges']);
-    Route::get('checkrowWedges/{id}', [SettingController::class, 'checkrowWedges']);
-    //Pay Item List 
-    Route::post('insertPayItem', [SettingController::class, 'insertPayItem']);
-    Route::get('getPayItemList', [SettingController::class, 'getPayItemList']);
-    Route::get('checkPayItemRow/{id}', [SettingController::class, 'checkPayItemRow']);
-    //Ads management  
-    Route::get('bannerTopget', [SettingController::class, 'getbannerTop']);
-    Route::post('bannerTop', [SettingController::class, 'updatebannerTop']);
-    Route::post('dealsbannner', [SettingController::class, 'updatedealsbannner']);    
-    Route::get('getdealsbanner', [SettingController::class, 'getdealsbanners']);
-    Route::post('sliderLeftads', [SettingController::class, 'updatesliderLeftads']);  
-    Route::get('getadsbannerreq', [SettingController::class , 'getadsbanner']);
-
-    // coupons 
-    Route::post('addcoupons', [SettingController::class, 'savecoupons']);
-    Route::get('couponsList', [SettingController::class, 'couponsList']);
-    Route::post('updatecoupon', [SettingController::class, 'updatecoupon']);
-    Route::get('getcoupons/{id}', [SettingController::class, 'getcoupons']);
-
-    // seller status 
-    Route::get('editseller/{id}', [SettingController::class, 'editseller']);
-    Route::post('updateSeller', [SettingController::class, 'updateSeller']);
     // sliders     
     Route::post('addslidersImages', [SettingController::class, 'saveslidersImages']);
     Route::post('deleteSlider', [SettingController::class, 'deleteSliderimage']);
@@ -377,44 +224,7 @@ Route::group([
 });
 
 
-
-
-
-
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'holiday'
-], function () {
-    Route::get('getholidaylist', [LeaveController::class, 'getholidaylist']);
-    Route::get('chkholidayrow/{id}', [LeaveController::class, 'chkholiDayRow']);
-    Route::post('createEditHoliday', [LeaveController::class, 'createEditHoliday']);
-    Route::post('createEditHolidayList', [LeaveController::class, 'createEditHolidayList']);
-    Route::get('getHolidayAllList', [LeaveController::class, 'getHolidayAllList']);
-    Route::get('chkleadlistId/{id}', [LeaveController::class, 'chkleadlistId']);
-});
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'leave'
-], function () {
-    Route::post('createEditLeaveAllocation', [LeaveController::class, 'createEditLeaveAllocation']);
-    Route::post('createEditLeavType', [LeaveController::class, 'createEditLeavType']);
-    Route::get('getLeaveTypeList', [LeaveController::class, 'getLeaveTypeList']);
-    Route::get('getLeaveRequestList', [LeaveController::class, 'getLeaveRequestList']);
-    Route::get('leaveTyperow/{id}', [LeaveController::class, 'leaveTyperow']);
-    Route::get('requestRowCheck/{id}', [LeaveController::class, 'requestRowCheck']);
-    Route::post('createEditLeaveRule', [LeaveController::class, 'createEditLeaveRule']);
-    Route::post('leaveRequestUpdate', [LeaveController::class, 'leaveRequestUpdate']);
-    Route::get('getLeaveRuleList', [LeaveController::class, 'getLeaveRuleList']);
-    Route::get('leaveRulerow/{id}', [LeaveController::class, 'leaveRulerow']);
-    Route::get('leaveAllocationRow/{id}', [LeaveController::class, 'leaveAllocationRow']);
-    Route::get('getLeaveRulesCheck', [LeaveController::class, 'getLeaveRulesCheck']);
-    Route::get('getLeaveAllocatedList', [LeaveController::class, 'getLeaveAllocationList']);
-    Route::get('getLeaveBalanceReport', [LeaveController::class, 'getLeaveBalanceReport']);
-    Route::get('getLeaveReport', [LeaveController::class, 'getLeaveReport']);
-    Route::get('getleaveApprovalList', [LeaveController::class, 'getleaveApprovalList']);
-    Route::post('createEditLeaveRequest', [LeaveController::class, 'createEditLeaveRequest']);
-    Route::get('leaveApprovalRequestRow/{id}', [LeaveController::class, 'leaveApprovalRequestRow']);
-});
+ 
 Route::group([
     'middleware' => 'api',
     'prefix' => 'blog'
@@ -431,12 +241,4 @@ Route::group([
     Route::get('blog-details/{slug}', [blogController::class, 'blogDetails']);
     Route::post('updateBlog', [blogController::class, 'updateBlog']);
 });
-Route::group([
-    'middleware' => 'api',
-    'prefix' => 'salary'
-], function () {  //
-    Route::post('addSalary', [blogController::class, 'addSalary']);
-    Route::get('salarylist', [blogController::class, 'salarylist']);
-    Route::get('salarydetails/{id}', [blogController::class, 'salarydata']);
-    Route::post('update', [blogController::class, 'updates']);
-});
+ 

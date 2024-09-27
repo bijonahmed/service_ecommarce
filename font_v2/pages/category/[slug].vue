@@ -73,88 +73,8 @@
                 <div class="col-6 col-sm-6 col-lg-12 pe-0">
                   <div class="text-center text-sm-start">
                     <div class="dropdown-lists">
-                      <ul class="p-0 mb-0 text-center text-sm-start">
-                        <li class="list-inline-item position-relative d-none d-xl-inline-block">
-                          <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Delivery
-                            Time <i class="fa fa-angle-down ms-2"></i></button>
-                          <div class="dropdown-menu">
-                            <div class="widget-wrapper pb25 mb0">
-                              <div class="radio-element">
-                                <div class="form-check d-flex align-items-center mb10">
-                                  <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault1">
-                                  <label class="form-check-label" for="flexRadioDefault1">Express 24H</label>
-                                </div>
-                                <div class="form-check d-flex align-items-center mb10">
-                                  <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault2" checked="checked">
-                                  <label class="form-check-label" for="flexRadioDefault2">Up to 3 days</label>
-                                </div>
-                                <div class="form-check d-flex align-items-center mb10">
-                                  <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault3">
-                                  <label class="form-check-label" for="flexRadioDefault3">Up to 7 days</label>
-                                </div>
-                                <div class="form-check d-flex align-items-center">
-                                  <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                    id="flexRadioDefault4">
-                                  <label class="form-check-label" for="flexRadioDefault4">Anytime</label>
-                                </div>
-                              </div>
-                            </div>
-                            <button class="done-btn ud-btn btn-thm drop_btn">Apply<i
-                                class="fal fa-arrow-right-long"></i></button>
-                          </div>
-                        </li>
-                        <li class="list-inline-item position-relative d-none d-xl-inline-block">
-                          <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Budget
-                            <i class="fa fa-angle-down ms-2"></i></button>
-                          <div class="dropdown-menu dd3">
-                            <div class="widget-wrapper pb25 mb0 pr20">
-                              <!-- Range Slider Desktop Version -->
-                              <div class="range-slider-style1">
-                                <div class="range-wrapper">
-                                  <div class="slider-range mb20"></div>
-                                  <div class="text-center">
-                                    <input type="text" class="amount" placeholder="$20"><span
-                                      class="fa-sharp fa-solid fa-minus mx-1 dark-color"></span>
-                                    <input type="text" class="amount2" placeholder="$70987">
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <button class="done-btn ud-btn btn-thm drop_btn3">Apply<i
-                                class="fal fa-arrow-right-long"></i></button>
-                          </div>
-                        </li>
-                        <li class="list-inline-item position-relative d-none d-xl-inline-block">
-                          <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Level <i
-                              class="fa fa-angle-down ms-2"></i></button>
-                          <div class="dropdown-menu">
-                            <div class="widget-wrapper pb25 mb0">
-                              <div class="checkbox-style1">
-                                <label class="custom_checkbox">Top Rated Seller
-                                  <input type="checkbox">
-                                  <span class="checkmark"></span>
-                                </label>
-                                <label class="custom_checkbox">Level Two
-                                  <input type="checkbox" checked="checked">
-                                  <span class="checkmark"></span>
-                                </label>
-                                <label class="custom_checkbox">Level One
-                                  <input type="checkbox">
-                                  <span class="checkmark"></span>
-                                </label>
-                                <label class="custom_checkbox">New Seller
-                                  <input type="checkbox">
-                                  <span class="checkmark"></span>
-                                </label>
-                              </div>
-                            </div>
-                            <button class="done-btn ud-btn btn-thm dropdown-toggle">Apply<i
-                                class="fal fa-arrow-right-long"></i></button>
-                          </div>
-                        </li>
+                      <ul class="p-0 mb-0 text-center text-sm-start d-none">
+
                         <li class="list-inline-item position-relative d-none d-xl-inline-block">
                           <button class="open-btn mb10 dropdown-toggle" type="button" data-bs-toggle="dropdown">Location
                             <i class="fa fa-angle-down ms-2"></i></button>
@@ -193,361 +113,58 @@
                 </div>
 
               </div>
+
+
               <div class="row">
-                <div class="col-sm-6 col-xl-3">
+                <div class="col-sm-6 col-xl-3" v-for="data in responseData" :key="data.id">
                   <div class="listing-style1">
                     <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-1.jpg" alt="">
+                      <!-- Dynamically set the image source -->
+                      <img class="w-100"
+                        :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
+                        alt="Listing Image">
                       <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
                     </div>
                     <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><nuxt-link to="/gigs/programming-task">I will design modern websites in figma
-                          or adobe xd</nuxt-link></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
+                      <p class="list-text body-color fz14 mb-1">{{ categoryName || '' }}</p>
+                      <h5 class="list-title">
+                        <nuxt-link :to="`/gigs/${data.gig_slug}`">{{ data.name || '' }} </nuxt-link>
+                      </h5>
+
                       <hr class="my-2">
                       <div class="list-meta d-flex justify-content-between align-items-center mt15">
                         <a href="#">
                           <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-1.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
+                            <img class="rounded-circle" :src="data.freelancer_images" alt="Freelancer Photo"
+                              style="height: 50px;width: 50px;">
+                            <span class="online-badge" style="height: 10px;width: 10px;"></span>
                           </span>
-                          <span class="fz14">Bijon Ahmed</span>
+                          <span class="fz14">{{ data.user_name || '' }}</span>
                         </a>
                         <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
+                          <p class="mb-0 body-color">
+                            Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.price || '0.00' }}</span>
+                          </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-3.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Design & Creative</p>
-                      <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will build a fully
-                          responsive design in HTML,CSS, bootstrap, and javascript</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-3.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-4.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will do mobile app development for
-                          ios and android</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-4.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-5.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma
-                          or adobe xd</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-1.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-6.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma
-                          or adobe xd</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-2.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-7.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Design & Creative</p>
-                      <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will build a fully
-                          responsive design in HTML,CSS, bootstrap, and javascript</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-3.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-8.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will do mobile app development for
-                          ios and android</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-4.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-9.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma
-                          or adobe xd</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-1.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-10.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will design modern websites in figma
-                          or adobe xd</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-2.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-11.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Design & Creative</p>
-                      <h5 class="list-title line-clamp2"><a href="page-services-single.html">I will build a fully
-                          responsive design in HTML,CSS, bootstrap, and javascript</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-3.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-sm-6 col-xl-3">
-                  <div class="listing-style1">
-                    <div class="list-thumb">
-                      <img class="w-100" src="/images/listings/g-12.jpg" alt="">
-                      <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
-                    </div>
-                    <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">Web & App Design</p>
-                      <h5 class="list-title"><a href="page-services-single.html">I will do mobile app development for
-                          ios and android</a></h5>
-                      <div class="review-meta d-flex align-items-center">
-                        <i class="fas fa-star fz10 review-color me-2"></i>
-                        <p class="mb-0 body-color fz14"><span class="dark-color me-2">4.82</span>94 reviews</p>
-                      </div>
-                      <hr class="my-2">
-                      <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
-                          <span class="position-relative mr10">
-                            <img class="rounded-circle" src="/images/team/fl-s-4.png" alt="Freelancer Photo">
-                            <span class="online-badge"></span>
-                          </span>
-                          <span class="fz14">Wanda Runo</span>
-                        </a>
-                        <div class="budget">
-                          <p class="mb-0 body-color">Starting at<span class="fz17 fw500 dark-color ms-1">$983</span></p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+
               </div>
               <div class="row">
-                <div class="mbp_pagination mt30 text-center">
-                  <ul class="page_navigation">
-                    <li class="page-item">
-                      <a class="page-link" href="#"> <span class="fas fa-angle-left"></span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item active" aria-current="page">
-                      <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                    <li class="page-item d-inline-block d-sm-none"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">5</a></li>
-                    <li class="page-item d-none d-sm-inline-block"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item d-none d-sm-inline-block"><a class="page-link" href="#">20</a></li>
-                    <li class="page-item">
-                      <a class="page-link" href="#"><span class="fas fa-angle-right"></span></a>
-                    </li>
-                  </ul>
-                  <p class="mt10 mb-0 pagination_page_count text-center">1 – 20 of 300+ property available</p>
-                </div>
+                <div class="mbp_pagination mt30 text-center" v-if="currentPage < totalPages">
+      <button
+        class="btn btn-primary"
+        @click="fetchData"
+        :disabled="isLoading"
+      >
+        <span v-if="isLoading">Loading...</span>
+        <span v-else>Load More</span>
+      </button>
+    </div>
+
               </div>
             </div>
           </section>
@@ -573,7 +190,10 @@ const route = useRoute();
 const slug = route.params.slug; // Capture the slug parameter from the URL
 const categoryName = ref('');
 const categoryData = ref([]);
-
+const responseData = ref([]);
+const currentPage = ref(1);
+const totalPages = ref(5);    // Total number of pages (update as needed)
+const isLoading = ref(false); // Loading state indicator
 // Assuming categoryData is provided as a prop or fetched from a store
 const props = defineProps({
   categoryData: {
@@ -587,26 +207,49 @@ const isActive = (slug) => {
   return slug === route.params.slug; // Compare slug with the current route's slug
 };
 
-const checkrow = async () => {
+
+const fetchData = async (page = 1) => {
   try {
     loading.value = true;
+    isLoading.value = true; // Set loading to true
+    const response = await axios.get(`/unauthenticate/filterCategoryesSlug`, {
+      params: {
+        slug: slug,
+        page: page, // Pass the page number
+      },
+    });
+    if (page === 1) {
+      responseData.value = response.data.data;
+    } else {
+      responseData.value.push(...response.data.data);
+    }
+    currentPage.value = response.data.pagination.current_page;
+    totalPages.value = response.data.pagination.last_page;
+  } catch (error) {
+  } finally {
+    isLoading.value = false; // Set loading to true
+    loading.value = false;
+  }
+};
+
+
+const checkrow = async () => {
+  try {
     const response = await axios.get(`/unauthenticate/findCategorys`, {
       params: {
         slug: slug,
       },
     });
-
     categoryName.value = response.data.category_name;
     categoryData.value = response.data.categoryData;
 
   } catch (error) {
     // Handle error
-  } finally {
-    loading.value = false;
   }
 };
 
 onMounted(() => {
+  fetchData();
   checkrow();
 });
 
@@ -615,68 +258,45 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.category-list {
-  list-style: none;
-  padding: 0;
+.mbp_pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
 }
 
-.category-item {
-  margin-bottom: 30px;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 15px;
-}
-
-.dropdown {
-  text-decoration: none;
-  font-size: 18px;
-  color: #333;
-  font-weight: bold;
-  transition: color 0.3s;
-}
-
-.dropdown:hover {
-  color: #007bff;
-}
-
-.subcategory-container {
-  margin-top: 10px;
-}
-
-.subcategory-item {
-  background: #f8f9fa;
-  border-radius: 5px;
-  padding: 15px;
-  margin: 5px 0;
-}
-
-.cat-title {
+.mbp_pagination .btn-primary {
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  padding: 12px 30px;
   font-size: 16px;
-  color: #333;
-  font-weight: 600;
-  margin-bottom: 10px;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
 }
 
-.sub-subcategory-list {
-  list-style: none;
-  padding: 0;
-  margin: 10px 0 0;
+
+.mbp_pagination .btn-primary:hover {
+  background-color: #2980b9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
 }
 
-.sub-subcategory-item {
-  margin: 5px 0;
+
+.mbp_pagination .btn-primary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.sub-subcategory-item a {
-  color: #555;
-  text-decoration: none;
-  transition: color 0.3s;
+.mbp_pagination .btn-primary:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.4);
 }
 
-.sub-subcategory-item a:hover {
-  color: #007bff;
-}
-
-/* Media query for mobile devices */
 @media (max-width: 768px) {
   .body_content {
     padding-bottom: 150px;

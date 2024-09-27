@@ -50,12 +50,12 @@
           </div>
           <div class="col-auto pe-0 pe-xl-3">
             <div class="d-flex align-items-center">
-              <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span
-                  class="flaticon-loupe"></span></a>
+              <!-- <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span
+                  class="flaticon-loupe"></span></a> -->
               <nuxt-link class="login-info mx15-xl mx30 list-item pe-0" to="/seller"><span
                   class="d-none d-xl-inline-block">Become a</span> Seller</nuxt-link>
               <nuxt-link class="login-info mr15-xl mr30" to="/sign-in">Sign in</nuxt-link>
-              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2" to="/sign-up">Join</nuxt-link>
+              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2" to="/sign-up">Sign up</nuxt-link>
             </div>
           </div>
         </div>

@@ -59,7 +59,7 @@ class ChatController extends Controller
 
     public function customerSendMessages(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $data = $request->validate([
             'message' => 'required',
 
@@ -85,7 +85,7 @@ class ChatController extends Controller
         $rdata['sender_id']      = $this->userid;
         $rdata['username']       = $this->email; ///$request->username;
         $rdata['files']          = $imagePath;
-      //  dd($rdata);
+        //  dd($rdata);
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);
@@ -118,16 +118,16 @@ class ChatController extends Controller
     public function getSellerMessages($buyerId)
     {
 
-        $messages    = MyMessage::where(function($query) use ($buyerId) {
-                            $query->where('sender_id', $this->userid)
-                                ->where('to_id', $buyerId);
-                        })
-                        ->orWhere(function($query) use ($buyerId) {
-                            $query->where('sender_id', $buyerId)
-                                ->where('to_id', $this->userid);
-                        })
-                        ->get();
-      
+        $messages    = MyMessage::where(function ($query) use ($buyerId) {
+            $query->where('sender_id', $this->userid)
+                ->where('to_id', $buyerId);
+        })
+            ->orWhere(function ($query) use ($buyerId) {
+                $query->where('sender_id', $buyerId)
+                    ->where('to_id', $this->userid);
+            })
+            ->get();
+
         $data = [];
         foreach ($messages as $v) {
             $check = User::where('email', $v->username)->select('name')->first();

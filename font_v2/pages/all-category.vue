@@ -7,19 +7,7 @@
                 <Header />
                 <MobileMenu />
                 <div class="body_content">
-                    <section class="categories_list_section overflow-hidden">
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-lg-12">
-                                    <div class="listings_category_nav_list_menu">
-                                        <ul class="mb0 d-flex ps-0">
-                                            <li><a href="#" class="active">All Categories</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
+
                     <!-- Breadcumb Sections -->
                     <section class="breadcumb-section">
                         <div class="container">
@@ -28,7 +16,6 @@
                                     <div class="breadcumb-style1">
                                         <div class="breadcumb-list">
                                             <nuxt-link to="/">Home</nuxt-link>
-                                            <a href="#">Category</a>
                                             <a href="#">All Categorys</a>
                                         </div>
                                     </div>
@@ -51,7 +38,6 @@
                                 <div class="row wow fadeInUp">
                                     <div class="col-xl-7">
                                         <div class="position-relative">
-                                            <h2>Category</h2>
                                             <div
                                                 class="advance-search-tab at-home6 bgc-white bdrs12 p10 position-relative border-0">
                                                 <div class="row">
@@ -61,7 +47,8 @@
                                                                 <div class="box-search">
                                                                     <span class="icon far fa-magnifying-glass"></span>
                                                                     <input class="form-control" type="text"
-                                                                        name="search" placeholder="Category...">
+                                                                        v-model="searchtxt" name="search"
+                                                                        placeholder="Category..." @keyup="fetchCatData">
                                                                 </div>
                                                             </form>
                                                         </div>
@@ -69,7 +56,7 @@
                                                     <div class="col-md-3 col-lg-4 col-xl-3">
                                                         <div class="text-center">
                                                             <button class="ud-btn btn-thm bdrs12 w-100 border-0"
-                                                                type="button">Search</button>
+                                                                @click="fetchCatData" type="button">Search</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -84,30 +71,19 @@
                     <!-- About Section Area -->
                     <section class="pb0 pt60">
                         <div class="container maxw1600 bdrb1 pb60">
-                            <ul class="category-list">
-                                <li v-for="category in categoryData" :key="category.id" class="category-item">
-                                    <nuxt-link class="dropdown" :to="`/category/${category.slug}`">
-                                        <span class="menu-title">{{ category.name }}</span>
-                                    </nuxt-link>
-                                    <div class="subcategory-container">
-                                        <!-- Iterate over subcategories in groups of 2 -->
-                                        <div v-for="(subCategoryGroup, index) in groupedSubCategories(category.children)"
-                                            :key="index" class="row mb-1">
-                                            <div v-for="subCategory in subCategoryGroup" :key="subCategory.id"
-                                                class="col-6 subcategory-item">
-                                                <div class="h6 cat-title">{{ subCategory.name }}</div>
-                                                <ul class="sub-subcategory-list ps-0">
-                                                    <li v-for="subSubCategory in subCategory.children"
-                                                        :key="subSubCategory.id" class="sub-subcategory-item">
-                                                        <nuxt-link :to="`/category/${subSubCategory.slug}`">{{
-                                                            subSubCategory.name }} </nuxt-link>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
+                            <div class="container">
+                                <div class="row">
+                                    <ul class="category-list list-unstyled d-flex flex-wrap">
+                                        <li v-for="category in categoryData" :key="category.id"
+                                            class="category-item col-4">
+                                            <nuxt-link class="dropdown" :to="`/category/${category.slug}`">
+                                                <span>{{ category.name }}</span>
+                                            </nuxt-link>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                     </section>
 
@@ -245,21 +221,20 @@ import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
 const router = useRouter();
 const loading = ref(false);
+const searchtxt = ref('');
 
-const groupedSubCategories = (subCategories) => {
-    const grouped = [];
-    for (let i = 0; i < subCategories.length; i += 2) {
-        grouped.push(subCategories.slice(i, i + 2));
-    }
-    return grouped;
-};
 
 const categoryData = ref([]);
+
 
 const fetchCatData = async () => {
     try {
         loading.value = true;
-        const response = await axios.get("/unauthenticate/getCategoryList");
+        const response = await axios.get("/unauthenticate/getCategoryList", {
+            params: {
+                searchtxt: searchtxt.value,
+            }
+        });
         categoryData.value = response.data;
 
     } catch (error) {
@@ -282,22 +257,12 @@ onMounted(async () => {
 }
 
 .category-item {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     border-bottom: 1px solid #ccc;
     padding-bottom: 15px;
 }
 
-.dropdown {
-    text-decoration: none;
-    font-size: 18px;
-    color: #333;
-    font-weight: bold;
-    transition: color 0.3s;
-}
 
-.dropdown:hover {
-    color: #007bff;
-}
 
 .subcategory-container {
     margin-top: 10px;
@@ -376,5 +341,4 @@ onMounted(async () => {
         padding: 100px;
     }
 }
-
 </style>

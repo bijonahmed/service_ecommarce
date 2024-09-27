@@ -19,58 +19,44 @@
                                 </p>
                                 <div
                                     class="advance-search-tab bgc-white p10 bdrs4-sm bdrs60 banner-btn position-relative zi1 animate-up-3 mt30">
-                                    <div class="row">
-                                        <div class="col-md-5 col-lg-6 col-xl-6">
-                                            <div class="advance-search-field mb10-sm">
-                                                <form class="form-search position-relative">
-                                                    <div class="box-search">
-                                                        <span class="icon far fa-magnifying-glass"></span>
-                                                        <input class="form-control" type="text" name="search"
-                                                            placeholder="What are you looking for?" />
-                                                        <div class="search-suggestions">
-                                                            <h6 class="fz14 ml30 mt25 mb-3">
-                                                                Popular Search
-                                                            </h6>
-                                                             
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4 col-xl-3">
-                                            <div class="bselect-style1 bdrl1 bdrn-sm">
-                                                <select class="selectpicker" data-width="100%">
-                                                    <option>Choose Category</option>
-                                                    <option data-tokens="Graphics&Design">
-                                                        Graphics & Design
-                                                    </option>
-                                                    <option data-tokens="DigitlMarketing">
-                                                        Digital Marketing
-                                                    </option>
-                                                    <option data-tokens="Writing&Translation">
-                                                        Writing & Translation
-                                                    </option>
-                                                    <option data-tokens="Video&Animation">
-                                                        Video & Animation
-                                                    </option>
-                                                    <option data-tokens="Music&Audio">
-                                                        Music & Audio
-                                                    </option>
-                                                    <option data-tokens="Programming&Tech">
-                                                        Programming & Tech
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3 col-lg-2 col-xl-3">
-                                            <div class="text-center text-xl-start">
-                                                <button class="ud-btn btn-thm w-100 bdrs60" type="button">
-                                                    Search
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <form class="form-search position-relative">
+    <div class="row">
+        <div class="col-md-5 col-lg-6 col-xl-6">
+            <div class="advance-search-field mb10-sm">
+                <div class="box-search">
+                    <span class="icon far fa-magnifying-glass"></span>
+                    <input class="form-control" type="text" name="search"
+                        v-model="filter_name"
+                        placeholder="What are you looking for?" 
+                        @keydown.enter.prevent />
+                    <div class="search-suggestions">
+                        <h6 class="fz14 ml30 mt25 mb-3">
+                            Popular Search
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4 col-xl-3">
+            <div class="bselect-style1 bdrl1 bdrn-sm">
+                <!-- Optional content -->
+            </div>
+        </div>
+        <div class="col-md-3 col-lg-2 col-xl-3">
+            <div class="text-center text-xl-start">
+                <button class="ud-btn btn-thm w-100 bdrs60" type="button"
+                    @click="fiterbySearch">
+                    Search
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+
                                 </div>
+
+
+
                                 <div class="row mt20 animate-up-4">
                                     <div class="col-xl-9">
                                         <div class="row justify-content-between">
@@ -131,7 +117,7 @@
                                     <span class="icon flaticon-review"></span>
                                     <div class="details pl20">
                                         <h6 class="mb-1">Proof of quality</h6>
-                                        <p class="text fz13 mb-0">Lorem Ipsum Dolar Amet</p>
+
                                     </div>
                                 </div>
                                 <div
@@ -139,7 +125,7 @@
                                     <span class="icon flaticon-review"></span>
                                     <div class="details pl20">
                                         <h6 class="mb-1">Safe and secure</h6>
-                                        <p class="text fz13 mb-0">Lorem Ipsum Dolar Amet</p>
+
                                     </div>
                                 </div>
                                 <img src="/images/about/happy-client.png" alt=""
@@ -151,7 +137,7 @@
             </section>
 
             <!-- Need something -->
-            <section class="our-features">
+            <section class="our-features" style="padding: 10px 0; position: relative;">
                 <div class="container wow fadeInUp">
                     <div class="row">
                         <div class="col-lg-12">
@@ -231,8 +217,7 @@
             <!-- Popular Services -->
             <!-- Browse talent by category -->
 
-            <section class="pb10-sm pb10">
-                <br />
+            <section class="">
                 <div class="container">
                     <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
                         <div class="col-lg-9">
@@ -241,10 +226,14 @@
                             </div>
                         </div>
                         <div class="col-lg-3">
-                            <div class="text-start text-lg-end mb-4 mb-lg-2">
+
+                            <div class="main-title2 text-left" style="text-align: right;">
                                 <nuxt-link class="ud-btn2" to="/all-category">All Categories<i
                                         class="fal fa-arrow-right-long"></i></nuxt-link>
                             </div>
+
+
+
                         </div>
                     </div>
 
@@ -259,7 +248,9 @@
                             <div class="iconbox-style1">
 
                                 <div class="details mt-2">
-                                    <nuxt-link :to="`/category/${category.slug}`" class="text-muted"> <p class="text-black">{{ category.name }}</p>     </nuxt-link>
+                                    <nuxt-link :to="`/category/${category.slug}`" class="text-muted">
+                                        <p class="text-black">{{ category.name }}</p>
+                                    </nuxt-link>
                                 </div>
                             </div>
                         </div>
@@ -316,20 +307,6 @@
                 <img class="home6-cta-img" src="/about-17.png" alt="N/A" />
 
             </section>
-
-            <!-- Our Partners -->
-
-            <!-- talent by category -->
-            <!-- <div class="owl-carousel owl-theme">
-                            <div class="item" v-for="(item, index) in items" :key="index">
-                                <img :src="item.image" alt="Slider Image" />
-                                <h4>{{ item.title }}</h4>
-                            </div>
-                        </div> -->
-
-
-            <!-- Highest Rated Freelancers -->
-            <!-- Our Footer -->
             <Footer />
         </div>
         <!-- END -->
@@ -359,7 +336,8 @@ const items = ref([
 ]);
 
 const categoryData = ref([]);
-// Compute the limited categories to display the last 20
+const filter_name = ref('');
+
 const limitedCategories = computed(() => {
     return categoryData.value.slice(-100); // Get the last 20 categories
 });
@@ -378,6 +356,13 @@ const fetchCatData = async () => {
     }
 };
 
+const fiterbySearch = () => {
+    const slug = filter_name.value;
+    router.push({
+        path: '/filter/search',
+        query: { slug }
+    });
+}
 
 onMounted(() => {
     fetchCatData();
@@ -413,10 +398,6 @@ onMounted(() => {
     height: 520px;
 }
 
-section {
-    padding: 20px 0;
-    position: relative;
-}
 
 .iconbox-style1 {
     border-radius: 12px;
