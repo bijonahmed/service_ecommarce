@@ -138,7 +138,7 @@ Route::group([
     Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
     Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
     Route::get('getSpeacialCategoryList', [CategoryController::class, 'getSpeacialCategoryList']);
-
+   
     Route::get('getInacCategoryList', [CategoryController::class, 'allInacCategory']);
     Route::get('getProductCategoryList', [CategoryController::class, 'getProductCategoryList']);
     Route::get('removeProctCategory', [CategoryController::class, 'removeProctCategory']);
@@ -263,7 +263,7 @@ Route::group([
     Route::get('pagniatedProducts', [UnauthenticatedController::class, 'pagniatedProducts']);
     Route::get('filterCategorys', [UnauthenticatedController::class, 'filterCategory']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
-    Route::get('findCategorys/{slug}', [UnauthenticatedController::class, 'findCategorys']);
+    Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
     Route::get('productSlug/{slug}', [UnauthenticatedController::class, 'findProductSlug']);
     Route::get('getSeller/{slug}', [UnauthenticatedController::class, 'getSeller']);
     Route::get('getSellerCategoryFilter/{id}', [UnauthenticatedController::class, 'getSellerCategoryFilter']);

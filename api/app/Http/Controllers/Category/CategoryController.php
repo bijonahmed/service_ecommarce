@@ -41,6 +41,8 @@ class CategoryController extends Controller
         return response()->json($categories);
     }
 
+
+     
     public function removeProctCategory(Request $request)
     {
         // dd($request->all());
@@ -180,9 +182,6 @@ class CategoryController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-
-
-
         if (empty($request->id)) {
             $validator = Validator::make(
                 $request->all(),
@@ -257,7 +256,7 @@ class CategoryController extends Controller
             $data->meta_keyword      =  $request->input('meta_keyword');
             $data->parent_id         =  $request->input('parent_id');
             $data->status            =  $request->input('status');
-          //  $data->home_status       =  $request->home_status;
+            //  $data->home_status       =  $request->home_status;
             $data->commission        =  $request->input('commission');
             $data->fixcommission     =  $request->input('fixcommission');
             $data->keyword           =  $request->input('keyword');
@@ -273,7 +272,7 @@ class CategoryController extends Controller
     public function allCategory(Request $request)
     {
         try {
-            $categories = Categorys::with('children.children.children.children.children')->where('parent_id', 0)->get();
+            $categories = Categorys::with('children.children.children.children.children')->where('status', 1)->get();
             // dd($categories);
             return response()->json(
                 $categories
@@ -307,12 +306,10 @@ class CategoryController extends Controller
                 // 'catList' => $categoriesList,
 
             ]);
-
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
-    } 
-
+    }
 
     public function allInacCategory(Request $request)
     {
@@ -417,7 +414,7 @@ class CategoryController extends Controller
     }
     public function attributeValRows($attributes_id)
     {
-//dd($attributes_id);
+        //dd($attributes_id);
 
         $attrValues = AttributeValues::where('attributes_id', $attributes_id)->select('id', 'attributes_id', 'name')->get();
         $collection = collect($attrValues);
@@ -524,7 +521,7 @@ class CategoryController extends Controller
                     "errors" => "Something went wrong"
                 ], 500);
             }
-        } else{
+        } else {
 
             $validator =  Validator::make(
                 $request->all(),
@@ -535,7 +532,7 @@ class CategoryController extends Controller
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
             }
-            
+
             $category->update([
                 'speacial_status' => $request->speacial_status,
             ]);
