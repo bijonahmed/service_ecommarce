@@ -57,6 +57,7 @@ Route::group([
     Route::post('profile', [AuthController::class, 'profile']);
     Route::post('updateLogo', [AuthController::class, 'updateLogo']);
     Route::post('updateprofile', [AuthController::class, 'updateprofile']);
+    Route::post('updateprofileFrontend', [AuthController::class, 'updateprofileFrontend']);
     Route::post('updateBusinessprofile', [AuthController::class, 'updateBusinessprofile']);
     Route::post('updatePassword', [AuthController::class, 'changesPassword']);
 
@@ -88,6 +89,7 @@ Route::group([
     'prefix' => 'user'
 ], function () {
     Route::get('allUsers', [UserController::class, 'AllUsersList']);
+    Route::get('allprofession', [UserController::class, 'allProfessionList']);
     Route::get('allemployeeType', [UserController::class, 'allemployeeType']);
     Route::get('employeeRow/{id}', [UserController::class, 'employeeRow']);
     Route::get('getEmployeeList', [UserController::class, 'getEmployeeList']);
@@ -199,11 +201,12 @@ Route::group([
 
 Route::group([ 'prefix' => 'unauthenticate' ], function () {
     Route::get('getFindCategorys', [UnauthenticatedController::class, 'getFindCategorys']);
-    Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategory']);
+    Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategorys']);
     Route::get('filterCategoryesSlug', [UnauthenticatedController::class, 'filterCategoryesSlug']);
     Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
     Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
     Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
+     Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
 });
 
 

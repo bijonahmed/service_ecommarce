@@ -1,9 +1,8 @@
 <template>
   <header class="header-nav nav-homepage-style stricky main-menu border-0">
-    <!-- Ace Responsive Menu -->
     <nav class="posr">
       <div class="container posr">
-        <div class="row align-items-center justify-content-between">
+        <div class="row align-items-center justify-content-between navbar-scrolltofixed">
           <div class="col-auto px-0 px-xl-3">
             <div class="d-flex align-items-center justify-content-between">
               <div class="logos">
@@ -32,7 +31,7 @@
                               <li v-for="subSubCategory in subCategory.children" :key="subSubCategory.id">
                                 <a href="#">{{ subSubCategory.name }}</a>
                               </li>
-                              
+
                             </ul>
                           </div>
                         </div>
@@ -44,7 +43,8 @@
               </div>
               <!-- Responsive Menu Structure-->
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
-                <li> <nuxt-link class="list-item pe-0" to="/support">Support</nuxt-link></li>
+                <li v-if="isLoggedIn"> <nuxt-link class="list-item pe-0" to="/dashboard/welcome">
+                    <i class="fa fa-home"></i>My Dashboard</nuxt-link></li>
               </ul>
             </div>
           </div>
@@ -54,37 +54,23 @@
                   class="flaticon-loupe"></span></a> -->
               <nuxt-link class="login-info mx15-xl mx30 list-item pe-0" to="/seller"><span
                   class="d-none d-xl-inline-block">Become a</span> Seller</nuxt-link>
-              <nuxt-link class="login-info mr15-xl mr30" to="/sign-in">Sign in</nuxt-link>
-              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2" to="/sign-up">Sign up</nuxt-link>
+
+              <nuxt-link class="login-info mr15-xl mr30" to="/sign-in" v-if="!isLoggedIn"><i class="fa fa-sign-in"></i>
+                Sign in</nuxt-link>
+              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2" v-if="!isLoggedIn" to="/sign-up">Sign
+                up</nuxt-link>
+              <nuxt-link class="login-info mr15-xl mr30" to="#" v-if="isLoggedIn" @click="logout"><i
+                  class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link>
+
+
+
             </div>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="search-modal">
-      <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-        tabindex="-1">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalToggleLabel"></h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                <i class="fal fa-xmark"></i>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="popup-search-field search_area">
-                <input type="text" class="form-control border-0"
-                  placeholder="What service are you looking for today?" />
-                <label><span class="far fa-magnifying-glass"></span></label>
-                <button class="ud-btn btn-thm" type="submit">Search</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
     <div class="hiddenbar-body-ovelay"></div>
 
@@ -92,16 +78,44 @@
 </template>
 
 <script setup>
+
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
-
 import { useRouter } from 'vue-router';
+import Cookies from 'js-cookie'; // Import the Cookies object from the js-cookie library
+import { useUserStore } from '~~/stores/user'
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const { isLoggedIn } = storeToRefs(userStore)
 import Swal from "sweetalert2";
-const router = useRouter();
 const loading = ref(false);
-definePageMeta({
-  middleware: 'is-logged-out',
+const router = useRouter();
+
+
+computed(async () => {
+  try {
+    await userStore.getUser()
+  } catch (error) { }
 })
+
+const logout = async () => {
+  const router = useRouter();  
+  try {
+    await userStore.logout(); 
+    Cookies.remove('user'); // Remove the user cookie
+    localStorage.removeItem('token'); // Remove the token from local storage
+    router.push('/').then(() => {
+      location.reload();  
+    });
+  } catch (error) {
+    console.error('Error during logout:', error);
+    if (error.response && error.response.status === 401) {
+      Cookies.remove('user'); // Remove the user cookie again if unauthorized
+      console.log('Unauthorized access - logging out...');
+      location.reload();  
+    }
+  }
+};
 
 const groupedSubCategories = (subCategories) => {
   const grouped = [];
@@ -126,8 +140,33 @@ const fetchCatData = async () => {
   }
 };
 
+
+const navbarScrollfixed = () => {
+  $('.navbar-scrolltofixed').scrollToFixed();
+  var summaries = $('.summary');
+  summaries.each(function (i) {
+    var summary = $(summaries[i]);
+    var next = summaries[i + 1];
+    summary.scrollToFixed({
+      marginTop: $('.navbar-scrolltofixed').outerHeight(true) + 10,
+      limit: function () {
+        var limit = 0;
+        if (next) {
+          limit = $(next).offset().top - $(this).outerHeight(true) - 10;
+        } else {
+          limit = $('.footer').offset().top - $(this).outerHeight(true) - 10;
+        }
+        return limit;
+      },
+      zIndex: 999
+    });
+  });
+}
+
+
 onMounted(async () => {
   fetchCatData();
+  navbarScrollfixed();
 });
 
 </script>
@@ -140,13 +179,14 @@ onMounted(async () => {
   font-size: 15px;
   line-height: 5px;
 }
+
 header.nav-homepage-style {
-	background-color: #1f4b3f;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-	padding: 7px 0;
-	position: fixed;
-	width: 100%;
-	z-index: 3;
+  background-color: #1f4b3f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 7px 0;
+  position: fixed;
+  width: 100%;
+  z-index: 3;
 }
 
 /* Submenu container */

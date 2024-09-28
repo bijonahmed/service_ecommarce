@@ -31,12 +31,13 @@ export const useUserStore = defineStore("user", {
         });
     },
 
-    async register(full_name,email,otp,inviteCode,password,confirmPassword) {
+    async register(name,email,country_1,inviteCode,userType,password,confirmPassword) {
       await $axios.post("/auth/register", {
-        full_name: '',
+        name: name,
         email: email,
-        otp: otp,
+        country_1: country_1,
         inviteCode: inviteCode,
+        userType: userType,
         password: password,
         password_confirmation: confirmPassword,
       });

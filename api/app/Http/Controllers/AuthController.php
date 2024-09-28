@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['updateLogo', 'login', 'register', 'showProfileData', 'updateprofile', 'updatePassword', 'registerSeller', 'updateBusinessprofile']]);
+        $this->middleware('auth:api', ['except' => ['updateLogo', 'login', 'register', 'updateprofileFrontend', 'showProfileData', 'updateprofile', 'updatePassword', 'registerSeller', 'updateBusinessprofile']]);
     }
     protected function validateLogin(Request $request)
     {
@@ -26,6 +26,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        //   dd($request->all());
         $this->validateLogin($request);
         $credentials = request(['email', 'password']);
         if (!$token = auth('api')->attempt($credentials)) {
@@ -42,12 +43,15 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // dd($request->all());
+        //dd($request->all());
         $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|unique:users,email',
-            'password' => 'required|min:2|confirmed', // Add the 'confirmed' rule
-        ],[
+            'name'      => 'required',
+            'country_1' => 'required',
+            'userType'  => 'required',
+            'email'     => 'required|unique:users,email',
+            'password'  => 'required|min:2|confirmed', // Add the 'confirmed' rule
+        ], [
+            'name'     => "Name is required",
             'password' => "Password dosen't match",
         ]);
 
@@ -55,20 +59,16 @@ class AuthController extends Controller
         $t = microtime(true);
         $createTimeStamp =  strtok($t, '.');
         $code = $createTimeStamp; //uniqid().mt_rand(1, 999999);
-        $inviteCode = !empty($request->invite_code) ? $request->invite_code : "";
+        $inviteCode = !empty($request->inviteCode) ? $request->inviteCode : "";
         if (!empty($inviteCode)) {
             $user = DB::table('users')->where('invite_code', $inviteCode)->first();
-
             if (!empty($user->id)) {
                 $setting = DB::table('tbl_setting')->first();
-
                 // Update user data
                 $userData = [
                     'reffer_bonus' => !empty($setting->reffer_bonus) ? $user->reffer_bonus + $setting->reffer_bonus : 0,
                 ];
-
                 DB::table('users')->where('invite_code', $inviteCode)->update($userData);
-
                 $inviteCode = $code;
                 $joinId = $user->id;
             } else {
@@ -91,8 +91,10 @@ class AuthController extends Controller
                 'email'         => $request->email,
                 'role_id'       => 2,
                 'status'        => 1,
+                'country_1'     => $request->country_1,
                 'ip'            => $ipaddress,
                 'invite_code'   => $inviteCode,
+                'userType'      => $request->userType,
                 'join_id'       => $joinId,
                 'show_password' => $request->password,
                 'password' => bcrypt($request->password),
@@ -214,13 +216,19 @@ class AuthController extends Controller
     }
     protected function respondWithToken($token)
     {
-        $user = auth('api')->user();
+        $user = auth('api')->user(); // Retrieve the authenticated user
         return response()->json([
-            'access_token' => $token,
-            'role_id'      => $user->role_id,
-            'email'        => $user->email,
-            'token_type'   => 'bearer',
-            'expires_in'   => auth('api')->factory()->getTTL() * 60
+            'access_token'  => $token,
+            'token_type'    => 'bearer',
+            'expires_in'    => auth('api')->factory()->getTTL() * 60,
+            'user' => [
+                'id'        => $user->id,
+                'role_id'   => $user->role_id,
+                'name'      => $user->name,
+                'email'     => $user->email,
+                'status'    => $user->status,
+                // Add any other user information you want to include
+            ],
         ]);
     }
     public function guard()
@@ -249,8 +257,6 @@ class AuthController extends Controller
             'user' => $user
         ], 200);
     }
-
- 
 
     public function updateBusinessprofile(Request $request)
     {
@@ -282,7 +288,6 @@ class AuthController extends Controller
         return response()->json($response);
     }
 
-
     public function updateLogo(Request $request)
     {
         $user       = auth('api')->user();
@@ -311,9 +316,6 @@ class AuthController extends Controller
             $data['business_logo'] = $upload_url;
         }
 
-
-
-
         //dd($data);
         DB::table('users')->where('id', $authId)->update($data);
         $response = [
@@ -324,6 +326,50 @@ class AuthController extends Controller
         return response()->json($response);
     }
 
+
+    public function updateprofileFrontend(Request $request)
+    {
+
+        $user = auth('api')->user();
+        $userid = $user->id;
+
+        $validator = Validator::make($request->all(), [
+            'name'            => 'required',
+            'email'           => 'required|email|unique:users,email,' . $userid, // Ensure email is unique except for the current user
+            'country_1'       => 'required',
+            'phone_number'    => 'required',
+            'profession_name' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Prepare the data for updating
+        $data = [
+            'name'            => $request->name,
+            'email'           => $request->email,
+            'country_1'       => $request->country_1,
+            'phone_number'    => $request->phone_number,
+            'profession_name' => $request->profession_name,
+            'profile_status'  => 1,
+        ];
+
+        try {
+            // Update the user data
+            $userUpdate = \DB::table('users')
+                ->where('id', $userid) // Find user by ID
+                ->update($data); // Update the fields
+
+            if ($userUpdate) {
+                return response()->json(['success' => 'Profile updated successfully!']);
+            } else {
+                return response()->json(['error' => 'No changes made to the profile.'], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while updating the profile.'], 500);
+        }
+    }
 
     public function updateprofile(Request $request)
     {
@@ -337,24 +383,6 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        
-        // name: '',
-        // email: '',
-        // gender: '',
-        // birthdate: '',
-        
-        // address_1: '',
-        // country_1: '',
-        // landmark_1: '',
-        // city_1: '',
-        // phone_1: '',
-
-        // address_2: '',
-        // country_2: '',
-        // city_2: '',
-        // landmark_2: '',
-        // phone_2: '',
-
 
         $data = array(
             'id'                => $authId,
@@ -363,7 +391,6 @@ class AuthController extends Controller
 
             'gender'      => !empty($request->gender) ? $request->gender : "",
             'birthdate'      => !empty($request->birthdate) ? $request->birthdate : "",
-
 
             // 'address'           => !empty($request->address) ? $request->address : "",
 
@@ -377,8 +404,6 @@ class AuthController extends Controller
             'landmark_2'        => !empty($request->landmark_2) ? $request->landmark_2 : "",
             'phone_1'           => !empty($request->phone_1) ? $request->phone_1 : "",
             'phone_2'           => !empty($request->phone_2) ? $request->phone_2 : "",
-            
-
 
             'website'           => !empty($request->website) ? $request->website : "",
             'github'            => !empty($request->github) ? $request->github : "",
@@ -410,7 +435,6 @@ class AuthController extends Controller
         }
         // dd($data);
         // return false;
-
 
         DB::table('users')->where('id', $authId)->update($data);
         $response = [

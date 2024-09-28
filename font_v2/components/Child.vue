@@ -20,38 +20,38 @@
                                 <div
                                     class="advance-search-tab bgc-white p10 bdrs4-sm bdrs60 banner-btn position-relative zi1 animate-up-3 mt30">
                                     <form class="form-search position-relative">
-    <div class="row">
-        <div class="col-md-5 col-lg-6 col-xl-6">
-            <div class="advance-search-field mb10-sm">
-                <div class="box-search">
-                    <span class="icon far fa-magnifying-glass"></span>
-                    <input class="form-control" type="text" name="search"
-                        v-model="filter_name"
-                        placeholder="What are you looking for?" 
-                        @keydown.enter.prevent />
-                    <div class="search-suggestions">
-                        <h6 class="fz14 ml30 mt25 mb-3">
-                            Popular Search
-                        </h6>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4 col-lg-4 col-xl-3">
-            <div class="bselect-style1 bdrl1 bdrn-sm">
-                <!-- Optional content -->
-            </div>
-        </div>
-        <div class="col-md-3 col-lg-2 col-xl-3">
-            <div class="text-center text-xl-start">
-                <button class="ud-btn btn-thm w-100 bdrs60" type="button"
-                    @click="fiterbySearch">
-                    Search
-                </button>
-            </div>
-        </div>
-    </div>
-</form>
+                                        <div class="row">
+                                            <div class="col-md-5 col-lg-6 col-xl-6">
+                                                <div class="advance-search-field mb10-sm">
+                                                    <div class="box-search">
+                                                        <span class="icon far fa-magnifying-glass"></span>
+                                                        <input class="form-control" type="text" name="search"
+                                                            v-model="filter_name"
+                                                            placeholder="What are you looking for?"
+                                                            @keydown.enter.prevent />
+                                                        <div class="search-suggestions">
+                                                            <h6 class="fz14 ml30 mt25 mb-3">
+                                                                Popular Search
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 col-xl-3">
+                                                <div class="bselect-style1 bdrl1 bdrn-sm">
+                                                    <!-- Optional content -->
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3 col-lg-2 col-xl-3">
+                                                <div class="text-center text-xl-start">
+                                                    <button class="ud-btn btn-thm w-100 bdrs60" type="button"
+                                                        @click="fiterbySearch">
+                                                        Search
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
 
                                 </div>
 
@@ -64,9 +64,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">834</div>
+                                                            <div class="timer">500</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>K</span></li>
                                                     </ul>
                                                     <p class="text-white mb-0">Total Freelancer</p>
                                                 </div>
@@ -75,9 +75,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">732</div>
+                                                            <div class="timer">15600</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>K</span></li>
                                                     </ul>
                                                     <p class="text-white mb-0">Positive Review</p>
                                                 </div>
@@ -86,9 +86,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">90</div>
+                                                            <div class="timer">1000</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>K</span></li>
                                                     </ul>
                                                     <p class="text-white mb-0">Order recieved</p>
                                                 </div>
@@ -97,9 +97,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">236</div>
+                                                            <div class="timer">2000</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>K</span></li>
                                                     </ul>
                                                     <p class="text-white mb-0">Projects Completed</p>
                                                 </div>

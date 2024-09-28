@@ -14,6 +14,7 @@ use App\Models\GigImagesHistory;
 use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use App\Models\AttributeValues;
+use App\Models\Country;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Models\Gig;
 
@@ -21,6 +22,32 @@ class UnauthenticatedController extends Controller
 {
     protected $frontend_url;
     protected $userid;
+
+    public function allCategorys(Request $request)
+    {
+        $categories = Categorys::with('children.children.children.children.children')->where('status', 1)->get();
+        return response()->json($categories);
+    }
+
+    public function getCountry(){
+
+        try {
+            $countrys = Country::where('status',1)->get();
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Countries retrieved successfully',
+                'data' => $countrys
+            ], 200);
+    
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Failed to retrieve countries',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+
+    }
 
     public function allCategory(Request $request)
     {
@@ -62,7 +89,6 @@ class UnauthenticatedController extends Controller
                 'country.countryname as countryname'
             )
             ->paginate(12);
-
 
         $data = [];
         foreach ($filterData as $v) {
@@ -133,7 +159,6 @@ class UnauthenticatedController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 
     public function getFindCategorys()
     {
@@ -220,7 +245,6 @@ class UnauthenticatedController extends Controller
             return response()->json(['error' => $e->getMessage()], 500);
         }
     }
-
 
     public function findCategorys(Request $request)
     {

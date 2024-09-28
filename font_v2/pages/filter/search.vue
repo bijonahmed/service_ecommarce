@@ -12,19 +12,20 @@
                     <section class="categories_list_section overflow-hidden">
                         <div class="container">
                             <div class="row">
-                <div class="col-lg-12">
-                  <div class="listings_category_nav_list_menu">
-                    <ul class="mb0 d-flex ps-0">
-                      <li v-for="data in categoryData" :key="data.id">
-                        <nuxt-link :to="`/category/${data.slug}`" :class="{ active: isActive(data.slug) }">
-                          {{ data.name }}
-                        </nuxt-link>
-                      </li>
-                      <!-- {{categoryData}} -->
-                    </ul>
-                  </div>
-                </div>
-              </div>
+                                <div class="col-lg-12">
+                                    <div class="listings_category_nav_list_menu">
+                                        <ul class="mb0 d-flex ps-0">
+                                            <li v-for="data in categoryData" :key="data.id">
+                                                <nuxt-link :to="`/category/${data.slug}`"
+                                                    :class="{ active: isActive(data.slug) }">
+                                                    {{ data.name }}
+                                                </nuxt-link>
+                                            </li>
+                                            <!-- {{categoryData}} -->
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </section>
                     <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -189,10 +190,10 @@ const slug = route.params.slug; // Capture the slug parameter from the URL
 const categoryData = ref([]);
 
 const props = defineProps({
-  categoryData: {
-    type: Array,
-    required: true
-  }
+    categoryData: {
+        type: Array,
+        required: true
+    }
 });
 
 
@@ -222,22 +223,22 @@ const fetchData = async (page = 1) => {
     }
 };
 const isActive = (slug) => {
-  return slug === route.params.slug; // Compare slug with the current route's slug
+    return slug === route.params.slug; // Compare slug with the current route's slug
 };
 
 
 const fetechCategory = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/findCategorys`, {
-      params: {
-        slug: slug,
-      },
-    });
-    categoryData.value = response.data.categoryData;
+    try {
+        const response = await axios.get(`/unauthenticate/findCategorys`, {
+            params: {
+                slug: slug,
+            },
+        });
+        categoryData.value = response.data.categoryData;
 
-  } catch (error) {
-    // Handle error
-  }
+    } catch (error) {
+        // Handle error
+    }
 };
 onMounted(async () => {
     fetchData();
@@ -286,44 +287,20 @@ onMounted(async () => {
     box-shadow: 0 0 0 4px rgba(52, 152, 219, 0.4);
 }
 
-/* Media query for mobile devices */
-@media (max-width: 768px) {
-    .body_content {
-        padding-bottom: 150px;
-    }
+.body_content {
+  padding: 100px;
+}
+
+@media (max-width: 991.98px) {
+  .body_content {
+    padding: 20px 20px 150px;
+  }
 }
 
 @media (max-width: 575.98px) {
-    .body_content {
-        padding-top: 20px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-}
-
-/* Small Devices (tablets, 576px and up) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-    .body_content {
-        padding-top: 20px;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-}
-
-/* Medium Devices (desktops, 768px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-    .body_content {
-        padding-top: 20px;
-        padding-left: 20px;
-        padding-right: 20px;
-    }
-}
-
-/* Large Devices (large desktops, 992px and up) */
-@media (min-width: 992px) {
-    .body_content {
-        padding: 100px;
-    }
+  .body_content {
+    padding: 20px 10px;
+  }
 }
 
 .categories_list_section {

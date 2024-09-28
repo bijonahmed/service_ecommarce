@@ -21,6 +21,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\BlogModel; 
 use App\Models\blogCategory; 
+use App\Models\Profession; 
+
 
 class UserController extends Controller
 {
@@ -38,6 +40,26 @@ class UserController extends Controller
             $this->email = $user->email;
         }
     }
+
+
+    public function allProfessionList(){
+
+        try {
+            $rows = Profession::where('status',1)->get();
+            $response = [
+                'data' => $rows,
+                'message' => 'success'
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                'data' => [],
+                'message' => 'failed'
+            ];
+        }
+        return response()->json($response, 200);
+
+    }
+
     public function saveRole(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -143,6 +165,10 @@ class UserController extends Controller
         }
         return response()->json($response, 200);
     }
+
+
+   
+
     public function AllUsersList(Request $request)
     {
         try {

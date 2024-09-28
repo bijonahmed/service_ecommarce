@@ -5,67 +5,101 @@
     <body class="bgc-thm2">
       <div class="wrapper ovh">
         <Header />
-        <MobileMenu/>
-       <div class="body_content">
-    <!-- Our LogIn Area -->
-    <section class="our-login">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
-            <div class="main-title text-center">
-              <h2 class="title text-white">Log In</h2>
-            </div>
-          </div>
-        </div>
-        <div class="row wow fadeInRight" data-wow-delay="300ms">
-          <div class="col-xl-6 mx-auto">
-            <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
-              <div class="mb30">
-                <h4>We're glad to see you again!</h4>
-                <p class="text">Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link></p>
-              </div>
-              <div class="mb20">
-                <label class="form-label fw600 dark-color">Email Address</label>
-                <input type="email" class="form-control" placeholder="alitfn58@gmail.com">
-              </div>
-              <div class="mb15">
-                <label class="form-label fw600 dark-color">Password</label>
-                <input type="text" class="form-control" placeholder="*******">
-              </div>
-              <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
-                <label class="custom_checkbox fz14 ff-heading">Remember me
-                  <input type="checkbox" checked="checked">
-                  <span class="checkmark"></span>
-                </label>
-                <a class="fz14 ff-heading" href="#">Lost your password?</a>
-              </div>
-              
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
+        <MobileMenu />
+        <div class="body_content">
+          <!-- Our LogIn Area -->
+          <section class="our-login">
+            <div class="container">
+              <center>
+                <h2 class="title text-white">Log In</h2>
+              </center>
+              <form @submit.prevent="login()">
+                <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                  <Loader />
+                </div>
+                <div class="row wow fadeInRight">
+                  
+                  <div class="col-xl-6 mx-auto">
+                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                      <div class="mb30">
+                        <h4>We're glad to see you again!</h4>
+                        <p class="text">
+                          Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link>
+                        </p>
+                      </div>
+<center><span class="text-danger">{{ errors.account }}</span></center>
+                      <div class="mb20">
+                        <label for="email" class="form-label fw600 dark-color">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="example@gmail.com"
+                          v-model="email">
+                        <span class="text-danger">{{ errors.email }}</span>
+                      </div>
 
-    
-    <Footer/>
-  </div>
+                      <div class="mb15">
+                        <label for="password" class="form-label fw600 dark-color">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="*******"
+                          v-model="password">
+                        <span class="text-danger">{{ errors.password }}</span>
+                      </div>
+
+                      <div class="mb15">
+                        <label for="userCapInput" class="form-label fw600 dark-color">Captcha</label>
+                        <div class="CaptchaWrap">
+                          <div id="CaptchaImageCode" class="CaptchaTxtField">
+                            <canvas id="CapCode" class="capcode" width="500" height="50"
+                              style="margin-top: -15px;"></canvas>
+                          </div>
+                          <button type="button" @click="createCaptcha" class="ReloadBtn">
+                            <img src="/refresh.webp" alt="Refresh Captcha" />
+                          </button>
+                        </div>
+
+                        <input type="hidden" id="UserCaptchaCode" class="CaptchaTxtField form-control mt-2"
+                          placeholder="Enter Captcha - Case Sensitive" v-model="captchaInput" @input="validateCaptcha"
+                          required>
+                        <input type="text" id="userCapInput" class="CaptchaTxtField form-control mt-2"
+                          placeholder="Enter Captcha - Case Sensitive" v-model="userCapInput">
+
+                        <span id="WrongCaptchaError" class="error">{{ captchaError }}</span>
+                        <span class="text-danger">{{ errors.userCapInput }}</span>
+                      </div>
+
+                      <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
+                        <a class="fz14 ff-heading" href="#">Lost your password?</a>
+                      </div>
+
+                      <div class="d-grid mb20">
+                        <button class="ud-btn btn-thm default-box-shadow2" type="submit">Login</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </section>
+
+
+          <Footer />
+        </div>
 
       </div>
     </body>
-   
+
   </div>
 </template>
 
 <script setup>
+
 import axios from "axios";
 import { useUserStore } from "~~/stores/user";
 
 const userStore = useUserStore();
 const router = useRouter();
 
-definePageMeta({
-  middleware: "is-logged-in",
-});
+// definePageMeta({
+//     middleware: 'is-logged-in'
+// })
 
 const loading = ref(false);
 const email = ref("");
@@ -93,17 +127,15 @@ const togglePassword = (id) => {
 };
 
 function createCaptcha() {
-    /*
   const canvas = document.getElementById("CapCode");
   const context = canvas.getContext("2d");
   const captchaCode = generateCaptchaCode(6); // Change the length as needed
 
   context.clearRect(0, 0, canvas.width, canvas.height);
-  context.font = "48px Arial";
+  context.font = "18px Arial";
   context.fillText(captchaCode, 10, 50);
 
   captchaInput.value = captchaCode;
-  */
 }
 
 function generateCaptchaCode(length) {
@@ -131,8 +163,6 @@ function validateCaptcha() {
 async function login() {
   try {
     loading.value = true;
-    // Your login logic here
-    // Assuming you're making an API request to log in
     await userStore.login(
       email.value,
       password.value,
@@ -145,7 +175,7 @@ async function login() {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + userStore.api_token;
     }
-    router.push("/dashboard/mining");
+    router.push("/dashboard/welcome");
   } catch (error) {
     loading.value = false;
     // If the request fails, display the error messages
@@ -170,13 +200,138 @@ onMounted(() => {
 });
 </script>
 
+
 <style scoped>
+h4 {
+  margin-bottom: 15px;
+  /* Space below the heading */
+  color: #333;
+  /* Darker color for heading */
+}
+
+.text {
+  margin-bottom: 20px;
+  /* Space below the paragraph */
+  color: #666;
+  /* Lighter color for text */
+}
+
+.form-label {
+  display: block;
+  /* Make labels block elements */
+  margin-bottom: 5px;
+  /* Space below the label */
+  font-weight: 600;
+  /* Bold font for labels */
+  color: #333;
+  /* Dark color for labels */
+}
+
+.form-control {
+  width: 100%;
+  /* Full width for inputs */
+  padding: 10px;
+  /* Padding inside inputs */
+  border: 1px solid #ddd;
+  /* Light border */
+  border-radius: 6px;
+  /* Rounded corners for inputs */
+  transition: border-color 0.3s ease;
+  /* Smooth transition on focus */
+}
+
+.form-control:focus {
+  border-color: #007bff;
+  /* Change border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  /* Glow effect on focus */
+}
+
+.text-danger {
+  color: #e74c3c;
+  /* Red color for error messages */
+  font-size: 0.9em;
+  /* Slightly smaller font size for errors */
+}
+
+.CaptchaWrap {
+  display: flex;
+  /* Flex layout for captcha */
+  align-items: center;
+  /* Center items vertically */
+  margin-bottom: 15px;
+  /* Space below captcha */
+}
+
+.CaptchaTxtField {
+  width: 100%;
+  /* Full width for captcha input */
+  padding: 10px;
+  /* Padding inside captcha input */
+  border: 1px solid #ddd;
+  /* Light border */
+  border-radius: 6px;
+  /* Rounded corners */
+}
+
+.ReloadBtn {
+  background: none;
+  /* No background for button */
+  border: none;
+  /* No border */
+  cursor: pointer;
+  /* Pointer cursor on hover */
+  margin-left: 10px;
+  /* Space between button and captcha */
+}
+
+.ReloadBtn img {
+  width: 30px;
+  /* Size of the refresh icon */
+  margin-left: -15px;
+}
+
+.checkbox-style1 a {
+  color: #007bff;
+  /* Link color */
+  text-decoration: none;
+  /* No underline */
+}
+
+.checkbox-style1 a:hover {
+  text-decoration: underline;
+  /* Underline on hover */
+}
+
+.ud-btn {
+  background-color: #007bff;
+  /* Button background color */
+  color: white;
+  /* Button text color */
+  border: none;
+  /* No border */
+  border-radius: 6px;
+  /* Rounded corners */
+  padding: 12px;
+  /* Padding inside button */
+  font-size: 16px;
+  /* Font size for button */
+  transition: background-color 0.3s ease;
+  /* Smooth transition */
+}
+
+.ud-btn:hover {
+  background-color: #0056b3;
+  /* Darker color on hover */
+}
+
 .sign-in {
   padding: 10px 0;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .sign-in .sign-in__main {
   padding: 01px 10px;
 }

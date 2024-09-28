@@ -43,15 +43,6 @@ class CategoryController extends Controller
 
 
      
-    public function removeProctCategory(Request $request)
-    {
-        // dd($request->all());
-        HomeAroductSliderCategory::where('id', $request->id)->delete();
-        $response = [
-            'message' => 'Successfully remove.',
-        ];
-        return response()->json($response);
-    }
 
     public function categoryProSlidersave(Request $request)
     {

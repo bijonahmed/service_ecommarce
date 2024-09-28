@@ -7,6 +7,8 @@
         <Header />
          <MobileMenu/>
          <Child />
+        
+         
          <div v-if="node && node.menu">
     <!-- Use 'node.menu' safely here -->
   </div>
@@ -14,6 +16,9 @@
    
   </div>
       </div>
+      <a class="scrollToHome at-home2" href="#"
+            ><i class="fas fa-angle-up"></i
+          ></a>
     </body>
   </div>
 </template>

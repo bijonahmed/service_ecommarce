@@ -96,10 +96,10 @@ export default defineNuxtConfig({
         { rel: "stylesheet", href: "/css/slider.css" },
         { rel: "stylesheet", href: "/css/style.css" },
         { rel: "stylesheet", href: "/css/ud-custom-spacing.css" },
+        { rel: "stylesheet", href: "/css/dashbord_navitaion.css" },
         { rel: "stylesheet", href: "/css/responsive.css" },
          //'~/assets/css/global.css', 
       ],
-      
       // Add JavaScript file
       script: [
         { src: "/js/jquery-3.6.4.min.js", type: "text/javascript" },
@@ -114,7 +114,8 @@ export default defineNuxtConfig({
         { src: "/js/owl.js", type: "text/javascript" },
         { src: "/js/jquery.counterup.js", type: "text/javascript" },
         { src: "/js/pricing-table.js", type: "text/javascript" },
-        { src: "/js/script.js", type: "text/javascript" }, // Custom script for all pages
+        { src: "/js/script.js", type: "text/javascript" },  
+        { src: "/js/dashboard-script.js", type: "text/javascript" },  
       ],
     },
   },

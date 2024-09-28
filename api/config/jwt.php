@@ -100,9 +100,8 @@ return [
     | Notice: If you set this to null you should remove 'exp' element from 'required_claims' list.
     |
     */
-
-    'ttl' => env('JWT_TTL', 60),
-
+    //'ttl' => env('JWT_TTL', 60), // default is 60 minutes
+    'ttl' => 10080, // 7 days in minutes
     /*
     |--------------------------------------------------------------------------
     | Refresh time to live

@@ -426,7 +426,6 @@ const checkrow = async () => {
   };
 };
 
-
 const getCatList = async () => {
   try {
     const response = await axios.get(`/unauthenticate/getFindCategorys`);
@@ -463,48 +462,22 @@ onMounted(() => {
 <style scoped>
 .carousel-item img {
   height: 400px;
-  /* Set your desired height */
   object-fit: cover;
-  /* Make sure the images cover the container */
 }
 
+.body_content {
+  padding: 100px;
+}
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
   .body_content {
-    padding-bottom: 150px;
+    padding: 20px 20px 150px;
   }
 }
 
 @media (max-width: 575.98px) {
   .body_content {
-    padding-top: 20px;
-    padding-left: 10px;
-    padding-right: 10px;
-  }
-}
-
-/* Small Devices (tablets, 576px and up) */
-@media (min-width: 576px) and (max-width: 767.98px) {
-  .body_content {
-    padding-top: 20px;
-    padding-left: 15px;
-    padding-right: 15px;
-  }
-}
-
-/* Medium Devices (desktops, 768px and up) */
-@media (min-width: 768px) and (max-width: 991.98px) {
-  .body_content {
-    padding-top: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-  }
-}
-
-/* Large Devices (large desktops, 992px and up) */
-@media (min-width: 992px) {
-  .body_content {
-    padding: 100px;
+    padding: 20px 10px;
   }
 }
 

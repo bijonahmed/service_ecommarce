@@ -8,50 +8,94 @@
         <MobileMenu />
         <div class="body_content">
           <!-- Our LogIn Area -->
-          <section class="our-register">
-            <div class="container">
-              <div class="row">
-                <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
-                  <div class="main-title text-center">
-                    <h2 class="title text-white">Register</h2>
+          <form @submit.prevent="register()">
+            <section class="our-register">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+                    <div class="main-title text-center">
+                      <h2 class="title text-white">Register</h2>
+                    </div>
+                  </div>
+                </div>
+                <center>
+                  <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                    <Loader />
+                  </div>
+                </center>
+
+                <div class="row wow fadeInRight" data-wow-delay="300ms">
+                  <div class="col-xl-6 mx-auto">
+                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                      <div class="mb30">
+                        <h4>Let's create your account!</h4>
+                        <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
+                            In!</nuxt-link></p>
+                      </div>
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Name</label>
+                        <input type="text" class="form-control" placeholder="Jons" v-model="name">
+                        <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                      </div>
+                      <div class="mb2">
+                       
+                        <label class="form-label fw500 dark-color">Country</label>
+                        <select class="form-control" v-model="country_1">
+                          <option value="" disabled>Select your country</option>
+                          <option v-for="country in countryData" :key="country.id" :value="country.id">
+                            {{ country.countryname }}
+                          </option>
+                        </select>
+                        <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Email</label>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" v-model="email">
+                        <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Type</label>
+                        <select class="form-control" v-model="userType">
+                          <option value="" disabled selected>Select your type</option>
+                          <option v-for="type in userTypes" :key="type.value" :value="type.value">
+                            {{ type.text }}
+                          </option>
+                        </select>
+                        <span class="text-danger" v-if="errors.userType">{{ errors.userType[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Invite Code</label>
+                        <input type="text" class="form-control" placeholder="157878888.." v-model="inviteCode">
+                        <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
+                      </div>
+
+
+                      <div class="mb15">
+                        <label class="form-label fw500 dark-color">Password</label>
+                        <input type="password" class="form-control" placeholder="*******" v-model="password">
+                        <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                      </div>
+
+                      <div class="mb15">
+                        <label class="form-label fw500 dark-color">Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                        <span class="text-danger" v-if="errors.password_confirmation">{{ errors.password_confirmation[0]
+                          }}</span>
+                      </div>
+                      <div class="d-grid mb20">
+                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit">Create
+                          Account <i class="fal fa-arrow-right-long"></i></button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div class="row wow fadeInRight" data-wow-delay="300ms">
-                <div class="col-xl-6 mx-auto">
-                  <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
-                    <div class="mb30">
-                      <h4>Let's create your account!</h4>
-                      <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
-                          In!</nuxt-link></p>
-                    </div>
-                    <div class="mb25">
-                      <label class="form-label fw500 dark-color">Display Name</label>
-                      <input type="text" class="form-control" placeholder="ali">
-                    </div>
-                    <div class="mb25">
-                      <label class="form-label fw500 dark-color">Username</label>
-                      <input type="text" class="form-control" placeholder="alitf">
-                    </div>
-                    <div class="mb25">
-                      <label class="form-label fw500 dark-color">Email</label>
-                      <input type="email" class="form-control" placeholder="alitfn58@gmail.com">
-                    </div>
-                    <div class="mb15">
-                      <label class="form-label fw500 dark-color">Password</label>
-                      <input type="text" class="form-control" placeholder="*******">
-                    </div>
-                    <div class="d-grid mb20">
-                      <button class="ud-btn btn-thm default-box-shadow2" type="button">Creat Account <i
-                          class="fal fa-arrow-right-long"></i></button>
-                    </div>
 
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
+            </section>
+          </form>
           <!-- Our Footer -->
           <Footer />
         </div>
@@ -62,119 +106,116 @@
 </template>
 
 <script setup>
+import { ref, watch, onMounted } from "vue";
+import { useUserStore } from '~~/stores/user';
 import axios from "axios";
-import { useUserStore } from "~~/stores/user";
+import Swal from "sweetalert2";
 
-const userStore = useUserStore();
 const router = useRouter();
+const userStore = useUserStore()
+const errors = ref({});
 
-definePageMeta({
-  middleware: "is-logged-in",
-});
+const loading = ref(false)
 
-const loading = ref(false);
-const email = ref("");
-const password = ref("");
-const errors = ref({ email: "", password: "" }); // Initialize error messages
-const emailError = ref("");
-const passwordError = ref("");
+let name = ref('');
+let email = ref('');
+let country_1 = ref("")
+let inviteCode = ref(null);
+let password = ref(null);
+let confirmPassword = ref(null);
+let userType = ref('');
+let countryData = ref('');
 
-const captchaInput = ref("");
-const userCapInput = ref("");
-const account = ref("");
-const captchaError = ref("");
-const captchaValid = ref(false);
-
-const passwordFieldType = ref("password");
-const confirmPasswordFieldType = ref("password");
-
-const togglePassword = (id) => {
-  const inputField = document.querySelector(id);
-  if (inputField.type === "password") {
-    inputField.type = "text";
-  } else {
-    inputField.type = "password";
-  }
-};
-
-function createCaptcha() {
-  /*
-const canvas = document.getElementById("CapCode");
-const context = canvas.getContext("2d");
-const captchaCode = generateCaptchaCode(6); // Change the length as needed
-
-context.clearRect(0, 0, canvas.width, canvas.height);
-context.font = "48px Arial";
-context.fillText(captchaCode, 10, 50);
-
-captchaInput.value = captchaCode;
-*/
-}
-
-function generateCaptchaCode(length) {
-  const characters = "0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-}
-
-function validateCaptcha() {
-  if (
-    captchaInput.value.toUpperCase() !==
-    document.getElementById("UserCaptchaCode").value.toUpperCase()
-  ) {
-    captchaError.value = "Incorrect CAPTCHA code";
-    captchaValid.value = false;
-  } else {
-    captchaError.value = "";
-    captchaValid.value = true;
-  }
-}
-
-async function login() {
+const userTypes = ref([
+  { value: 'seller', text: 'Seller' },
+  { value: 'buyer', text: 'Buyer' }
+]);
+//getAllcountrys
+const checkEmail = async () => {
   try {
     loading.value = true;
-    // Your login logic here
-    // Assuming you're making an API request to log in
-    await userStore.login(
-      email.value,
-      password.value,
-      captchaInput.value,
-      userCapInput.value
-    );
-    const token = window.localStorage.getItem("token");
-    //console.log("My token: " + token);
-    if (token) {
-      axios.defaults.headers.common["Authorization"] =
-        "Bearer " + userStore.api_token;
-    }
-    router.push("/dashboard/mining");
+    //console.log("====" + email.value);
+    const response = await axios.post('/sendEmail', {
+      email: email.value // Send the email value in the request body
+    });
+    console.log("Send Code: " + response.data);
+    //productdata.value = response.data.data;
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Email sent successfully! Please check your email or spam folder for the OTP.",
+      showConfirmButton: false,
+      timer: 3000
+    });
+
   } catch (error) {
-    loading.value = false;
-    // If the request fails, display the error messages
-    if (error.response && error.response.data.errors) {
-      const responseErrors = error.response.data.errors;
-      errors.value = {
-        email: responseErrors.email ? responseErrors.email[0] : "",
-        password: responseErrors.password ? responseErrors.password[0] : "",
-        userCapInput: responseErrors.userCapInput
-          ? responseErrors.userCapInput[0]
-          : "",
-        account: responseErrors.account ? responseErrors.account[0] : "",
-      };
+    if (error.response && error.response.status === 422) {
+      errors.value = error.response.data.errors;
     } else {
-      console.error("An error occurred while logging in:", error);
+      // Handle other types of errors here
+      console.error('An error occurred:', error);
+    }
+  }
+};
+const getCountrys = async () => {
+  try {
+    const response = await axios.get('/unauthenticate/getAllcountrys');
+    countryData.value = response.data.data;
+
+  } catch (error) {
+
+  }
+};
+getCountrys();
+const buttonDisabled = ref(false); // Initially, button is enabled
+async function sendCode() {
+  if (!buttonDisabled.value) { // Check if button is not disabled
+    try {
+      loading.value = true; // Show loader
+      buttonDisabled.value = true; // Disable the button to prevent double-clicking
+      // Your asynchronous operation (e.g., axios request)
+      await checkEmail(); // Assuming checkEmail is an asynchronous function
+    } finally {
+      loading.value = false; // Hide loader
+      buttonDisabled.value = false; // Re-enable the button after operation completes or fails
     }
   }
 }
 
-onMounted(() => {
-  createCaptcha();
-});
-</script>
+const register = async () => {
+  loading.value = true;
+  try {
+    await userStore.register(
+      name.value,
+      email.value,
+      country_1.value,
+      inviteCode.value,
+      userType.value,
+      password.value,
+      confirmPassword.value
+    )
 
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your account has been successfully created.",
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+
+    router.push('/sign-in')
+  } catch (error) {
+    //console.log(error)
+    errors.value = error.response.data.errors
+  } finally {
+    loading.value = false; // Hide loader
+
+  }
+
+}
+
+</script>
 <style scoped>
 .sign-in {
   padding: 10px 0;
