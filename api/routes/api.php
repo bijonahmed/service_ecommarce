@@ -9,14 +9,9 @@ use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Category\CategoryController;
 use App\Http\Controllers\Project\ProjectController;
-use App\Http\Controllers\Documents\DocumentsController;
-use App\Http\Controllers\Circumstances\CircumstancesController;
-use App\Http\Controllers\Recruitment\RecruitmentController;
-use App\Http\Controllers\Organogram\OrganogramController;
+use App\Http\Controllers\Gig\GigController;
 use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\UnauthenticatedController;
-use App\Http\Controllers\Leave\LeaveController;
-use App\Http\Controllers\Manufacturer\ManufacturesController;
 use App\Http\Controllers\Brands\BrandsController;
 use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Cart\CartController;
@@ -84,6 +79,19 @@ Route::group([
     Route::get('getCustomerRow/{id}', [CustomerController::class, 'checkCustomer']);
     Route::get('getLeadRow/{id}', [CustomerController::class, 'checkLead']);
 });
+
+
+
+
+Route::group(['prefix' => 'gig' ], function () {
+    Route::post('createGig', [GigController::class, 'createGig']);
+    Route::get('deleteGig', [GigController::class, 'deleteGig']);
+    Route::get('getGigHistory', [GigController::class, 'getGigHistory']);
+
+});
+
+
+
 Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
@@ -99,7 +107,7 @@ Route::group([
     Route::get('departmentCheck/{id}', [UserController::class, 'departmentCheck']);
     Route::get('designationCheck/{id}', [UserController::class, 'designationCheck']);
     Route::get('getDepartmentList', [UserController::class, 'getDepartmentList']);
-    Route::get('typeofdoucments', [UserController::class, 'typeofdoucments']);
+   // Route::get('typeofdoucments', [UserController::class, 'typeofdoucments']);
     Route::post('saveDepartment', [UserController::class, 'saveDepartment']);
     Route::post('changePassword', [UserController::class, 'changePassword']);
     Route::post('saveUser', [UserController::class, 'saveUser']);
@@ -110,18 +118,6 @@ Route::group([
     Route::get('getUserRow/{id}', [UserController::class, 'editUserId']);
     Route::get('getCountry', [UserController::class, 'getCountry']);
     Route::get('getTime', [UserController::class, 'getTime']);
-    Route::get('inactiveEmployee', [UserController::class, 'inactiveEmployee']);
-    Route::get('selectOrganisationProfile', [UserController::class, 'selectOrganisationProfile']);
-    Route::post('organisationUpdateprofile', [UserController::class, 'organisationUpdateprofile']);
-    Route::post('updateTopbanner', [UserController::class, 'updateTopbanner']);
-    Route::post('updatebannerOne', [UserController::class, 'updatebannerOne']);
-    Route::post('updatebannerTwo', [UserController::class, 'updatebannerTwo']);
-    Route::post('updatebannerThree', [UserController::class, 'updatebannerThree']);
-    Route::post('updatebannerFour', [UserController::class, 'updatebannerFour']);
-    Route::post('updatebannerFive', [UserController::class, 'updatebannerFive']);
-    Route::post('updateYAds', [UserController::class, 'updateYAds']);
-    Route::post('getSellerAds', [UserController::class, 'getSellerAds']);
-    Route::post('saveCard', [UserController::class, 'saveCard']);
     Route::get('cardlist/{id}', [UserController::class, 'getCard']);
     Route::get('blogs', [UserController::class,'getblogs']);
 });
@@ -201,6 +197,7 @@ Route::group([
 
 Route::group([ 'prefix' => 'unauthenticate' ], function () {
     Route::get('getFindCategorys', [UnauthenticatedController::class, 'getFindCategorys']);
+    Route::get('getSubCategoryList', [UnauthenticatedController::class, 'getSubCategoryList']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategorys']);
     Route::get('filterCategoryesSlug', [UnauthenticatedController::class, 'filterCategoryesSlug']);
     Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);

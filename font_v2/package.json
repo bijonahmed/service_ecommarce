@@ -37,8 +37,10 @@
     "pinia-plugin-persistedstate": "^3.1.0",
     "pusher-js": "^8.4.0-rc2",
     "qrcode": "^1.5.3",
+    "spectrum-colorpicker": "^1.8.1",
     "sweetalert2": "^11.10.5",
     "swiper": "^8.4.7",
+    "tinymce": "^7.3.0",
     "vue-advanced-cropper": "^2.8.8"
   }
 }

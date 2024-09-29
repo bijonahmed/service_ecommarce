@@ -117,8 +117,7 @@
 
 
                     <div class="service-about">
-                      <p class="text mb30 text-justify" style="text-align:justify">{{ responseData.gig_description }}
-                      </p>
+                      <p class="text mb30 text-justify" style="text-align:justify" v-html="responseData.gig_description"></p>
                       <hr class="opacity-100 mb15">
                       <div class="product_single_content mb50">
                         <div class="mbp_pagination_comments">
@@ -300,8 +299,7 @@
                         <div v-if="responseData.types == 1">
 
                           <div class="">
-                            <h3 class="widget-title">${{ responseData.price }} <small class="fz15 fw500">/per
-                                hour</small></h3>
+                            <h3 class="widget-title">${{ responseData.price }} <small class="fz15 fw500"></small></h3>
                             <div class="category-list mt20">
                               <a class="d-flex align-items-center justify-content-between bdrb1 pb-2" href="#">
                                 <span class="text"><i class="flaticon-place text-thm2 pe-2 vam"></i>Location</span>

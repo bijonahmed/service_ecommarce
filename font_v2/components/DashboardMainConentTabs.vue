@@ -6,35 +6,38 @@
           <ul class="nav nav-pills mb12" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active fw500 dark-color" id="pills-home-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home"
-                aria-selected="true">Welcome</button>
+                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
+                  class="fa fa-home" aria-hidden="true"></i>&nbsp;Welcome</button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" id="pills-profile-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                aria-selected="false">Refer a Friend</button>
+                aria-selected="false"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Refer a Friend</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="chatbox">Messages</button>
+              <button class="nav-link fw500 dark-color" @click="chatbox"><i class="fa fa-commenting"
+                  aria-hidden="true"></i>&nbsp;Messages</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="myprofile" aria-selected="false">Profile</button>
+              <button class="nav-link fw500 dark-color" @click="myprofile" aria-selected="false"><i class="fa fa-user"
+                  aria-hidden="true"></i>&nbsp;Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw500 dark-color" @click="mygig" aria-selected="false"><i class="fa fa-tasks"
+                  aria-hidden="true"></i>&nbsp;My GIG</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw500 dark-color" @click="myorders" aria-selected="false"><i
+                  class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders</button>
+            </li>
+            <li class="nav-item" role="presentation">
+              <button class="nav-link fw500 dark-color" @click="mysetting" aria-selected="false"><i class="fa fa-cogs"
+                  aria-hidden="true"></i>&nbsp;Setting</button>
             </li>
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
-                role="tab" aria-controls="pills-contact" aria-selected="false">My GIG</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
-                role="tab" aria-controls="pills-contact" aria-selected="false">Orders</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
-                role="tab" aria-controls="pills-contact" aria-selected="false">Setting</button>
-            </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
-                role="tab" aria-controls="pills-contact" aria-selected="false">Report</button>
+                role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa fa-line-chart"
+                  aria-hidden="true"></i>&nbsp;Report</button>
             </li>
           </ul>
           <div class="tab-content" id="pills-tabContent">
@@ -54,25 +57,24 @@
                           <div class="list-meta d-sm-flex align-items-center mt30">
                             <a class="position-relative freelancer-single-style" href="#">
                               <span class="online"></span>
-                              <img class="rounded-circle w-100 wa-sm mb15-sm" src="/images/team/fl-1.png"
-                                alt="Freelancer Photo">
+                              <img class="rounded-circle w-100 wa-sm mb15-sm" src="/profile_default.png"
+                                style="height:200px; width:100%" alt="Freelancer Photo">
                             </a>
                             <div class="ml20 ml0-xs">
                               <h5 class="title mb-1">{{ name }}</h5>
-                              <p class="mb-0">UI/UX Designer</p>
-                              <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm">
+                              <p class="mb-0">{{ profName }}</p>
+                              <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
-                                4.82 94
+                                0
                                 reviews
-                              </p>
-                              <p class="mb-0 dark-color fz15 fw500 list-inline-item ml15 mb5-sm ml0-xs">
+                              </p> -->
+                              <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm ml0-xs">
                                 <i class="flaticon-place vam fz20 me-2"></i>
-                                London, UK
+                                {{ countryName }}
                               </p>
                               <p class="mb-0 dark-color fz15 fw500 list-inline-item ml15 mb5-sm ml0-xs">
                                 <i class="flaticon-30-days vam fz20 me-2"></i>
-                                Member since April 1,
-                                2022
+                                Join Date {{ joindate }}
                               </p>
 
                             </div>
@@ -215,20 +217,10 @@
 
             </div>
             <div class="tab-pane fade fz15 text" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              Pharetra nulla ullamcorper sit lectus. Fermentum
-              mauris pellentesque nec nibh sed et, vel diam, massa. Placerat quis vel fames
-              interdum urna lobortis sagittis sed pretium. Aliquam eget posuere sit enim elementum
-              nulla vulputate magna. Morbi sed arcu proin quis tortor non risus. </div>
-            <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab">
-
-
-
-
-
-
-
-
+              <br />
+              <ReferralLink />
             </div>
+            <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
         </div>
 
@@ -247,6 +239,9 @@ import Swal from "sweetalert2";
 
 const router = useRouter();
 const name = ref('');
+const joindate = ref('');
+const countryName = ref('');
+const profName = ref('');
 const loading = ref(false);
 const route = useRoute();
 
@@ -257,26 +252,39 @@ definePageMeta({
 const profileModal = ref(null);
 
 const chkUserrow = async () => {
-    try {
-        const response = await axios.post(`/auth/me`);
-        //console.log("Profile Status: ", response.data.profile_status);
-        name.value = response.data.name;
-      
-    } catch (error) {
-        console.error("Error fetching user data:", error);
-    }
+  try {
+    const response = await axios.post(`/auth/me`);
+    //console.log("Profile Status: ", response.data.profile_status);
+    name.value = response.data.name;
+    joindate.value = response.data.joindate;
+    countryName.value = response.data.countryName;
+    profName.value = response.data.profName;
+
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
 };
 
 
 const myprofile = () => {
-  console.log("working....");
   router.push('/dashboard/myprofile')
 }
 
 const chatbox = () => {
-  console.log("working....");
   router.push('/dashboard/chatbox')
 }
+
+const mysetting = () => {
+  router.push('/dashboard/setting')
+}
+const myorders = () => {
+  router.push('/dashboard/orders')
+}
+const mygig = () => {
+  router.push('/dashboard/mygig/giglist')
+}
+
+
 
 onMounted(() => {
   chkUserrow();

@@ -1,88 +1,109 @@
 <template>
   <div>
     <title>Sign Up</title>
-    <section class="sign-in sign-up">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12">
-            <div class="sign-in__top center">
-              <nuxt-link to="/">
-                <img id="site-logo" src="/assets/images/logo/logo-main.png" alt="Monteno" width="165" height="40"
-                  data-retina="assets/images/logo/logo-main@x2.png" data-width="165" data-height="40">
-              </nuxt-link>
-            </div>
-            <div class="sign-in__main">
-              <div class="top center">
-                <h3 class="title">Sign up</h3>
-                <p class="fs-17">Create New OCN Account</p>
+
+    <body class="bgc-thm2">
+      <div class="wrapper ovh">
+        <Header />
+        <MobileMenu />
+        <div class="body_content">
+          <!-- Our LogIn Area -->
+          <form @submit.prevent="register()">
+            <section class="our-register">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+                    <div class="main-title text-center">
+                      <h2 class="title text-white">Register</h2>
+                    </div>
+                  </div>
+                </div>
+                <center>
+                  <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                    <Loader />
+                  </div>
+                </center>
+
+                <div class="row wow fadeInRight" data-wow-delay="300ms">
+                  <div class="col-xl-6 mx-auto">
+                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                      <div class="mb30">
+                        <h4>Let's create your account!</h4>
+                        <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
+                            In!</nuxt-link></p>
+                      </div>
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Name</label>
+                        <input type="text" class="form-control" placeholder="Jons" v-model="name">
+                        <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                      </div>
+                      <div class="mb2">
+
+                        <label class="form-label fw500 dark-color">Country</label>
+                        <select class="form-control" v-model="country_1">
+                          <option value="" disabled>Select your country</option>
+                          <option v-for="country in countryData" :key="country.id" :value="country.id">
+                            {{ country.countryname }}
+                          </option>
+                        </select>
+                        <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Email</label>
+                        <input type="email" class="form-control" placeholder="example@gmail.com" v-model="email">
+                        <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Type</label>
+                        <select class="form-control" v-model="userType">
+                          <option value="" disabled selected>Select your type</option>
+                          <option v-for="type in userTypes" :key="type.value" :value="type.value">
+                            {{ type.text }}
+                          </option>
+                        </select>
+                        <span class="text-danger" v-if="errors.userType">{{ errors.userType[0] }}</span>
+                      </div>
+
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Invite Code</label>
+                        <input type="text" class="form-control" placeholder="157878888.." v-model="inviteCode" readonly>
+                        <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
+                      </div>
+
+
+                      <div class="mb15">
+                        <label class="form-label fw500 dark-color">Password</label>
+                        <input type="password" class="form-control" placeholder="*******" v-model="password">
+                        <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                      </div>
+
+                      <div class="mb15">
+                        <label class="form-label fw500 dark-color">Confirm Password</label>
+                        <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                        <span class="text-danger" v-if="errors.password_confirmation">{{ errors.password_confirmation[0]
+                          }}</span>
+                      </div>
+                      <div class="d-grid mb20">
+                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit">Create
+                          Account <i class="fal fa-arrow-right-long"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <center>
-                <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                  <Loader />
-                </div>
-              </center>
-              <form @submit.prevent="register()">
-                <div class="form-group">
-                  <label>Email address <span>*</span> </label>
-                  <div class="input_bt_group">
-                    <input type="text" placeholder="example@gmail.com" class="form-control" v-model="email">
-                    <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
-                    <button class="btn_copy" @click="sendCode" :disabled="buttonDisabled">Send code
-                      <span v-if="loading"><span style="color:white">Loading...</span></span>
 
-                    </button>
-                  </div>
-
-                </div>
-                <div class="form-group">
-                  <label for="code">OTP Code<span>*</span></label>
-                  <input type="text" class="form-control" id="code" placeholder="OTP" v-model="otp">
-                  <p class="ms-2" style="font-size: 12px;">Click 'Send Code,' check your email (inbox/spam) for the OTP.
-                  </p>
-                  <span class="text-danger" v-if="errors.otp">{{ errors.otp[0] }}</span>
-                  <span class="text-danger" v-if="errors.invaliteotp">{{ errors.invaliteotp[0] }}</span>
-
-                  
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Password<span>*</span></label>
-                  <input id="newpass" :type="passwordFieldType" name="password" class="form-control" v-model="password">
-                  <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Confirm Password<span>*</span></label>
-                  <input id="repass" :type="confirmPasswordFieldType" name="password" class="form-control"
-                    v-model="confirmPassword">
-                  <span class="text-danger" v-if="errors.password_confirmation">{{ errors.password_confirmation[0]
-                    }}</span>
-                </div>
-                <div class="form-group">
-                  <label for="exampleInputPassword1">Ref. <span>*</span></label>
-                  <input type="text" class="form-control" placeholder="Invite code" v-model="inviteCode">
-                  <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
-                </div>
-                <div class="form-check">
-                  <div class="left" style="height: 20px;">
-                    <input type="checkbox" checked class="form-check-input" id="exampleCheck1">
-                    <label class="form-check-label" for="exampleCheck1">I agree to the <a href="#">Terms
-                        of User</a></label>
-                  </div>
-                </div>
-                <button type="submit" class="btn-action style-1"><span>Sign Up</span> </button>
-              </form>
-
-            </div>
-
-            <p class="bottom">Dont have an account? <nuxt-link to="/sign-in">Sign in</nuxt-link></p>
-          </div>
+            </section>
+          </form>
+          <!-- Our Footer -->
+          <Footer />
         </div>
       </div>
-    </section>
+    </body>
+
   </div>
-
 </template>
-
-
 
 <script setup>
 import { ref, watch, onMounted } from "vue";
@@ -95,23 +116,31 @@ const userStore = useUserStore()
 const errors = ref({});
 
 const loading = ref(false)
-let email = ref('');
+
 let name = ref('');
-let password = ref(null);
+let email = ref('');
+let country_1 = ref("")
 let inviteCode = ref(null);
+let password = ref(null);
 let confirmPassword = ref(null);
-let otp = ref(null)
+let userType = ref('');
+let countryData = ref('');
 
-const passwordFieldType = ref('password');
-const confirmPasswordFieldType = ref('password');
 
+const userTypes = ref([
+  { value: 'seller', text: 'Seller' },
+  { value: 'buyer', text: 'Buyer' }
+]);
+//getAllcountrys
 const checkEmail = async () => {
   try {
     loading.value = true;
+    //console.log("====" + email.value);
     const response = await axios.post('/sendEmail', {
       email: email.value // Send the email value in the request body
     });
     console.log("Send Code: " + response.data);
+    //productdata.value = response.data.data;
     Swal.fire({
       position: "top-end",
       icon: "success",
@@ -119,8 +148,6 @@ const checkEmail = async () => {
       showConfirmButton: false,
       timer: 3000
     });
-
-
 
   } catch (error) {
     if (error.response && error.response.status === 422) {
@@ -131,9 +158,17 @@ const checkEmail = async () => {
     }
   }
 };
+const getCountrys = async () => {
+  try {
+    const response = await axios.get('/unauthenticate/getAllcountrys');
+    countryData.value = response.data.data;
 
+  } catch (error) {
+
+  }
+};
+getCountrys();
 const buttonDisabled = ref(false); // Initially, button is enabled
-
 async function sendCode() {
   if (!buttonDisabled.value) { // Check if button is not disabled
     try {
@@ -154,11 +189,22 @@ const register = async () => {
     await userStore.register(
       name.value,
       email.value,
-      otp.value,
+      country_1.value,
       inviteCode.value,
+      userType.value,
       password.value,
       confirmPassword.value
     )
+
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your account has been successfully created.",
+      showConfirmButton: false,
+      timer: 3000
+    });
+
+
     router.push('/sign-in')
   } catch (error) {
     //console.log(error)
@@ -169,8 +215,6 @@ const register = async () => {
   }
 
 }
-
- 
 let queryParams = {};
 if (process.client) {
   queryParams = new URLSearchParams(window.location.search);
@@ -179,3 +223,15 @@ if (process.client) {
   inviteCode.value = codeValue;
 }
 </script>
+<style scoped>
+.sign-in {
+  padding: 10px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sign-in .sign-in__main {
+  padding: 01px 10px;
+}
+</style>

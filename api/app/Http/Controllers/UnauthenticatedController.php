@@ -14,9 +14,11 @@ use App\Models\GigImagesHistory;
 use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use App\Models\AttributeValues;
+use App\Models\Category;
 use App\Models\Country;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Models\Gig;
+use PhpParser\Node\Stmt\TryCatch;
 
 class UnauthenticatedController extends Controller
 {
@@ -29,16 +31,16 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
-    public function getCountry(){
+    public function getCountry()
+    {
 
         try {
-            $countrys = Country::where('status',1)->get();
+            $countrys = Country::where('status', 1)->get();
             return response()->json([
                 'status' => 'success',
                 'message' => 'Countries retrieved successfully',
                 'data' => $countrys
             ], 200);
-    
         } catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
@@ -46,7 +48,6 @@ class UnauthenticatedController extends Controller
                 'error' => $e->getMessage()
             ], 500);
         }
-
     }
 
     public function allCategory(Request $request)
@@ -131,6 +132,7 @@ class UnauthenticatedController extends Controller
                 ->where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
                 ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'users.image as freelancer_images')
+                ->orderBy('gig.id', 'desc') 
                 ->paginate(20);
 
             $data = [];
@@ -160,6 +162,29 @@ class UnauthenticatedController extends Controller
         }
     }
 
+
+    public function getSubCategoryList(Request $request)
+    {
+
+        $categoryId = $request->categoryId;
+        try {
+            // Fetch subcategories where parent_id matches the categoryId and status is active (1)
+            $chk = Categorys::where('parent_id', $categoryId)
+                ->where('status', 1)
+                ->get();
+                
+        return response()->json([
+                'status' => 'success',
+                'data' => $chk
+            ], 200);
+        } catch (\Exception $e) {
+            // Handle any exceptions or errors
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Something went wrong: ' . $e->getMessage()
+            ], 500);
+        }
+    }
     public function getFindCategorys()
     {
 

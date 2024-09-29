@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
+use App\Models\Profession;
 use App\Models\User;
 use Validator;
 use Illuminate\Support\Str;
@@ -198,9 +200,16 @@ class AuthController extends Controller
                 $response[$column] = $value;
             }
 
-            // Add 'profileLogo' and 'businessLogo' columns specifically
-            $response['profileLogo'] = url(!empty($user->image) ? $user->image : '/profileLogo');
+            $countryid     = !empty($user) ? $user->country_1 : "";
+            $proId         = !empty($user) ? $user->profession_name : "";
+            $chkCountry    = Country::where('id',$countryid)->first();
+            $chkProfession = Profession::where('id',$proId)->first();
+            $response['profileLogo']  = url(!empty($user->image) ? $user->image : '/profileLogo');
             $response['businessLogo'] = url(!empty($user->business_logo) ? $user->business_logo : '/businessLogo');
+            $response['joindate']     = date("Y-M-d",strtotime($user->created_at));
+            $response['countryName']  = !empty($chkCountry) ? $chkCountry->countryname : "";
+            $response['profName']     = !empty($chkProfession) ? $chkProfession->name : "";
+            $response['invite_code']  = !empty($user) ? $user->invite_code : "";;
         }
 
         return response()->json($response);

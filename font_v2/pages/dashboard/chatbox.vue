@@ -1,5 +1,5 @@
 <template>
-    <title>Welcome to Dashboard</title>
+    <title>Messages</title>
 
     <body class="bgc-thm1">
         <div class="wrapper ovh">

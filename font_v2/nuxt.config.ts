@@ -98,6 +98,7 @@ export default defineNuxtConfig({
         { rel: "stylesheet", href: "/css/ud-custom-spacing.css" },
         { rel: "stylesheet", href: "/css/dashbord_navitaion.css" },
         { rel: "stylesheet", href: "/css/responsive.css" },
+        
          //'~/assets/css/global.css', 
       ],
       // Add JavaScript file
