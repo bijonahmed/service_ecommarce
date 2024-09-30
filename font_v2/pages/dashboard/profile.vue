@@ -1,97 +1,12 @@
 <template>
-    <div class="dashboard show">
-        <title>Profile</title>
-
-        <DashboardSidebar />
-        <div class="dashboard_main_content">
-            <div class="dashboard__content">
-              <DashboardHeader/>
-              <div class="dashboard__main">
-                <form @submit.prevent="update()" id="formrest">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="profile_">
-                                <h4>Personal details</h4>
-                                <ul class="profile_data">
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">User name</label>
-                                            <input type="text" placeholder="user123" disabled class="form-control" v-model="name">
-                                            <span class="text-danger" v-if="errors.name">{{ errors.name[0]}}</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Real Name</label>
-                                            <input type="text" placeholder="Real name" class="form-control" v-model="real_name">
-                                            <span class="text-danger" v-if="errors.real_name">{{ errors.real_name[0]}}</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Email address</label>
-                                            <input type="email" placeholder="abc@mail.com" disabled class="form-control" v-model="email">
-                                            <span class="text-danger" v-if="errors.email">{{ errors.email[0]}}</span>
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Phone</label>
-                                            <input type="tel" placeholder="Phone number" class="form-control" v-model="phone_number">
-                                            <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0]}}</span>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="profile_">
-                                <h4>Social links</h4>
-                                <ul class="profile_data">
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Facebook</label>
-                                            <input type="text" placeholder="Facebook" class="form-control" v-model="facebook">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Twitter</label>
-                                            <input type="text" placeholder="Twitter" class="form-control" v-model="twitter">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">WhatsApp</label>
-                                            <input type="text" placeholder="WhatsApp" class="form-control" v-model="whtsapp">
-                                        </div>
-                                    </li>
-                                    <li>
-                                        <div class="personal_details">
-                                            <label for="">Telegram</label>
-                                            <input type="text" placeholder="Telegram" class="form-control" v-model="telegram">
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <button type="submit" class="btn-action style-1">Update</button>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            </div>
-        </div>
-
-
+    <div>
+        
 
     </div>
 </template>
 
 <script setup>
-import DashboardSidebar from "~/layouts/DashboardSidebar.vue";
-import DashboardHeader from "~/layouts/DashboardHeader.vue";
+
 import { useRouter } from "vue-router";
 const router = useRouter();
 import axios from "axios";

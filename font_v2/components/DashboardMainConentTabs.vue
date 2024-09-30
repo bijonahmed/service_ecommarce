@@ -57,8 +57,8 @@
                           <div class="list-meta d-sm-flex align-items-center mt30">
                             <a class="position-relative freelancer-single-style" href="#">
                               <span class="online"></span>
-                              <img class="rounded-circle w-100 wa-sm mb15-sm" src="/profile_default.png"
-                                style="height:200px; width:100%" alt="Freelancer Photo">
+                              <img class="w-100 wa-sm mb15-sm" :src="profileLogo || 'profile_default.png'"
+                                style="height:150px; border-radius: 10px;;" alt="Freelancer Photo">
                             </a>
                             <div class="ml20 ml0-xs">
                               <h5 class="title mb-1">{{ name }}</h5>
@@ -95,75 +95,33 @@
                       <!-- ============{{ userResponseData.profile_status }}======== -->
                       <div class="service-about">
                         <h4>Description</h4>
-                        <p class="text mb30">It is a long established fact that a reader
-                          will be distracted
-                          by the readable content of a page when looking at its
-                          layout. The point of using
-                          Lorem Ipsum is that it has a more-or-less normal
-                          distribution of letters, as
-                          opposed to using 'Content here, content here', making it
-                          look like readable
-                          English. </p>
-                        <p class="text mb30">Many desktop publishing packages and web
-                          page editors now use
-                          Lorem Ipsum as their default model text, and a search for
-                          'lorem ipsum' will
-                          uncover many web sites still in their infancy. Various
-                          versions have evolved
-                          over the years, sometimes by accident, sometimes on purpose
-                          (injected humour and
-                          the like).</p>
+                        <p class="text mb30 text-justify" style="text-align: justify;">{{ introduce_yourself }}</p>
+
                         <hr class="opacity-100 mb60 mt60">
                         <h4 class="mb30">Education</h4>
-                        <div class="educational-quality">
-                          <div class="m-circle text-thm">M</div>
-                          <div class="wrapper mb40">
-                            <span class="tag">2012 - 2014</span>
-                            <h5 class="mt15">Bachlors in Fine Arts</h5>
-                            <h6 class="text-thm">Modern College</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              primis in faucibus.
+                        <div class="educational-quality_">
+
+                          <div class="wrapper mb40" v-for="edu in euddata" :key="edu.id">
+                            <span class="tag">{{ edu.year }}</span>
+                            <h5 class="mt15">{{ edu.subject }}</h5>
+                            <h6 class="text-thm">{{ edu.college }}</h6>
+                            <p>{{ edu.description }}
                             </p>
                           </div>
-                          <div class="m-circle before-none text-thm">M</div>
-                          <div class="wrapper mb60">
-                            <span class="tag">2008 - 2012</span>
-                            <h5 class="mt15">Computer Science</h5>
-                            <h6 class="text-thm">Harvartd University</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              primis in faucibus.
-                            </p>
-                          </div>
+
                         </div>
                         <hr class="opacity-100 mb60">
                         <h4 class="mb30">Work & Experience</h4>
-                        <div class="educational-quality">
-                          <div class="m-circle text-thm">M</div>
-                          <div class="wrapper mb40">
-                            <span class="tag">2012 - 2014</span>
-                            <h5 class="mt15">UX Designer</h5>
-                            <h6 class="text-thm">Dropbox</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              primis in faucibus.
+                        <div class="educational-quality_">
+
+                          <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
+                            <span class="tag">{{ edu.year }}</span>
+                            <h5 class="mt15">{{ edu.role }}</h5>
+                            <h6 class="text-thm">{{ edu.company }}</h6>
+                            <p>{{ edu.description }}
                             </p>
                           </div>
-                          <div class="m-circle before-none text-thm">M</div>
-                          <div class="wrapper mb60">
-                            <span class="tag">2008 - 2012</span>
-                            <h5 class="mt15">Art Director</h5>
-                            <h6 class="text-thm">amazon</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              primis in faucibus.
-                            </p>
-                          </div>
+
                         </div>
                         <hr class="opacity-100 mb60">
                         <h4 class="mb30">Awards adn Certificates</h4>
@@ -200,13 +158,7 @@
                         <div class="sidebar-widget mb30 pb20 bdrs8">
                           <h4 class="widget-title">My Skills</h4>
                           <div class="tag-list mt30">
-                            <a href="#">Figma</a>
-                            <a href="#">Sketch</a>
-                            <a href="#">HTML5</a>
-                            <a href="#">Software Design</a>
-                            <a href="#">Prototyping</a>
-                            <a href="#">SaaS</a>
-                            <a href="#">Design Writing</a>
+                            <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
                           </div>
                         </div>
                       </div>
@@ -236,12 +188,16 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
-
+const euddata = ref([]);
 const router = useRouter();
 const name = ref('');
 const joindate = ref('');
 const countryName = ref('');
 const profName = ref('');
+const introduce_yourself = ref('');
+const profileLogo = ref('');
+const skillsdata = ref('');
+const expdata = ref([]);
 const loading = ref(false);
 const route = useRoute();
 
@@ -259,6 +215,8 @@ const chkUserrow = async () => {
     joindate.value = response.data.joindate;
     countryName.value = response.data.countryName;
     profName.value = response.data.profName;
+    introduce_yourself.value = response.data.introduce_yourself
+    profileLogo.value = response.data.profileLogo;
 
   } catch (error) {
     console.error("Error fetching user data:", error);
@@ -284,9 +242,40 @@ const mygig = () => {
   router.push('/dashboard/mygig/giglist')
 }
 
+const getExperience = async () => {
+  try {
+    const response = await axios.get(`/user/getExperience`);
+    expdata.value = response.data.expdata;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+
+const getEducations = async () => {
+  try {
+    const response = await axios.get(`/user/geteducation`);
+    euddata.value = response.data.euddata;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+
+const getSkills = async () => {
+  try {
+    const response = await axios.get(`/user/skillsData`);
+    skillsdata.value = response.data.skillsdata;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 onMounted(() => {
+  getExperience();
+  getEducations();
+  getSkills();
   chkUserrow();
 });
 

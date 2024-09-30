@@ -9,6 +9,7 @@ class Profession extends Model
 {
     public $table = "professions";
     protected $fillable = [
+        'name',
         'profession_name',
         'status',
     ];

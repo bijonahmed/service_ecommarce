@@ -152,9 +152,12 @@ const selectedProfession = ref('');
 const phone = ref('');
 const skillInput = ref('');
 const country_1 = ref('');
+const introduce_yourself = ref('');
 const skills = ref([]);
-const professinListData = ref([]);
 const skillsError = ref('');
+const professinListData = ref([]);
+
+const profileLogo = ref('');
 let countryData = ref('');
 
 
@@ -248,6 +251,8 @@ const chkUserrow = async () => {
         phone.value = response.data.phone_number
         country_1.value = response.data.country_1
         selectedProfession.value = response.data.profession_name
+        introduce_yourself.value = response.data.introduce_yourself
+        profileLogo.value = response.data.profileLogo;
         if (response.data.profile_status == 0) {
             // Trigger the modal
             const modal = new bootstrap.Modal(document.getElementById('profileUpdateModal'), {
@@ -282,6 +287,8 @@ const professionlist = async () => {
         // Handle error
     }
 };
+
+
 
 onMounted(() => {
     getCountrys();

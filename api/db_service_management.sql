@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 29, 2024 at 03:15 PM
+-- Generation Time: Sep 30, 2024 at 05:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -1053,6 +1053,60 @@ CREATE TABLE `customer` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `education`
+--
+
+CREATE TABLE `education` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `year` varchar(255) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `college` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `education`
+--
+
+INSERT INTO `education` (`id`, `user_id`, `year`, `subject`, `college`, `description`, `created_at`, `updated_at`) VALUES
+(1, 2, '2010 - 2012', 'Bachelor of Computer Science', 'Stanford University', 'Completed a Bachelor\'s degree with a focus on computer science and software engineering.', '2024-09-30 14:59:12', '2024-09-30 14:59:12'),
+(2, 2, '2012 - 2014', 'Master of Computer Science', 'MIT', 'Specialized in artificial intelligence and machine learning during the Master\'s program.', '2024-09-30 14:59:12', '2024-09-30 14:59:12'),
+(3, 2, '2015 - 2016', 'UX Design Certification', 'California Institute of the Arts', 'Earned a certification in UX design with a focus on user research and prototyping.', '2024-09-30 14:59:12', '2024-09-30 14:59:12'),
+(4, 2, '2017 - 2018', 'Data Science Bootcamp', 'General Assembly', 'Completed an intensive bootcamp in data science, focusing on Python, R, and machine learning algorithms.', '2024-09-30 14:59:12', '2024-09-30 14:59:12'),
+(5, 2, '2019 - 2020', 'Full Stack Web Development', 'Harvard Extension School', 'Studied full stack web development with a focus on modern JavaScript frameworks, back-end services, and databases.', '2024-09-30 14:59:12', '2024-09-30 14:59:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `experience`
+--
+
+CREATE TABLE `experience` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `year` varchar(255) NOT NULL,
+  `role` varchar(255) NOT NULL,
+  `company` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `experience`
+--
+
+INSERT INTO `experience` (`id`, `user_id`, `year`, `role`, `company`, `description`, `created_at`, `updated_at`) VALUES
+(1, 2, '2012 - 2014', 'UX Designer', 'Dropbox', 'Worked as a UX Designer, creating user-centered designs and improving the user experience for Dropbox products.', '2024-09-30 14:56:34', '2024-09-30 14:57:08'),
+(2, 2, '2015 - 2017', 'Front-end Developer', 'Google', 'Developed front-end interfaces using HTML, CSS, and JavaScript for Google applications and services.', '2024-09-30 14:56:34', '2024-09-30 14:57:10'),
+(3, 2, '2018 - 2020', 'Project Manager', 'Facebook', 'Managed cross-functional teams and projects for Facebook’s new product development initiatives.', '2024-09-30 14:56:34', '2024-09-30 14:57:12');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `failed_jobs`
 --
 
@@ -1095,7 +1149,7 @@ CREATE TABLE `gig` (
   `stn_descrition` text DEFAULT NULL COMMENT 'Standard',
   `stn_delivery_days` int(11) DEFAULT NULL COMMENT 'Standard',
   `stn_source_file` varchar(255) DEFAULT NULL COMMENT 'Standard',
-  `premium_price` double(10,2) NOT NULL COMMENT 'Premium',
+  `premium_price` double(10,2) DEFAULT NULL COMMENT 'Premium',
   `premium_description` text DEFAULT NULL COMMENT 'Premium',
   `premium_delivery_days` int(11) DEFAULT NULL COMMENT 'Premium',
   `premium_source_file` varchar(255) DEFAULT NULL COMMENT 'Premium',
@@ -1147,7 +1201,7 @@ INSERT INTO `gig` (`id`, `user_id`, `category_id`, `subcategory_id`, `insubcateg
 (36, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design-119', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
 (37, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design-118', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
 (38, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design-117', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
-(39, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--116', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
+(39, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--116', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 0, '2024-09-27 08:53:44', '2024-09-30 06:59:50'),
 (40, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--115', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
 (41, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--114', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
 (42, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--113', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
@@ -1166,7 +1220,7 @@ INSERT INTO `gig` (`id`, `user_id`, `category_id`, `subcategory_id`, `insubcateg
 (54, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design-101', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-27 08:53:44', '2024-09-29 06:06:10'),
 (59, 2, 1, 24, NULL, 'I will do it make comptuer', 'i-will-do-it-make-comptuer', '/backend/gig/UprMpZ3hYvbSkk4IdxZL.jpg', '1', 'English', '1', 'Gig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Descriptionsdf', 5000.00, 600, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-29 11:56:29', '2024-09-29 11:56:29'),
 (60, 2, 1, 24, NULL, 'Testing gig', 'testing-gig', '/backend/gig/MxGz5mNX3TlqTzWPIiqw.jpg', '2', 'English', '1', 'Gig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description', 111.00, 2333, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0.00, NULL, NULL, NULL, 1, '2024-09-29 12:38:06', '2024-09-29 12:38:06'),
-(61, 2, 1, 24, NULL, 'Do website', 'do-website', '/backend/gig/zQrrirXyf6tEAB5T4Mcx.jpg', '2', 'English', '1', '<b><span style=\"background-color: rgb(255, 255, 0);\">Gig DescriptionGig</span></b> DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description', 522.00, 5, 100.00, 'Short Description:', 4, NULL, 150.00, NULL, 3, 'Yes', 1552.00, 'Short Description', 2, 'Yes', 1, '2024-09-29 12:47:54', '2024-09-29 12:47:54');
+(61, 2, 1, 24, 121, 'Do website......', 'do-website', '/backend/gig/zQrrirXyf6tEAB5T4Mcx.jpg', '2', 'English', '1', '<p><strong>Gig DescriptionGig</strong> DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description JOBS</p>', 522.00, 5, 100.00, 'Short Description:', 4, 'Yes', 150.00, 'Short Description:Short Description:Short Description:Short Description:', 3, 'Yes', 1552.00, 'Short Description', 2, 'Yes', 1, '2024-09-29 12:47:54', '2024-09-30 06:58:18');
 
 -- --------------------------------------------------------
 
@@ -1207,9 +1261,13 @@ INSERT INTO `gig_images_history` (`id`, `gig_id`, `image_path`, `created_at`, `u
 (18, 60, '/backend/gig/2t6hfTffMBPvd44tXdK3.jpg', '2024-09-29 12:38:06', '2024-09-29 12:38:06'),
 (19, 60, '/backend/gig/PdlOVbmwe9AzYb8V7MHE.jpg', '2024-09-29 12:38:06', '2024-09-29 12:38:06'),
 (20, 61, '/backend/gig/HXheb9IGZzIMRVne3jeU.jpg', '2024-09-29 12:47:54', '2024-09-29 12:47:54'),
-(21, 61, '/backend/gig/Ep8uhWMmK6RxoX7RTi3a.jpg', '2024-09-29 12:47:54', '2024-09-29 12:47:54'),
 (22, 61, '/backend/gig/sh0t6sQ9P9hODFHRf3HT.jpg', '2024-09-29 12:47:55', '2024-09-29 12:47:55'),
-(23, 61, '/backend/gig/rRQ3NEDu7l1qYZaRxMGY.jpg', '2024-09-29 12:47:55', '2024-09-29 12:47:55');
+(24, 61, '/backend/gig/Cf4u63gct5U0qxfJ88ru.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37'),
+(25, 61, '/backend/gig/RAdTnpO6fVBzPFIJazfU.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37'),
+(26, 61, '/backend/gig/WYLE7ZsfGU5V4zRnPeR9.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37'),
+(27, 61, '/backend/gig/OJsk5bz2hniMa866exvZ.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37'),
+(28, 61, '/backend/gig/VTqu9A54XtVp7t0u5c0b.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37'),
+(29, 61, '/backend/gig/tqb01ieKv6G3OhNR8vbO.jpg', '2024-09-30 06:46:37', '2024-09-30 06:46:37');
 
 -- --------------------------------------------------------
 
@@ -2825,6 +2883,41 @@ INSERT INTO `send_message` (`id`, `candidate_name`, `candidate_email`, `subject`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `skills`
+--
+
+CREATE TABLE `skills` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `skills`
+--
+
+INSERT INTO `skills` (`id`, `user_id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 2, 'HTML', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(2, 2, 'CSS', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(3, 2, 'JavaScript', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(4, 2, 'React.js', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(5, 2, 'Vue.js', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(6, 2, 'Angular', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(7, 2, 'Node.js', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(8, 2, 'Express.js', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(9, 2, 'PHP', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(10, 2, 'Laravel', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(11, 2, 'MySQL', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(12, 2, 'MongoDB', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(13, 2, 'Git', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(14, 2, 'Docker', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
+(15, 2, 'TypeScript', '2024-09-30 15:01:41', '2024-09-30 15:01:41');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `sliders`
 --
 
@@ -2970,6 +3063,7 @@ CREATE TABLE `users` (
   `profession_name` varchar(255) DEFAULT NULL,
   `business_return_name` varchar(255) DEFAULT NULL,
   `birthdate` varchar(255) DEFAULT NULL,
+  `introduce_yourself` text DEFAULT NULL,
   `business_return_email` varchar(255) DEFAULT NULL,
   `landmark_2` varchar(255) DEFAULT NULL,
   `landmark_1` varchar(255) DEFAULT NULL,
@@ -2994,36 +3088,36 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `business_return_email`, `landmark_2`, `landmark_1`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
-(1, 1, NULL, NULL, NULL, 75, 2, 'admin', NULL, NULL, 'admin@gmail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', 'null', '', 'School road, mohakhali, Dhaka', '23', NULL, 'Banani, Mohakhali, Dhaka', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', NULL, '$2a$12$w3Sd7LSp69CLMh.xMEcXoux6NAwPlS2xqZAFsTg328wwSQH4g97Lu', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, NULL, NULL),
-(2, 3, NULL, '1702800790', NULL, 90, 2, 'Bijon', '', '', 'bijon@gmail.com', '/backend/files/blog-1.jpg', '019999999', '', '', '23', 'Bangladesh', '', 'null', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
-(5, 3, NULL, NULL, NULL, NULL, NULL, 'Bazaar BD', 'Abc', 'def', 'Bazaarbd@gmail.com', '/backend/files/blog-2.jpg', '03425556466', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'abc', 'abc', 'abc', '23456', 'asdfghj', 'asdfg', NULL, NULL, NULL, 'seller1@gmail.com', 'seller1@gmail.com', 'Web Developer', 'asdf', NULL, NULL, NULL, NULL, 'asdfg', 'seller1@gmail.com', '/backend/files/EDvQZKC6a4FZBXw0gI2a.png', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:42:22', '2024-03-05 06:26:18', 1, 0, 1, NULL, NULL),
-(6, 3, NULL, NULL, NULL, NULL, NULL, 'Amar Deal', 'sdrftg', 'asdfbg', 'amardeal@gmail.com', '/backend/files/blog-3.jpg', '34567', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asdfg', 'asdfg', 'asdfg', 'wsedfg', 'asdfg', 'asdfg', NULL, NULL, NULL, 'seller4@gmail.com', 'asdfg', 'Web Developer', 'asdfg', NULL, NULL, NULL, NULL, 'asdfg', 'sdf', '/backend/files/cDhWwsPMaLbbXgM2Ci08.jpg', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:53:59', '2024-09-22 14:21:06', 1, 0, 1, NULL, NULL),
-(7, 3, NULL, '1706591702', NULL, 15, 2, 'Ahmed1', NULL, NULL, 'Ahmed1@GMAIL.COM', '/backend/files/blog-4.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed1@GMAIL.COM', NULL, '$2y$10$1rNkkkIAklVZQJzPbD8KhuHDcGR8DL1OB.gKno0eeNRsr9MlgFrae', NULL, NULL, '2024-01-30 05:15:03', '2024-01-30 05:15:03', 1, 0, NULL, NULL, NULL),
-(8, 3, NULL, '1706592621', NULL, NULL, 2, 'Nawazl1@gmail.com', NULL, NULL, 'nawazl1@gmail.com', '/backend/files/blog-5.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nawazl1@gmail.com', NULL, '$2y$10$HJNnR.4vuUWfOABcJvSdQ.pT4XqBRIKiaCWWmfZwUM2jpgrIzMJnK', NULL, NULL, '2024-01-30 05:30:21', '2024-01-30 05:30:21', 1, 0, NULL, NULL, NULL),
-(9, 3, NULL, '1706621085', NULL, 5, 7, 'Asad', NULL, NULL, 'asadmujahidforweb@gmail.com', '/backend/files/blog-6.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$Mx1fdSA5yrISaLVrffCD7egliJ1x7fz5THXheJHwJEW1MKVx7weVO', NULL, NULL, '2024-01-30 13:24:45', '2024-01-30 13:24:45', 1, 0, NULL, NULL, NULL),
-(10, 3, NULL, '1706622106', NULL, 5, 9, 'Gulraiz', NULL, NULL, 'gulraizkhanforweb@gmaul.com', '/backend/files/blog-7.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$bqH83FsRJZRicBpjTyOxUuxtxXxCts6BWS0jRr7INY65hi6sqCGgC', NULL, NULL, '2024-01-30 13:41:46', '2024-01-30 13:41:46', 1, 0, NULL, NULL, NULL),
-(11, 3, NULL, '1706622854', NULL, 5, 10, 'Mubeen', NULL, NULL, 'mubeenkhanforweb@gmail.com', '/backend/files/blog-8.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$Tu067w6lf6gtXFGLOmTmHOshEUltg7FDHKqSYiY3kbCBUxf1YVp/.', NULL, NULL, '2024-01-30 13:54:14', '2024-01-30 13:54:14', 1, 0, NULL, NULL, NULL),
-(12, 3, NULL, '1706623062', NULL, 5, 11, 'Asad', NULL, NULL, 'asadkhanforweb@gmail.com', '/backend/files/blog-9.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$WOb7x/tKaohXqSv9w.tJG.JOHvKYG33h9fCq7eplXGjTYqqgQsduW', NULL, NULL, '2024-01-30 13:57:42', '2024-01-30 13:57:42', 1, 0, NULL, NULL, NULL),
-(13, 3, NULL, '1706623140', NULL, NULL, 12, 'Asad', NULL, NULL, 'asadmujahidfkrweb2@gmail.com', '/backend/files/blog-10.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$EGMFBoPo9UP7qgEJuym8p.FSmQ5sKbX6TE3S6mqiV1PPIsMYxQWSq', NULL, NULL, '2024-01-30 13:59:00', '2024-01-30 13:59:00', 1, 0, NULL, NULL, NULL),
-(14, 3, NULL, '1706625560', NULL, NULL, 7, 'Mastan', NULL, NULL, 'Maz1@gmail.com', '/backend/files/blog-11.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ahrar24', NULL, '$2y$10$HYJM9b27lLEMYGw1xzJMpefwThFEswjjRFFTGYOZ9KzIlKQ1Ni0py', NULL, NULL, '2024-01-30 14:39:20', '2024-01-30 14:39:20', 1, 0, NULL, NULL, NULL),
-(15, 3, NULL, '1706635167', NULL, NULL, 7, 'Ahmed2@gmail.com', NULL, NULL, 'Ahmed2@gmail.com', '/backend/files/blog-12.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed2@gmail.com', NULL, '$2y$10$c5Mb8H7jqurbUo359WMPLu488.Cw9gO4Y7DRbkCrS6z1C0Qw2Fcm6', NULL, NULL, '2024-01-30 17:19:27', '2024-01-30 17:19:27', 1, 0, NULL, NULL, NULL),
-(18, 3, NULL, NULL, NULL, NULL, NULL, 'Bangla Buy', 'dhaka', 'store', 'BanglaBuy@gmail.com', '/backend/files/blog-1.jpg', '212313', NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dhak astore', 'Dhaka Store', 'dhaka-store', '1312416455', 'dhaka', 'Dhaka', NULL, NULL, NULL, 'dhakastore@gmail.com', '14234', 'Web Developer', 'dhakastore@gmail.com', NULL, NULL, NULL, NULL, 'Dhaka', '14234', '/backend/files/MT34fO1Zu1wW2yS8qq4t.jpg', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-03-06 13:25:01', '2024-09-22 14:21:12', 1, 0, 1, NULL, NULL),
-(19, 3, NULL, '1711242661', NULL, NULL, 0, 'Ahmed11@gmail.com', NULL, NULL, 'Ahmed11@gmail.com', '/backend/files/blog-2.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed11@gmail.com', NULL, '$2y$10$eLDPkMOs4Xg0LqdHHn2TGOnMOv3O7HmkzmwxoW2sdTxWpwczHS9rq', NULL, NULL, '2024-03-24 01:11:01', '2024-03-24 01:11:01', 1, 0, NULL, NULL, NULL),
-(20, 3, NULL, '1712331516', NULL, NULL, 0, 'Julia', NULL, NULL, 'cristianajulia244@gmail.com', '/backend/files/blog-3.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ekroybd.com2024', NULL, '$2y$10$VEJuF5l3kOlF2wIi4.2D.us5e6/Grx.9nm5FC9cbPzqwoSLn.uTsK', NULL, NULL, '2024-04-05 15:38:36', '2024-04-05 15:38:36', 1, 0, NULL, NULL, NULL),
-(21, 3, NULL, '1712331759', NULL, NULL, 0, 'Handrix', NULL, NULL, 'hendrixsmith200@gmail.com', '/backend/files/blog-4.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ekroybd.com2024', NULL, '$2y$10$xIrxIf97kNbIuPgKu6wj6.EZoD9MpXmGm10RZgYs9ODxLW2fFbryy', NULL, NULL, '2024-04-05 15:42:39', '2024-04-05 15:42:39', 1, 0, NULL, NULL, NULL),
-(25, 3, NULL, '1714737414', NULL, NULL, 0, 'User', NULL, NULL, 'user@gmail.com', '/backend/files/blog-5.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user@gmail.com', NULL, '$2y$10$5dKmRzRfjzlQR.P2NqGpnOg6RaEaOi4opGMN377LRoKPr/R7DY4eu', NULL, NULL, '2024-05-03 11:56:54', '2024-05-03 11:56:54', 1, 0, NULL, NULL, NULL),
-(26, 3, NULL, '1715615070', NULL, NULL, 0, 'user1@gmail.com', NULL, NULL, 'user1@gmail.com', '/backend/files/blog-6.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user1@gmail.com', NULL, '$2y$10$Pg6jYPmxjcmiyeBV2SFzyuO3Hs4hfbvEIKjpgTstkYl9kxtduPt1q', NULL, NULL, '2024-05-13 15:44:30', '2024-05-13 15:44:30', 1, 0, NULL, NULL, NULL),
-(27, 3, NULL, '1726460883', NULL, NULL, 0, 'Amir', NULL, NULL, 'amirnaseem2647@gmail.com', '/backend/files/blog-7.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amnailar2647', NULL, '$2y$10$IkYGyWRfHeA9OH4pqXEexed2pRGd3ofHRFNER/dE.Jt9Ch9mRiEQC', NULL, NULL, '2024-09-16 04:28:03', '2024-09-16 04:28:03', 1, 0, NULL, NULL, NULL),
-(28, 2, NULL, '1727510945', NULL, NULL, 0, 'jobsnsdf', NULL, NULL, 'bangladesh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'jonsb@gmail.com', NULL, '$2y$10$o9Qm6cOOhjDLy77be4JA6uXvLATjpdPZcsnYO1vxxsGx3vdQZJS7O', NULL, NULL, '2024-09-28 02:09:05', '2024-09-28 02:09:05', 1, 0, NULL, NULL, NULL),
-(29, 2, NULL, '1727511163', NULL, NULL, 0, 'zahid', NULL, NULL, 'zahid@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '123456789', NULL, '$2y$10$du6dAtLFYg1SjQ2zsGCsQOiMT3XrglCwXEG89ztmUrlyZgivM8xFG', NULL, NULL, '2024-09-28 02:12:43', '2024-09-28 02:12:43', 1, 0, NULL, NULL, NULL),
-(30, 2, NULL, '1727511258', NULL, 5, 0, 'Kamal', NULL, NULL, 'kamal@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'kamal@gmail.com', NULL, '$2y$10$.Ptg/dkYUJ9XGC/tkj3Fyu56R/CYtLoRk8t2qPJyZL1iot2YoDW.C', NULL, NULL, '2024-09-28 02:14:18', '2024-09-28 02:14:18', 1, 0, NULL, NULL, NULL),
-(31, 2, NULL, '1727511471', NULL, NULL, 30, 'kafrul', NULL, NULL, 'kafrul@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1727511258', NULL, '$2y$10$HhWQbOPJ7yWUYKmrobGHAuEdz0GiFQ6gaznVAXkL4dnm48HO6QKlK', NULL, NULL, '2024-09-28 02:17:52', '2024-09-28 02:17:52', 1, 0, NULL, NULL, NULL),
-(32, 2, NULL, '1727511560', NULL, NULL, 0, 'rana', NULL, NULL, 'rana@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'rana@gmail.com', NULL, '$2y$10$dpSWA5ngbD.WJKJXE2jXGOUfFjDnjx9y68a1qYwEKhRXlBY2vHgA6', NULL, NULL, '2024-09-28 02:19:20', '2024-09-28 02:19:20', 1, 0, NULL, NULL, NULL),
-(33, 2, NULL, '1727511666', NULL, NULL, 0, 'jannat', NULL, NULL, 'jannat@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'jannat@gmail.com', NULL, '$2y$10$PUWgCmoPuDTMa.Td0D170.U/6LAqCnxPBNzTPqaVxGvlBpr2ga5qy', NULL, NULL, '2024-09-28 02:21:06', '2024-09-28 02:21:06', 1, 0, NULL, NULL, NULL),
-(34, 2, NULL, '1727515359', 0, NULL, 0, 'ibraheem', NULL, NULL, 'ibraheem@gmail.com', NULL, NULL, NULL, NULL, 'Bangladesh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ibraheem', NULL, '$2y$10$85kIrlJ7R031BXcS/jeZCeOC4B/CDiiC1F0CCuENBbn8V26hBe8E6', NULL, NULL, '2024-09-28 03:22:39', '2024-09-28 03:22:39', 1, 0, NULL, NULL, NULL),
-(35, 2, NULL, '1727515503', 0, NULL, 0, 'Fahim', NULL, NULL, 'fahim@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fahim@gmail.com', NULL, '$2y$10$VLYpfovgmMCFXOAaKRpaBubo6eGC1g2TOrxpzBK.zXOsD1FjfA5Zu', NULL, NULL, '2024-09-28 03:25:03', '2024-09-28 03:25:03', 1, 0, NULL, NULL, NULL),
-(36, 2, NULL, '1727584943', 0, NULL, 2, 'Mr. Shuvo', NULL, NULL, 'shuvo@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'shuvo@gmail.com', NULL, '$2y$10$3v.s7coXmYUlUjPX8iGK6eq00Bx2wbt5Z5jYh5QVTQG7xYYCJNpE6', NULL, NULL, '2024-09-28 22:42:23', '2024-09-28 22:42:23', 1, 0, NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `introduce_yourself`, `business_return_email`, `landmark_2`, `landmark_1`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
+(1, 1, NULL, NULL, NULL, 75, 2, 'admin', NULL, NULL, 'admin@gmail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', 'null', '', 'School road, mohakhali, Dhaka', '23', NULL, 'Banani, Mohakhali, Dhaka', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', NULL, '$2a$12$w3Sd7LSp69CLMh.xMEcXoux6NAwPlS2xqZAFsTg328wwSQH4g97Lu', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, NULL, NULL),
+(2, 3, NULL, '1702800790', NULL, 90, 2, 'BIjon Ahmed', '', '', 'bijon@gmail.com', '/backend/files/tHHFwZOJHI333EHXmdPq.jpg', '019999999', '', '', '23', '', '', 'null', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', '', '', NULL, NULL, NULL, NULL, NULL, '', '', '', '1', '', '', '16', '', '', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', '', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, '', ''),
+(5, 3, NULL, NULL, NULL, NULL, NULL, 'Bazaar BD', 'Abc', 'def', 'Bazaarbd@gmail.com', '/backend/files/blog-2.jpg', '03425556466', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'abc', 'abc', 'abc', '23456', 'asdfghj', 'asdfg', NULL, NULL, NULL, 'seller1@gmail.com', 'seller1@gmail.com', 'Web Developer', 'asdf', NULL, NULL, NULL, NULL, NULL, 'asdfg', 'seller1@gmail.com', '/backend/files/EDvQZKC6a4FZBXw0gI2a.png', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:42:22', '2024-03-05 06:26:18', 1, 0, 1, NULL, NULL),
+(6, 3, NULL, NULL, NULL, NULL, NULL, 'Amar Deal', 'sdrftg', 'asdfbg', 'amardeal@gmail.com', '/backend/files/blog-3.jpg', '34567', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asdfg', 'asdfg', 'asdfg', 'wsedfg', 'asdfg', 'asdfg', NULL, NULL, NULL, 'seller4@gmail.com', 'asdfg', 'Web Developer', 'asdfg', NULL, NULL, NULL, NULL, NULL, 'asdfg', 'sdf', '/backend/files/cDhWwsPMaLbbXgM2Ci08.jpg', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:53:59', '2024-09-22 14:21:06', 1, 0, 1, NULL, NULL),
+(7, 3, NULL, '1706591702', NULL, 15, 2, 'Ahmed1', NULL, NULL, 'Ahmed1@GMAIL.COM', '/backend/files/blog-4.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed1@GMAIL.COM', NULL, '$2y$10$1rNkkkIAklVZQJzPbD8KhuHDcGR8DL1OB.gKno0eeNRsr9MlgFrae', NULL, NULL, '2024-01-30 05:15:03', '2024-01-30 05:15:03', 1, 0, NULL, NULL, NULL),
+(8, 3, NULL, '1706592621', NULL, NULL, 2, 'Nawazl1@gmail.com', NULL, NULL, 'nawazl1@gmail.com', '/backend/files/blog-5.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Nawazl1@gmail.com', NULL, '$2y$10$HJNnR.4vuUWfOABcJvSdQ.pT4XqBRIKiaCWWmfZwUM2jpgrIzMJnK', NULL, NULL, '2024-01-30 05:30:21', '2024-01-30 05:30:21', 1, 0, NULL, NULL, NULL),
+(9, 3, NULL, '1706621085', NULL, 5, 7, 'Asad', NULL, NULL, 'asadmujahidforweb@gmail.com', '/backend/files/blog-6.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$Mx1fdSA5yrISaLVrffCD7egliJ1x7fz5THXheJHwJEW1MKVx7weVO', NULL, NULL, '2024-01-30 13:24:45', '2024-01-30 13:24:45', 1, 0, NULL, NULL, NULL),
+(10, 3, NULL, '1706622106', NULL, 5, 9, 'Gulraiz', NULL, NULL, 'gulraizkhanforweb@gmaul.com', '/backend/files/blog-7.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$bqH83FsRJZRicBpjTyOxUuxtxXxCts6BWS0jRr7INY65hi6sqCGgC', NULL, NULL, '2024-01-30 13:41:46', '2024-01-30 13:41:46', 1, 0, NULL, NULL, NULL),
+(11, 3, NULL, '1706622854', NULL, 5, 10, 'Mubeen', NULL, NULL, 'mubeenkhanforweb@gmail.com', '/backend/files/blog-8.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$Tu067w6lf6gtXFGLOmTmHOshEUltg7FDHKqSYiY3kbCBUxf1YVp/.', NULL, NULL, '2024-01-30 13:54:14', '2024-01-30 13:54:14', 1, 0, NULL, NULL, NULL),
+(12, 3, NULL, '1706623062', NULL, 5, 11, 'Asad', NULL, NULL, 'asadkhanforweb@gmail.com', '/backend/files/blog-9.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$WOb7x/tKaohXqSv9w.tJG.JOHvKYG33h9fCq7eplXGjTYqqgQsduW', NULL, NULL, '2024-01-30 13:57:42', '2024-01-30 13:57:42', 1, 0, NULL, NULL, NULL),
+(13, 3, NULL, '1706623140', NULL, NULL, 12, 'Asad', NULL, NULL, 'asadmujahidfkrweb2@gmail.com', '/backend/files/blog-10.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'vgfc1234', NULL, '$2y$10$EGMFBoPo9UP7qgEJuym8p.FSmQ5sKbX6TE3S6mqiV1PPIsMYxQWSq', NULL, NULL, '2024-01-30 13:59:00', '2024-01-30 13:59:00', 1, 0, NULL, NULL, NULL),
+(14, 3, NULL, '1706625560', NULL, NULL, 7, 'Mastan', NULL, NULL, 'Maz1@gmail.com', '/backend/files/blog-11.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ahrar24', NULL, '$2y$10$HYJM9b27lLEMYGw1xzJMpefwThFEswjjRFFTGYOZ9KzIlKQ1Ni0py', NULL, NULL, '2024-01-30 14:39:20', '2024-01-30 14:39:20', 1, 0, NULL, NULL, NULL),
+(15, 3, NULL, '1706635167', NULL, NULL, 7, 'Ahmed2@gmail.com', NULL, NULL, 'Ahmed2@gmail.com', '/backend/files/blog-12.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed2@gmail.com', NULL, '$2y$10$c5Mb8H7jqurbUo359WMPLu488.Cw9gO4Y7DRbkCrS6z1C0Qw2Fcm6', NULL, NULL, '2024-01-30 17:19:27', '2024-01-30 17:19:27', 1, 0, NULL, NULL, NULL),
+(18, 3, NULL, NULL, NULL, NULL, NULL, 'Bangla Buy', 'dhaka', 'store', 'BanglaBuy@gmail.com', '/backend/files/blog-1.jpg', '212313', NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Dhak astore', 'Dhaka Store', 'dhaka-store', '1312416455', 'dhaka', 'Dhaka', NULL, NULL, NULL, 'dhakastore@gmail.com', '14234', 'Web Developer', 'dhakastore@gmail.com', NULL, NULL, NULL, NULL, NULL, 'Dhaka', '14234', '/backend/files/MT34fO1Zu1wW2yS8qq4t.jpg', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-03-06 13:25:01', '2024-09-22 14:21:12', 1, 0, 1, NULL, NULL),
+(19, 3, NULL, '1711242661', NULL, NULL, 0, 'Ahmed11@gmail.com', NULL, NULL, 'Ahmed11@gmail.com', '/backend/files/blog-2.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed11@gmail.com', NULL, '$2y$10$eLDPkMOs4Xg0LqdHHn2TGOnMOv3O7HmkzmwxoW2sdTxWpwczHS9rq', NULL, NULL, '2024-03-24 01:11:01', '2024-03-24 01:11:01', 1, 0, NULL, NULL, NULL),
+(20, 3, NULL, '1712331516', NULL, NULL, 0, 'Julia', NULL, NULL, 'cristianajulia244@gmail.com', '/backend/files/blog-3.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ekroybd.com2024', NULL, '$2y$10$VEJuF5l3kOlF2wIi4.2D.us5e6/Grx.9nm5FC9cbPzqwoSLn.uTsK', NULL, NULL, '2024-04-05 15:38:36', '2024-04-05 15:38:36', 1, 0, NULL, NULL, NULL),
+(21, 3, NULL, '1712331759', NULL, NULL, 0, 'Handrix', NULL, NULL, 'hendrixsmith200@gmail.com', '/backend/files/blog-4.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ekroybd.com2024', NULL, '$2y$10$xIrxIf97kNbIuPgKu6wj6.EZoD9MpXmGm10RZgYs9ODxLW2fFbryy', NULL, NULL, '2024-04-05 15:42:39', '2024-04-05 15:42:39', 1, 0, NULL, NULL, NULL),
+(25, 3, NULL, '1714737414', NULL, NULL, 0, 'User', NULL, NULL, 'user@gmail.com', '/backend/files/blog-5.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user@gmail.com', NULL, '$2y$10$5dKmRzRfjzlQR.P2NqGpnOg6RaEaOi4opGMN377LRoKPr/R7DY4eu', NULL, NULL, '2024-05-03 11:56:54', '2024-05-03 11:56:54', 1, 0, NULL, NULL, NULL),
+(26, 3, NULL, '1715615070', NULL, NULL, 0, 'user1@gmail.com', NULL, NULL, 'user1@gmail.com', '/backend/files/blog-6.jpg', NULL, NULL, NULL, '105', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user1@gmail.com', NULL, '$2y$10$Pg6jYPmxjcmiyeBV2SFzyuO3Hs4hfbvEIKjpgTstkYl9kxtduPt1q', NULL, NULL, '2024-05-13 15:44:30', '2024-05-13 15:44:30', 1, 0, NULL, NULL, NULL),
+(27, 3, NULL, '1726460883', NULL, NULL, 0, 'Amir', NULL, NULL, 'amirnaseem2647@gmail.com', '/backend/files/blog-7.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amnailar2647', NULL, '$2y$10$IkYGyWRfHeA9OH4pqXEexed2pRGd3ofHRFNER/dE.Jt9Ch9mRiEQC', NULL, NULL, '2024-09-16 04:28:03', '2024-09-16 04:28:03', 1, 0, NULL, NULL, NULL),
+(28, 2, NULL, '1727510945', NULL, NULL, 0, 'jobsnsdf', NULL, NULL, 'bangladesh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'jonsb@gmail.com', NULL, '$2y$10$o9Qm6cOOhjDLy77be4JA6uXvLATjpdPZcsnYO1vxxsGx3vdQZJS7O', NULL, NULL, '2024-09-28 02:09:05', '2024-09-28 02:09:05', 1, 0, NULL, NULL, NULL),
+(29, 2, NULL, '1727511163', NULL, NULL, 0, 'zahid', NULL, NULL, 'zahid@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '123456789', NULL, '$2y$10$du6dAtLFYg1SjQ2zsGCsQOiMT3XrglCwXEG89ztmUrlyZgivM8xFG', NULL, NULL, '2024-09-28 02:12:43', '2024-09-28 02:12:43', 1, 0, NULL, NULL, NULL),
+(30, 2, NULL, '1727511258', NULL, 5, 0, 'Kamal', NULL, NULL, 'kamal@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'kamal@gmail.com', NULL, '$2y$10$.Ptg/dkYUJ9XGC/tkj3Fyu56R/CYtLoRk8t2qPJyZL1iot2YoDW.C', NULL, NULL, '2024-09-28 02:14:18', '2024-09-28 02:14:18', 1, 0, NULL, NULL, NULL),
+(31, 2, NULL, '1727511471', NULL, NULL, 30, 'kafrul', NULL, NULL, 'kafrul@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1727511258', NULL, '$2y$10$HhWQbOPJ7yWUYKmrobGHAuEdz0GiFQ6gaznVAXkL4dnm48HO6QKlK', NULL, NULL, '2024-09-28 02:17:52', '2024-09-28 02:17:52', 1, 0, NULL, NULL, NULL),
+(32, 2, NULL, '1727511560', NULL, NULL, 0, 'rana', NULL, NULL, 'rana@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'rana@gmail.com', NULL, '$2y$10$dpSWA5ngbD.WJKJXE2jXGOUfFjDnjx9y68a1qYwEKhRXlBY2vHgA6', NULL, NULL, '2024-09-28 02:19:20', '2024-09-28 02:19:20', 1, 0, NULL, NULL, NULL),
+(33, 2, NULL, '1727511666', NULL, NULL, 0, 'jannat', NULL, NULL, 'jannat@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'jannat@gmail.com', NULL, '$2y$10$PUWgCmoPuDTMa.Td0D170.U/6LAqCnxPBNzTPqaVxGvlBpr2ga5qy', NULL, NULL, '2024-09-28 02:21:06', '2024-09-28 02:21:06', 1, 0, NULL, NULL, NULL),
+(34, 2, NULL, '1727515359', 0, NULL, 0, 'ibraheem', NULL, NULL, 'ibraheem@gmail.com', NULL, NULL, NULL, NULL, 'Bangladesh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ibraheem', NULL, '$2y$10$85kIrlJ7R031BXcS/jeZCeOC4B/CDiiC1F0CCuENBbn8V26hBe8E6', NULL, NULL, '2024-09-28 03:22:39', '2024-09-28 03:22:39', 1, 0, NULL, NULL, NULL),
+(35, 2, NULL, '1727515503', 0, NULL, 0, 'Fahim', NULL, NULL, 'fahim@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fahim@gmail.com', NULL, '$2y$10$VLYpfovgmMCFXOAaKRpaBubo6eGC1g2TOrxpzBK.zXOsD1FjfA5Zu', NULL, NULL, '2024-09-28 03:25:03', '2024-09-28 03:25:03', 1, 0, NULL, NULL, NULL),
+(36, 2, NULL, '1727584943', 0, NULL, 2, 'Mr. Shuvo', NULL, NULL, 'shuvo@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'shuvo@gmail.com', NULL, '$2y$10$3v.s7coXmYUlUjPX8iGK6eq00Bx2wbt5Z5jYh5QVTQG7xYYCJNpE6', NULL, NULL, '2024-09-28 22:42:23', '2024-09-28 22:42:23', 1, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3105,6 +3199,18 @@ ALTER TABLE `coupons`
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `education`
+--
+ALTER TABLE `education`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `experience`
+--
+ALTER TABLE `experience`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3245,6 +3351,12 @@ ALTER TABLE `send_message`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `skills`
+--
+ALTER TABLE `skills`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `sliders`
 --
 ALTER TABLE `sliders`
@@ -3329,6 +3441,18 @@ ALTER TABLE `customer`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `education`
+--
+ALTER TABLE `education`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `experience`
+--
+ALTER TABLE `experience`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
@@ -3344,7 +3468,7 @@ ALTER TABLE `gig`
 -- AUTO_INCREMENT for table `gig_images_history`
 --
 ALTER TABLE `gig_images_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `manufacturers`
@@ -3453,6 +3577,12 @@ ALTER TABLE `seller_ads`
 --
 ALTER TABLE `send_message`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `skills`
+--
+ALTER TABLE `skills`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `sliders`

@@ -23,6 +23,9 @@ use App\Models\BlogModel;
 use App\Models\blogCategory;
 use App\Models\Profession;
 use App\Models\Gig;
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\Skills;
 
 class UserController extends Controller
 {
@@ -38,7 +41,6 @@ class UserController extends Controller
             $this->userid = $user->id;
         }
     }
-
 
     public function allProfessionList()
     {
@@ -418,17 +420,156 @@ class UserController extends Controller
 
         $userId = DB::table('users')->insertGetId($data);
 
-        // if (empty($request->id)) {
-        //     $userId = DB::table('users')->insertGetId($data);
-        // } else {
-        //     $userId = $request->id;
-        //     DB::table('users')->where('id', $request->id)->update($data);
-        // }
         $response = [
             'message' => 'Successfully Assign to User. UserID:' . $userId
         ];
         return response()->json($response);
     }
+
+    public function skillsData(Request $request)
+    {
+
+        try {
+            $data['skillsdata'] = Skills::where('user_id', $this->userid)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+
+    public function geteducation(Request $request)
+    {
+
+        try {
+            $data['euddata'] = Education::where('user_id', $this->userid)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+public function getExperience(Request $request)
+    {
+
+        try {
+            $data['expdata'] = Experience::where('user_id', $this->userid)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+
+
+    
+
+
+    public function addExperience(Request $request)
+    {
+        //dd($request->all());
+        $request->validate([
+            'year'          => 'required',
+            'role'          => 'required',
+            'company'       => 'required',
+
+        ]);
+        $educationData = [
+            'user_id'           => $this->userid, // Assuming you are using authentication
+            'year'              => $request->year,
+            'role'              => $request->role,
+            'company'           => $request->company,
+            'description'       => $request->description,
+        ];
+
+        $education =  Experience::create($educationData);
+
+        return response()->json([
+            'message' => 'Experience added successfully!',
+            'education' => $education
+        ]);
+    }
+
+    public function addeducation(Request $request)
+    {
+
+        $request->validate([
+            'year'          => 'required',
+            'subject'       => 'required',
+            'college'       => 'required',
+
+        ]);
+        $educationData = [
+            'user_id'           => $this->userid, // Assuming you are using authentication
+            'year'              => $request->year,
+            'subject'           => $request->subject,
+            'college'           => $request->college,
+            'description'       => $request->description,
+        ];
+
+        $education =  Education::create($educationData);
+
+        return response()->json([
+            'message' => 'Education added successfully!',
+            'education' => $education
+        ]);
+    }
+
+
+    public function addskills(Request $request)
+    {
+        $request->validate([
+            'skills' => 'required|array', // Ensure skills is an array
+            'skills.*' => 'string|max:255', // Each skill must be a string and max length of 255
+        ]);
+        foreach ($request->skills as $skillName) {
+            Skills::create([
+                'user_id' => $this->userid, // Assuming $this->userid is set correctly
+                'name' => $skillName,
+            ]);
+        }
+
+        $data['skillsdata'] = Skills::where('user_id', $this->userid)->get();
+        $data['message']    = "Skills added successfully!";
+
+        // Return a success response
+        return response()->json($data);
+    }
+
+
+    public function deleteEducation($id)
+    {
+        $skill = Education::find($id);
+        if ($skill) {
+            $skill->delete(); // Delete the skill
+            return response()->json(['message' => 'Skill deleted successfully!']);
+        } else {
+            return response()->json(['message' => 'Skill not found!'], 404);
+        }
+    }
+
+
+    public function deleteExperience($id)
+    {
+        $edu = Experience::find($id);
+        if ($edu) {
+            $edu->delete(); // Delete the skill
+            return response()->json(['message' => 'Skill deleted successfully!']);
+        } else {
+            return response()->json(['message' => 'Skill not found!'], 404);
+        }
+    } function removeSkill(Request $request)
+    {
+        $id = $request->id;
+        $skill = Skills::find($id);
+        if ($skill) {
+            $skill->delete(); // Delete the skill
+            return response()->json(['message' => 'Skill deleted successfully!']);
+        } else {
+            return response()->json(['message' => 'Skill not found!'], 404);
+        }
+    }
+
     public function saveEmployee(Request $request)
     {
         ///dd($request->all());

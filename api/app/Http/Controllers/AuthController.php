@@ -209,7 +209,10 @@ class AuthController extends Controller
             $response['joindate']     = date("Y-M-d",strtotime($user->created_at));
             $response['countryName']  = !empty($chkCountry) ? $chkCountry->countryname : "";
             $response['profName']     = !empty($chkProfession) ? $chkProfession->name : "";
-            $response['invite_code']  = !empty($user) ? $user->invite_code : "";;
+            $response['invite_code']  = !empty($user) ? $user->invite_code : "";
+            $response['profession_name']  = !empty($user) ? $user->profession_name : "";
+            $response['twitter']      = !empty($user) ? $user->twitter : "";
+            $response['introduce_yourself']= !empty($user) ? strip_tags($user->introduce_yourself) : "";
         }
 
         return response()->json($response);
@@ -267,43 +270,15 @@ class AuthController extends Controller
         ], 200);
     }
 
-    public function updateBusinessprofile(Request $request)
-    {
+     
 
-        $user = auth('api')->user();
-
-        $authId = $user->id;
-        $validator = Validator::make($request->all(), [
-            'business_owner_name'       => 'required',
-            'business_name'             => 'required',
-            'business_register_num'     => 'required',
-            'business_address'          => 'required',
-        ]);
-        if ($validator->fails()) {
-            return response()->json(['errors' => $validator->errors()], 422);
-        }
-        $data = array(
-            'id'                => $authId,
-            'business_owner_name'       => $request->business_owner_name,
-            'business_name'             => $request->business_name,
-            'business_register_num'     => $request->business_register_num,
-            'business_address'          => $request->business_address,
-
-        );
-
-        $response = [
-            'message' => 'Business Information successfully update'
-        ];
-        return response()->json($response);
-    }
-
-    public function updateLogo(Request $request)
+    public function updateProfileImages(Request $request)
     {
         $user       = auth('api')->user();
         $authId     = $user->id;
 
-        if (!empty($request->file('file'))) {
-            $documents = $request->file('file');
+        if (!empty($request->file('image'))) {
+            $documents = $request->file('image');
             $fileName = Str::random(20);
             $ext = strtolower($documents->getClientOriginalExtension());
             $path = $fileName . '.' . $ext;
@@ -312,29 +287,71 @@ class AuthController extends Controller
             $documents->move(public_path('/backend/files/'), $upload_url);
             $data['image'] = $upload_url;
         }
-        //business logo 
-
-        if (!empty($request->file('business_logo'))) {
-            $documents = $request->file('business_logo');
-            $fileName = Str::random(20);
-            $ext = strtolower($documents->getClientOriginalExtension());
-            $path = $fileName . '.' . $ext;
-            $uploadPath = '/backend/files/';
-            $upload_url = $uploadPath . $path;
-            $documents->move(public_path('/backend/files/'), $upload_url);
-            $data['business_logo'] = $upload_url;
-        }
-
+      
         //dd($data);
         DB::table('users')->where('id', $authId)->update($data);
         $response = [
             'profileLogo'  => !empty($user) ? url($user->image) : "",
-            'businessLogo' => !empty($user) ? url($user->business_logo) : "",
-            'message' => 'Logo successfully update'
+            'message'      => 'Profile successfully update'
         ];
         return response()->json($response);
     }
 
+
+
+    public function updateprofileFrontendSeller (Request $request){
+
+        $user = auth('api')->user();
+        $userid = $user->id;
+
+        $validator = Validator::make($request->all(), [
+            'name'            => 'required',
+            'email'           => 'required|email|unique:users,email,' . $userid, // Ensure email is unique except for the current user
+            'country_1'       => 'required',
+            'phone_number'    => 'required',
+            'profession_name' => 'required',
+            'introduce_yourself' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        // Prepare the data for updating
+
+        $introduce_yourself = !empty($request->introduce_yourself) ? $request->introduce_yourself : ""; 
+        $description_with_line_breaks = nl2br($introduce_yourself);
+     
+        $data = [
+            'name'            => $request->name,
+            'email'           => $request->email,
+            'country_1'       => $request->country_1,
+            'phone_number'    => $request->phone_number,
+            'profession_name' => $request->profession_name,
+            'github'          => $request->github,
+            'website'         => $request->website,
+            'gender'          => $request->gender,
+            'twitter'         => $request->twitter,
+            'introduce_yourself' => $description_with_line_breaks,
+
+        ];
+
+
+        try {
+            // Update the user data
+            $userUpdate = \DB::table('users')
+                ->where('id', $userid) // Find user by ID
+                ->update($data); // Update the fields
+
+            if ($userUpdate) {
+                return response()->json(['success' => 'Profile updated successfully!']);
+            } else {
+                return response()->json(['error' => 'No changes made to the profile.'], 200);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'An error occurred while updating the profile.'], 500);
+        }
+
+    }
 
     public function updateprofileFrontend(Request $request)
     {
@@ -387,7 +404,6 @@ class AuthController extends Controller
         $validator  = Validator::make($request->all(), [
             'email'        => 'required',
             'email'        => "required|unique:users,email, $user->id",
-
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
