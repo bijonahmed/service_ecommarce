@@ -284,9 +284,8 @@
                       <p>{{ edu.description }}</p>
                     </div>
 
-
                   </div>
-                 
+
                 </div>
               </div>
               <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
@@ -297,15 +296,15 @@
                 </div>
                 <div class="position-relative">
                   <div class="educational-quality__">
-                  
+
                     <div class="wrapper mb40 position-relative" v-for="exdata in expdata" :key="exdata.id">
                       <div class="del-edit">
                         <div class="d-flex">
                           <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
                             data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
-                          <a href="javascript:void(0);" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title=""   @click.prevent="removeExperience(exdata.id)"
-                            data-bs-original-title="Delete" aria-label="Delete"><span
-                              class="flaticon-delete"></span></a>
+                          <a href="javascript:void(0);" class="icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="" @click.prevent="removeExperience(exdata.id)" data-bs-original-title="Delete"
+                            aria-label="Delete"><span class="flaticon-delete"></span></a>
                         </div>
                       </div>
                       <span class="tag">{{ exdata.year || "" }}</span>
@@ -313,66 +312,100 @@
                       <h6 class="text-thm">{{ exdata.company }}</h6>
                       <p>{{ exdata.description }}</p>
                     </div>
-                    
+
                   </div>
-                
+
                 </div>
               </div>
               <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
                 <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
                   <h5 class="list-title">Certification</h5>
-                  <a href="#" class="add-more-btn text-thm"><i class="icon far fa-plus mr10"></i>Add Certification</a>
+                  <a href="javascript:void(0);" class="add-more-btn text-thm" data-bs-toggle="modal"
+                    data-bs-target="#addCertificationeModal"><i class="icon far fa-plus mr10"></i>Add Certification</a>
+
                 </div>
                 <div class="position-relative">
                   <div class="educational-quality ps-0">
                     <div class="wrapper mb40 position-relative">
-                      <div class="del-edit">
-                        <div class="d-flex">
-                          <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                            data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a>
-                          <a href="#" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                            data-bs-original-title="Delete" aria-label="Delete"><span
-                              class="flaticon-delete"></span></a>
+
+                      <div class="wrapper mb40 position-relative" v-for="cerdata in certificatedata" :key="cerdata.id">
+                        <div class="del-edit">
+                          <div class="d-flex">
+                            <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
+                            data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
+                            <a href="javascript:void(0);" class="icon" data-bs-toggle="tooltip" data-bs-placement="top"
+                              title="" @click.prevent="removeCertificate(cerdata.id)" data-bs-original-title="Delete"
+                              aria-label="Delete"><span class="flaticon-delete"></span></a>
+                          </div>
                         </div>
+                        <span class="tag">{{ cerdata.year || "" }}</span>
+                        <h5 class="mt15">{{ cerdata.course_name }}</h5>
+                        <h6 class="text-thm">{{ cerdata.institute_name }}</h6>
+                        <p>{{ cerdata.description }}</p>
                       </div>
-                      <span class="tag">2012 - 2014</span>
-                      <h5 class="mt15">UI UX Design</h5>
-                      <h6 class="text-thm">Udemy</h6>
-                      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus. Interdum et
-                        malesuada fames ac ante ipsum <br class="d-none d-lg-block"> primis in faucibus.</p>
+
                     </div>
-                    <div class="wrapper mb40 position-relative">
-                      <div class="del-edit">
-                        <div class="d-flex">
-                          <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                            data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a>
-                          <a href="#" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                            data-bs-original-title="Delete" aria-label="Delete"><span
-                              class="flaticon-delete"></span></a>
-                        </div>
-                      </div>
-                      <span class="tag">2008 - 2012</span>
-                      <h5 class="mt15">App Design</h5>
-                      <h6 class="text-thm">Google</h6>
-                      <p class="mb-0">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin a ipsum tellus.
-                        Interdum et malesuada fames ac ante ipsum <br class="d-none d-lg-block"> primis in faucibus.</p>
-                    </div>
-                  </div>
-                  <div class="text-start">
-                    <a class="ud-btn btn-thm" href="#">Save<i class="fal fa-arrow-right-long"></i></a>
+
                   </div>
                 </div>
+
+              </div>
+            </div>
+          </div>
+          <!-- END Profile -->
+          <div />
+        </div>
+      </div>
+    </div>
+    <!-- Modal Template -->
+
+    <!-- Cetification Modal -->
+    <div class="modal fade" id="addCertificationeModal" tabindex="-1" aria-labelledby="addCertificateModalLabel"
+      aria-hidden="true">
+      <form @submit.prevent="submitCertifiate">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addCertificateModalLabel">Add Certificate</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+              <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="text" class="form-control" id="year" placeholder="e.g. 2012 - 2014"
+                  v-model="certificate.year">
+                <span class="text-danger" v-if="errors.year">{{ errors.year[0] }}</span>
+
+              </div>
+              <div class="mb-3">
+                <label for="role" class="form-label">Course Name</label>
+                <input type="text" class="form-control" id="role" placeholder="e.g. UX Designer"
+                  v-model="certificate.course_name">
+                <span class="text-danger" v-if="errors.course_name">{{ errors.course_name[0] }}</span>
+              </div>
+              <div class="mb-3">
+                <label for="company" class="form-label">Insititute Name</label>
+                <input type="text" class="form-control" id="company" placeholder="e.g. Dropbox"
+                  v-model="certificate.institute_name">
+                <span class="text-danger" v-if="errors.institute_name">{{ errors.institute_name[0] }}</span>
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" rows="3" placeholder="Describe your role..."
+                  v-model="certificate.description"></textarea>
               </div>
 
             </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary text-white" id="submitCertificate">Add Certificate</button>
+            </div>
           </div>
         </div>
-        <!-- END Profile -->
-        <div />
-      </div>
+      </form>
     </div>
 
-    <!-- Modal Template -->
     <!-- Experience Modal -->
     <div class="modal fade" id="addExperienceModal" tabindex="-1" aria-labelledby="addExperienceModalLabel"
       aria-hidden="true">
@@ -500,12 +533,12 @@ const uploadStatus = ref(null);
 const skillsdata = ref([]);
 const euddata = ref([]);
 const expdata = ref([]);
+const certificatedata = ref([]);
 
 const skillInput = ref(''); // Reactive variable for input
 const skills = ref([]); // Reactive array for skills
 const skillsError = ref(''); // Reactive variable for error message
 const skillInputRef = ref(null); // Reference for the input element
-
 
 //Add education 
 const education = ref({
@@ -522,8 +555,46 @@ const experience = ref({
   description: ''
 });
 
+//Certificate
+const certificate = ref({
+  year: '',
+  course_name: '',
+  institute_name: '',
+  description: ''
+});
+
 const errorMessage = ref('');
 
+const submitCertifiate = async () => {
+  try {
+    const response = await axios.post('/user/add-certificate', certificate.value);
+    console.log('Certificate added successfully:', response.data);
+    certificate.value = {
+      year: '',
+      course_name: '',
+      institute_name: '',
+      description: ''
+    };
+    errorMessage.value = ''; // Clear any previous error messages
+    $('#addCertificationeModal').modal('hide');
+    getCertificates();
+  } catch (error) {
+    // Check if there's a response from the server
+    if (error.response) {
+      if (error.response.status === 422) {
+        // Validation errors
+        errors.value = error.response.data.errors; // Assuming `errors` is defined as a reactive variable
+        console.error("Validation errors:", errors.value);
+      } else {
+        console.error("Server error:", error.response.data.message || error.response.data);
+        errorMessage.value = 'An error occurred while adding education. Please try again.';
+      }
+    } else {
+      console.error("An error occurred:", error);
+      errorMessage.value = 'Failed to add education. Please check your connection and try again.';
+    }
+  }
+};
 
 const submitExperience = async () => {
   try {
@@ -556,7 +627,6 @@ const submitExperience = async () => {
   }
 };
 
-
 const submitEducation = async () => {
   try {
     const response = await axios.post('/user/add-education', education.value);
@@ -585,6 +655,42 @@ const submitEducation = async () => {
       console.error("An error occurred:", error);
       errorMessage.value = 'Failed to add education. Please check your connection and try again.';
     }
+  }
+};
+
+const removeCertificate = async (id) => {
+  // Show SweetAlert confirmation dialog
+  const { isConfirmed } = await Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  });
+
+  if (!isConfirmed) return; // Exit if the user cancels
+
+  try {
+    const response = await axios.get(`/user/delete-certificate/${id}`);
+    console.log('Certificate deleted successfully:', response.data);
+    getCertificates();
+    Swal.fire({
+      title: 'Deleted!',
+      text: 'Your Certificate record has been deleted.',
+      icon: 'success',
+      confirmButtonText: 'OK'
+    });
+  } catch (error) {
+    console.error('Error deleting Certificate:', error);
+    // Show error message
+    Swal.fire({
+      title: 'Error!',
+      text: 'There was an error deleting your Certificate record.',
+      icon: 'error',
+      confirmButtonText: 'OK'
+    });
   }
 };
 
@@ -624,7 +730,6 @@ const removeExperience = async (id) => {
   }
 };
 
-
 const removeEducation = async (id) => {
   // Show SweetAlert confirmation dialog
   const { isConfirmed } = await Swal.fire({
@@ -660,7 +765,6 @@ const removeEducation = async (id) => {
     });
   }
 };
-
 
 const addSkill = () => {
   const trimmedSkill = skillInput.value.trim(); // Trim input
@@ -833,8 +937,14 @@ const getExperience = async () => {
   }
 };
 
-
-
+const getCertificates = async () => {
+  try {
+    const response = await axios.get(`/user/getCertificate`);
+    certificatedata.value = response.data.certificatedata;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 const getEducations = async () => {
   try {
@@ -844,8 +954,6 @@ const getEducations = async () => {
     console.log(error);
   }
 };
-
-
 
 const getSkills = async () => {
   try {
@@ -869,6 +977,7 @@ const getCatList = async () => {
 };
 
 onMounted(() => {
+  getCertificates();
   getExperience();
   getEducations();
   getSkills();

@@ -113,7 +113,6 @@
                         <hr class="opacity-100 mb60">
                         <h4 class="mb30">Work & Experience</h4>
                         <div class="educational-quality_">
-
                           <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
                             <span class="tag">{{ edu.year }}</span>
                             <h5 class="mt15">{{ edu.role }}</h5>
@@ -125,35 +124,28 @@
                         </div>
                         <hr class="opacity-100 mb60">
                         <h4 class="mb30">Awards adn Certificates</h4>
-                        <div class="educational-quality ps-0">
-                          <div class="wrapper mb40">
-                            <span class="tag">2012 - 2014</span>
-                            <h5 class="mt15">UI UX Design</h5>
-                            <h6 class="text-thm">Udemy</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              <br class="d-none d-lg-block"> primis in faucibus.
+                        <div class="educational-quality__">
+                          <div class="wrapper mb40" v-for="cer in certificatedata" :key="cer.id">
+                            <span class="tag">{{ cer.year }}</span>
+                            <h5 class="mt15">{{ cer.course_name }}</h5>
+                            <h6 class="text-thm">{{ cer.institute_name }}</h6>
+                            <p>{{ cer.description }}
                             </p>
                           </div>
-                          <div class="wrapper mb60">
-                            <span class="tag">2008 - 2012</span>
-                            <h5 class="mt15">App Design</h5>
-                            <h6 class="text-thm">Google</h6>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                              elit. Proin a ipsum
-                              tellus. Interdum et malesuada fames ac ante ipsum
-                              <br class="d-none d-lg-block"> primis in faucibus.
-                            </p>
-                          </div>
+
                         </div>
 
 
 
                       </div>
                     </div>
+
                     <div class="col-lg-4">
                       <div class="blog-sidebar ms-lg-auto">
+                        <div class="sidebar-widget mb30 pb20 bdrs8">
+                          <h4 class="widget-title">Share Public Profile</h4>
+                        <ShareProfileLink/>
+                        </div>
 
                         <div class="sidebar-widget mb30 pb20 bdrs8">
                           <h4 class="widget-title">My Skills</h4>
@@ -161,8 +153,13 @@
                             <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
                           </div>
                         </div>
+
                       </div>
                     </div>
+
+
+
+
                   </div>
                 </div>
               </section>
@@ -198,6 +195,7 @@ const introduce_yourself = ref('');
 const profileLogo = ref('');
 const skillsdata = ref('');
 const expdata = ref([]);
+const certificatedata = ref([]);
 const loading = ref(false);
 const route = useRoute();
 
@@ -261,6 +259,15 @@ const getEducations = async () => {
   }
 };
 
+const getCertificates = async () => {
+  try {
+    const response = await axios.get(`/user/getCertificate`);
+    certificatedata.value = response.data.certificatedata;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 const getSkills = async () => {
@@ -273,6 +280,7 @@ const getSkills = async () => {
 };
 
 onMounted(() => {
+  getCertificates();
   getExperience();
   getEducations();
   getSkills();

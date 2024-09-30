@@ -21,7 +21,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\BlogModel;
 use App\Models\blogCategory;
+use App\Models\Certificate;
 use App\Models\Profession;
+use App\Models\Courses;
 use App\Models\Gig;
 use App\Models\Education;
 use App\Models\Experience;
@@ -437,7 +439,6 @@ class UserController extends Controller
         }
     }
 
-
     public function geteducation(Request $request)
     {
 
@@ -449,7 +450,7 @@ class UserController extends Controller
         }
     }
 
-public function getExperience(Request $request)
+    public function getExperience(Request $request)
     {
 
         try {
@@ -460,10 +461,41 @@ public function getExperience(Request $request)
         }
     }
 
+    public function getCertificate(Request $request)
+    {
 
+        try {
+            $data['certificatedata'] = Certificate::where('user_id', $this->userid)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
 
-    
+    public function addcertificate(Request $request)
+    {
+        //dd($request->all());
+        $request->validate([
+            'year'                  => 'required',
+            'course_name'           => 'required',
+            'institute_name'        => 'required',
 
+        ]);
+        $certicateData = [
+            'user_id'           => $this->userid, // Assuming you are using authentication
+            'year'              => $request->year,
+            'course_name'       => $request->course_name,
+            'institute_name'    => $request->institute_name,
+            'description'       => $request->description,
+        ];
+
+        $cerData =  Certificate::create($certicateData);
+
+        return response()->json([
+            'message' => 'Certificate added successfully!',
+            'certicated' => $cerData
+        ]);
+    }
 
     public function addExperience(Request $request)
     {
@@ -515,7 +547,6 @@ public function getExperience(Request $request)
         ]);
     }
 
-
     public function addskills(Request $request)
     {
         $request->validate([
@@ -536,37 +567,49 @@ public function getExperience(Request $request)
         return response()->json($data);
     }
 
-
     public function deleteEducation($id)
     {
         $skill = Education::find($id);
         if ($skill) {
             $skill->delete(); // Delete the skill
-            return response()->json(['message' => 'Skill deleted successfully!']);
+            return response()->json(['message' => 'Deleted successfully!']);
         } else {
-            return response()->json(['message' => 'Skill not found!'], 404);
+            return response()->json(['message' => 'Not found!'], 404);
         }
     }
-
 
     public function deleteExperience($id)
     {
         $edu = Experience::find($id);
         if ($edu) {
             $edu->delete(); // Delete the skill
-            return response()->json(['message' => 'Skill deleted successfully!']);
+            return response()->json(['message' => 'Deleted successfully!']);
         } else {
-            return response()->json(['message' => 'Skill not found!'], 404);
+            return response()->json(['message' => 'Not found!'], 404);
         }
-    } function removeSkill(Request $request)
+    }
+
+
+    public function deleteCertificate($id)
+    {
+        $edu = Certificate::find($id);
+        if ($edu) {
+            $edu->delete(); // Delete the skill
+            return response()->json(['message' => 'Deleted successfully!']);
+        } else {
+            return response()->json(['message' => 'Not found!'], 404);
+        }
+    }
+
+    function removeSkill(Request $request)
     {
         $id = $request->id;
         $skill = Skills::find($id);
         if ($skill) {
             $skill->delete(); // Delete the skill
-            return response()->json(['message' => 'Skill deleted successfully!']);
+            return response()->json(['message' => 'Deleted successfully!']);
         } else {
-            return response()->json(['message' => 'Skill not found!'], 404);
+            return response()->json(['message' => 'Not found!'], 404);
         }
     }
 

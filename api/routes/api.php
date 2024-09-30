@@ -90,13 +90,16 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::post('add-certificate', [UserController::class, 'addcertificate']);
     Route::post('add-experience', [UserController::class, 'addExperience']);
     Route::post('add-education', [UserController::class, 'addeducation']);
     Route::get('removeSkill', [UserController::class, 'removeSkill']);
     Route::get('geteducation', [UserController::class, 'geteducation']);
     Route::get('getExperience', [UserController::class, 'getExperience']);
+    Route::get('getCertificate', [UserController::class, 'getCertificate']);
     Route::get('delete-education/{id}', [UserController::class, 'deleteEducation']);
     Route::get('delete-experience/{id}', [UserController::class, 'deleteExperience']);
+    Route::get('delete-certificate/{id}', [UserController::class, 'deleteCertificate']);
     Route::get('skillsData', [UserController::class, 'skillsData']);
     Route::post('addskills', [UserController::class, 'addskills']);
     Route::get('allUsers', [UserController::class, 'AllUsersList']);
