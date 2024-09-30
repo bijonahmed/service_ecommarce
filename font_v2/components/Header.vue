@@ -18,18 +18,18 @@
                         class="pr5 fz15 vam flaticon-menu"></span><span>Categories</span></a></div>
                   <ul class="menu ps-0">
                     <li v-for="category in categoryData.slice(0, 15)" :key="category.id">
-                      <a class="dropdown" href="#">
+                      <nuxt-link :to="`/category/${category.slug}`" class="dropdown">
                         <!-- <span class="menu-icn flaticon-developer"></span> -->
                         <span class="menu-title">{{ category.name }}</span>
-                      </a>
+                      </nuxt-link>
                       <div class="drop-menu">
                         <div v-for="(subCategoryGroup, index) in groupedSubCategories(category.children)" :key="index"
                           class="row mb-1">
                           <div v-for="subCategory in subCategoryGroup" :key="subCategory.id" class="col-6">
-                            <div class="h6 cat-title">{{ subCategory.name }}</div>
+                            <div class="h6 cat-title"> <nuxt-link :to="`/category/${subCategory.slug}`">{{ subCategory.name }}</nuxt-link></div>
                             <ul class="ps-0">
                               <li v-for="subSubCategory in subCategory.children" :key="subSubCategory.id">
-                                <a href="#">{{ subSubCategory.name }}</a>
+                                <a href="#"><nuxt-link :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name }}</nuxt-link></a>
                               </li>
 
                             </ul>

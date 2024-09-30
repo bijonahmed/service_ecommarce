@@ -58,11 +58,12 @@
             <Loader />
           </div>
           <!-- Breadcumb Sections -->
-
+         
           <section class="pt0 pb90 pb30-md">
             <div class="container">
               <div class="row wrap">
                 <div class="col-lg-8">
+                  <h2>{{ responseData.name }}</h2>
                   <div class="column wow fadeInUp">
                     <div class="row mt30">
                       <div class="col-sm-6 col-md-4">

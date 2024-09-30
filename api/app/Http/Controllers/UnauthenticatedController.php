@@ -31,6 +31,7 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
+
     public function getCountry()
     {
 

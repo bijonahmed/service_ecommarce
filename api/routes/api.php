@@ -84,10 +84,12 @@ Route::group([
 
 
 Route::group(['prefix' => 'gig' ], function () {
+    Route::get('deleteMultipleImgId', [GigController::class, 'deleteMultipleImgId']);
     Route::post('createGig', [GigController::class, 'createGig']);
+    Route::post('updateGig', [GigController::class, 'updateGig']);
     Route::get('deleteGig', [GigController::class, 'deleteGig']);
     Route::get('getGigHistory', [GigController::class, 'getGigHistory']);
-
+    Route::get('getgitrow', [GigController::class, 'getgitrow']);
 });
 
 
@@ -203,7 +205,8 @@ Route::group([ 'prefix' => 'unauthenticate' ], function () {
     Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
     Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
     Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
-     Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
+    Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
+  
 });
 
 

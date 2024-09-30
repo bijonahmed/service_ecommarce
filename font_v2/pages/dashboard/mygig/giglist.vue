@@ -72,17 +72,23 @@
                                         <img class="w-100" :src="gig.thumbnail_images" alt="">
                                         <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
                                                 class="fa-solid fa-trash"></i></a>
+
+                                                
                                     </div>
+
+                                    <div align="right"><nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`"><button type="button" class="btn btn-primary text-white"><i class="fa-solid fa-pen"></i>&nbsp;Edit</button></nuxt-link></div>
                                     <div class="list-content">
                                         <p class="list-text body-color fz14 mb-1">{{ gig.category_name }}</p>
                                         <h6 class="list-title"> <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`"> {{ gig.name }}</nuxt-link></h6>
 
                                         <span v-if="gig.status == 1">
-                                            <nuxt-link :to="`/gigs/${gig.gig_slug}`">  <span class="badge bg-primary rounded-pill">Live View</span></nuxt-link>
+                                            <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span class="badge bg-primary rounded-pill">Live View</span></nuxt-link>
                                         </span>
                                         <span v-else>
                                             <span class="badge bg-danger rounded-pill">Not Publish</span>
                                         </span>
+
+                                       
 
 
                                         <hr class="my-2">

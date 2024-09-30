@@ -45,7 +45,7 @@
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
                     <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                    <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
+                    <div class="h6 mb-0"><nuxt-link to="/dashboard/mygig/giglist">Back</nuxt-link></div>
                   </div>
 
                 </div>
@@ -121,7 +121,27 @@
                         </div>
                       </div>
 
-                      <div class="col-sm-4">
+
+                      
+                        <div class="col-sm-4 single_pack">
+                          <div class="">
+                            <label class="heading-color ff-heading fw500 mb10">Regular Price</label>
+                            <input type="text" class="form-control" placeholder="$15" v-model="price" @input="validateInput" min="0">
+                            <span class="text-danger" v-if="priceError">{{ priceError }}</span>
+                            <span class="text-danger" v-if="errors.price">{{ errors.price[0] }}</span>
+                          </div>
+                        </div>
+                        <div class="col-sm-4 single_pack">
+                          <div class="">
+                            <label class="heading-color ff-heading fw500 mb10">Delivery Days</label>
+                            <input type="text" class="form-control" placeholder="3" v-model="delivery_day" @input="validateInput" min="0">
+                            <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
+                          </div>
+                        </div>
+                   
+
+
+                      <!-- <div class="col-sm-4">
                         <div class="">
                           <div class="form-style1">
                             <label class="heading-color ff-heading fw500 mb10">Language Name</label>
@@ -144,7 +164,7 @@
                             <span class="text-danger" v-if="errors.language_type">{{ errors.language_type[0] }}</span>
                           </div>
                         </div>
-                      </div>
+                      </div> -->
 
                       <div class="col-md-12">
                         <div class="mb10">
@@ -156,23 +176,7 @@
                     </div>
 
 
-                    <div class="row single_pack">
-                        <div class="col-sm-6">
-                          <div class="">
-                            <label class="heading-color ff-heading fw500 mb10">Regular Price</label>
-                            <input type="text" class="form-control" placeholder="$15" v-model="price" @input="validateInput" min="0">
-                            <span class="text-danger" v-if="priceError">{{ priceError }}</span>
-                            <span class="text-danger" v-if="errors.price">{{ errors.price[0] }}</span>
-                          </div>
-                        </div>
-                        <div class="col-sm-6">
-                          <div class="">
-                            <label class="heading-color ff-heading fw500 mb10">Delivery Days</label>
-                            <input type="text" class="form-control" placeholder="3" v-model="delivery_day" @input="validateInput" min="0">
-                            <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
-                          </div>
-                        </div>
-                    </div>
+                    
                     <div class="row multiple_pack">
                       <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
                         <b><u>Basic</u></b><br>

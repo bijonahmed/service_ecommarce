@@ -40,161 +40,381 @@ class GigController extends Controller
     }
 
 
-    public function createGig(Request $request){
+    public function deleteMultipleImgId(Request $request)
+    {
 
-    //dd($request->all());
-      // First, validate the common fields
-    $validator = Validator::make($request->all(), [
-        'name'              => 'required|string|max:255',
-        'category_id'       => 'required',
-        'type'              => 'required|string',
-        'thumbnail_images'  => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        'images.*'          => 'nullable|image|mimes:jpeg,png,jpg,gif',
-        'language_name'     => 'required',
-        'language_type'     => 'required',
-     
-        'status'            => 'required',
-        'gig_description'   => 'required',
-    ], [
-        // Custom messages
-        'name.required' => 'The name is required.',
-        'name.string'   => 'The name must be a string.',
-        'name.max'      => 'The name may not be greater than 255 characters.',
-        'category_id.required' => 'The category is required.',
-        'type.required' => 'The type field is required.',
-        'thumbnail_images.image' => 'The thumbnail must be an image.',
-        'thumbnail_images.mimes' => 'The thumbnail must be a file of type: jpeg, png, jpg, gif.',
-        'images.*.image' => 'Each image must be an image.',
-        'images.*.mimes' => 'Each image must be a file of type: jpeg, png, jpg, gif.',
-        'language_name.required' => 'The language name field is required.',
-        'language_type.required' => 'The language type field is required.',
-        'delivery_day.required' => 'The delivery day field is required.',
-        'delivery_day.integer'  => 'The delivery day must be an integer.',
-        'status.required' => 'The status field is required.',
-        'status.in'       => 'The selected status is invalid.',
-    ]);
-
-
-    if ($validator->fails()) {
-        return response()->json(['errors' => $validator->errors()], 422);
+        $deletedCount = GigImagesHistory::where('id', $request->deleteId)->delete();
+        if ($deletedCount > 0) {
+            return response()->json(['message' => 'Images deleted successfully.']);
+        } else {
+            return response()->json(['message' => 'No images found for the provided gig ID.'], 404);
+        }
     }
-    // Now add conditional validation for the price field
-    if ($request->type == '1') {
-        $request->validate([
-            'price'        => 'required',
-            'delivery_day' => 'required|integer|min:0', // Ensure it's an integer and >= 0,
 
+
+
+    public function getgitrow(Request $request)
+    {
+
+        $slug = $request->slug;
+
+        try {
+            $row = Gig::where('gig_slug', $slug)
+                ->where('user_id', $this->userid)
+                ->firstOrFail();
+
+            $data = [
+                'id'                    => $row->id,
+                'category_id'           => $row->category_id,
+                'subcategory_id'        => $row->subcategory_id,
+                'insubcategory_Id'      => $row->insubcategory_Id,
+                'name'                  => $row->name,
+                'gig_slug'              => $row->gig_slug,
+                'thumbnail_images'      => !empty($row->thumbnail_images) ? url($row->thumbnail_images) : "",
+                'types'                 => (int) $row->types,
+                'gig_description'       => $row->gig_description,
+                'price'                 => $row->price,
+                'delivery_day'          => $row->delivery_day,
+                'basic_price'           => $row->basic_price,
+                'basic_description'     => $row->basic_description,
+                'basic_delivery_days'   => $row->basic_delivery_days,
+                'source_file'           => $row->source_file,
+                'standard_price'        => $row->standard_price,
+                'stn_descrition'        => $row->stn_descrition,
+                'stn_delivery_days'     => $row->stn_delivery_days,
+                'stn_source_file'       => $row->stn_source_file,
+                'premium_price'         => $row->premium_price,
+                'premium_description'   => $row->premium_description,
+                'premium_delivery_days' => $row->premium_delivery_days,
+                'premium_source_file'   => $row->premium_source_file,
+                'status'                => $row->status,
+            ];
+
+
+            $rdata['data']          = $data;
+            $rdata['subcategory']   = Categorys::where('parent_id', $row->category_id)->where('status', 1)->get();
+            $rdata['inSubcatData']  = Categorys::where('parent_id', $row->subcategory_id)->where('status', 1)->get();
+
+            $imgHistory             = GigImagesHistory::where('gig_id', $row->id)->get();
+
+
+            $imgData = [];
+            foreach ($imgHistory as $v) {
+                $imgData[] = [
+                    'id'           => $v->id,
+                    'url'          => !empty($v->image_path) ? url($v->image_path) : "",
+
+                ];
+            }
+
+            $rdata['imgHisttory']  = $imgData;
+            // Proceed with other logic or return the data
+            return response()->json($rdata);
+        } catch (\Exception $e) {
+            // Handle the exception and return an error message
+            return response()->json([
+                'error' => 'Gig not found or an error occurred',
+                'message' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
+    public function updateGig(Request $request){
+
+       // dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'name'              => 'required|string|max:255',
+            'category_id'       => 'required',
+            'type'              => 'required|string',
+            'thumbnail_images'  => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'images.*'          => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'status'            => 'required',
+            'gig_description'   => 'required',
         ], [
-            'price.required' => 'The price field is required.',
-            'price.numeric' => 'The price must be a number.',
+            // Custom messages
+            'name.required' => 'The name is required.',
+            'name.string'   => 'The name must be a string.',
+            'name.max'      => 'The name may not be greater than 255 characters.',
+            'category_id.required' => 'The category is required.',
+            'type.required' => 'The type field is required.',
+            'thumbnail_images.image' => 'The thumbnail must be an image.',
+            'thumbnail_images.mimes' => 'The thumbnail must be a file of type: jpeg, png, jpg, gif.',
+            'images.*.image' => 'Each image must be an image.',
+            'images.*.mimes' => 'Each image must be a file of type: jpeg, png, jpg, gif.',
+            'delivery_day.integer'  => 'The delivery day must be an integer.',
+            'status.required' => 'The status field is required.',
+            'status.in'       => 'The selected status is invalid.',
         ]);
-    }
 
 
-    if ($request->type == 2) {
-        $request->validate([
-            'basic_price'    => 'required|numeric',
-            'standard_price' => 'required|numeric',
-            'premium_price'  => 'required|numeric',
-        ]);
-    }
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        // Now add conditional validation for the price field
+        if ($request->type == '1') {
+            $request->validate([
+                'price'        => 'required',
+                'delivery_day' => 'required|integer|min:0', // Ensure it's an integer and >= 0,
+
+            ], [
+                'price.required' => 'The price field is required.',
+                'price.numeric' => 'The price must be a number.',
+            ]);
+        }
 
 
-    // Handle thumbnail upload
+        if ($request->type == 2) {
+            $request->validate([
+                'basic_price'    => 'required|numeric',
+                'standard_price' => 'required|numeric',
+                'premium_price'  => 'required|numeric',
+            ]);
+        }
 
-    if (!empty($request->file('thumbnail_images'))) {
-        $files = $request->file('thumbnail_images');
-        $fileName = Str::random(20);
-        $ext = strtolower($files->getClientOriginalExtension());
-        $path = $fileName . '.' . $ext;
-        $uploadPath = '/backend/gig/';
-        $upload_url = $uploadPath . $path;
-        $files->move(public_path('/backend/gig/'), $upload_url);
-        $file_url = $uploadPath . $path;
-        $thumbnail_images = $file_url;
-    }
 
-   
-    // Handle multiple image uploads
-    $imageUrls = [];
-    if ($request->hasFile('images')) {
-        foreach ($request->file('images') as $file) {
+        // Handle thumbnail upload
+
+        if (!empty($request->file('thumbnail_images'))) {
+            $files = $request->file('thumbnail_images');
             $fileName = Str::random(20);
-            $ext = strtolower($file->getClientOriginalExtension());
+            $ext = strtolower($files->getClientOriginalExtension());
             $path = $fileName . '.' . $ext;
             $uploadPath = '/backend/gig/';
-            $file->move(public_path('/backend/gig/'), $path);
-            $imageUrls[] = $uploadPath . $path;
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/gig/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $thumbnail_images = $file_url;
         }
-    }
 
-    // Insert form data into the database
-    // Initialize the data array
-    $data = [];
-    // Fill the data array
-    $data['user_id']          = $this->userid;
-    $data['name']             = $validatedData['name'];
-    $data['category_id']      = $validatedData['category_id'];
-    $data['subcategory_id']   = !empty($request->subcategory_id) ? $request->subcategory_id : null;
-    $data['insubcategory_Id'] = !empty($request->insubcategory_Id) ? $request->insubcategory_Id : null;
-    $data['types']            = $request->type;
-    $data['status']           = $request->status;
-    $data['gig_slug']         = Str::slug($validatedData['name']);
-    // Ensure unique gig_slug
-    $slugExists = Gig::where('gig_slug', $data['gig_slug'])->exists();
-    if ($slugExists) {
-        $counter = 1;
-        while ($slugExists) {
-            $newSlug = $data['gig_slug'] . '-' . $counter;
-            $slugExists = Gig::where('gig_slug', $newSlug)->exists();
-            $counter++;
+
+        // Handle multiple image uploads
+        $imageUrls = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $fileName = Str::random(20);
+                $ext = strtolower($file->getClientOriginalExtension());
+                $path = $fileName . '.' . $ext;
+                $uploadPath = '/backend/gig/';
+                $file->move(public_path('/backend/gig/'), $path);
+                $imageUrls[] = $uploadPath . $path;
+            }
         }
-        $data['gig_slug'] = $newSlug;
-    }
 
-    $data['thumbnail_images']    = !empty($thumbnail_images) ? $thumbnail_images : null;
-    $data['language_name']       = $request->language_name;
-    $data['language_type']       = $request->language_type;
-    $data['price']               = $request->price;
-    $data['delivery_day']        = $request->delivery_day;
-    $data['gig_description']     = $request->gig_description;
-    //For Basic
-    $data['basic_price']         = $request->basic_price;   
-    $data['basic_description']   = $request->basic_description; 
-    $data['basic_delivery_days'] = $request->basic_delivery_days;   
-    $data['basic_source_file' ]  = $request->basic_source_file;
-    //For Standard
-    $data['standard_price']      = $request->standard_price;   
-    $data['stn_description']     = $request->stn_description; 
-    $data['stn_delivery_days']   = $request->stn_delivery_days;   
-    $data['stn_source_file' ]    = $request->stn_source_file;
-    //For Premimum
-    $data['premium_price']        = $request->premium_price;   
-    $data['premium_description']  = $request->premium_description; 
-    $data['premium_delivery_days']= $request->premium_delivery_days;   
-    $data['premium_source_file' ] = $request->premium_source_file;
+        // Insert form data into the database
+        // Initialize the data array
+        $data = [];
+        // Fill the data array
+        $data['user_id']          = $this->userid;
+        $data['name']             = $request->name;
+        $data['category_id']      = $request->category_id;
+        $data['subcategory_id']   = !empty($request->subcategory_id) ? $request->subcategory_id : null;
+        $data['insubcategory_Id'] = !empty($request->insubcategory_Id) ? $request->insubcategory_Id : null;
+        $data['types']            = $request->type;
+        $data['status']           = $request->status;
+        $data['gig_slug']         = Str::slug($request->name);
+        // Ensure unique gig_slug
+        $slugExists = Gig::where('gig_slug', $data['gig_slug'])->exists();
+        if ($slugExists) {
+            $counter = 1;
+            while ($slugExists) {
+                $newSlug = $data['gig_slug'] . '-' . $counter;
+                $slugExists = Gig::where('gig_slug', $newSlug)->exists();
+                $counter++;
+            }
+            $data['gig_slug'] = $newSlug;
+        }
+
+        $data['thumbnail_images']    = !empty($thumbnail_images) ? $thumbnail_images : null;
+        $data['language_name']       = $request->language_name;
+        $data['language_type']       = $request->language_type;
+        $data['price']               = $request->price;
+        $data['delivery_day']        = $request->delivery_day;
+        $data['gig_description']     = $request->gig_description;
+        //For Basic
+        $data['basic_price']         = $request->basic_price;
+        $data['basic_description']   = $request->basic_description;
+        $data['basic_delivery_days'] = $request->basic_delivery_days;
+        $data['basic_source_file']   = $request->basic_source_file;
+        //For Standard
+        $data['standard_price']      = $request->standard_price;
+        $data['stn_description']     = $request->stn_description;
+        $data['stn_delivery_days']   = $request->stn_delivery_days;
+        $data['stn_source_file']     = $request->stn_source_file;
+        //For Premimum
+        $data['premium_price']        = $request->premium_price;
+        $data['premium_description']  = $request->premium_description;
+        $data['premium_delivery_days']= $request->premium_delivery_days;
+        $data['premium_source_file']  = $request->premium_source_file;
 
 
+        $gigid      = (int) $request->id; 
+        $gig        = Gig::find($gigid);
+        $data       = $request->all();
+        $gig->update($data);
 
-    // Create and save the Gig instance
-    $gig = new Gig($data);
-    $gig->save();
- 
-    foreach ($imageUrls as $imageUrl) {
-        GigImagesHistory::create([
-            'gig_id' => $gig->id, // Associate the image with the newly created gig
-            'image_path' => $imageUrl,
+        foreach ($imageUrls as $imageUrl) {
+            GigImagesHistory::create([
+                'gig_id' => $gigid, // Associate the image with the newly created gig
+                'image_path' => $imageUrl,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gig update successfully',
+            'data' => $gig
         ]);
+
     }
 
-    return response()->json([
-        'success' => true,
-        'message' => 'Gig created successfully',
-        'data' => $gig
-    ]);
+    public function createGig(Request $request)
+    {
+
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'name'              => 'required|string|max:255',
+            'category_id'       => 'required',
+            'type'              => 'required|string',
+            'thumbnail_images'  => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'images.*'          => 'nullable|image|mimes:jpeg,png,jpg,gif',
+            'status'            => 'required',
+            'gig_description'   => 'required',
+        ], [
+            // Custom messages
+            'name.required' => 'The name is required.',
+            'name.string'   => 'The name must be a string.',
+            'name.max'      => 'The name may not be greater than 255 characters.',
+            'category_id.required' => 'The category is required.',
+            'type.required' => 'The type field is required.',
+            'thumbnail_images.image' => 'The thumbnail must be an image.',
+            'thumbnail_images.mimes' => 'The thumbnail must be a file of type: jpeg, png, jpg, gif.',
+            'images.*.image' => 'Each image must be an image.',
+            'images.*.mimes' => 'Each image must be a file of type: jpeg, png, jpg, gif.',
+            'delivery_day.integer'  => 'The delivery day must be an integer.',
+            'status.required' => 'The status field is required.',
+            'status.in'       => 'The selected status is invalid.',
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        // Now add conditional validation for the price field
+        if ($request->type == '1') {
+            $request->validate([
+                'price'        => 'required',
+                'delivery_day' => 'required|integer|min:0', // Ensure it's an integer and >= 0,
+
+            ], [
+                'price.required' => 'The price field is required.',
+                'price.numeric' => 'The price must be a number.',
+            ]);
+        }
+
+
+        if ($request->type == 2) {
+            $request->validate([
+                'basic_price'    => 'required|numeric',
+                'standard_price' => 'required|numeric',
+                'premium_price'  => 'required|numeric',
+            ]);
+        }
+
+
+        // Handle thumbnail upload
+
+        if (!empty($request->file('thumbnail_images'))) {
+            $files = $request->file('thumbnail_images');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/gig/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/gig/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $thumbnail_images = $file_url;
+        }
+
+
+        // Handle multiple image uploads
+        $imageUrls = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $fileName = Str::random(20);
+                $ext = strtolower($file->getClientOriginalExtension());
+                $path = $fileName . '.' . $ext;
+                $uploadPath = '/backend/gig/';
+                $file->move(public_path('/backend/gig/'), $path);
+                $imageUrls[] = $uploadPath . $path;
+            }
+        }
+
+        // Insert form data into the database
+        // Initialize the data array
+        $data = [];
+        // Fill the data array
+        $data['user_id']          = $this->userid;
+        $data['name']             = $request->name;
+        $data['category_id']      = $request->category_id;
+        $data['subcategory_id']   = !empty($request->subcategory_id) ? $request->subcategory_id : null;
+        $data['insubcategory_Id'] = !empty($request->insubcategory_Id) ? $request->insubcategory_Id : null;
+        $data['types']            = $request->type;
+        $data['status']           = $request->status;
+        $data['gig_slug']         = Str::slug($request->name);
+        // Ensure unique gig_slug
+        $slugExists = Gig::where('gig_slug', $data['gig_slug'])->exists();
+        if ($slugExists) {
+            $counter = 1;
+            while ($slugExists) {
+                $newSlug = $data['gig_slug'] . '-' . $counter;
+                $slugExists = Gig::where('gig_slug', $newSlug)->exists();
+                $counter++;
+            }
+            $data['gig_slug'] = $newSlug;
+        }
+
+        $data['thumbnail_images']    = !empty($thumbnail_images) ? $thumbnail_images : null;
+        $data['language_name']       = $request->language_name;
+        $data['language_type']       = $request->language_type;
+        $data['price']               = $request->price;
+        $data['delivery_day']        = $request->delivery_day;
+        $data['gig_description']     = $request->gig_description;
+        //For Basic
+        $data['basic_price']         = $request->basic_price;
+        $data['basic_description']   = $request->basic_description;
+        $data['basic_delivery_days'] = $request->basic_delivery_days;
+        $data['basic_source_file']  = $request->basic_source_file;
+        //For Standard
+        $data['standard_price']      = $request->standard_price;
+        $data['stn_description']     = $request->stn_description;
+        $data['stn_delivery_days']   = $request->stn_delivery_days;
+        $data['stn_source_file']    = $request->stn_source_file;
+        //For Premimum
+        $data['premium_price']        = $request->premium_price;
+        $data['premium_description']  = $request->premium_description;
+        $data['premium_delivery_days'] = $request->premium_delivery_days;
+        $data['premium_source_file'] = $request->premium_source_file;
 
 
 
+        // Create and save the Gig instance
+        $gig = new Gig($data);
+        $gig->save();
+
+        foreach ($imageUrls as $imageUrl) {
+            GigImagesHistory::create([
+                'gig_id' => $gig->id, // Associate the image with the newly created gig
+                'image_path' => $imageUrl,
+            ]);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gig created successfully',
+            'data' => $gig
+        ]);
     }
 
 
@@ -221,8 +441,8 @@ class GigController extends Controller
             $filterData = Gig::where('user_id', $this->userid)
                 //->where('gig.status', 1)
                 ->join('categorys', 'categorys.id', '=', 'gig.category_id')
-                ->select('gig.*', 'gig.status as gig_status','categorys.name as category_name')
-                ->orderBy('gig.id', 'desc') 
+                ->select('gig.*', 'gig.status as gig_status', 'categorys.name as category_name')
+                ->orderBy('gig.id', 'desc')
                 ->get();;
             $data = [];
             foreach ($filterData as $v) {

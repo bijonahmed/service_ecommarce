@@ -116,7 +116,8 @@ export default defineNuxtConfig({
         { src: "/js/jquery.counterup.js", type: "text/javascript" },
         { src: "/js/pricing-table.js", type: "text/javascript" },
         { src: "/js/script.js", type: "text/javascript" },  
-        { src: "/js/dashboard-script.js", type: "text/javascript" },  
+        { src: "/js/dashboard-script.js", type: "text/javascript" }, 
+        
       ],
     },
   },
