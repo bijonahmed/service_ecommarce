@@ -97,10 +97,29 @@ computed(async () => {
     await userStore.getUser()
   } catch (error) { }
 })
-
 const logout = async () => {
-  const router = useRouter();  
   try {
+    await userStore.logout();  // Perform the logout action in your store
+    Cookies.remove('user');    // Remove the 'user' cookie
+    localStorage.removeItem('token');  // Remove token from local storage
+
+    // Navigate to the home page after logout
+    await router.push('/');
+    location.reload();  // Optionally reload the page to clear any cached state
+  } catch (error) {
+    if (error.response && error.response.status === 401) {
+      Cookies.remove('user');  // Handle unauthorized case
+      console.log('Unauthorized access - logging out...');
+      location.reload();  // Reload the page
+    } else {
+      console.error('Error during logout:', error);  // Log any other errors
+    }
+  }
+};
+/*
+const logout = async () => {
+  try {
+    const router = useRouter();  
     await userStore.logout(); 
     Cookies.remove('user'); // Remove the user cookie
     localStorage.removeItem('token'); // Remove the token from local storage
@@ -108,7 +127,7 @@ const logout = async () => {
       location.reload();  
     });
   } catch (error) {
-    console.error('Error during logout:', error);
+   // console.error('Error during logout:', error);
     if (error.response && error.response.status === 401) {
       Cookies.remove('user'); // Remove the user cookie again if unauthorized
       console.log('Unauthorized access - logging out...');
@@ -116,6 +135,7 @@ const logout = async () => {
     }
   }
 };
+*/
 
 const groupedSubCategories = (subCategories) => {
   const grouped = [];

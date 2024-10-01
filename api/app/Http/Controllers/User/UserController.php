@@ -29,6 +29,7 @@ use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Skills;
 use App\Models\Deposit;
+use App\Models\Order;
 
 class UserController extends Controller
 {
@@ -473,7 +474,6 @@ class UserController extends Controller
         }
     }
 
-
     public function getDeposit(Request $request)
     {
 
@@ -485,6 +485,25 @@ class UserController extends Controller
         }
     }
 
+    public function checkDepositBalance()
+    {
+
+    $orderAmount = Order::where('buyerId', $this->userid)
+                  ->where('order_status', 1)
+                  ->sum('selected_price');
+    
+    $depositAmt = Deposit::where('user_id', $this->userid)
+                  ->where('status', 1)
+                  ->sum('deposit_amount');
+    try {
+        // Calculate the deposit amount
+        $data['depositAmount'] = abs($depositAmt - $orderAmount);
+       
+        return response()->json($data);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Failed Please try again later.'], 500);
+    }
+    }
 
     public function saveDeposit(Request $request)
     {
@@ -504,7 +523,6 @@ class UserController extends Controller
 
         $uniqueDepositID = 'DEP' . str_pad($data->id, 6, '0', STR_PAD_LEFT); // E.g., "DEP000123"
         $data->update(['depositID' => $uniqueDepositID]);
-
 
         return response()->json([
             'message' => 'added successfully!',
@@ -628,7 +646,6 @@ class UserController extends Controller
             return response()->json(['message' => 'Not found!'], 404);
         }
     }
-
 
     public function deleteCertificate($id)
     {

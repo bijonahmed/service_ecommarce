@@ -211,20 +211,17 @@ class OrderController extends Controller
     public function getOrder()
     {
 
-        $orders = [];
+        try {
+            $data['orders'] = Order::where('buyerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name') // Select desired fields
+            ->get();
 
-        $data['orders']  = Order::where('customer_id', $this->userid)->where('order_status', 1)->limit(2)->get();
-        foreach ($data['orders'] as $v) {
-            $orders[] = [
-                'orderId'      => $v->orderId,
-                'placeOn'      => date_format(date_create($v->created_at), "Y-m-d"),
-                'total'        => number_format($v->total, 2),
-            ];
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            // Handle the exception and return an error message with a 500 status code
+            return response()->json(['message' => 'Failed to retrieve orders, please try again later.'], 500);
         }
-
-        $order['orderdata']      = $orders;
-
-        return response()->json($order, 200);
     }
 
 
@@ -307,8 +304,8 @@ class OrderController extends Controller
 
 
         $devlDate = OrderHistory::join('product', 'product.id', '=', 'order_history.product_id')
-        ->select('product.delivery_days','product.name as product_name', 'product.thumnail_img', 'product.discount_status', 'product.discount', 'product.vat_status', 'product.vat', 'order_history.*')
-        ->where('order_id', $findorder->id)->first();
+            ->select('product.delivery_days', 'product.name as product_name', 'product.thumnail_img', 'product.discount_status', 'product.discount', 'product.vat_status', 'product.vat', 'order_history.*')
+            ->where('order_id', $findorder->id)->first();
         $delivery_days =  (!empty($devlDate) && isset($devlDate->delivery_days)) ? $devlDate->delivery_days : "";
         $order['devliveryDate'] = $delivery_days;
 
@@ -349,16 +346,19 @@ class OrderController extends Controller
         // return false;
 
         $data['orders'] = Order::join('order_status', 'orders.order_status', '=', 'order_status.id')
-            ->select('orders.*', 'order_status.name', 
-            'order_history.id as order_history_id', 
-            'order_history.product_id as order_history_product_id', 
-            'order_history.seller_id as order_history_seller_id', 
-            'order_history.quantity as order_history_quantity', 
-            'order_history.price as order_history_price', 
-            'order_history.total as order_history_total', 
-            'order_history.quantity as qty', 'product.name as product_name', 
-            'product.slug as product_slug', 
-            'product.thumnail_img as thumbnail_img'
+            ->select(
+                'orders.*',
+                'order_status.name',
+                'order_history.id as order_history_id',
+                'order_history.product_id as order_history_product_id',
+                'order_history.seller_id as order_history_seller_id',
+                'order_history.quantity as order_history_quantity',
+                'order_history.price as order_history_price',
+                'order_history.total as order_history_total',
+                'order_history.quantity as qty',
+                'product.name as product_name',
+                'product.slug as product_slug',
+                'product.thumnail_img as thumbnail_img'
             )
             ->Leftjoin('order_history', 'order_history.order_id', '=', 'orders.id')
             ->Leftjoin('product', 'product.id', '=', 'order_history.product_id') // Join with product table
@@ -412,24 +412,30 @@ class OrderController extends Controller
 
     public function submitOrder(Request $request)
     {
+        //  dd($request->all());
 
         $validator = FacadesValidator::make(
             $request->all(),
             [
-                'subTotal'              => 'required',
-                'item_total'            => 'required',
-                'shipp_address'         => 'required',
-                'billAddress'           => 'required',
-                'Cutomer_name'          => 'required',
-                'Cutomer_email'         => 'required',
-                'Cutomer_phone_number'  => 'required',
-                'payment_staus'         => 'required',
+                'gig_id'                 => 'required',
+                'fullname'               => 'required',
+                'email_address'          => 'required',
+                'billing_address'        => 'required',
+                'card_number'            => 'required',
+                'expiration_date'        => 'required',
+                'cvc'                    => 'required',
+                'SelectedPackages'       => 'required',
+                'SelectedPrice'          => 'required',
+
             ],
             [
-                'item_total'            => 'Errors in Total amount',
-                'shipp_address'         => 'Please add your address',
-                'billAddress'           => 'Please add your billing address',
-                'payment_staus'         => 'Please select payment method',
+                'gig_id'                => 'Gig is required',
+                'fullname'              => 'Fullname is required',
+                'email_address'         => 'Email address is required',
+                'billing_address'       => 'Billing address Address is required',
+                'card_number'           => 'Card is required',
+                'expiration_date'       => 'Expire date is required',
+                'cvc'                   => 'CVC is required',
 
             ]
         );
@@ -438,142 +444,35 @@ class OrderController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-
-        $subTotal               = $request->subTotal;
-        $item_total               = $request->item_total;
-        $shipp_address          = $request->shipp_address;
-        $billAddress            = $request->billAddress;
-        $Cutomer_name           = $request->Cutomer_name;
-        $Cutomer_email          = $request->Cutomer_email;
-        $Cutomer_phone_number   = $request->Cutomer_phone_number;
-        $payment_staus          = $request->payment_staus;
+        $gig_id                 = $request->gig_id;
+        $fullname               = $request->fullname;
+        $email_address          = $request->email_address;
+        $billing_address        = $request->billing_address;
+        $card_number            = $request->card_number;
+        $expiration_date        = $request->expiration_date;
+        $cvc                    = $request->cvc;
+        $SelectedPackages       = $request->SelectedPackages;
+        $SelectedPrice          = $request->SelectedPrice;
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
-        $cartData = json_decode($request->input('cart'));
-        if (is_object($cartData)) {
-            // Convert the stdClass object to an array
-            $cartData = [$cartData];
-        }
-        // dd($cartData);
-        // return false;
-        $total = 0;
-        foreach ($cartData as $cartItem) {
-            $productid = $cartItem->product->id; //$cartItem['product']['id'];
-            $quantity  = $cartItem->quantity; //$cartItem['quantity'];
-            $price     = str_replace(',', '', $cartItem->product->price); //$cartItem['product']['price']); // Remove commas
-            $price     = floatval($price); // Convert to float
+        // Create an array with the necessary fields
+        $orderData = [
+            'gig_id'              => $gig_id,
+            'fullname'            => $fullname,
+            'email_address'       => $email_address,
+            'buyerId'             => $this->userid,
+            'billing_address'     => $billing_address,
+            'card_number'         => $card_number,
+            'expiration_date'     => $expiration_date,
+            'cvc'                 => $cvc,
+            'selected_packages'   => $SelectedPackages, // Assuming this is an array and needs to be stored as JSON
+            'selected_price'      => $SelectedPrice,
+            'orderId'             => $randomNum,
+            'order_status'        => 1, // Order Placed
+        ];
 
-            if (!is_numeric($quantity) || !is_numeric($price)) {
-                continue;
-            }
-            // Calculate the subtotal for the current item
-            $subtotal = $quantity * $price;
-            $total += $subtotal;
-        }
-
-        $order                  = new Order();
-        $order->orderId         = $randomNum;
-        $order->total           = $item_total;
-        $order->subtotal        = $subTotal;
-
-        $order->shipper_name          = $Cutomer_name;
-        $order->shipper_email         = $Cutomer_email;
-        $order->shipper_phone_number  = $Cutomer_phone_number;
-        $order->shipper_address       = $shipp_address;
-        $order->billing_name          = $Cutomer_name;
-        $order->billing_email         = $Cutomer_email;
-        $order->billing_phone_number  = $Cutomer_phone_number;
-        $order->billing_address       = $billAddress;
-        $order->payment_type        = $payment_staus;
-
-        $order->customer_id     = $this->userid;
-        $order->order_status    = 1; // Order Placed 
-        $order->save();
-
-        $lastOrderId = $order->id;
-        
-        $formattedItems = [];
-        foreach ($cartData as $item) {
-            $formattedItem = [
-                'order_id' => $order->orderId,
-                'product_id' => $item->product->id,
-                'price' => $item->product->price,
-                'discount' => $item->product->discount,
-                'discount_status' => $item->product->discount_status,
-                'last_price' => $item->product->last_price,
-                'qty' => $item->quantity,
-                'color' => $item->product->color ? $item->product->color : '',
-                'size' => $item->product->size ? $item->product->size : '',
-                'vat' => $item->product->vat,
-                'vat_status' => $item->product->vat_status,
-
-            ];
-            // dd($item->product->warranty_id);
-            // return false;
-            if (!empty($item->product->warranty_id)) {
-                productwarrantyhistory::create([
-                    'warranty_id'   => $item->product->warranty_id,
-                    'product_id'    => $item->product->id,
-                    'order_id'      => $order->orderId,
-                ]);
-            } 
-
-            $formattedItems[] = $formattedItem;
-            ordersProduct::create($formattedItem);
-        }
-
-
-        $itemtotal = 0;
-        foreach ($cartData as $cartItem) {
-            $pid = $cartItem->product->id; //$cartItem['product']['id'];
-            $chkpost = Product::where('id', $pid)->select('seller_id')->first();
-            $seller_id = !empty($chkpost) ? $chkpost->seller_id : 1;
-            $productid = $pid;
-            $quantity  = $cartItem->quantity; //$cartItem['quantity'];
-            $price     = str_replace(',', '', $cartItem->product->price); //$cartItem['product']['price']); // Remove commas
-            $price     = floatval($price); // Convert to float
-            $chkCat    = ProductCategory::where('product_id', $productid)->first();
-            $categories = !empty($chkCat->parent_id) ? explode(',', $chkCat->parent_id) : "";
-            $parentCategoryId = isset($categories[0]) ? $categories[0] : null;
-            $catrow     = Categorys::where('id', $categories)->first();
-            $commission = !empty($catrow->commission) ? $catrow->commission : 0;
-            //Insert into CategoryCommissionHistory
-            $categoryHistory = new CategoryCommissionHistory();
-            $categoryHistory->customer_id         = $this->userid;
-            $categoryHistory->seller_id           = $seller_id;
-            $categoryHistory->product_qty         = $quantity;
-            $categoryHistory->product_price       = $price;
-            $categoryHistory->product_id          = $productid;
-            $categoryHistory->category_id         = $parentCategoryId;
-            $categoryHistory->category_percetage  = $commission;
-            $categoryHistory->admin_get_amount    = ($price * $commission) / 100;
-            $categoryHistory->save();
-            //End 
-            $subtotal = $quantity * $price;
-            // Add the subtotal to the total
-            $itemtotal += $subtotal;
-            $order_history                  = new OrderHistory();
-            $order_history->order_id        = $lastOrderId;
-            $order_history->seller_id       = $seller_id;
-            $order_history->product_id      = $productid;
-            $order_history->quantity        = $quantity;
-            $order_history->price           = $price;
-            $order_history->total           = $itemtotal;
-            $order_history->save();
-        }
-
-        $couponUse = $request->coupon_id ?? '';
-        if ($couponUse !== '') {
-            // dd($request->coupon_id,$request->user_id);
-            $couponUseadd = couponUseHistory::create([
-                'user_id' => $request->user_id,
-                'coupon_id' => $request->coupon_id,
-            ]);
-
-            return response()->json("Your order successfully done!", 200);
-        }
-
+        Order::create($orderData);
         return response()->json("Your order successfully done!", 200);
     }
     public function orderTrackadd(request $request)

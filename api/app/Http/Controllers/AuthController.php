@@ -10,6 +10,7 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException; // Import the ValidationException class
 use DB;
 
 class AuthController extends Controller
@@ -21,9 +22,18 @@ class AuthController extends Controller
     protected function validateLogin(Request $request)
     {
         $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string',
+            'email'        => 'required|string',
+            'password'     => 'required|string',
+            'captchaInput' => 'required',
+            'userCapInput' => 'required',
         ]);
+
+        // Validate CAPTCHA
+        if (strtolower($request->input('captchaInput')) !== strtolower($request->input('userCapInput'))) {
+            throw ValidationException::withMessages([
+                'userCapInput' => ['The CAPTCHA code is incorrect.'],
+            ]);
+        }
     }
 
     public function login(Request $request)

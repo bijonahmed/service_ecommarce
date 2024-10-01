@@ -90,6 +90,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
     Route::get('getDeposit', [UserController::class, 'getDeposit']);
     Route::post('saveDeposit', [UserController::class, 'saveDeposit']);
     Route::post('add-certificate', [UserController::class, 'addcertificate']);
@@ -183,7 +184,7 @@ Route::group([
     'prefix' => 'order'
 ], function () {
     //Add to cart 
-    Route::post('submitOrder', [OrderController::class, 'submitOrder']);
+    Route::post('confirmOrder', [OrderController::class, 'submitOrder']);
     Route::get('getOrder', [OrderController::class, 'getOrder']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
     Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);

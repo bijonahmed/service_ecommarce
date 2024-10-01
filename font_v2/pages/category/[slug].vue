@@ -116,7 +116,7 @@
 
 
               <div class="row">
-                <div class="col-sm-6 col-xl-3" v-for="data in responseData" :key="data.id">
+                <div class="col-sm-2 col-sm-3" v-for="data in responseData" :key="data.id">
                   <div class="listing-style1">
                     <div class="list-thumb">
                       <!-- Dynamically set the image source -->

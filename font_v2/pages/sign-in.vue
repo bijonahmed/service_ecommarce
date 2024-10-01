@@ -101,21 +101,22 @@ const router = useRouter();
 //     middleware: 'is-logged-in'
 // })
 
+const passwordFieldType = ref("password");
+const confirmPasswordFieldType = ref("password");
+const emailError = ref("");
+const passwordError = ref("");
+const account = ref("");
+
 const loading = ref(false);
+const captchaInput = ref("");
+const userCapInput = ref("");
 const email = ref("");
 const password = ref("");
 const errors = ref({ email: "", password: "" }); // Initialize error messages
-const emailError = ref("");
-const passwordError = ref("");
-
-const captchaInput = ref("");
-const userCapInput = ref("");
-const account = ref("");
 const captchaError = ref("");
 const captchaValid = ref(false);
 
-const passwordFieldType = ref("password");
-const confirmPasswordFieldType = ref("password");
+
 
 const togglePassword = (id) => {
   const inputField = document.querySelector(id);
@@ -160,6 +161,58 @@ function validateCaptcha() {
   }
 }
 
+
+async function login() {
+  try {
+    loading.value = true;
+    // Your login logic here
+    // Assuming you're making an API request to log in
+    await userStore.login(
+      email.value,
+      password.value,
+      captchaInput.value,
+      userCapInput.value
+    );
+    const token = window.localStorage.getItem("token");
+    //console.log("My token: " + token);
+    if (token) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + userStore.api_token;
+    }
+
+    const userrole = window.localStorage.getItem("userrole");
+    //console.log("userrole" + userrole);
+    const role_id = userStore.role_id; // Assuming userStore contains role_id after login
+    console.log("RoleID" + role_id);
+    if (role_id === 2) {
+      router.push("/dashboard/welcome");
+    } else if (role_id === 3) {
+      router.push("/dashboard/buyer/welcome");
+    } else if (role_id === 1) {
+      roleMsg();
+      loading.value = false;
+      return;
+    }
+   
+  } catch (error) {
+    loading.value = false;
+    // If the request fails, display the error messages
+    if (error.response && error.response.data.errors) {
+      const responseErrors = error.response.data.errors;
+      errors.value = {
+        email: responseErrors.email ? responseErrors.email[0] : "",
+        password: responseErrors.password ? responseErrors.password[0] : "",
+        userCapInput: responseErrors.userCapInput
+          ? responseErrors.userCapInput[0]
+          : "",
+        account: responseErrors.account ? responseErrors.account[0] : "",
+      };
+    } else {
+      console.error("An error occurred while logging in:", error);
+    }
+  }
+}
+/*
 async function login() {
   try {
     loading.value = true;
@@ -207,6 +260,7 @@ async function login() {
     }
   }
 }
+  */
 
 const roleMsg = () => {
   Swal.fire({

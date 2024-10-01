@@ -338,6 +338,7 @@ class UnauthenticatedController extends Controller
 
 
         $data = [
+            'gig_id'                => $userRecords->id ?? "",
             'user_id'               => $userRecords->user_id ?? "",
             'sellerSlug'            => $userRecords->sellerSlug ?? "",
             'category_id'           => $userRecords->category_id ?? "",
@@ -380,6 +381,7 @@ class UnauthenticatedController extends Controller
             return response()->json([
                 'data'        => $data,
                 'galleryImgs' => $imgrows,
+                'gig_id'      => $userRecords->id,
             ]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);

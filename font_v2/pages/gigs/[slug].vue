@@ -58,7 +58,7 @@
             <Loader />
           </div>
           <!-- Breadcumb Sections -->
-         
+
           <section class="pt0 pb90 pb30-md">
             <div class="container">
               <div class="row wrap">
@@ -116,9 +116,9 @@
 
                     <br />
 
-
                     <div class="service-about">
-                      <p class="text mb30 text-justify" style="text-align:justify" v-html="responseData.gig_description"></p>
+                      <p class="text mb30 text-justify" style="text-align:justify"
+                        v-html="responseData.gig_description"></p>
                       <hr class="opacity-100 mb15">
                       <div class="product_single_content mb50">
                         <div class="mbp_pagination_comments">
@@ -200,8 +200,6 @@
                   <div class="column">
                     <div class="blog-sidebar ms-lg-auto">
 
-
-
                       <div class="price-widget">
                         <div class="navtab-style1" v-if="responseData.types == 2">
                           <nav>
@@ -239,8 +237,15 @@
                                   </ul>
                                 </div>
                                 <div class="d-grid">
-                                  <a href="#" class="ud-btn btn-thm">Continue ${{ responseData.basic_price }}<i
+                                  <a href="#" class="ud-btn btn-thm"
+                                    @click="setPrice('Basic', responseData.basic_price)" v-if="isLoggedIn">Continue ${{
+                                      responseData.basic_price }}<i class="fal fa-arrow-right-long"></i></a>
+
+                                  <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">Continue ${{ responseData.basic_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
+
+
                                 </div>
                               </div>
                             </div>
@@ -265,8 +270,18 @@
                                   </ul>
                                 </div>
                                 <div class="d-grid">
-                                  <a href="#" class="ud-btn btn-thm">Continue ${{ responseData.standard_price }}<i
+                                  <a href="#" class="ud-btn btn-thm"
+                                    @click="setPrice('Standart', responseData.standard_price)"
+                                    v-if="isLoggedIn">Continue ${{
+                                      responseData.standard_price }}<i class="fal fa-arrow-right-long"></i></a>
+
+                                  <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">Continue ${{ responseData.standard_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
+
+
+
+
                                 </div>
                               </div>
                             </div>
@@ -288,9 +303,24 @@
                                       responseData.premium_source_file }}</li>
                                   </ul>
                                 </div>
+
                                 <div class="d-grid">
-                                  <a href="#" class="ud-btn btn-thm">Continue ${{ responseData.premium_price }}<i
+
+
+                                  <a href="#" class="ud-btn btn-thm"
+                                    @click="setPrice('Premium', responseData.premium_price)" v-if="isLoggedIn">Continue
+                                    ${{ responseData.premium_price }}<i class="fal fa-arrow-right-long"></i></a>
+
+                                  <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
+                                    data-bs-target="#staticBackdrop">Continue ${{ responseData.premium_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
+
+
+
+
+
+
+
                                 </div>
                               </div>
                             </div>
@@ -311,9 +341,8 @@
                                   since</span> <span class="">{{ responseData.join_date }}</span>
                               </a>
 
-
-                              <a class="d-flex align-items-center justify-content-between bdrb1 pb-2" href="#">
-                                <span class="text"><i
+                              <!-- <a class="d-flex align-items-center justify-content-between bdrb1 pb-2" href="#">
+                                <span class="text"><i @click="setPrice('Basic',responseData.basic_price)"
                                     class="flaticon-translator text-thm2 pe-2 vam"></i>Languages</span> <span
                                   class="">{{ responseData.language_name }}</span>
                               </a>
@@ -321,21 +350,25 @@
                                 <span class="text"><i class="flaticon-sliders text-thm2 pe-2 vam"></i>{{
                                   responseData.language_name }}
                                   Level</span> <span class="">{{ responseData.language_type }}</span>
-                              </a>
+                              </a> -->
                             </div>
                             <div class="d-grid">
-                              <a href="#" class="ud-btn btn-thm">Contact Me<i class="fal fa-arrow-right-long"></i></a>
+
+                              <a href="#" class="ud-btn btn-thm" @click="setPrice('Single', responseData.price)"
+                                v-if="isLoggedIn">Continue
+                                ${{ responseData.price }}<i class="fal fa-arrow-right-long"></i></a>
+
+                              <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">Continue
+                                ${{ responseData.price }}<i class="fal fa-arrow-right-long"></i></a>
+
                             </div>
                           </div>
 
                         </div>
 
-
-
-
-
                       </div>
- 
+
                       <div class="freelancer-style1 service-single mb-0">
                         <div class="wrapper d-flex align-items-center">
                           <div class="thumb position-relative mb25">
@@ -344,8 +377,12 @@
                             <span class="online"></span>
                           </div>
                           <div class="ml20">
-                            <h5 class="title mb-1"> <nuxt-link :to="{ path: '/public', query: { profile: responseData.sellerSlug } }"> {{responseData.user_name}} </nuxt-link></h5>
-                            <p class="mb-0"><nuxt-link :to="{ path: '/public', query: { profile: responseData.sellerSlug } }">{{ responseData.profession_name }}</nuxt-link></p>
+                            <h5 class="title mb-1"> <nuxt-link
+                                :to="{ path: '/public', query: { profile: responseData.sellerSlug } }">
+                                {{ responseData.user_name }} </nuxt-link></h5>
+                            <p class="mb-0"><nuxt-link
+                                :to="{ path: '/public', query: { profile: responseData.sellerSlug } }">{{
+                                  responseData.profession_name }}</nuxt-link></p>
                             <div class="review d-none">
                               <p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span>
                                 (595 reviews)</p>
@@ -355,15 +392,16 @@
                         <hr class="opacity-100">
                         <div class="details">
                           <div class="fl-meta d-flex align-items-center justify-content-between">
-                            <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">{{ responseData.countryname }}</span></a>
-                         
+                            <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">{{
+                              responseData.countryname }}</span></a>
+
                             <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">100%</span></a>
                           </div>
                         </div>
-                        <div class="d-grid mt30">
+                        <!-- <div class="d-grid mt30">
                           <a href="#" class="ud-btn btn-thm-border">Contact Me<i
                               class="fal fa-arrow-right-long"></i></a>
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>
@@ -372,11 +410,161 @@
             </div>
           </section>
 
-
         </div>
 
         <Footer />
       </div>
+
+      <!-- Payment Modal -->
+      <div class="modal fade" id="payment_modal" tabindex="-1" aria-labelledby="payment_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="payment_modalLabel">Payment Information</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
+                <input type="hidden" value="gig_id" v-model="gig_id" />
+                <!-- Billing Information -->
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Selected Packages</label>
+                  <input type="text" class="form-control" id="fullName" v-model="SelectedPackages" disabled readonly>
+                </div>
+
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Selected Price</label>
+                  <input type="text" class="form-control" v-model="SelectedPrice" disabled readonly>
+                </div>
+                <div class="mb-3">
+                  <label for="fullName" class="form-label">Full Name</label>
+                  <input type="text" class="form-control" id="fullName" placeholder="Enter your full name"
+                    v-model="fullname">
+                  <span class="text-danger" v-if="errors.fullname">{{ errors.fullname[0] }}</span>
+                </div>
+
+                <div class="mb-3">
+                  <label for="emailAddress" class="form-label">Email Address</label>
+                  <input type="email" class="form-control" id="emailAddress" placeholder="Enter your email"
+                    v-model="email_address">
+                  <span class="text-danger" v-if="errors.email_address">{{ errors.email_address[0] }}</span>
+                </div>
+
+                <div class="mb-3">
+                  <label for="billingAddress" class="form-label">Billing Address</label>
+                  <input type="text" class="form-control" id="billingAddress" placeholder="Enter your billing address"
+                    v-model="billing_address">
+                  <span class="text-danger" v-if="errors.billing_address">{{ errors.billing_address[0] }}</span>
+                </div>
+
+                <!-- Card Information -->
+                <h5 class="mb-3">Card Details</h5>
+
+                <div class="mb-3">
+                  <label for="cardNumber" class="form-label">Card Number</label>
+                  <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456"
+                    v-model="card_number">
+                  <span class="text-danger" v-if="errors.card_number">{{ errors.card_number[0] }}</span>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="cardExpiry" class="form-label">Expiration Date</label>
+                    <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY"
+                      v-model="expiration_date">
+                    <span class="text-danger" v-if="errors.expiration_date">{{ errors.expiration_date[0] }}</span>
+                  </div>
+
+                  <div class="col-md-6 mb-3">
+                    <label for="cardCVC" class="form-label">CVC</label>
+                    <input type="text" class="form-control" id="cardCVC" placeholder="CVC" v-model="cvc">
+                    <span class="text-danger" v-if="errors.cvc">{{ errors.cvc[0] }}</span>
+                  </div>
+                </div>
+                <!-- Payment Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 text-white">Payment Confirm</button>
+              </form>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Login Modal -->
+      <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Login</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form @submit.prevent="login()">
+                <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                  <Loader />
+                </div>
+                <div class="row wow fadeInRight">
+
+                  <div class="log-reg-form search-modal form-style1 bgc-white p30-sm default-box-shadow1 bdrs12">
+                    <div class="mb30">
+                      <h4>We're glad to see you again!</h4>
+                      <p class="text">
+                        Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link>
+                      </p>
+                    </div>
+                    <center><span class="text-danger">{{ errors.account }}</span></center>
+                    <div class="mb20">
+                      <label for="email" class="form-label fw600 dark-color">Email Address</label>
+                      <input type="email" id="email" class="form-control" placeholder="example@gmail.com"
+                        v-model="email">
+                      <span class="text-danger">{{ errors.email }}</span>
+                    </div>
+
+                    <div class="mb15">
+                      <label for="password" class="form-label fw600 dark-color">Password</label>
+                      <input type="password" id="password" class="form-control" placeholder="*******"
+                        v-model="password">
+                      <span class="text-danger">{{ errors.password }}</span>
+                    </div>
+
+                    <div class="mb15">
+                      <label for="userCapInput" class="form-label fw600 dark-color">Captcha</label>
+                      <div class="CaptchaWrap">
+                        <div id="CaptchaImageCode" class="CaptchaTxtField">
+                          <canvas id="CapCode" class="capcode" width="500" height="50"></canvas>
+                        </div>
+                        <button type="button" @click="createCaptcha" class="ReloadBtn">
+                          <img src="/refresh.webp" alt="Refresh Captcha" />
+                        </button>
+                      </div>
+
+                      <input type="hidden" id="UserCaptchaCode" class="CaptchaTxtField form-control mt-2"
+                        placeholder="Enter Captcha - Case Sensitive" v-model="captchaInput" @input="validateCaptcha"
+                        required>
+                      <input type="text" id="userCapInput" class="CaptchaTxtField form-control mt-2"
+                        placeholder="Enter Captcha - Case Sensitive" v-model="userCapInput">
+
+                      <span id="WrongCaptchaError" class="error">{{ captchaError }}</span>
+                      <span class="text-danger">{{ errors.userCapInput }}</span>
+                    </div>
+
+                    <div class="d-grid mb20">
+                      <button class="ud-btn btn-thm default-box-shadow2" type="submit">Login</button>
+                    </div>
+                  </div>
+
+                </div>
+              </form>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
     </body>
 
   </div>
@@ -395,6 +583,199 @@ const route = useRoute();
 const slug = route.params.slug; // Capture the slug parameter from the URL
 const responseData = ref([]);
 const carouselItems = ref([]);
+import { useUserStore } from '~~/stores/user'
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const { isLoggedIn } = storeToRefs(userStore)
+
+const gig_id = ref("");
+const captchaInput = ref("");
+const userCapInput = ref("");
+const email = ref("");
+const password = ref("");
+const errors = ref({ email: "", password: "" }); // Initialize error messages
+const captchaError = ref("");
+const captchaValid = ref(false);
+const SelectedPackages = ref('');
+const SelectedPrice = ref('');
+//for insert
+const fullname = ref("");
+const email_address = ref('');
+const billing_address = ref('');
+const card_number = ref('');
+const expiration_date = ref('');
+const cvc = ref('');
+
+
+
+
+const submitFrm = () => {
+
+  const formData = new FormData();
+  formData.append("gig_id", gig_id.value);
+  formData.append("fullname", fullname.value);
+  formData.append("email_address", email_address.value);
+  formData.append("billing_address", billing_address.value);
+  formData.append("card_number", card_number.value);
+  formData.append("expiration_date", expiration_date.value);
+  formData.append("cvc", cvc.value);
+  formData.append("SelectedPackages", SelectedPackages.value);
+  formData.append("SelectedPrice", SelectedPrice.value);
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  axios.post("/order/confirmOrder", formData, { headers })
+    .then((res) => {
+      document.getElementById("formrest").reset();
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Confirm',
+        text: 'Your order confirm please.',
+      });
+      $('#payment_modal').modal('hide');
+
+
+      //router.push("/dashboard/welcome");
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        errors.value = error.response.data.errors;
+      } else {
+        // Handle other types of errors here
+        console.error("An error occurred:", error);
+      }
+    });
+};
+
+
+const setPrice = async (packages, price) => {
+  console.log('Pack:' + packages + "--Selected Price:---" + price);
+  SelectedPackages.value = packages;
+  SelectedPrice.value = price;
+
+
+  const setprice = price;
+  try {
+    const response = await axios.get(`/user/checkDepositBalance`);
+    console.log("Deposit Amount is: " + response.data.depositAmount);
+    const depositAmount = response.data.depositAmount;
+
+    if (depositAmount >= setprice) {
+      $('#payment_modal').modal('show');
+    } else {
+      // If depositAmount is smaller than price
+      Swal.fire({
+        icon: 'error',
+        title: 'Deposit too low',
+        text: 'Your deposit is less than the required amount.',
+      });
+    }
+  } catch (error) {
+    // Handle error
+  }
+
+
+
+
+}
+
+function createCaptcha() {
+  const canvas = document.getElementById("CapCode");
+  const context = canvas.getContext("2d");
+  const captchaCode = generateCaptchaCode(6); // Change the length as needed
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.font = "18px Arial";
+  context.fillText(captchaCode, 10, 50);
+
+  captchaInput.value = captchaCode;
+}
+
+function generateCaptchaCode(length) {
+  const characters = "0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+function validateCaptcha() {
+  if (
+    captchaInput.value.toUpperCase() !==
+    document.getElementById("UserCaptchaCode").value.toUpperCase()
+  ) {
+    captchaError.value = "Incorrect CAPTCHA code";
+    captchaValid.value = false;
+  } else {
+    captchaError.value = "";
+    captchaValid.value = true;
+  }
+}
+
+async function login() {
+
+  try {
+
+    loading.value = true;
+    //loading.value = true;
+    await userStore.login(
+      email.value,
+      password.value,
+      captchaInput.value,
+      userCapInput.value
+    );
+
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + userStore.api_token;
+    }
+    const role_id = userStore.role_id; // Assuming userStore contains role_id after login
+    if (role_id === 3) {
+      $('#staticBackdrop').modal('hide'); // This should hide the modal
+      loading.value = false;
+      const redirectslug = route.params.slug;
+      console.log("Redirect : " + redirectslug);
+      router.push("/gigs/" + redirectslug);
+    } else if (role_id === 1 || role_id === 2) {
+      roleMsg();
+      return;
+    }
+  } catch (error) {
+    loading.value = false;
+    // If the request fails, display the error messages
+    if (error.response && error.response.data.errors) {
+      const responseErrors = error.response.data.errors;
+      errors.value = {
+        email: responseErrors.email ? responseErrors.email[0] : "",
+        password: responseErrors.password ? responseErrors.password[0] : "",
+        userCapInput: responseErrors.userCapInput
+          ? responseErrors.userCapInput[0]
+          : "",
+        account: responseErrors.account ? responseErrors.account[0] : "",
+      };
+    } else {
+      console.error("An error occurred while logging in:", error);
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+
+
+const roleMsg = () => {
+  Swal.fire({
+    position: "center", // Changed to center
+    position: "top-end",
+    icon: "error",
+    title: "Login not allowed for this role.",
+    showConfirmButton: false,
+    timer: 3000
+  });
+}
 
 const checkrow = async () => {
   try {
@@ -406,7 +787,9 @@ const checkrow = async () => {
     });
 
     responseData.value = response.data.data;
+    gig_id.value = response.data.gig_id;
     carouselItems.value = response.data.galleryImgs;
+
 
   } catch (error) {
     // Handle error
@@ -432,30 +815,31 @@ const getCatList = async () => {
   }
 };
 
-
 const isActive = (slug) => {
   return slug === route.params.slug; // Compare slug with the current route's slug
 };
 onMounted(() => {
-  $('.owl-carousel').owlCarousel({
-    items: 1, // Number of items to show
-    loop: true,
-    autoplay: true,
-    autoplayTimeout: 2000,
-    autoplayHoverPause: true,
-    autoWidth: true,
-    nav: true,
-    dots: true,
-  });
+  createCaptcha();
   checkrow();
   getCatList();
 });
 
-
-
 </script>
 
 <style scoped>
+.CaptchaWrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.CaptchaTxtField {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
 .carousel-item img {
   height: 400px;
   object-fit: cover;
@@ -484,5 +868,17 @@ onMounted(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.ReloadBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.ReloadBtn img {
+  width: 30px;
+  margin-left: -50px;
 }
 </style>
