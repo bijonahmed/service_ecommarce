@@ -50,7 +50,7 @@ class AuthController extends Controller
             'name'      => 'required',
             'country_1' => 'required',
             'userType'  => 'required',
-            'email'     => 'required|unique:users,email',
+            'email'     => 'required|email|unique:users,email',
             'password'  => 'required|min:2|confirmed', // Add the 'confirmed' rule
         ], [
             'name'     => "Name is required",
@@ -88,8 +88,16 @@ class AuthController extends Controller
             return response()->json(['error' => $errorMessage], 400);
         } else {
 
+            $slug = Str::slug($request->name);
+            $existingSlug = User::where('slug', $slug)->first();
+            if ($existingSlug) {
+                return response()->json(['slugerror' => 'This name is already taken. Please choose another.'], 400);
+            }
+
+
             $user = User::create([
                 'name'          => $request->name,
+                'slug'          => $slug,
                 'email'         => $request->email,
                 'role_id'       => 2,
                 'status'        => 1,
@@ -200,19 +208,28 @@ class AuthController extends Controller
                 $response[$column] = $value;
             }
 
+             
+
             $countryid     = !empty($user) ? $user->country_1 : "";
             $proId         = !empty($user) ? $user->profession_name : "";
-            $chkCountry    = Country::where('id',$countryid)->first();
-            $chkProfession = Profession::where('id',$proId)->first();
+            $chkCountry    = Country::where('id', $countryid)->first();
+            $chkProfession = Profession::where('id', $proId)->first();
             $response['profileLogo']  = url(!empty($user->image) ? $user->image : '/profileLogo');
             $response['businessLogo'] = url(!empty($user->business_logo) ? $user->business_logo : '/businessLogo');
-            $response['joindate']     = date("Y-M-d",strtotime($user->created_at));
+            $response['joindate']     = date("Y-M-d", strtotime($user->created_at));
             $response['countryName']  = !empty($chkCountry) ? $chkCountry->countryname : "";
             $response['profName']     = !empty($chkProfession) ? $chkProfession->name : "";
             $response['invite_code']  = !empty($user) ? $user->invite_code : "";
+            $response['github']       = !empty($user->github) ? $user->github : "";
             $response['profession_name']  = !empty($user) ? $user->profession_name : "";
-            $response['twitter']      = !empty($user) ? $user->twitter : "";
-            $response['introduce_yourself']= !empty($user) ? strip_tags($user->introduce_yourself) : "";
+            if (isset($user->twitter) && $user->twitter !== null) {
+                $response['twitter'] = !empty($user->twitter) ? $user->twitter : "";
+            } else {
+                $response['twitter'] = ""; // Assign an empty string if it is null or doesn't exist
+            }
+            
+            $response['introduce_yourself'] = !empty($user) ? strip_tags($user->introduce_yourself) : "";
+           // dd($response['githubs']);
         }
 
         return response()->json($response);
@@ -270,7 +287,7 @@ class AuthController extends Controller
         ], 200);
     }
 
-     
+
 
     public function updateProfileImages(Request $request)
     {
@@ -287,7 +304,7 @@ class AuthController extends Controller
             $documents->move(public_path('/backend/files/'), $upload_url);
             $data['image'] = $upload_url;
         }
-      
+
         //dd($data);
         DB::table('users')->where('id', $authId)->update($data);
         $response = [
@@ -299,7 +316,8 @@ class AuthController extends Controller
 
 
 
-    public function updateprofileFrontendSeller (Request $request){
+    public function updateprofileFrontendSeller(Request $request)
+    {
 
         $user = auth('api')->user();
         $userid = $user->id;
@@ -318,23 +336,22 @@ class AuthController extends Controller
         }
         // Prepare the data for updating
 
-        $introduce_yourself = !empty($request->introduce_yourself) ? $request->introduce_yourself : ""; 
+        $introduce_yourself = !empty($request->introduce_yourself) ? $request->introduce_yourself : "";
         $description_with_line_breaks = nl2br($introduce_yourself);
-     
+
         $data = [
             'name'            => $request->name,
             'email'           => $request->email,
             'country_1'       => $request->country_1,
-            'phone_number'    => $request->phone_number,
-            'profession_name' => $request->profession_name,
-            'github'          => $request->github,
-            'website'         => $request->website,
-            'gender'          => $request->gender,
-            'twitter'         => $request->twitter,
-            'introduce_yourself' => $description_with_line_breaks,
+            'phone_number'    => !empty($request->phone_number) ? $request->phone_number : "",
+            'profession_name' => !empty($request->profession_name) ? $request->profession_name : "",
+            'github'          => !empty($request->github) ? $request->github : "",
+            'website'         => !empty($request->website) ? $request->website : "", 
+            'gender'          => !empty($request->gender) ? $request->gender : "", 
+            'twitter'         => !empty($request->twitter) ? $request->twitter : "", 
+            'introduce_yourself' => $description_with_line_breaks , 
 
         ];
-
 
         try {
             // Update the user data
@@ -350,7 +367,6 @@ class AuthController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => 'An error occurred while updating the profile.'], 500);
         }
-
     }
 
     public function updateprofileFrontend(Request $request)

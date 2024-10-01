@@ -18,6 +18,11 @@ use App\Models\Category;
 use App\Models\Country;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Models\Gig;
+use App\Models\Skills;
+use App\Models\Certificate;
+use App\Models\Education;
+use App\Models\Experience;
+use App\Models\Profession;
 use PhpParser\Node\Stmt\TryCatch;
 
 class UnauthenticatedController extends Controller
@@ -31,6 +36,106 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
+    public function getPublic(Request $request)
+    {
+        $row        =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
+        $filterData = Gig::where('user_id', $row->id)
+            ->where('gig.status', 1)
+            ->join('users', 'gig.user_id', '=', 'users.id')
+            ->join('categorys', 'gig.category_id', '=', 'categorys.id')
+            ->join('country', 'users.country_1', '=', 'country.id')
+            ->select(
+                'gig.*',
+                'users.name as user_name',
+                'users.email as user_email',
+                'users.slug as sellerSlug',
+                'users.image as freelancer_images',
+                'users.created_at as join_date',
+                'users.profession_name',
+                'categorys.id as category_id',
+                'categorys.name as category_name',
+                'country.id as country_id',
+                'country.countryname as countryname'
+            )
+            ->get();
+
+            $gigList = [];
+            foreach ($filterData as $v) {
+                $gigList[] = [
+                    'id'                => $v->id,
+                    'user_id'           => $v->user_id,
+                    'name'              => $v->name,
+                    'gig_slug'          => $v->gig_slug,
+                    'user_name'         => $v->user_name,
+                    'price'             => $v->price,
+                    'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
+                    'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
+    
+                ];
+            }
+
+
+        $row                =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
+        $chkCountry         =   Country::where('id', $row->country_1)->first();
+
+        $response = [
+            'gigList'             => $gigList,
+            'name'                => $row->name,
+            'email'               => $row->email,
+            'joindate'            => date("d-M-Y", strtotime($row->created_at)),
+            'countryName'         => $chkCountry->countryname,
+            'image'               => !empty($row->image) ? url($row->image) : "",
+            'introduce_yourself'  => $row->introduce_yourself,
+            'message' => 'success'
+        ];
+
+        return response()->json($response, 200);
+    }
+
+    public function getExperience(Request $request)
+    {
+        $slugData = User::where('slug', $request->slug)->first();
+        try {
+            $data['expdata'] = Experience::where('user_id', $slugData->id)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+    public function geteducation(Request $request)
+    {
+        $slugData = User::where('slug', $request->slug)->first();
+        try {
+            $data['euddata'] = Education::where('user_id', $slugData->id)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+    public function getCertificate(Request $request)
+    {
+        $slugData = User::where('slug', $request->slug)->first();
+        try {
+            $data['certificatedata'] = Certificate::where('user_id', $slugData->id)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
+
+    public function skillsData(Request $request)
+    {
+
+        $slugData = User::where('slug', $request->slug)->first();
+        try {
+            $data['skillsdata'] = Skills::where('user_id', $slugData->id)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed to retrieve skills. Please try again later.'], 500);
+        }
+    }
 
     public function getCountry()
     {
@@ -133,7 +238,7 @@ class UnauthenticatedController extends Controller
                 ->where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
                 ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'users.image as freelancer_images')
-                ->orderBy('gig.id', 'desc') 
+                ->orderBy('gig.id', 'desc')
                 ->paginate(20);
 
             $data = [];
@@ -163,7 +268,6 @@ class UnauthenticatedController extends Controller
         }
     }
 
-
     public function getSubCategoryList(Request $request)
     {
 
@@ -173,8 +277,8 @@ class UnauthenticatedController extends Controller
             $chk = Categorys::where('parent_id', $categoryId)
                 ->where('status', 1)
                 ->get();
-                
-        return response()->json([
+
+            return response()->json([
                 'status' => 'success',
                 'data' => $chk
             ], 200);
@@ -204,6 +308,7 @@ class UnauthenticatedController extends Controller
                 'gig.*',
                 'users.name as user_name',
                 'users.email as user_email',
+                'users.slug as sellerSlug',
                 'users.image as freelancer_images',
                 'users.created_at as join_date',
                 'users.profession_name',
@@ -213,6 +318,11 @@ class UnauthenticatedController extends Controller
                 'country.countryname as countryname'
             )
             ->first();
+
+        $findProfession = Profession::where('id', $userRecords->profession_name)->first();
+        $proName        = !empty($findProfession) ? $findProfession->name : "";
+
+
 
         $imagesgrows   = GigImagesHistory::where('gig_id', $userRecords->id)->get();
 
@@ -224,8 +334,12 @@ class UnauthenticatedController extends Controller
             ];
         }
 
+
+
+
         $data = [
             'user_id'               => $userRecords->user_id ?? "",
+            'sellerSlug'            => $userRecords->sellerSlug ?? "",
             'category_id'           => $userRecords->category_id ?? "",
             'subcategory_id'        => $userRecords->subcategory_id ?? "",
             'insubcategory_id'      => $userRecords->insubcategory_Id ?? "",
@@ -258,7 +372,7 @@ class UnauthenticatedController extends Controller
             'category_name'         => $userRecords->category_name ?? "",
             'language_name'         => $userRecords->language_name ?? "",
             'language_type'         => $userRecords->language_type ?? "",
-            'profession_name'       => $userRecords->profession_name ?? "",
+            'profession_name'       => $proName ?? "",
             'join_date'             => date("d-M-Y", strtotime($userRecords->join_date)) ?? "",
         ];
 

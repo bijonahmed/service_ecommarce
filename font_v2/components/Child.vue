@@ -55,8 +55,6 @@
 
                                 </div>
 
-
-
                                 <div class="row mt20 animate-up-4">
                                     <div class="col-xl-9">
                                         <div class="row justify-content-between">
@@ -232,11 +230,8 @@
                                         class="fal fa-arrow-right-long"></i></nuxt-link>
                             </div>
 
-
-
                         </div>
                     </div>
-
 
                     <div class="loading-indicator" v-if="loading" style="text-align: center;">
                         <Loader />
@@ -398,7 +393,6 @@ onMounted(() => {
     height: 520px;
 }
 
-
 .iconbox-style1 {
     border-radius: 12px;
     border: 1px solid #ddd;
@@ -413,7 +407,6 @@ onMounted(() => {
     transform: scale(1.05);
 }
 
-
 .text {
     font-size: 14px;
     color: #777;
@@ -423,7 +416,6 @@ onMounted(() => {
     font-size: 18px;
     font-weight: bold;
 }
-
 
 .iconbox-style1 {
     background-color: #ffffff;
@@ -441,7 +433,6 @@ onMounted(() => {
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
     /* Increase shadow on hover */
 }
-
 
 .details .text {
     font-size: 14px;

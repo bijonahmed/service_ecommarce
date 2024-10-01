@@ -32,13 +32,15 @@
                         <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
                             In!</nuxt-link></p>
                       </div>
+                      <div v-if="slug_error" class="error">{{ slug_error.slugerror }}</div>
                       <div class="mb2">
                         <label class="form-label fw500 dark-color">Name</label>
-                        <input type="text" class="form-control" placeholder="Jons" v-model="name">
+                        <input type="text" class="form-control" placeholder="Jons" v-model="name" @blur="validateName">
                         <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                        <div v-if="nameError" class="error">{{ nameError }}</div>
                       </div>
                       <div class="mb2">
-                       
+
                         <label class="form-label fw500 dark-color">Country</label>
                         <select class="form-control" v-model="country_1">
                           <option value="" disabled>Select your country</option>
@@ -51,7 +53,7 @@
 
                       <div class="mb2">
                         <label class="form-label fw500 dark-color">Email</label>
-                        <input type="email" class="form-control" placeholder="example@gmail.com" v-model="email">
+                        <input type="text" class="form-control" placeholder="example@gmail.com" v-model="email">
                         <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                       </div>
 
@@ -86,7 +88,8 @@
                           }}</span>
                       </div>
                       <div class="d-grid mb20">
-                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit">Create
+                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
+                          v-if="!hasInvalidChars && !isEmailFormat">Create
                           Account <i class="fal fa-arrow-right-long"></i></button>
                       </div>
                     </div>
@@ -115,6 +118,7 @@ const router = useRouter();
 const userStore = useUserStore()
 const errors = ref({});
 
+
 const loading = ref(false)
 
 let name = ref('');
@@ -125,21 +129,47 @@ let password = ref(null);
 let confirmPassword = ref(null);
 let userType = ref('');
 let countryData = ref('');
+let slug_error = ref('');
+let nameError = ref('');
+const errorMessage = ref();
+
 
 const userTypes = ref([
   { value: 'seller', text: 'Seller' },
   { value: 'buyer', text: 'Buyer' }
 ]);
+
+
+// Computed property to check if name is in email format
+const isEmailFormat = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(name.value); // Return true if name is in email format
+});
+
+// Computed property to check for invalid characters
+const hasInvalidChars = computed(() => {
+  const invalidCharsRegex = /[@\-~!#$%^&*()_+=]/; // Define invalid characters
+  return invalidCharsRegex.test(name.value); // Return true if invalid characters are present
+});
+
+// Method to validate name
+const validateName = () => {
+  if (isEmailFormat.value) {
+    nameError.value = "Email addresses are not allowed. Please enter a valid name.";
+  } else if (hasInvalidChars.value) {
+    nameError.value = "The name contains invalid characters. Please enter a valid name.";
+  } else {
+    nameError.value = ""; // Clear the error if the name is valid
+  }
+};
 //getAllcountrys
 const checkEmail = async () => {
   try {
     loading.value = true;
-    //console.log("====" + email.value);
     const response = await axios.post('/sendEmail', {
       email: email.value // Send the email value in the request body
     });
     console.log("Send Code: " + response.data);
-    //productdata.value = response.data.data;
     Swal.fire({
       position: "top-end",
       icon: "success",
@@ -149,6 +179,7 @@ const checkEmail = async () => {
     });
 
   } catch (error) {
+
     if (error.response && error.response.status === 422) {
       errors.value = error.response.data.errors;
     } else {
@@ -183,8 +214,12 @@ async function sendCode() {
 }
 
 const register = async () => {
-  loading.value = true;
+  loading.value = true; // Start loading
+  errors.value = {}; // Clear previous errors
+  slug_error.value = ""; // Reset slug error
+
   try {
+    // Call the register function from userStore with the provided parameters
     await userStore.register(
       name.value,
       email.value,
@@ -193,30 +228,66 @@ const register = async () => {
       userType.value,
       password.value,
       confirmPassword.value
-    )
-
+    );
     Swal.fire({
       position: "top-end",
       icon: "success",
       title: "Your account has been successfully created.",
       showConfirmButton: false,
-      timer: 3000
+      timer: 3000,
     });
-
-
-    router.push('/sign-in')
+    router.push('/sign-in');
   } catch (error) {
-    //console.log(error)
-    errors.value = error.response.data.errors
+
+    if (error.response) {
+      if (error.response && error.response.status === 422) {
+        errors.value = error.response.data.errors;
+      }
+      if (error.response.data.slug_error) {
+        slug_error.value = error.response.data.slug_error; // Assign slug error if exists
+      }
+      // Optional: Handle 400 error and log additional information
+      if (error.response.status === 400) {
+        //console.log("=== Validation error:", error.response.data); // Log the error for debugging
+        slug_error.value = error.response.data;
+      }
+    } else {
+      console.error("An unexpected error occurred:", error); // Log unexpected errors
+    }
+
+
+
+
+    // if (error.response) {
+    //   if (error.response.data.errors) {
+    //     for (const key in error.response.data.errors) {
+    //       errors.value[key] = error.response.data.errors[key].join(', '); // Join array messages into a single string
+    //     }
+    //   }
+    //   if (error.response.data.slug_error) {
+    //     slug_error.value = error.response.data.slug_error; // Assign slug error if exists
+    //   }
+    //   // Optional: Handle 400 error and log additional information
+    //   if (error.response.status === 400) {
+    //     //console.log("=== Validation error:", error.response.data); // Log the error for debugging
+    //     slug_error.value = error.response.data;
+    //   }
+    // } else {
+    //   console.error("An unexpected error occurred:", error); // Log unexpected errors
+    // }
   } finally {
     loading.value = false; // Hide loader
-
   }
+};
 
-}
 
 </script>
 <style scoped>
+.error {
+  color: red;
+  margin-top: 10px;
+}
+
 .sign-in {
   padding: 10px 0;
   display: flex;

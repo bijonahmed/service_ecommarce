@@ -90,6 +90,8 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::get('getDeposit', [UserController::class, 'getDeposit']);
+    Route::post('saveDeposit', [UserController::class, 'saveDeposit']);
     Route::post('add-certificate', [UserController::class, 'addcertificate']);
     Route::post('add-experience', [UserController::class, 'addExperience']);
     Route::post('add-education', [UserController::class, 'addeducation']);
@@ -199,6 +201,16 @@ Route::group([
 });
 
 Route::group(['prefix' => 'unauthenticate'], function () {
+
+    Route::get('getPublic', [UnauthenticatedController::class, 'getPublic']);
+    Route::get('getExperience', [UnauthenticatedController::class, 'getExperience']);
+    Route::get('geteducation', [UnauthenticatedController::class, 'geteducation']);
+    Route::get('skillsData', [UnauthenticatedController::class, 'skillsData']);
+    Route::get('getCertificate', [UnauthenticatedController::class, 'getCertificate']);
+
+
+
+
     Route::get('getFindCategorys', [UnauthenticatedController::class, 'getFindCategorys']);
     Route::get('getSubCategoryList', [UnauthenticatedController::class, 'getSubCategoryList']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategorys']);
@@ -207,6 +219,7 @@ Route::group(['prefix' => 'unauthenticate'], function () {
     Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
     Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
     Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
+
 });
 
 Route::group([

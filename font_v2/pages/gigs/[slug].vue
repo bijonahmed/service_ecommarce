@@ -335,19 +335,17 @@
 
 
                       </div>
-
-
-
+ 
                       <div class="freelancer-style1 service-single mb-0">
                         <div class="wrapper d-flex align-items-center">
                           <div class="thumb position-relative mb25">
-                            <img class="rounded-circle mx-auto" :src="responseData.freelancer_images"
-                              style="height:70px;width:70px;" alt="">
+                            <img class="rounded-circle mx-auto img-circle" :src="responseData.freelancer_images"
+                              style="height:60px;width:60px;" alt="">
                             <span class="online"></span>
                           </div>
                           <div class="ml20">
-                            <h5 class="title mb-1">{{ responseData.user_name }}</h5>
-                            <p class="mb-0">{{ responseData.profession_name }}</p>
+                            <h5 class="title mb-1"> <nuxt-link :to="{ path: '/public', query: { profile: responseData.sellerSlug } }"> {{responseData.user_name}} </nuxt-link></h5>
+                            <p class="mb-0"><nuxt-link :to="{ path: '/public', query: { profile: responseData.sellerSlug } }">{{ responseData.profession_name }}</nuxt-link></p>
                             <div class="review d-none">
                               <p><i class="fas fa-star fz10 review-color pr10"></i><span class="dark-color">4.9</span>
                                 (595 reviews)</p>
@@ -357,9 +355,8 @@
                         <hr class="opacity-100">
                         <div class="details">
                           <div class="fl-meta d-flex align-items-center justify-content-between">
-                            <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">London</span></a>
-                            <a class="meta fw500 text-start">Rate<br><span class="fz14 fw400">${{ responseData.price
-                                }}</span></a>
+                            <a class="meta fw500 text-start">Location<br><span class="fz14 fw400">{{ responseData.countryname }}</span></a>
+                         
                             <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">100%</span></a>
                           </div>
                         </div>

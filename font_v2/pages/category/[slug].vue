@@ -151,7 +151,6 @@
                   </div>
                 </div>
 
-
               </div>
               <div class="row">
                 <div class="mbp_pagination mt30 text-center" v-if="currentPage < totalPages">

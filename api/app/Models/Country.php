@@ -9,7 +9,9 @@ class Country extends Model
 {
     public $table = "country";
     protected $fillable = [
-        'category_name',
+        'countrycode',
+        'countryname',
+        'code',
         'status',
         'created_at',
         'updated_at',

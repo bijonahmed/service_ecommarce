@@ -28,6 +28,7 @@ use App\Models\Gig;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Skills;
+use App\Models\Deposit;
 
 class UserController extends Controller
 {
@@ -472,6 +473,45 @@ class UserController extends Controller
         }
     }
 
+
+    public function getDeposit(Request $request)
+    {
+
+        try {
+            $data['data'] = Deposit::where('user_id', $this->userid)->get();
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed Please try again later.'], 500);
+        }
+    }
+
+
+    public function saveDeposit(Request $request)
+    {
+        //dd($request->all());
+        $request->validate([
+            'amount'                  => 'required',
+            'frm_wallet_address'      => 'required',
+        ]);
+        $rdata = [
+            'user_id'           => $this->userid, // Assuming you are using authentication
+            'deposit_amount'    => $request->amount,
+            'frm_wallet_address' => $request->frm_wallet_address,
+            'payment_method'    => 'TRX(TRC20)',
+            'status'            => 0,
+        ];
+        $data =  Deposit::create($rdata);
+
+        $uniqueDepositID = 'DEP' . str_pad($data->id, 6, '0', STR_PAD_LEFT); // E.g., "DEP000123"
+        $data->update(['depositID' => $uniqueDepositID]);
+
+
+        return response()->json([
+            'message' => 'added successfully!',
+            'data'    => $data
+        ]);
+    }
+
     public function addcertificate(Request $request)
     {
         //dd($request->all());
@@ -859,14 +899,13 @@ class UserController extends Controller
     public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
             'password' => 'min:2|required_with:password_confirmation|same:password_confirmation',
             'password_confirmation' => 'min:2'
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
-        $user = User::find($request->id);
+        $user = User::find($this->userid);
         $user->password = Hash::make($request->password);
         $user->show_password = $request->password;
         $user->save();

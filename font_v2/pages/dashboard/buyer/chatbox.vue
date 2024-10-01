@@ -35,7 +35,7 @@
                             <div class="col-sm-8 col-lg-10">
                                 <div class="breadcumb-style1 mb10-xs">
                                     <div class="breadcumb-list">
-                                        <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
+                                        <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
                                         <a href="#">Messages</a>
                                     </div>
                                 </div>
@@ -44,7 +44,7 @@
                                 <div class="d-flex align-items-center justify-content-sm-end">
                                     <div class="share-save-widget d-flex align-items-center">
                                         <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                                        <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
+                                        <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link></div>
                                     </div>
                                     
                                 </div>

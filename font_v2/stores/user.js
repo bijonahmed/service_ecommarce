@@ -8,6 +8,7 @@ export const useUserStore = defineStore("user", {
     full_name: "",
     email: "",
     api_token: "",
+    role_id: "",
     isLoggedIn: false,
   }),
   actions: {
@@ -25,6 +26,7 @@ export const useUserStore = defineStore("user", {
           //return false;
           localStorage.setItem("token", result.data.access_token);
           this.$state.api_token = result.data.access_token;
+          this.$state.role_id = result.data.user.role_id;
           this.$state.email = result.data.user.email;
           this.$state.id = result.data.user.id;
           this.$state.isLoggedIn = true;
@@ -61,6 +63,7 @@ export const useUserStore = defineStore("user", {
       this.$state.full_name = "";
       this.$state.email = "";
       this.$state.api_token = "";
+      this.$state.role_id = "";
       this.$state.isLoggedIn = false;
     },
   },

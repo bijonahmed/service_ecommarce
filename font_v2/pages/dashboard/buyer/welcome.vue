@@ -25,7 +25,7 @@
                     </div>
                 </section>
                 <!-- Breadcumb Sections -->
-                <DashboardMainConentTabs />
+              <DashboardMainConentTabsBuyer/>
                 <div />
             </div>
         </div>

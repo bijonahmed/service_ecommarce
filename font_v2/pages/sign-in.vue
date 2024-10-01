@@ -18,7 +18,7 @@
                   <Loader />
                 </div>
                 <div class="row wow fadeInRight">
-                  
+
                   <div class="col-xl-6 mx-auto">
                     <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
                       <div class="mb30">
@@ -27,7 +27,7 @@
                           Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link>
                         </p>
                       </div>
-<center><span class="text-danger">{{ errors.account }}</span></center>
+                      <center><span class="text-danger">{{ errors.account }}</span></center>
                       <div class="mb20">
                         <label for="email" class="form-label fw600 dark-color">Email Address</label>
                         <input type="email" id="email" class="form-control" placeholder="example@gmail.com"
@@ -93,7 +93,7 @@
 
 import axios from "axios";
 import { useUserStore } from "~~/stores/user";
-
+import Swal from "sweetalert2";
 const userStore = useUserStore();
 const router = useRouter();
 
@@ -169,13 +169,26 @@ async function login() {
       captchaInput.value,
       userCapInput.value
     );
+
     const token = window.localStorage.getItem("token");
     //console.log("My token: " + token);
     if (token) {
       axios.defaults.headers.common["Authorization"] =
         "Bearer " + userStore.api_token;
     }
-    router.push("/dashboard/welcome");
+
+    // Fetch the user role_id after login
+    const role_id = userStore.role_id; // Assuming userStore contains role_id after login
+    console.log("RoleID" + role_id);
+    if (role_id === 2) {
+      router.push("/dashboard/welcome");
+    } else if (role_id === 3) {
+      router.push("/dashboard/buyer/welcome");
+    } else if (role_id === 1) {
+      roleMsg();
+      loading.value = false;
+      return;
+    }
   } catch (error) {
     loading.value = false;
     // If the request fails, display the error messages
@@ -193,6 +206,17 @@ async function login() {
       console.error("An error occurred while logging in:", error);
     }
   }
+}
+
+const roleMsg = () => {
+  Swal.fire({
+    position: "center", // Changed to center
+    position: "top-end",
+    icon: "error",
+    title: "Login not allowed for this role.",
+    showConfirmButton: false,
+    timer: 3000
+  });
 }
 
 onMounted(() => {

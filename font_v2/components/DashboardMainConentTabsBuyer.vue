@@ -9,11 +9,7 @@
                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
                   class="fa fa-home" aria-hidden="true"></i>&nbsp;Welcome</button>
             </li>
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" id="pills-profile-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
-                aria-selected="false"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Refer a Friend</button>
-            </li>
+           
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="chatbox"><i class="fa fa-commenting"
                   aria-hidden="true"></i>&nbsp;Messages</button>
@@ -22,10 +18,12 @@
               <button class="nav-link fw500 dark-color" @click="myprofile" aria-selected="false"><i class="fa fa-user"
                   aria-hidden="true"></i>&nbsp;Profile</button>
             </li>
+
             <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="mygig" aria-selected="false"><i class="fa fa-tasks"
-                  aria-hidden="true"></i>&nbsp;My GIG</button>
+              <button class="nav-link fw500 dark-color" @click="deposit" aria-selected="false"><i
+                  class="far fa-money-bill-alt" aria-hidden="true"></i>&nbsp;Deposit</button>
             </li>
+
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="myorders" aria-selected="false"><i
                   class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders</button>
@@ -58,7 +56,7 @@
                             <a class="position-relative freelancer-single-style" href="#">
                               <span class="online"></span>
                               <img class="w-100 wa-sm mb15-sm" :src="profileLogo || 'profile_default.png'"
-                                style="height:150px; border-radius: 10px;;" alt="Freelancer Photo">
+                                style="height:150px; border-radius: 10px;;" alt="Loading...">
                             </a>
                             <div class="ml20 ml0-xs">
                               <h5 class="title mb-1">{{ name }}</h5>
@@ -135,15 +133,13 @@
 
                         </div>
 
-
-
                       </div>
                     </div>
 
                     <div class="col-lg-4">
                       <div class="blog-sidebar ms-lg-auto">
                         <div class="sidebar-widget mb30 pb20 bdrs8">
-                             <ShareProfileLink/>
+                             <ShareProfileLinkBuyer/>
                         </div>
 
                         <div class="sidebar-widget mb30 pb20 bdrs8">
@@ -164,10 +160,7 @@
               </section>
 
             </div>
-            <div class="tab-pane fade fz15 text" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              <br />
-              <ReferralLink />
-            </div>
+            
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
         </div>
@@ -222,21 +215,21 @@ const chkUserrow = async () => {
 
 
 const myprofile = () => {
-  router.push('/dashboard/myprofile')
+  router.push('/dashboard/buyer/myprofile')
 }
 
 const chatbox = () => {
-  router.push('/dashboard/chatbox')
+  router.push('/dashboard/buyer/chatbox')
 }
 
 const mysetting = () => {
-  router.push('/dashboard/setting')
+  router.push('/dashboard/buyer/setting')
 }
 const myorders = () => {
-  router.push('/dashboard/orders')
+  router.push('/dashboard/buyer/orders')
 }
-const mygig = () => {
-  router.push('/dashboard/mygig/giglist')
+const deposit = () => {
+  router.push('/dashboard/buyer/deposit')
 }
 
 const getExperience = async () => {

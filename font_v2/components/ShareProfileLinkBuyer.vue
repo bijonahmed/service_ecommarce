@@ -37,7 +37,7 @@ const chkUserrow = async () => {
 // Update referralLink whenever slug changes
 watchEffect(() => {
   const currentDomain = window.location.origin
-  referralLink.value = `${currentDomain}${router.resolve({ path: '/public' }).href}?profile=${slug.value}`
+  referralLink.value = `${currentDomain}${router.resolve({ path: '/buyer' }).href}?profile=${slug.value}`
 })
 
 // Fetch user data on component mount
