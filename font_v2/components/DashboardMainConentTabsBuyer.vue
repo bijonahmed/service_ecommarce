@@ -9,7 +9,7 @@
                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
                   class="fa fa-home" aria-hidden="true"></i>&nbsp;Welcome</button>
             </li>
-           
+
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="chatbox"><i class="fa fa-commenting"
                   aria-hidden="true"></i>&nbsp;Messages</button>
@@ -32,7 +32,7 @@
               <button class="nav-link fw500 dark-color" @click="mysetting" aria-selected="false"><i class="fa fa-cogs"
                   aria-hidden="true"></i>&nbsp;Setting</button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item d-none" role="presentation">
               <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
                 role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa fa-line-chart"
                   aria-hidden="true"></i>&nbsp;Report</button>
@@ -85,10 +85,19 @@
               </section>
 
               <!-- Service Details -->
-              <section class="pt10 pb90 pb30-md">
+              <section class="pt10 pb90">
                 <div class="container">
                   <div class="row wow fadeInUp">
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
+                      <ShareProfileLinkBuyer />
+
+                      <h4 class="widget-title">My Skills</h4>
+                      <div class="tag-list mt30">
+                        <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
+                      </div>
+
+                      <hr class="opacity-100">
+
 
                       <!-- ============{{ userResponseData.profile_status }}======== -->
                       <div class="service-about">
@@ -103,7 +112,7 @@
                             <span class="tag">{{ edu.year }}</span>
                             <h5 class="mt15">{{ edu.subject }}</h5>
                             <h6 class="text-thm">{{ edu.college }}</h6>
-                            <p>{{ edu.description }}
+                            <p style="text-align: justify;">{{ edu.description }}
                             </p>
                           </div>
 
@@ -115,7 +124,7 @@
                             <span class="tag">{{ edu.year }}</span>
                             <h5 class="mt15">{{ edu.role }}</h5>
                             <h6 class="text-thm">{{ edu.company }}</h6>
-                            <p>{{ edu.description }}
+                            <p style="text-align: justify;">{{ edu.description }}
                             </p>
                           </div>
 
@@ -127,7 +136,7 @@
                             <span class="tag">{{ cer.year }}</span>
                             <h5 class="mt15">{{ cer.course_name }}</h5>
                             <h6 class="text-thm">{{ cer.institute_name }}</h6>
-                            <p>{{ cer.description }}
+                            <p style="text-align: justify;">{{ cer.description }}
                             </p>
                           </div>
 
@@ -136,31 +145,47 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
-                      <div class="blog-sidebar ms-lg-auto">
-                        <div class="sidebar-widget mb30 pb20 bdrs8">
-                             <ShareProfileLinkBuyer/>
-                        </div>
+                    <div class="col-lg-8">
 
-                        <div class="sidebar-widget mb30 pb20 bdrs8">
-                          <h4 class="widget-title">My Skills</h4>
-                          <div class="tag-list mt30">
-                            <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
+                      <center>
+                        <h3><u>Order History</u></h3>
+                        <small>Automatic updates every 10 seconds.</small>
+                      </center>
+                      <div class="order-list">
+                        <div class="card text-center mt-2" v-for="(order, index) in orderData" :key="index">
+                          <div class="card-header">
+                            Order ID: {{ order.orderId }}
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title"><span class="ms-3">{{ order.gig_name }}</span></h5>
+                            <p class="card-text">
+                              Order Date: {{ formatDate(order.created_at) }}<br />
+                              Amount: ${{ order.selected_price }}<br />
+                              Order Status:
+                              <span v-if="order.order_status == 1">Order Placed</span>
+                              <span v-if="order.order_status == 2">Completed</span>
+                              <span v-if="order.order_status == 3">Delivered</span>
+                              <span v-if="order.order_status == 4">Under Review</span>
+                              <span v-if="order.order_status == 5">Order Cancelled</span><br />
+                              Packages: {{ order.selected_packages }}
+                            </p>
+                            <nuxt-link :to="`/gigs/${order.gig_slug}`" class="btn btn-primary text-white">View
+                              Gig</nuxt-link>
+                          </div>
+                          <div class="card-footer text-muted">
+                            {{ order.reamingitime }}
                           </div>
                         </div>
-
                       </div>
+
+
                     </div>
-
-
-
-
                   </div>
                 </div>
               </section>
 
             </div>
-            
+
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
         </div>
@@ -190,6 +215,8 @@ const profileLogo = ref('');
 const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
+const orderData = ref('');
+
 
 definePageMeta({
   middleware: "is-logged-out",
@@ -270,17 +297,133 @@ const getSkills = async () => {
     console.log(error);
   }
 };
+const getAllOrdersList = async () => {
+  try {
+    const response = await axios.get(`/order/getOrderPlace`);
+    orderData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// Function to format the date
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(date).toLocaleDateString(undefined, options);
+};
+
+let intervalId = null;
+intervalId = setInterval(getAllOrdersList, 10000); // Set interval for 10 seconds
 
 onMounted(() => {
+  getAllOrdersList();
   getCertificates();
   getExperience();
   getEducations();
   getSkills();
   chkUserrow();
 });
-
+onBeforeUnmount(() => {
+  clearInterval(intervalId); // Clear interval when component is unmounted
+});
 </script>
 <style scoped>
+.order-list {
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow cards to wrap on smaller screens */
+  justify-content: space-between;
+  /* Evenly space the cards */
+  padding: 20px;
+  /* Add padding around the order list */
+}
+
+.card {
+  width: calc(50% - 15px);
+  /* 2 cards per row with spacing */
+  margin-bottom: 20px;
+  /* Space below each card */
+  border-radius: 10px;
+  /* Rounded corners */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  /* Subtle shadow for depth */
+  transition: transform 0.3s, box-shadow 0.3s;
+  /* Smooth transition for hover effects */
+  background-color: #ffffff;
+  /* White background for the card */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  /* Lift the card on hover */
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  /* Deeper shadow on hover */
+}
+
+
+.card-header {
+  font-weight: bold;
+  /* Bold text for order ID */
+  background-color: #f8f9fa;
+  /* Light gray background for header */
+  border-top-left-radius: 10px;
+  /* Round top left corner */
+  border-top-right-radius: 10px;
+  /* Round top right corner */
+}
+
+.card-body {
+  padding: 15px;
+  /* Add padding inside the card body */
+}
+
+.card-title {
+  font-size: 1.2em;
+  /* Increase font size for title */
+  color: #007bff;
+  /* Primary color for title */
+}
+
+.card-text {
+  font-size: 0.9em;
+  /* Slightly smaller text for details */
+  color: #555;
+  /* Darker gray for text */
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  /* Light gray background for footer */
+  border-bottom-left-radius: 10px;
+  /* Round bottom left corner */
+  border-bottom-right-radius: 10px;
+  /* Round bottom right corner */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  /* Primary button color */
+  border: none;
+  /* Remove border */
+  border-radius: 20px;
+  /* Round button corners */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  /* Darker blue on hover */
+}
+
+.referral-link-container {
+  max-width: 600px;
+  margin: 10px auto;
+  padding: 20px;
+  text-align: center;
+  background: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
 .body_content {
   padding: 100px;
 }

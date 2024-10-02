@@ -28,13 +28,21 @@ use App\Http\Controllers\Chat\ChatController;
 |
 */
 
-Route::post('messages', [ChatController::class, 'message']);
-Route::post('customerSendMessages', [ChatController::class, 'customerSendMessages']);
-Route::post('sellerSendMessages', [ChatController::class, 'sellerSendMessages']);
-Route::get('/messages/{community_slug}', [ChatController::class, 'getMessages']);
-Route::get('/getSellerMessages/{seller_id}', [ChatController::class, 'getSellerMessages']);
-Route::get('/getBuyListForSeller', [ChatController::class, 'getBuyerList']);
-Route::get('/getSellerList', [ChatController::class, 'getSellerList']);
+
+
+
+
+Route::group([
+    'prefix' => 'chat'
+], function () {
+    Route::post('messages', [ChatController::class, 'message']);
+    Route::post('sendMessages', [ChatController::class, 'sendMessages']);
+    Route::get('sendChatRequest', [ChatController::class, 'sendChatRequest']);
+    Route::get('/getMessages', [ChatController::class, 'getMessages']);
+    Route::get('/getSelectedMessages', [ChatController::class, 'getSelectedMessages']);
+    Route::get('/getChatUsers', [ChatController::class, 'getChatUsers']);
+});
+
 
 Route::group([
     'middleware' => 'api',
@@ -52,9 +60,7 @@ Route::group([
     Route::post('updateprofileFrontend', [AuthController::class, 'updateprofileFrontend']);
     Route::post('updateprofileFrontendSeller', [AuthController::class, 'updateprofileFrontendSeller']);
     Route::post('updatePassword', [AuthController::class, 'changesPassword']);
-
     Route::get('showProfileData', [AuthController::class, 'showProfileData']);
-
     Route::post('password/email', [ForgotPasswordController::class, 'sendPasswordResetEmail']);
     Route::post('password/reset', [ResetPasswordController::class, 'updatePassword']);
 });
@@ -183,22 +189,23 @@ Route::group([
 Route::group([
     'prefix' => 'order'
 ], function () {
-    //Add to cart 
+    Route::post('updateOrder', [OrderController::class, 'updateOrder']);
     Route::post('confirmOrder', [OrderController::class, 'submitOrder']);
     Route::get('getOrder', [OrderController::class, 'getOrder']);
+    Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
-    Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
-    Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
-    Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
-    Route::get('allWishList/', [OrderController::class, 'allWishList']);
-    Route::get('removeWishList/{productid}', [OrderController::class, 'removeWishList']);
-    Route::get('orderStatus', [OrderController::class, 'orderStatus']);
-    Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
-    Route::post('save_order', [OrderController::class, 'save_order']);
-    Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
-    Route::post('update_order_status', [OrderController::class, 'update_order_status']);
-    Route::post('orderTrack', [OrderController::class, 'orderTrackadd']);
-    Route::get('orderTrackList/{orderid}', [OrderController::class, 'orderTrackaddList']);
+   // Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
+  //  Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
+  //  Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
+   // Route::get('allWishList/', [OrderController::class, 'allWishList']);
+   // Route::get('removeWishList/{productid}', [OrderController::class, 'removeWishList']);
+  //  Route::get('orderStatus', [OrderController::class, 'orderStatus']);
+   // Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
+   // Route::post('save_order', [OrderController::class, 'save_order']);
+   // Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
+   // Route::post('update_order_status', [OrderController::class, 'update_order_status']);
+   // Route::post('orderTrack', [OrderController::class, 'orderTrackadd']);
+   // Route::get('orderTrackList/{orderid}', [OrderController::class, 'orderTrackaddList']);
 });
 
 Route::group(['prefix' => 'unauthenticate'], function () {
@@ -220,7 +227,6 @@ Route::group(['prefix' => 'unauthenticate'], function () {
     Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
     Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
     Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
-
 });
 
 Route::group([

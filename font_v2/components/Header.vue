@@ -43,8 +43,11 @@
               </div>
               <!-- Responsive Menu Structure-->
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
-                <li v-if="isLoggedIn"> <nuxt-link class="list-item pe-0" to="/dashboard/welcome">
-                    <i class="fa fa-home"></i>My Dashboard</nuxt-link></li>
+                <li v-if="isLoggedIn">
+                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="userStore.role_id==2"><i class="fa fa-home"></i>My Dashboard</nuxt-link>
+                  <nuxt-link class="list-item pe-0" to="/dashboard/buyer/welcome" v-if="userStore.role_id==3"><i class="fa fa-home"></i>My Dashboard</nuxt-link>
+                  
+                  </li>
               </ul>
             </div>
           </div>

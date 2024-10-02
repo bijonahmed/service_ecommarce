@@ -53,7 +53,6 @@
           </div>
         </section>
 
-        <!-- Start Profile -->
         <div class="container">
           <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
             <div class="packages_table table-responsive">
@@ -62,31 +61,39 @@
                   <tr>
                     <th scope="col">OrderID</th>
                     <th scope="col">OrderDate</th>
+                    <th scope="col">Delivery Time</th>
                     <th scope="col">Amount</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Action</th>
+                    <th scope="col text-center" style="text-align: center;">Status</th>
+                    <th scope="col text-center" style="text-align: center;">Action</th>
                   </tr>
                 </thead>
                 <tbody class="t-body">
                   <!-- v-for loop to iterate over orderData -->
                   <tr v-for="(order, index) in orderData" :key="index">
                     <th scope="row">
-                      <div>#{{ order.orderId }} <span class="ms-3">{{ order.gig_name }}</span></div>
+                      <div>#{{ order.orderId }} <span class="ms-3"><nuxt-link :to="`/gigs/${order.gig_slug}`">{{
+                        order.gig_name }}</nuxt-link>
+                        </span></div>
                     </th>
                     <td class="vam">{{ formatDate(order.created_at) }}</td>
+                    <td class="vam">{{ order.reamingitime }}</td>
                     <td class="vam">${{ order.selected_price }}</td>
                     <td class="vam">
-
-                      <span v-if="order.order_status == 1">Active</span>
-                      <span v-if="order.order_status == 2">Reject</span>
-
+                      <span v-if="order.order_status == 1">Order Placed</span>
+                      <span v-if="order.order_status == 2">Completed</span>
+                      <span v-if="order.order_status == 3">Delivered</span>
+                      <span v-if="order.order_status == 4">Under Review</span>
+                      <span v-if="order.order_status == 5">Order Cancelled</span>
                     </td>
 
-                    <td class="vam">
-                      <a href="#" class="table-action fz15 fw500 text-thm2" data-bs-toggle="tooltip"
-                        data-bs-placement="top" title="View">
-                        <span class="flaticon-website me-2 vam"></span> View
+                    <td class="vam" style="text-align: center;">
+                      <a href="#" @click="showDetails(order)">
+                        <i class="fa-solid fa-list-check"></i>&nbsp;Status
                       </a>
+                      <a href="#" @click="getAllOrdersList">
+                        <i class="fa fa-refresh" aria-hidden="true"></i> Reload
+                      </a>
+
                     </td>
                   </tr>
                 </tbody>
@@ -101,6 +108,38 @@
     </div>
 
     <!-- Modal Template -->
+
+    <div class="modal fade" id="staticBackdrop" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">Order Status [{{ gigName }}]</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
+              <input type="hidden" v-model="orderId" />
+              <center>
+                <h3>OrderID: {{ orderId }}</h3>
+              </center>
+              <!-- Billing Information -->
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Status</label>
+                <select v-model="selectedStatus" class="form-select">
+                  <option v-for="status in orderStatuses" :key="status.id" :value="status.id">
+                    {{ status.text }}
+                  </option>
+                </select>
+              </div>
+
+              <!-- Payment Submit Button -->
+              <button type="submit" class="btn btn-primary w-100 text-white">Update</button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
 
     <Footer />
   </body>
@@ -121,13 +160,60 @@ const loading = ref(false);
 const route = useRoute();
 const errors = ref({});
 const orderData = ref('');
+const gigName = ref('');
+const orderId = ref('');
+
+const selectedStatus = ref(null); // Track the selected dropdown status
 
 
-const getOrderStatus = (status) => {
-  return status === 1 ? 'Approved'
-    : status === 2 ? 'Rejected'
-      : status === 3 ? 'Canceled'
-        : 'Unknown';
+
+const submitFrm = () => {
+  const formData = new FormData();
+  formData.append("orderId", orderId.value);
+  formData.append("selectedStatus", selectedStatus.value);
+  const headers = {
+    "Content-Type": "multipart/form-data",
+  };
+  axios.post("/order/updateOrder", formData, { headers })
+    .then((res) => {
+      document.getElementById("formrest").reset();
+      getAllOrdersList();
+      Swal.fire({
+        icon: 'success',
+        title: 'Order Update',
+        text: 'Your order confirm please.',
+      });
+      $('#staticBackdrop').modal('hide');
+
+      //router.push("/dashboard/welcome");
+    })
+    .catch((error) => {
+      if (error.response && error.response.status === 422) {
+        errors.value = error.response.data.errors;
+      } else {
+        // Handle other types of errors here
+        console.error("An error occurred:", error);
+      }
+    });
+};
+
+
+// Define order statuses
+const orderStatuses = ref([
+  { id: 1, text: 'Order Placed' },
+  { id: 2, text: 'Completed' },
+  { id: 3, text: 'Delivered' },
+  { id: 4, text: 'Under Review' },
+  { id: 5, text: 'Order Cancelled' },
+]);
+
+const showDetails = (order) => {
+  console.log(order.orderId);
+  orderId.value = order.orderId;
+  selectedStatus.value = order.order_status;
+  gigName.value = order.gig_name;
+  $('#staticBackdrop').modal('show');
+
 }
 // Function to format the date
 const formatDate = (date) => {
@@ -137,22 +223,23 @@ const formatDate = (date) => {
 
 const getCatList = async () => {
   try {
-    loading.value = true;
+
     const response = await axios.get(`/unauthenticate/getFindCategorys`);
     categoryData.value = response.data;
   } catch (error) {
     // Handle error
-  } finally {
-    loading.value = false;
   }
 };
 
 const getAllOrdersList = async () => {
   try {
+    loading.value = true;
     const response = await axios.get(`/order/getOrder`);
-    orderData.value = response.data.orders;
+    orderData.value = response.data;
   } catch (error) {
     console.log(error);
+  } finally {
+    loading.value = false;
   }
 };
 

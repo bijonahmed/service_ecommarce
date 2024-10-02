@@ -56,7 +56,7 @@
         <!-- Start Chatbox -->
         <div class="dashboard__content content">
           <div class="row">
-            <div class="col-lg-3">
+            <div class="col-lg-3 col-xl-3 col-xxl-3">
               <div class="message_container">
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
@@ -70,10 +70,10 @@
 
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-lg-6 col-xl-7 col-xxl-8">
               <div class="card">
                 <div class="card-header">
-                  Chat History <span v-if="user_name">[{{ user_name }}]</span>
+                  Chat History <span v-if="user_name">[{{user_name}}]</span>
                 </div>
                 <div class="chatbox" id="">
                   <div class="" v-if="chatMessages.length">
@@ -153,6 +153,7 @@ const errors = ref({});
 const orderData = ref('');
 const gigName = ref('');
 const uploadedFile = ref(null);
+
 const chatMessages = ref([]);
 const chatUsers = ref([]);
 const messageContent = ref('');
@@ -160,12 +161,7 @@ const user_name = ref('');
 const senderId = ref(37); // Set this to the ID of the logged-in buyer
 const recipientId = ref(''); // The ID of the recipient (seller)
 // Send a new message
-const selUser = ref(null); // Property to store the selected user
-// Method to select a user
-const selectUserSelect = (user) => {
-  selUser.value = user.user_id; // Set the selected user
-  console.log('Selected user:', user); // Debugging purpose
-};
+
 // Method to handle file upload
 const handleFileUpload = (event) => {
   uploadedFile.value = event.target.files[0]; // Store the first uploaded file
@@ -313,239 +309,165 @@ onMounted(() => {
 
 
 <style scoped>
-.message_container {
-  background-color: #ffffff;
-  border-right: 1px solid #e0e0e0;
-  overflow-y: auto;
-  width: 100%;
-  /* Fixed width for user list */
-
+.chat-user-list {
+  list-style-type: none;
+  padding: 0;
 }
 
 .chat-user-item {
-  padding: 15px;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  border-bottom: 1px solid #e0e0e0;
-  /* Add a bottom border for separation */
-}
-
-.chat-user-item:last-child {
-  border-bottom: none;
-  /* Remove border for the last item */
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
 
 .chat-user-item:hover {
-  background-color: #065252;
-  /* Change background on hover */
-}
-
-.chat-user-item {
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.chat-user-item:hover {
-  background-color: #075e54;
-  color: white;
+  background-color: #f0f0f0;
 }
 
 .profile-pic {
-  width: 30px;
-  /* Smaller image size */
-  height: 30px;
-  /* Smaller image size */
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-right: 10px;
+}
+
+.chat-details {
+  margin-top: 20px;
+}
+
+.chat-message {
+  margin: 5px 0;
+}
+
+.chat-message.sender {
+  text-align: right;
+}
+
+.timestamp {
+  font-size: 0.8em;
+  color: gray;
+}
+
+/* message */
+.modal-backdrop.show {
+  opacity: 0;
 }
 
 .dashboard__content {
-  background-color: #f0f0f0;
-  padding: 10px 10px 10px;
-  height: 100vh;
-}
-
-
-.chat-user-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.chat-user-item {
-  padding: 15px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.chat-user-item:hover {
-  background-color: #075e54;
-  color: white;
-}
-
-
-.chat-user-item.selected {
-  background-color: #075e54;
-}
-
-
-.profile-pic {
-  width: 30px;
-  /* Smaller image size */
-  height: 30px;
-  /* Smaller image size */
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.chat-container {
-  width: 50%;
-  /* Fixed width for chat area */
-  display: flex;
-  flex-direction: column;
-}
-
-.card {
-  border-radius: 10px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-  height: 650px;
-  flex: 1;
-  /* Takes the remaining height */
-}
-
-.card-header {
-  background-color: #075e54;
-  color: #ffffff;
-  padding: 10px;
-  font-weight: bold;
+  border-radius: 4px;
+  padding: 10px 60px 20px;
+  width: 100%;
 }
 
 .chatbox {
-  height: calc(100vh - 130px);
-  overflow-y: auto;
-  background-color: #ffffff;
   padding: 10px;
+  background-color: #e5ddd5;
+  /* Light gray background similar to WhatsApp */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  max-height: 500px;
+  text-align: left;
+  max-width: 100%;
+  overflow-y: auto;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-picture {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+  object-fit: cover;
+}
+
+.profile-picture {
+  width: 40px;
+  /* Set a fixed width */
+  height: 40px;
+  /* Set a fixed height */
+  border-radius: 50%;
+  /* Make it circular */
+  margin-right: 10px;
+  /* Space between the image and message */
+  object-fit: cover;
+  /* Crop the image to fit */
 }
 
 .message {
   display: flex;
+  /* Use flexbox for alignment */
   align-items: flex-start;
-  margin-bottom: 10px;
-}
-
-.sender-message {
-  justify-content: flex-end;
-}
-
-.recipient-message {
-  justify-content: flex-start;
-}
-
-.profile-picture {
-  width: 30px;
-  /* Smaller image size */
-  height: 30px;
-  /* Smaller image size */
-  border-radius: 50%;
-  margin: 0 10px;
+  /* Align items vertically */
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  position: relative;
+  /* Needed for the arrow effect */
+  max-width: 100%;
+  /* Limit width for messages */
 }
 
 .message-content {
-  max-width: 75%;
-  padding: 10px;
-  border-radius: 10px;
-  position: relative;
-  text-align: left;
-  /* Align text to the left */
+  flex-grow: 1;
+  /* Allow content to take available space */
 }
 
-.sender-message .message-content {
+.sender-message {
   background-color: #dcf8c6;
-  margin-left: auto;
+  color: #000;
+  align-self: flex-end;
+  /* margin-left: auto; */
+  border-bottom-left-radius: 20px;
 }
 
-.recipient-message .message-content {
-  background-color: #f1f1f1;
+.recipient-message {
+  background-color: #fff;
+  color: #000;
+  align-self: flex-start;
   margin-right: auto;
+  border-bottom-right-radius: 20px;
+}
+
+.sender-name {
+  font-weight: bold;
+  font-size: 0.9em;
+  margin-bottom: 5px;
 }
 
 .message-text {
   margin: 0;
+  line-height: 1.4;
 }
 
 .file-attachment {
   margin-top: 5px;
+  font-size: 0.9em;
 }
 
 .attached-image {
-  max-width: 100%;
-  border-radius: 10px;
+  max-width: 200px;
+  height: auto;
+  margin-top: 5px;
+  border-radius: 5px;
 }
 
 .file-link {
-  display: inline-block;
-  margin-top: 5px;
-  color: #075e54;
+  color: #007bff;
+  text-decoration: none;
+}
+
+.file-link:hover {
+  text-decoration: underline;
 }
 
 .timestamp {
-  font-size: 12px;
-  color: #999999;
+  display: block;
+  font-size: 0.75em;
+  color: #888;
   margin-top: 5px;
-}
-
-.card-footer {
-  background-color: #f1f1f1;
-  padding: 10px;
-}
-
-.input-group {
-  display: flex;
-  align-items: center;
-}
-
-textarea {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  resize: none;
-  padding: 10px;
-  flex: 1;
-  /* Allow textarea to take available space */
-  margin-right: 10px;
-  /* Add space between textarea and file input */
-}
-
-
-
-input[type="file"]+label {
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 8px;
-  background-color: #e1e1e1;
-  cursor: pointer;
-}
-
-.btn {
-  border-radius: 20px;
-  margin-left: 10px;
-}
-
-.right-sidebar {
-  background-color: #ffffff;
-  /* Optional: Add styles for right sidebar */
-  border-left: 1px solid #e0e0e0;
-  width: 25%;
-  /* Fixed width for right sidebar */
-  overflow-y: auto;
-  /* Allow scrolling if needed */
+  text-align: right;
 }
 
 /* end message */

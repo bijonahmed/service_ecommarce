@@ -13,12 +13,11 @@ class MyMessage extends Authenticatable
     public $table = "messages";
     protected $fillable = [
         'user_id',
-        'role_id',
+        'to_id',
         'sender_id',
-        'seller_id',
-        'product_id',
-        'community_slug',
-        'username',
         'message',
+        'files',
     ];
+
+    
 }

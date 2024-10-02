@@ -245,7 +245,6 @@
                                     data-bs-target="#staticBackdrop">Continue ${{ responseData.basic_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
 
-
                                 </div>
                               </div>
                             </div>
@@ -278,10 +277,6 @@
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop">Continue ${{ responseData.standard_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
-
-
-
-
                                 </div>
                               </div>
                             </div>
@@ -306,7 +301,6 @@
 
                                 <div class="d-grid">
 
-
                                   <a href="#" class="ud-btn btn-thm"
                                     @click="setPrice('Premium', responseData.premium_price)" v-if="isLoggedIn">Continue
                                     ${{ responseData.premium_price }}<i class="fal fa-arrow-right-long"></i></a>
@@ -314,12 +308,6 @@
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
                                     data-bs-target="#staticBackdrop">Continue ${{ responseData.premium_price }}<i
                                       class="fal fa-arrow-right-long"></i></a>
-
-
-
-
-
-
 
                                 </div>
                               </div>
@@ -398,10 +386,14 @@
                             <a class="meta fw500 text-start">Job Success<br><span class="fz14 fw400">100%</span></a>
                           </div>
                         </div>
-                        <!-- <div class="d-grid mt30">
-                          <a href="#" class="ud-btn btn-thm-border">Contact Me<i
+                        <div class="d-grid mt30">
+                          <a href="javascript:void(0);" class="ud-btn btn-thm-border" @click="contactSend"
+                            v-if="isLoggedIn">Contact Me<i class="fal fa-arrow-right-long"></i></a>
+                          <a href="javascript:void(0);" class="ud-btn btn-thm-border" v-if="!isLoggedIn"
+                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">Contact Me<i
                               class="fal fa-arrow-right-long"></i></a>
-                        </div> -->
+
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -414,7 +406,28 @@
 
         <Footer />
       </div>
+      <!-- Message Modal -->
+      <div class="modal fade" id="message_modal" tabindex="-1" aria-labelledby="message_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="message_modalLabel">Send Message</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
+              <!-- Custom message and button -->
+
+              <p>Your message has been sent to the seller! If you want to chat more, click the button below:</p>
+              <center>
+                <a href="/dashboard/buyer/chatbox" class="btn btn-primary text-white">Continue Chat</a>
+              </center>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
       <!-- Payment Modal -->
       <div class="modal fade" id="payment_modal" tabindex="-1" aria-labelledby="payment_modalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
@@ -606,8 +619,25 @@ const card_number = ref('');
 const expiration_date = ref('');
 const cvc = ref('');
 
+const contactSend = async () => {
+  try {
+    // $('#payment_modal').modal('hide');
+    const sellerSlug = responseData.value.sellerSlug;
+    console.log("Fetching data for sellerSlug:", sellerSlug);
+    const response = await axios.get(`/chat/sendChatRequest`, {
+      params: {
+        sellerSlug: sellerSlug,
+        SelectedPackages: SelectedPackages.value,
+        SelectedPrice: SelectedPrice.value,
 
+      },
+    });
+    $('#message_modal').modal('show');
 
+  } catch (error) {
+    console.error("Error fetching gig data:", error);
+  }
+}
 
 const submitFrm = () => {
 
@@ -635,7 +665,6 @@ const submitFrm = () => {
       });
       $('#payment_modal').modal('hide');
 
-
       //router.push("/dashboard/welcome");
     })
     .catch((error) => {
@@ -648,12 +677,10 @@ const submitFrm = () => {
     });
 };
 
-
 const setPrice = async (packages, price) => {
   console.log('Pack:' + packages + "--Selected Price:---" + price);
   SelectedPackages.value = packages;
   SelectedPrice.value = price;
-
 
   const setprice = price;
   try {
@@ -674,9 +701,6 @@ const setPrice = async (packages, price) => {
   } catch (error) {
     // Handle error
   }
-
-
-
 
 }
 
@@ -764,8 +788,6 @@ async function login() {
   }
 }
 
-
-
 const roleMsg = () => {
   Swal.fire({
     position: "center", // Changed to center
@@ -789,7 +811,6 @@ const checkrow = async () => {
     responseData.value = response.data.data;
     gig_id.value = response.data.gig_id;
     carouselItems.value = response.data.galleryImgs;
-
 
   } catch (error) {
     // Handle error

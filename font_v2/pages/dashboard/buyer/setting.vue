@@ -188,13 +188,13 @@ const success_noti = () => {
 
 const getCatList = async () => {
   try {
-    loading.value = true;
+   // loading.value = true;
     const response = await axios.get(`/unauthenticate/getFindCategorys`);
     categoryData.value = response.data;
   } catch (error) {
     // Handle error
   } finally {
-    loading.value = false;
+    //loading.value = false;
   }
 };
 

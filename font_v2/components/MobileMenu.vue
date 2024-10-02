@@ -11,8 +11,14 @@
 
 
               <nuxt-link class="" to="/sign-in" v-if="!isLoggedIn">Login</nuxt-link>
-              <nuxt-link class="" to="/dashboard/welcome"
-                v-if="isLoggedIn">Dashboard&nbsp;&nbsp;&nbsp;&nbsp;</nuxt-link>
+
+              <nuxt-link class="" to="/dashboard/welcome" v-if="isLoggedIn && userStore.role_id === 2">
+                Dashboard&nbsp;&nbsp;&nbsp;&nbsp;
+              </nuxt-link>
+              <nuxt-link class="" to="/dashboard/buyer/welcome" v-if="isLoggedIn && userStore.role_id === 3">
+                Dashboard&nbsp;&nbsp;&nbsp;&nbsp;
+              </nuxt-link>
+
               <nuxt-link to="#" v-if="isLoggedIn" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link>
 
 
