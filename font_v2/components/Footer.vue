@@ -80,19 +80,7 @@
                 </div>
                 <div class="col-sm-6 col-lg-3">
                   <div class="footer-widget">
-                    <div class="footer-widget mb-4 mb-sm-5">
-                      <div class="mailchimp-widget">
-                        <h5 class="title text-white mb20">Subscribe</h5>
-                        <div class="mailchimp-style1">
-                          <input
-                            type="email"
-                            class="form-control bdrs4"
-                            placeholder="Your email address"
-                          />
-                          <button type="submit">Send</button>
-                        </div>
-                      </div>
-                    </div>
+                 
                     <div class="app-widget mb-4 mb-sm-5">
                       <h5 class="title text-white mb20">Apps</h5>
                       <div class="row mb-4 mb-lg-5">

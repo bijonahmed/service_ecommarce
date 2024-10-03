@@ -34,7 +34,7 @@
               <button class="nav-link fw500 dark-color" @click="mysetting" aria-selected="false"><i class="fa fa-cogs"
                   aria-hidden="true"></i>&nbsp;Setting</button>
             </li>
-            <li class="nav-item" role="presentation">
+            <li class="nav-item d-none" role="presentation">
               <button class="nav-link fw500 dark-color" id="#" data-bs-toggle="pill" data-bs-target="#" type="button"
                 role="tab" aria-controls="pills-contact" aria-selected="false"><i class="fa fa-line-chart"
                   aria-hidden="true"></i>&nbsp;Report</button>
@@ -90,8 +90,14 @@
               <section class="pt10 pb90 pb30-md">
                 <div class="container">
                   <div class="row wow fadeInUp">
-                    <div class="col-lg-8">
+                    <div class="col-lg-4">
 
+                      <ShareProfileLink />
+                      <hr>
+                      <h4 class="widget-title">My Skills</h4>
+                      <div class="tag-list mt30">
+                        <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
+                      </div>
                       <!-- ============{{ userResponseData.profile_status }}======== -->
                       <div class="service-about">
                         <h4>Description</h4>
@@ -135,29 +141,42 @@
 
                         </div>
 
-
-
                       </div>
                     </div>
 
-                    <div class="col-lg-4">
-                      <div class="blog-sidebar ms-lg-auto">
-                        <div class="sidebar-widget mb30 pb20 bdrs8">
-                             <ShareProfileLink/>
-                        </div>
-
-                        <div class="sidebar-widget mb30 pb20 bdrs8">
-                          <h4 class="widget-title">My Skills</h4>
-                          <div class="tag-list mt30">
-                            <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
+                    <div class="col-lg-8">
+                      <center>
+                        <h3><u>Active Orders</u></h3>
+                        <small>Automatic updates every 10 seconds.</small>
+                      </center>
+                      <div class="order-list">
+                        <div class="card text-center mt-2" v-for="(order, index) in orderData" :key="index">
+                          <div class="card-header">
+                            Order ID: {{ order.orderId }}
+                          </div>
+                          <div class="card-body">
+                            <h5 class="card-title"><span class="ms-3">{{ order.gig_name }}</span></h5>
+                            <p class="card-text">
+                              Order Date: {{ formatDate(order.created_at) }}<br />
+                              Amount: ${{ order.selected_price }}<br />
+                              Order Status:
+                              <span v-if="order.order_status == 1">Order Placed</span>
+                              <span v-if="order.order_status == 2">Completed</span>
+                              <span v-if="order.order_status == 3">Delivered</span>
+                              <span v-if="order.order_status == 4">Under Review</span>
+                              <span v-if="order.order_status == 5">Order Cancelled</span><br />
+                              Packages: {{ order.selected_packages }}
+                            </p>
+                            <nuxt-link :to="`/gigs/${order.gig_slug}`" class="btn btn-primary text-white">View
+                              Gig</nuxt-link>
+                          </div>
+                          <div class="card-footer text-muted">
+                            {{ order.reamingitime }}
                           </div>
                         </div>
-
                       </div>
+
                     </div>
-
-
-
 
                   </div>
                 </div>
@@ -167,6 +186,30 @@
             <div class="tab-pane fade fz15 text" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
               <br />
               <ReferralLink />
+
+              <table class="table table-bordered table-striped">
+
+                <thead class="thead-dark">
+                  <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Upline</th>
+                    <th>Register Date</th>
+                    <th>Bonus</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(v, index) in mlmData" :key="v.id">
+                    <td>{{ index + 1 }}</td> <!-- Displaying dynamic serial number -->
+                    <td>{{ v.name }}</td>
+                    <td>{{ v.upline }}</td>
+                    <td>{{ v.registerDate }}</td>
+                    <td>$0</td>
+                  </tr>
+
+                  <!-- Add more rows as needed -->
+                </tbody>
+              </table>
             </div>
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
@@ -187,6 +230,7 @@ import Swal from "sweetalert2";
 const euddata = ref([]);
 const expdata = ref([]);
 const certificatedata = ref([]);
+const mlmData = ref([]);
 const router = useRouter();
 const name = ref('');
 const joindate = ref('');
@@ -220,7 +264,6 @@ const chkUserrow = async () => {
   }
 };
 
-
 const myprofile = () => {
   router.push('/dashboard/myprofile')
 }
@@ -248,7 +291,6 @@ const getExperience = async () => {
   }
 };
 
-
 const getEducations = async () => {
   try {
     const response = await axios.get(`/user/geteducation`);
@@ -267,8 +309,6 @@ const getCertificates = async () => {
   }
 };
 
-
-
 const getSkills = async () => {
   try {
     const response = await axios.get(`/user/skillsData`);
@@ -277,8 +317,40 @@ const getSkills = async () => {
     console.log(error);
   }
 };
+const orderData = ref('');
+const getAllOrdersList = async () => {
+  try {
+    const response = await axios.get(`/order/getOrderPlaceForSeller`);
+    orderData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
+
+// Function to format the date
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(date).toLocaleDateString(undefined, options);
+};
+
+
+const getmlmList = async () => {
+  try {
+    const response = await axios.get('/user/getmlmlists');
+    console.log("===" + response.data.data);
+    mlmData.value = response.data.data;
+
+  } catch (error) {
+
+  }
+};
+
+let intervalId = null;
+intervalId = setInterval(getAllOrdersList, 10000); // Set interval for 10 seconds
 onMounted(() => {
+  getmlmList();
+  getAllOrdersList();
   getCertificates();
   getExperience();
   getEducations();
@@ -288,6 +360,83 @@ onMounted(() => {
 
 </script>
 <style scoped>
+.order-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  padding: 20px;
+}
+
+.card {
+  width: calc(50% - 15px);
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  background-color: #ffffff;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  /* Lift the card on hover */
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+  /* Deeper shadow on hover */
+}
+
+
+.card-header {
+  font-weight: bold;
+  /* Bold text for order ID */
+  background-color: #f8f9fa;
+  /* Light gray background for header */
+  border-top-left-radius: 10px;
+  /* Round top left corner */
+  border-top-right-radius: 10px;
+  /* Round top right corner */
+}
+
+.card-body {
+  padding: 15px;
+  /* Add padding inside the card body */
+}
+
+.card-title {
+  font-size: 1.2em;
+  /* Increase font size for title */
+  color: #007bff;
+  /* Primary color for title */
+}
+
+.card-text {
+  font-size: 0.9em;
+  /* Slightly smaller text for details */
+  color: #555;
+  /* Darker gray for text */
+}
+
+.card-footer {
+  background-color: #f8f9fa;
+  /* Light gray background for footer */
+  border-bottom-left-radius: 10px;
+  /* Round bottom left corner */
+  border-bottom-right-radius: 10px;
+  /* Round bottom right corner */
+}
+
+.btn-primary {
+  background-color: #007bff;
+  /* Primary button color */
+  border: none;
+  /* Remove border */
+  border-radius: 20px;
+  /* Round button corners */
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+  /* Darker blue on hover */
+}
+
 .body_content {
   padding: 100px;
 }

@@ -1,543 +1,612 @@
 <template>
-    <title>Messages</title>
+  <title>Messages</title>
 
-    <body class="bgc-thm1">
-        <div class="wrapper ovh">
-            <Header />
-            <MobileMenu />
-            <div class="body_content">
-                <section class="categories_list_section overflow-hidden">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="listings_category_nav_list_menu">
-                                    <ul class="mb0 d-flex ps-0">
-                                        <li v-for="data in categoryData" :key="data.id">
-                                            <nuxt-link :to="`/category/${data.slug}`">
-                                                {{ data.name }}
-                                            </nuxt-link>
-                                        </li>
-                                        <!-- {{categoryData}} -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- Breadcumb Sections -->
-
-                <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
+  <body class="bgc-thm1">
+    <div class="wrapper ovh">
+      <Header />
+      <MobileMenu />
+      <div class="body_content">
+        <section class="categories_list_section overflow-hidden">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="listings_category_nav_list_menu">
+                  <ul class="mb0 d-flex ps-0">
+                    <li v-for="data in categoryData" :key="data.id">
+                      <nuxt-link :to="`/category/${data.slug}`">
+                        {{ data.name }}
+                      </nuxt-link>
+                    </li>
+                    <!-- {{categoryData}} -->
+                  </ul>
                 </div>
-                <section class="breadcumb-section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-8 col-lg-10">
-                                <div class="breadcumb-style1 mb10-xs">
-                                    <div class="breadcumb-list">
-                                        <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
-                                        <a href="#">Messages</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-lg-2">
-                                <div class="d-flex align-items-center justify-content-sm-end">
-                                    <div class="share-save-widget d-flex align-items-center">
-                                        <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                                        <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- <DashboardMainConentTabs /> -->
-  <!-- Start Chatbox -->
-  <div class="dashboard__content hover-bgc-color">
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Breadcumb Sections -->
 
-<div class="row mb40">
-  <div class="col-lg-6 col-xl-5 col-xxl-4">
-    <div class="message_container">
-      <div class="inbox_user_list">
-        <div class="iu_heading pr35">
-          <div class="chat_user_search">
-            <form class="d-flex align-items-center">
-              <button class="btn" type="submit"><span class="far fa-magnifying-glass"></span></button>
-              <input class="form-control" type="search" placeholder="Serach" aria-label="Search">
-            </form>
+        <div class="loading-indicator" v-if="loading" style="text-align: center;">
+          <Loader />
+        </div>
+        <section class="breadcumb-section">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-8 col-lg-10">
+                <div class="breadcumb-style1 mb10-xs">
+                  <div class="breadcumb-list">
+                    <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
+                    <a href="#">Messages</a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-4 col-lg-2">
+                <div class="d-flex align-items-center justify-content-sm-end">
+                  <div class="share-save-widget d-flex align-items-center">
+                    <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                    <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- <DashboardMainConentTabs /> -->
+        <!-- Start Chatbox -->
+        <div class="dashboard__content content">
+          <div class="row">
+            <div class="col-lg-3">
+              <div class="message_container">
+                <!-- ============={{recipientId}}=== -->
+                <div v-if="chatUsers.length">
+                  <ul class="chat-user-list">
+                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item text-white"
+                  :class="['chat-user-item', { selected: selectedUserId === user.id }]" 
+                    >
+                      <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
+                      <span>{{ user.user_name }}</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-9">
+              <div class="card">
+                <div class="card-header">
+                  Chat History <span v-if="user_name">[{{ user_name }}]</span>
+                </div>
+                <div class="chatbox" id="" ref="chatContainer">
+                  <div class="" ref="chatContainer" v-if="chatMessages.length">
+                    <div class="message" v-for="message in chatMessages" :key="message.id"
+                      :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
+
+                      <img
+                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
+                        alt="Profile Picture" class="profile-picture" />
+
+                      <div class="message-content">
+                        <strong class="sender-name">{{ message.sender_name }}</strong>
+                        <p class="message-text">{{ message.message }}</p>
+                        <div v-if="message.files" class="file-attachment">
+                          <p>Attached Files:</p>
+                          <div v-if="isImage(message.files)">
+                            <img :src="message.files" alt="Attached Image" class="attached-image" />
+                          </div>
+                          <div v-else>
+                            <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
+                              }}</a>
+                          </div>
+                        </div>
+                        <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
+                          hour: '2-digit',
+                          minute: '2-digit'
+                        }) }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="no-messages" v-else>
+                    <p>No messages yet.</p>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
+                    <div class="input-group">
+                      <textarea class="form-control" id="message" placeholder="Type your message..." rows="3"
+                        v-model="messageContent"></textarea>
+                      <input type="file" class="form-control" id="fileInput" accept="image/*,application/pdf"
+                        @change="handleFileUpload" />
+                      <button class="btn btn-primary text-white" type="submit">Send</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+
+            </div>
           </div>
         </div>
-        <div class="chat-member-list pr20">
-          <div class="list-item pt5">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms1.png"
-                  alt="ms1.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Darlene Robertson</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms2.png"
-                  alt="ms2.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Jane Cooper</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                    <div class="m_notif">2</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms3.png"
-                  alt="ms3.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Arlene McCoy</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                    <div class="m_notif online">2</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms4.png"
-                  alt="ms4.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Albert Flores</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms5.png"
-                  alt="ms5.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Cameron Williamson</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                    <div class="m_notif away">2</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms6.png"
-                  alt="ms6.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Kristin Watson</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms7.png"
-                  alt="ms7.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Annette Black</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                    <div class="m_notif busy">2</div>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms8.png"
-                  alt="ms8.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Jacob Jones</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms1.png"
-                  alt="ms1.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Vincent Porter</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="list-item">
-            <a href="#">
-              <div class="d-flex align-items-center position-relative">
-                <img class="img-fluid float-start rounded-circle mr10" src="/images/inbox/ms2.png"
-                  alt="ms2.png">
-                <div class="d-sm-flex">
-                  <div class="d-inline-block">
-                    <div class="fz15 fw500 dark-color ff-heading mb-0">
-                      Jacob Brown</div>
-                    <p class="preview">Head of Development
-                    </p>
-                  </div>
-                  <div class="iul_notific">
-                    <small>35 mins</small>
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
+        <!-- END ChatBox -->
+        <div />
       </div>
     </div>
-  </div>
-  <div class="col-lg-6 col-xl-7 col-xxl-8">
-    <div class="message_container mt30-md">
-      <div class="user_heading px-0 mx30">
-        <div class="wrap">
-          <img class="img-fluid mr10" src="/images/inbox/ms3.png" alt="ms3.png">
-          <div class="meta d-sm-flex justify-content-sm-between align-items-center">
-            <div class="authors">
-              <h6 class="name mb-0">Arlene McCoy</h6>
-              <p class="preview">Active</p>
-            </div>
-            <div>
-              <a class="text-decoration-underline fz14 fw500 text-red ff-heading" href="#">Delete
-                Conversation</a>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="inbox_chatting_box" style="">
-        <ul class="chatting_content">
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms4.png"
-                alt="ms4.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>How likely are you to recommend our company to your
-              friends and family?</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms5.png"
-                alt="ms5.png">
-            </div>
-            <p>Hey there, we’re just writing to let you know that
-              you’ve been subscribed to a repository on GitHub.
-            </p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms5.png"
-                alt="ms5.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>Ok, Understood!</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms5.png"
-                alt="ms5.png">
-            </div>
-            <p>The project finally complete! Let's go to!.</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>Let's go!</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>Hello, John!</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms3.png"
-                alt="ms3.png">
-            </div>
-            <p>simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms3.png"
-                alt="ms3.png">
-            </div>
-            <p>Are we meeting today?</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms3.png"
-                alt="ms3.png">
-            </div>
-            <p>The project finally complete! Let's go to!</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>Let's go!</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms3.png"
-                alt="ms3.png">
-            </div>
-            <p>Are we meeting today?</p>
-          </li>
-          <li class="reply float-end">
-            <div class="d-flex align-items-center justify-content-end mb15">
-              <div class="title fz15"><small class="mr10">35
-                  mins</small> You</div>
-              <img class="img-fluid rounded-circle align-self-end ml10" src="/images/inbox/ms3.png"
-                alt="ms3.png">
-            </div>
-            <p>The project finally complete! Let's go to!</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>Let's go!</p>
-          </li>
-          <li class="sent float-start">
-            <div class="d-flex align-items-center mb15">
-              <img class="img-fluid rounded-circle align-self-start mr10" src="/images/inbox/ms2.png"
-                alt="ms2.png">
-              <div class="title fz15">Albert Flores <small class="ml10">35 mins</small></div>
-            </div>
-            <p>simply dummy text of the printing and typesetting
-              industry. Lorem Ipsum has been the industry's</p>
-          </li>
-        </ul>
-      </div>
-      <div class="mi_text">
-        <div class="message_input">
-          <form class="d-flex align-items-center">
-            <input class="form-control" type="search" placeholder="Type a Message" aria-label="Search">
-            <button class="btn ud-btn btn-thm">Send Message<i
-                class="fal fa-arrow-right-long"></i></button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-</div>
-<!-- END ChatBox -->
-                <div />
-            </div>
-        </div>
 
-        <!-- Modal Template -->
+    <!-- Modal Template -->
 
-
-
-
-        <Footer />
-    </body>
+    <Footer />
+  </body>
 </template>
-
+ 
 <script setup>
+definePageMeta({
+  middleware: "is-logged-out",
+});
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
-
 const router = useRouter();
 const categoryData = ref([]);
 const loading = ref(false);
 const route = useRoute();
-
-definePageMeta({
-    middleware: "is-logged-out",
-});
-
-const profileModal = ref(null);
-
 const errors = ref({});
-const profilePicture = ref(null);
-const imagePreview = ref(null);
-const name = ref('');
-const email = ref('');
-const selectedProfession = ref('');
-const phone = ref('');
-const skillInput = ref('');
-const country_1 = ref('');
-const skills = ref([]);
-const professinListData = ref([]);
-const skillsError = ref('');
-let countryData = ref('');
+const orderData = ref('');
+const gigName = ref('');
+const uploadedFile = ref(null);
+const chatMessages = ref([]);
+const chatUsers = ref([]);
+const messageContent = ref('');
+const user_name = ref('');
+const chatContainer = ref(null); // Reference for the chat container
+const isUserAtBottom = ref(true); // Track if the user is at the bottom
+const senderId = ref(''); // Set this to the ID of the logged-in buyer
+const recipientId = ref(''); // The ID of the recipient (seller)
+// Send a new message
+const selUser = ref(null); // Property to store the selected user
+// Method to select a user
+const selectUserSelect = (user) => {
+  selUser.value = user.user_id; // Set the selected user
+  console.log('Selected user:', user); // Debugging purpose
+};
+// Method to handle file upload
+const handleFileUpload = (event) => {
+  uploadedFile.value = event.target.files[0]; // Store the first uploaded file
+};
 
-const myprofile = () => {
-    console.log("working....");
-    router.push('/dashboard/myprofile')
+const isImage = (fileUrl) => {
+  return fileUrl.match(/\.(jpeg|jpg|gif|png)$/) != null;
 }
 
-const getCatList = async () => {
-    try {
-        loading.value = true;
-        const response = await axios.get(`/unauthenticate/getFindCategorys`);
-        categoryData.value = response.data;
-    } catch (error) {
-        // Handle error
-    } finally {
-        loading.value = false;
+const getFileName = (fileUrl) => {
+  return fileUrl.split('/').pop(); // Extracts the file name from the URL
+}
+
+// Method to send the message
+async function sendMessage() {
+  try {
+    const formData = new FormData();
+    formData.append("senderId", senderId.value);
+    formData.append("recipientId", recipientId.value);
+    formData.append("message", messageContent.value);
+
+    // Append the file if it exists
+    if (uploadedFile.value) {
+      formData.append("files", uploadedFile.value);
     }
+
+    // Send the message using axios
+    const response = await axios.post("/chat/sendMessages", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log(response);
+
+    // Handle the response
+    fetchChatHistory(); // Refresh the chat history after sending the message
+    messageContent.value = ''; // Clear the message input
+    uploadedFile.value = null; // Clear the file input
+  } catch (error) {
+    // Handle errors
+    if (error.response && error.response.status === 422) {
+      errors.value = error.response.data.errors; // Validation errors
+    } else {
+      console.error("An error occurred:", error); // Other errors
+    }
+  }
+}
+ 
+// Automatically reload the chat history every 5 seconds
+const fetchChatHistory = async () => {
+  //loading.value = true; // Set loading to true
+  try {
+    // Fetch chat history from the server
+    const response = await axios.get('/chat/getMessages', {
+      params: {
+        sender_id: senderId.value, // ID of the logged-in buyer
+        to_id: recipientId.value // ID of the recipient (seller)
+      }
+    });
+
+    chatMessages.value = response.data.map(message => ({
+      ...message,
+      sender_name: message.sender_name || 'Unknown' // Use sender_name directly
+    }));
+
+    //messageContent.value = ''; // Clear the message input
+
+    // Scroll to the bottom if the user is at or near the bottom
+    nextTick(() => {
+      if (isUserAtBottom.value && chatContainer.value) {
+        handleScroll();
+        chatContainer.value.scrollTo({
+          top: chatContainer.value.scrollHeight,
+          behavior: 'smooth' // Smooth scrolling effect
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching chat history:', error);
+  }
+};
+
+// Track scroll position to determine if the user is at the bottom
+const handleScroll = () => {
+  if (chatContainer.value) {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainer.value;
+    isUserAtBottom.value = scrollTop + clientHeight >= scrollHeight - 10; // User is near the bottom
+  }
+};
+
+const selectedUserId = ref(null);
+async function selectUser(users) {
+  console.log("====" + users.user_id);
+  recipientId.value = users.user_id;
+  selectedUserId.value = users.id;
+  user_name.value = users.user_name;
+  fetchChatHistory();
+}
+
+// Handle sending message on form submit
+function handleSendMessage() {
+  if (messageContent.value.trim() === '') return;
+  sendMessage();
+}
+
+const showDetails = (order) => {
+  fetchChatHistory()
+  console.log(order.gig_name);
+  gigName.value = order.gig_name;
+  $('#staticBackdrop').modal('show');
+
+}
+// Function to format the date
+const formatDate = (date) => {
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  return new Date(date).toLocaleDateString(undefined, options);
+};
+
+const getCatList = async () => {
+  try {
+    const response = await axios.get(`/unauthenticate/getFindCategorys`);
+    categoryData.value = response.data;
+  } catch (error) {
+    // Handle error
+  }
 };
 
 
+const getChatusersList = async () => {
+  try {
+    const response = await axios.get(`/chat/getChatUsers`);
+    chatUsers.value = response.data;
+  } catch (error) {
+    // Handle error
+  }
+};
+const chkUserrow = async () => {
+  try {
+    loading.value = true;
+    const response = await axios.post(`/auth/me`);
+    senderId.value = response.data.user_id;
 
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  } finally {
+    loading.value = false;
+
+  }
+};
+let intervalId;
 onMounted(() => {
-    getCatList();
+  chkUserrow();
+  fetchChatHistory(); // Fetch chat history immediately
+  intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
+  // Attach scroll event listener to track user scrolling
+  if (chatContainer.value) {
+    chatContainer.value.addEventListener('scroll', handleScroll);
+    handleScroll();
+  }
+  getChatusersList();
+  fetchChatHistory();
+  getCatList();
 
+});
+
+ 
+// Clear the interval when the component is unmounted
+onBeforeUnmount(() => {
+  clearInterval(intervalId); // Stop the interval when the component is destroyed
+
+  if (chatContainer.value) {
+    chatContainer.value.removeEventListener('scroll', handleScroll);
+  }
 });
 
 </script>
 
+
+
 <style scoped>
+.message_container {
+  background-color: #ffffff;
+  border-right: 1px solid #e0e0e0;
+  overflow-y: auto;
+  width: 100%;
+  /* Fixed width for user list */
+
+}
+
+.chat-user-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  border-bottom: 1px solid #e0e0e0;
+  /* Add a bottom border for separation */
+}
+
+.chat-user-item:last-child {
+  border-bottom: none;
+  /* Remove border for the last item */
+}
+
+.chat-user-item:hover {
+  background-color: #065252;
+  /* Change background on hover */
+}
+
+.chat-user-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-user-item:hover {
+  background-color: #075e54;
+  color: white;
+}
+
+.profile-pic {
+  width: 30px;
+  /* Smaller image size */
+  height: 30px;
+  /* Smaller image size */
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.dashboard__content {
+  background-color: #f0f0f0;
+  padding: 10px 10px 10px;
+  height: 100vh;
+}
+
+
+.chat-user-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.chat-user-item {
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.chat-user-item:hover {
+  background-color: #075e54;
+  color: white;
+}
+
+
+.chat-user-item.selected {
+  background-color: #075e54;
+}
+
+
+.profile-pic {
+  width: 30px;
+  /* Smaller image size */
+  height: 30px;
+  /* Smaller image size */
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.chat-container {
+  width: 50%;
+  /* Fixed width for chat area */
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 650px;
+  flex: 1;
+  /* Takes the remaining height */
+}
+
+.card-header {
+  background-color: #075e54;
+  color: #ffffff;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.chatbox {
+  height: calc(100vh - 130px);
+  overflow-y: auto;
+  background-color: #ffffff;
+  padding: 10px;
+}
+
+.message {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.sender-message {
+  justify-content: flex-end;
+}
+
+.recipient-message {
+  justify-content: flex-start;
+}
+
+.profile-picture {
+  width: 30px;
+  /* Smaller image size */
+  height: 30px;
+  /* Smaller image size */
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.message-content {
+  max-width: 75%;
+  padding: 10px;
+  border-radius: 10px;
+  position: relative;
+  text-align: left;
+  /* Align text to the left */
+}
+
+.sender-message .message-content {
+  background-color: #dcf8c6;
+  margin-left: auto;
+}
+
+.recipient-message .message-content {
+  background-color: #f1f1f1;
+  margin-right: auto;
+}
+
+.message-text {
+  margin: 0;
+}
+
+.file-attachment {
+  margin-top: 5px;
+}
+
+.attached-image {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.file-link {
+  display: inline-block;
+  margin-top: 5px;
+  color: #075e54;
+}
+
+.timestamp {
+  font-size: 12px;
+  color: #999999;
+  margin-top: 5px;
+}
+
+.card-footer {
+  background-color: #f1f1f1;
+  padding: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+}
+
+textarea {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  resize: none;
+  padding: 10px;
+  flex: 1;
+  /* Allow textarea to take available space */
+  margin-right: 10px;
+  /* Add space between textarea and file input */
+}
+
+
+
+input[type="file"]+label {
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 8px;
+  background-color: #e1e1e1;
+  cursor: pointer;
+}
+
+.btn {
+  border-radius: 20px;
+  margin-left: 10px;
+}
+
+.right-sidebar {
+  background-color: #ffffff;
+  /* Optional: Add styles for right sidebar */
+  border-left: 1px solid #e0e0e0;
+  width: 25%;
+  /* Fixed width for right sidebar */
+  overflow-y: auto;
+  /* Allow scrolling if needed */
+}
+
+/* end message */
 .body_content {
-    padding: 100px;
+  padding: 100px;
 }
 
 @media (max-width: 991.98px) {
-    .body_content {
-        padding: 20px 20px 150px;
-    }
+  .body_content {
+    padding: 20px 20px 150px;
+  }
 }
 
 @media (max-width: 575.98px) {
-    .body_content {
-        padding: 20px 10px;
-    }
+  .body_content {
+    padding: 20px 10px;
+  }
 }
 
 .categories_list_section {
-    border-bottom: 1px solid #E9E9E9;
-    padding: 7px 0 3px;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  border-bottom: 1px solid #E9E9E9;
+  padding: 7px 0 3px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>

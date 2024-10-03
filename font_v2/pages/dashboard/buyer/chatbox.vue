@@ -61,7 +61,9 @@
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
-                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item">
+                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item"
+                  :class="['chat-user-item', { selected: selectedUserId === user.id }]" 
+                    >
                       <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
                       <span>{{ user.user_name }}</span>
                     </li>
@@ -75,13 +77,11 @@
                 <div class="card-header">
                   Chat History <span v-if="user_name">[{{ user_name }}]</span>
                 </div>
-                <div class="chatbox" id="">
+                <div class="chatbox" id="" ref="chatContainer">
                   <div class="" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
-
-                      <img
-                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
+                      <img :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
                         alt="Profile Picture" class="profile-picture" />
 
                       <div class="message-content">
@@ -157,8 +157,11 @@ const chatMessages = ref([]);
 const chatUsers = ref([]);
 const messageContent = ref('');
 const user_name = ref('');
+const chatContainer = ref(null); // Reference for the chat container
+const isUserAtBottom = ref(true); // Track if the user is at the bottom
 const senderId = ref(37); // Set this to the ID of the logged-in buyer
 const recipientId = ref(''); // The ID of the recipient (seller)
+const selectedUserId = ref(null);
 // Send a new message
 const selUser = ref(null); // Property to store the selected user
 // Method to select a user
@@ -213,12 +216,12 @@ async function sendMessage() {
     }
   }
 }
-
-// Fetch chat history
-async function fetchChatHistory() {
-  loading.value = true; // Set loading to true
+ 
+// Automatically reload the chat history every 5 seconds
+const fetchChatHistory = async () => {
+  //loading.value = true; // Set loading to true
   try {
-    // Send user_id as a query parameter
+    // Fetch chat history from the server
     const response = await axios.get('/chat/getMessages', {
       params: {
         sender_id: senderId.value, // ID of the logged-in buyer
@@ -230,23 +233,39 @@ async function fetchChatHistory() {
       ...message,
       sender_name: message.sender_name || 'Unknown' // Use sender_name directly
     }));
-    messageContent.value = ''; // Clear the message input 
+
+    //messageContent.value = ''; // Clear the message input
+
+    // Scroll to the bottom if the user is at or near the bottom
+    nextTick(() => {
+      if (isUserAtBottom.value && chatContainer.value) {
+        handleScroll();
+        chatContainer.value.scrollTo({
+          top: chatContainer.value.scrollHeight,
+          behavior: 'smooth' // Smooth scrolling effect
+        });
+      }
+    });
   } catch (error) {
     console.error('Error fetching chat history:', error);
-  } finally {
-    loading.value = false; // Set loading to false after fetching
   }
-}
+};
 
+// Track scroll position to determine if the user is at the bottom
+const handleScroll = () => {
+  if (chatContainer.value) {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainer.value;
+    isUserAtBottom.value = scrollTop + clientHeight >= scrollHeight - 10; // User is near the bottom
+  }
+};
 
 
 async function selectUser(users) {
-
   console.log("====" + users.user_id);
   recipientId.value = users.user_id;
+  selectedUserId.value = users.id;
   user_name.value = users.user_name;
   fetchChatHistory();
-
 }
 
 // Handle sending message on form submit
@@ -287,32 +306,56 @@ const getChatusersList = async () => {
   }
 };
 
-
-
-const getAllOrdersList = async () => {
-  try {
-    loading.value = true;
-    const response = await axios.get(`/order/getOrder`);
-    orderData.value = response.data;
-  } catch (error) {
-    console.log(error);
-  } finally {
-    loading.value = false;
-  }
-};
-
+let intervalId;
 onMounted(() => {
+  fetchChatHistory(); // Fetch chat history immediately
+  intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
+  // Attach scroll event listener to track user scrolling
+  if (chatContainer.value) {
+    chatContainer.value.addEventListener('scroll', handleScroll);
+    handleScroll();
+  }
   getChatusersList();
   fetchChatHistory();
   getCatList();
-  getAllOrdersList();
 
+});
+
+ 
+// Clear the interval when the component is unmounted
+onBeforeUnmount(() => {
+  clearInterval(intervalId); // Stop the interval when the component is destroyed
+
+  if (chatContainer.value) {
+    chatContainer.value.removeEventListener('scroll', handleScroll);
+  }
 });
 
 </script>
 
 
 <style scoped>
+
+.chat-user-list {
+  list-style-type: none; /* Remove default list styling */
+  padding: 0; /* Remove default padding */
+}
+
+.chat-user-item {
+  cursor: pointer; /* Change cursor to pointer */
+  padding: 10px; /* Add some padding */
+  display: flex; /* Align items */
+  align-items: center; /* Center items vertically */
+}
+
+.chat-user-item:hover {
+  background-color: #f0f0f0; /* Light gray background on hover */
+}
+
+.selected {
+  background-color: #007bff; /* Blue background for selected item */
+  color: white; /* White text for selected item */
+}
 .message_container {
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;

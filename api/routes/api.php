@@ -96,6 +96,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::get('getmlmlists', [UserController::class, 'getmlmlists']);
     Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
     Route::get('getDeposit', [UserController::class, 'getDeposit']);
     Route::post('saveDeposit', [UserController::class, 'saveDeposit']);
@@ -192,20 +193,11 @@ Route::group([
     Route::post('updateOrder', [OrderController::class, 'updateOrder']);
     Route::post('confirmOrder', [OrderController::class, 'submitOrder']);
     Route::get('getOrder', [OrderController::class, 'getOrder']);
+    Route::get('getOrderForSeller', [OrderController::class, 'getOrderForSeller']);
+    Route::get('getOrderPlaceForSeller', [OrderController::class, 'getOrderPlaceForSeller']);
     Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
-   // Route::get('orderDetails/{orderid}', [OrderController::class, 'orderDetails']);
-  //  Route::post('updateOrderStatus', [OrderController::class, 'updateOrderStatus']);
-  //  Route::get('addtowish/{slug}', [OrderController::class, 'addtowish']);
-   // Route::get('allWishList/', [OrderController::class, 'allWishList']);
-   // Route::get('removeWishList/{productid}', [OrderController::class, 'removeWishList']);
-  //  Route::get('orderStatus', [OrderController::class, 'orderStatus']);
-   // Route::get('orderStatusRow/{id}', [OrderController::class, 'orderStatusRow']);
-   // Route::post('save_order', [OrderController::class, 'save_order']);
-   // Route::get('allOrdersAdmin', [OrderController::class, 'allOrdersAdmin']);
-   // Route::post('update_order_status', [OrderController::class, 'update_order_status']);
-   // Route::post('orderTrack', [OrderController::class, 'orderTrackadd']);
-   // Route::get('orderTrackList/{orderid}', [OrderController::class, 'orderTrackaddList']);
+ 
 });
 
 Route::group(['prefix' => 'unauthenticate'], function () {

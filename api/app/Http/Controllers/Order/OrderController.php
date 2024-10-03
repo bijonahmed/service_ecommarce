@@ -16,6 +16,7 @@ use App\Models\OrderHistory;
 use App\Models\ProductCategory;
 use App\Models\CategoryCommissionHistory;
 use App\Models\couponUseHistory;
+use App\Models\Gig;
 use App\Models\ordersProduct;
 use App\Models\productwarrantyhistory;
 use App\Models\trackingModel;
@@ -107,57 +108,153 @@ class OrderController extends Controller
         return $randomNumber;
     }
 
-
-    public function getOrderPlace(){
+    public function getOrderPlace()
+    {
 
         $data = Order::where('buyerId', $this->userid)
-        ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
-        ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
-        ->where('orders.order_status',1)
-        ->get();
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->where('orders.order_status', 1)
+            ->get();
 
-    $orders = [];
-    foreach ($data as $v) {
+        $orders = [];
+        foreach ($data as $v) {
 
-        $convDay = $v->delivery_day_convert_date;
-        $currentDateTime = Carbon::now();
-        $deliveryDateTime = Carbon::parse($convDay);
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
 
-        if ($deliveryDateTime->isPast()) {
-            $formattedTime = "Time Over";
-        } else {
-            // Calculate the difference
-            $remainingTime = $currentDateTime->diff($deliveryDateTime);
+            if ($deliveryDateTime->isPast()) {
+                $formattedTime = "Time Over";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
 
-            // Format the remaining time
-            $formattedTime = sprintf(
-                '%d days, %d hours, %d minutes, %d seconds',
-                $remainingTime->days,
-                $remainingTime->h,
-                $remainingTime->i,
-                $remainingTime->s // Include seconds if you want to show them
-            );
+                // Format the remaining time
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'user_id'           => $v->user_id,
+                'gig_name'          => $v->gig_name,
+                'created_at'        => $v->created_at,
+                'selected_price'    => $v->selected_price,
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
         }
 
-        $orders[] = [
-            'id'                => $v->id,
-            'orderId'           => $v->orderId,
-            'gig_slug'          => $v->gig_slug,
-            'user_id'           => $v->user_id,
-            'gig_name'          => $v->gig_name,
-            'created_at'        => $v->created_at,
-            'selected_price'    => $v->selected_price,
-            'selected_packages' => $v->selected_packages,
-            'order_status'      => $v->order_status,
-            'reamingitime'      => $formattedTime,
-
-        ];
+        return response()->json($orders, 200);
     }
 
-    return response()->json($orders, 200);
+    public function getOrderPlaceForSeller()
+    {
 
+        $data = Order::where('sellerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->where('orders.order_status', 1)
+            ->get();
 
+        $orders = [];
+        foreach ($data as $v) {
 
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
+
+            if ($deliveryDateTime->isPast()) {
+                $formattedTime = "Time Over";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
+
+                // Format the remaining time
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'user_id'           => $v->user_id,
+                'gig_name'          => $v->gig_name,
+                'created_at'        => $v->created_at,
+                'selected_price'    => $v->selected_price,
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
+        }
+
+        return response()->json($orders, 200);
+    }
+
+    public function getOrderForSeller()
+    {
+
+        $data = Order::where('sellerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->get();
+
+        $orders = [];
+        foreach ($data as $v) {
+
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
+
+            if ($deliveryDateTime->isPast()) {
+                $formattedTime = "Time Over";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
+
+                // Format the remaining time
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'user_id'           => $v->user_id,
+                'gig_name'          => $v->gig_name,
+                'created_at'        => $v->created_at,
+                'selected_price'    => $v->selected_price,
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
+        }
+
+        return response()->json($orders, 200);
     }
 
     public function getOrder()
@@ -252,7 +349,10 @@ class OrderController extends Controller
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $chkSeller = Gig::where('id', $request->gig_id)->select('user_id')->first();
+
         $gig_id                 = $request->gig_id;
+        $seller_id              = $chkSeller->user_id ? $chkSeller->user_id : "";
         $fullname               = $request->fullname;
         $email_address          = $request->email_address;
         $billing_address        = $request->billing_address;
@@ -267,6 +367,7 @@ class OrderController extends Controller
         // Create an array with the necessary fields
         $orderData = [
             'gig_id'              => $gig_id,
+            'sellerId'            => $seller_id,
             'fullname'            => $fullname,
             'email_address'       => $email_address,
             'buyerId'             => $this->userid,

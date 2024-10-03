@@ -46,6 +46,37 @@ class UserController extends Controller
         }
     }
 
+    public function getmlmlists()
+    {
+
+
+        $filterData = User::where('join_id', $this->userid)->where('status', 1)->get();
+        $rdata = [];
+        foreach ($filterData as $v) {
+            $chkupline = User::where('id', $v->join_id)->first();
+            $rdata[] = [
+                'userId'            => $v->id,
+                'registerDate'      => !empty($v->created_at) ? date("d-m-Y", strtotime($v->created_at)) : "",
+                'upline'            => !empty($chkupline) ? $chkupline->name : "",
+                'name'              => $v->name,
+            ];
+        }
+
+        try {
+
+            $response = [
+                'data' => $rdata,
+                'message' => 'success'
+            ];
+        } catch (\Throwable $th) {
+            $response = [
+                'data' => [],
+                'message' => 'failed'
+            ];
+        }
+        return response()->json($response, 200);
+    }
+
     public function allProfessionList()
     {
 
@@ -488,21 +519,21 @@ class UserController extends Controller
     public function checkDepositBalance()
     {
 
-    $orderAmount = Order::where('buyerId', $this->userid)
-                  ->where('order_status', 1)
-                  ->sum('selected_price');
-    
-    $depositAmt = Deposit::where('user_id', $this->userid)
-                  ->where('status', 1)
-                  ->sum('deposit_amount');
-    try {
-        // Calculate the deposit amount
-        $data['depositAmount'] = abs($depositAmt - $orderAmount);
-       
-        return response()->json($data);
-    } catch (\Exception $e) {
-        return response()->json(['message' => 'Failed Please try again later.'], 500);
-    }
+        $orderAmount = Order::where('buyerId', $this->userid)
+            ->where('order_status', 1)
+            ->sum('selected_price');
+
+        $depositAmt = Deposit::where('user_id', $this->userid)
+            ->where('status', 1)
+            ->sum('deposit_amount');
+        try {
+            // Calculate the deposit amount
+            $data['depositAmount'] = abs($depositAmt - $orderAmount);
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed Please try again later.'], 500);
+        }
     }
 
     public function saveDeposit(Request $request)

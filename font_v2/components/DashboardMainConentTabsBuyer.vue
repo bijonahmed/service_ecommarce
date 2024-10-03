@@ -331,26 +331,17 @@ onBeforeUnmount(() => {
 .order-list {
   display: flex;
   flex-wrap: wrap;
-  /* Allow cards to wrap on smaller screens */
   justify-content: space-between;
-  /* Evenly space the cards */
   padding: 20px;
-  /* Add padding around the order list */
 }
 
 .card {
   width: calc(50% - 15px);
-  /* 2 cards per row with spacing */
   margin-bottom: 20px;
-  /* Space below each card */
   border-radius: 10px;
-  /* Rounded corners */
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  /* Subtle shadow for depth */
   transition: transform 0.3s, box-shadow 0.3s;
-  /* Smooth transition for hover effects */
   background-color: #ffffff;
-  /* White background for the card */
 }
 
 .card:hover {

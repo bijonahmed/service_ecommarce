@@ -32,10 +32,12 @@
                         <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
                             In!</nuxt-link></p>
                       </div>
+                      <div v-if="slug_error" class="error">{{ slug_error.slugerror }}</div>
                       <div class="mb2">
                         <label class="form-label fw500 dark-color">Name</label>
-                        <input type="text" class="form-control" placeholder="Jons" v-model="name">
+                        <input type="text" class="form-control" placeholder="Jons" v-model="name" @blur="validateName">
                         <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                        <div v-if="nameError" class="error">{{ nameError }}</div>
                       </div>
                       <div class="mb2">
 
@@ -86,7 +88,8 @@
                           }}</span>
                       </div>
                       <div class="d-grid mb20">
-                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit">Create
+                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
+                          v-if="!hasInvalidChars && !isEmailFormat">Create
                           Account <i class="fal fa-arrow-right-long"></i></button>
                       </div>
                     </div>
@@ -182,7 +185,31 @@ async function sendCode() {
     }
   }
 }
+let nameError = ref('');
 
+
+// Computed property to check if name is in email format
+const isEmailFormat = computed(() => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(name.value); // Return true if name is in email format
+});
+
+// Computed property to check for invalid characters
+const hasInvalidChars = computed(() => {
+  const invalidCharsRegex = /[@\-~!#$%^&*()_+=]/; // Define invalid characters
+  return invalidCharsRegex.test(name.value); // Return true if invalid characters are present
+});
+
+// Method to validate name
+const validateName = () => {
+  if (isEmailFormat.value) {
+    nameError.value = "Email addresses are not allowed. Please enter a valid name.";
+  } else if (hasInvalidChars.value) {
+    nameError.value = "The name contains invalid characters. Please enter a valid name.";
+  } else {
+    nameError.value = ""; // Clear the error if the name is valid
+  }
+};
 const register = async () => {
   loading.value = true;
   try {

@@ -231,6 +231,7 @@ class AuthController extends Controller
             $response['profName']     = !empty($chkProfession) ? $chkProfession->name : "";
             $response['invite_code']  = !empty($user) ? $user->invite_code : "";
             $response['github']       = !empty($user->github) ? $user->github : "";
+            $response['user_id']      = !empty($user->id) ? $user->id : "";
             $response['profession_name']  = !empty($user) ? $user->profession_name : "";
             if (isset($user->twitter) && $user->twitter !== null) {
                 $response['twitter'] = !empty($user->twitter) ? $user->twitter : "";
