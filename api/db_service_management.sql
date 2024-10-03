@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2024 at 03:19 PM
+-- Generation Time: Oct 03, 2024 at 09:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -1263,7 +1263,7 @@ INSERT INTO `gig` (`id`, `user_id`, `category_id`, `subcategory_id`, `insubcateg
 (46, 2, 1, NULL, NULL, 'I will make modern design ', 'i-will-make-modern-design--109', '/backend/gig/g-23.jpg', '2', 'English', 'Fluent', 'About\n\nIt is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.\n\nServices I provide:\n\n1) Website Design\n\n2) Mobile App Design\n\n3) Brochure Design\n\n4) Business Card Design\n\n5) Flyer Design\n\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).', 400.00, 2, 15.00, '150', NULL, NULL, NULL, NULL, 4, NULL, 600.00, NULL, 5, NULL, 1, '2024-09-27 08:53:44', '2024-09-27 08:53:44'),
 (59, 2, 1, 24, NULL, 'I will do it make comptuer', 'i-will-do-it-make-comptuer', '/backend/gig/UprMpZ3hYvbSkk4IdxZL.jpg', '1', 'English', '1', 'Gig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Descriptionsdf', 5000.00, 600, 15.00, '150', NULL, NULL, NULL, NULL, 4, NULL, 600.00, NULL, 5, NULL, 1, '2024-09-29 11:56:29', '2024-09-29 11:56:29'),
 (60, 15, 1, 24, NULL, 'Testing gig', 'testing-gig', '/backend/gig/MxGz5mNX3TlqTzWPIiqw.jpg', '2', 'English', '1', 'Gig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description', 111.00, 2333, 15.00, '150', NULL, NULL, NULL, NULL, 4, NULL, 600.00, NULL, 5, NULL, 1, '2024-09-29 12:38:06', '2024-09-29 12:38:06'),
-(61, 2, 1, 24, 121, 'Do website......', 'do-website', '/backend/gig/zQrrirXyf6tEAB5T4Mcx.jpg', '2', 'English', '1', '<p><strong>Gig DescriptionGig</strong> DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description JOBS</p>', 522.00, 5, 15.00, '150', 4, 'Yes', 150.00, 'Short Description:Short Description:Short Description:Short Description:', 4, 'Yes', 600.00, 'Short Description', 5, 'Yes', 1, '2024-09-29 12:47:54', '2024-09-30 06:58:18');
+(61, 20, 1, 24, 121, 'Do website......', 'do-website', '/backend/gig/zQrrirXyf6tEAB5T4Mcx.jpg', '2', 'English', '1', '<p><strong>Gig DescriptionGig</strong> DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig DescriptionGig Description JOBS</p>', 522.00, 5, 15.00, '150', 4, 'Yes', 150.00, 'Short Description:Short Description:Short Description:Short Description:', 4, 'Yes', 600.00, 'Short Description', 5, 'Yes', 1, '2024-09-29 12:47:54', '2024-09-30 06:58:18');
 
 -- --------------------------------------------------------
 
@@ -1383,7 +1383,50 @@ INSERT INTO `messages` (`id`, `user_id`, `to_id`, `sender_id`, `message`, `files
 (38, 37, 15, 37, 'dfdfdd', NULL, '2024-10-02 11:49:31', '2024-10-02 11:49:31'),
 (39, 37, 15, 37, 'dfgdfgdfgdfg', NULL, '2024-10-02 11:49:39', '2024-10-02 11:49:39'),
 (40, 37, 2, 37, 'dfgdfgdfgdfg', '/backend/files/1727870037.jpg', '2024-10-02 11:53:57', '2024-10-02 11:53:57'),
-(41, 37, 2, 37, 'ZIP', '/backend/files/1727871011.zip', '2024-10-02 12:10:11', '2024-10-02 12:10:11');
+(41, 37, 2, 37, 'ZIP', '/backend/files/1727871011.zip', '2024-10-02 12:10:11', '2024-10-02 12:10:11'),
+(42, 2, 37, 2, 'Yes boss', NULL, '2024-10-03 02:45:45', '2024-10-03 02:45:45'),
+(43, 2, 37, 2, 'ssss', NULL, '2024-10-03 02:46:18', '2024-10-03 02:46:18'),
+(44, 2, 37, 2, 'Bijon How are you', NULL, '2024-10-03 02:49:36', '2024-10-03 02:49:36'),
+(45, 37, 2, 37, 'Yes sir I\"m good', NULL, '2024-10-03 02:49:53', '2024-10-03 02:49:53'),
+(46, 2, 37, 2, 'I\"m Bijon', NULL, '2024-10-03 02:55:41', '2024-10-03 02:55:41'),
+(47, 2, 37, 2, 'Hollow mr. ripon how are you', NULL, '2024-10-03 02:55:54', '2024-10-03 02:55:54'),
+(48, 2, 37, 2, 'hgh', NULL, '2024-10-03 02:57:21', '2024-10-03 02:57:21'),
+(49, 2, 37, 2, 'good', NULL, '2024-10-03 02:57:27', '2024-10-03 02:57:27'),
+(50, 2, 37, 2, 'sdddddddddddddd', NULL, '2024-10-03 02:59:59', '2024-10-03 02:59:59'),
+(51, 2, 37, 2, 'ssss', NULL, '2024-10-03 03:07:22', '2024-10-03 03:07:22'),
+(52, 2, 37, 2, 'sssss', NULL, '2024-10-03 03:07:27', '2024-10-03 03:07:27'),
+(53, 2, 37, 2, '1111111111111111111111100000000000', NULL, '2024-10-03 03:07:37', '2024-10-03 03:07:37'),
+(54, 2, 37, 2, 'gggggggg', NULL, '2024-10-03 03:10:50', '2024-10-03 03:10:50'),
+(55, 2, 37, 2, 'ssdfsdfsdf', NULL, '2024-10-03 03:16:42', '2024-10-03 03:16:42'),
+(56, 2, 37, 2, 'dddd', NULL, '2024-10-03 03:16:51', '2024-10-03 03:16:51'),
+(57, 2, 37, 2, 'Jan', NULL, '2024-10-03 03:17:00', '2024-10-03 03:17:00'),
+(58, 2, 37, 2, 'Rana How are you', NULL, '2024-10-03 03:17:06', '2024-10-03 03:17:06'),
+(59, 2, 37, 2, 'Yes adsfasdfsdafsdf', NULL, '2024-10-03 03:17:42', '2024-10-03 03:17:42'),
+(60, 2, 37, 2, 'ddddddddddddd', '/backend/files/1727925469.jpg', '2024-10-03 03:17:49', '2024-10-03 03:17:49'),
+(61, 2, 37, 2, 'Files', NULL, '2024-10-03 03:18:33', '2024-10-03 03:18:33'),
+(62, 2, 37, 2, 'Files', '/backend/files/1727925528.zip', '2024-10-03 03:18:48', '2024-10-03 03:18:48'),
+(63, 2, 37, 2, 'vvff', NULL, '2024-10-03 03:30:17', '2024-10-03 03:30:17'),
+(64, 2, 37, 2, 'gggg', NULL, '2024-10-03 03:30:38', '2024-10-03 03:30:38'),
+(65, 2, 37, 2, 'tumi ki sei ager motoi valos', NULL, '2024-10-03 04:10:13', '2024-10-03 04:10:13'),
+(66, 2, 37, 2, 'asdf', NULL, '2024-10-03 04:19:07', '2024-10-03 04:19:07'),
+(67, 2, 37, 2, 'jons123', NULL, '2024-10-03 04:19:20', '2024-10-03 04:19:20'),
+(68, 2, 37, 2, 'vfvffffgggg', NULL, '2024-10-03 04:26:48', '2024-10-03 04:26:48'),
+(69, 2, 37, 2, 'hhhhhhhhhhhhhhhhhhhhhhhhh', NULL, '2024-10-03 04:26:59', '2024-10-03 04:26:59'),
+(70, 2, 37, 2, 'sdfsdfsdsdf', NULL, '2024-10-03 04:28:43', '2024-10-03 04:28:43'),
+(71, 2, 37, 2, 'bbbbb', NULL, '2024-10-03 04:28:50', '2024-10-03 04:28:50'),
+(72, 2, 37, 2, 'jobs', NULL, '2024-10-03 04:33:17', '2024-10-03 04:33:17'),
+(73, 2, 37, 2, 'fdffff', NULL, '2024-10-03 04:34:42', '2024-10-03 04:34:42'),
+(74, 2, 37, 2, 'jobs', NULL, '2024-10-03 04:34:57', '2024-10-03 04:34:57'),
+(75, 37, 2, 37, 'Real Messages', NULL, '2024-10-03 04:35:10', '2024-10-03 04:35:10'),
+(76, 2, 37, 2, 'jobsssssss', '/backend/files/1727930567.jpg', '2024-10-03 04:42:47', '2024-10-03 04:42:47'),
+(77, 37, 2, 37, 'Hello Mir.', NULL, '2024-10-03 04:44:13', '2024-10-03 04:44:13'),
+(78, 2, 37, 2, 'Yes', NULL, '2024-10-03 04:44:22', '2024-10-03 04:44:22'),
+(79, 37, 2, 37, 'come to me', NULL, '2024-10-03 04:44:34', '2024-10-03 04:44:34'),
+(80, 2, 37, 2, 'Okay', NULL, '2024-10-03 04:44:48', '2024-10-03 04:44:48'),
+(81, 37, 20, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-03 04:50:56', '2024-10-03 04:50:56'),
+(82, 37, 20, 37, 'Hi Julia I\'m Mr. Bijon Ahmed', NULL, '2024-10-03 04:51:25', '2024-10-03 04:51:25'),
+(83, 37, 2, 37, 'Okay', NULL, '2024-10-03 04:57:53', '2024-10-03 04:57:53'),
+(84, 37, 15, 37, 'asdfsdfsdf', NULL, '2024-10-03 04:58:07', '2024-10-03 04:58:07');
 
 -- --------------------------------------------------------
 
@@ -1418,6 +1461,7 @@ CREATE TABLE `orders` (
   `orderId` varchar(255) NOT NULL,
   `gig_id` int(11) DEFAULT NULL,
   `buyerId` int(11) DEFAULT NULL,
+  `sellerId` int(11) DEFAULT NULL,
   `fullname` varchar(255) DEFAULT NULL,
   `email_address` varchar(255) DEFAULT NULL,
   `billing_address` varchar(255) DEFAULT NULL,
@@ -1438,12 +1482,13 @@ CREATE TABLE `orders` (
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `fullname`, `email_address`, `billing_address`, `card_number`, `expiration_date`, `cvc`, `selected_packages`, `selected_price`, `delivery_day`, `delivery_day_convert_date`, `order_status`, `return_status`, `created_at`, `updated_at`) VALUES
-(1, '3786416-24', 1, 37, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 3, '2024-10-05 08:10:30', '2', '', '2024-10-01 11:22:37', '2024-10-02 12:48:42'),
-(2, '3789875-24', 1, 37, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 2, '2024-10-04 02:47:59', '1', '', '2024-10-01 11:31:30', '2024-10-01 17:31:30'),
-(3, '3783698-24', 61, 37, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Standart', '150', 4, '2024-10-06 08:10:46', '1', '', '2024-10-01 11:40:58', '2024-10-01 17:40:58'),
-(4, '3763470-24', 61, 37, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '100', 6, '2024-10-08 08:10:51', '1', '', '2024-10-01 11:41:21', '2024-10-01 17:41:21'),
-(5, '2094616-24', 61, 20, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '15', NULL, NULL, '1', '', '2024-10-01 22:53:07', '2024-10-02 04:53:07');
+INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `fullname`, `email_address`, `billing_address`, `card_number`, `expiration_date`, `cvc`, `selected_packages`, `selected_price`, `delivery_day`, `delivery_day_convert_date`, `order_status`, `return_status`, `created_at`, `updated_at`) VALUES
+(1, '3786416-24', 1, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 3, '2024-10-05 08:10:30', '3', '', '2024-10-01 11:22:37', '2024-10-02 12:48:42'),
+(2, '3789875-24', 1, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 2, '2024-10-04 02:47:59', '1', '', '2024-10-01 11:31:30', '2024-10-01 17:31:30'),
+(3, '3783698-24', 61, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Standart', '150', 4, '2024-10-06 08:10:46', '3', '', '2024-10-01 11:40:58', '2024-10-01 17:40:58'),
+(4, '3763470-24', 61, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '100', 6, '2024-10-08 08:10:51', '1', '', '2024-10-01 11:41:21', '2024-10-01 17:41:21'),
+(5, '2094616-24', 61, 20, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '15', NULL, NULL, '1', '', '2024-10-01 22:53:07', '2024-10-02 04:53:07'),
+(6, '3724701-24', 61, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Standart', '150', NULL, NULL, '1', '', '2024-10-02 08:47:23', '2024-10-02 14:47:23');
 
 -- --------------------------------------------------------
 
@@ -3005,7 +3050,9 @@ INSERT INTO `tasks` (`id`, `title`, `description`, `project_id`, `emp_id`, `type
 --
 
 CREATE TABLE `tbl_setting` (
+  `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
+  `forSellerCommission` int(11) DEFAULT NULL,
   `deposit_service_charge` int(11) DEFAULT NULL COMMENT '%',
   `convert_php_amt` float DEFAULT NULL,
   `withdraw_service_charge` int(11) DEFAULT NULL COMMENT '%',
@@ -3052,8 +3099,8 @@ CREATE TABLE `tbl_setting` (
 -- Dumping data for table `tbl_setting`
 --
 
-INSERT INTO `tbl_setting` (`name`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `setting_id`) VALUES
-('TRADING', 0, 64, 6, 10, 5, 10, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '<p><strong>Cancellation / Return / Exchange Policy.</strong></p><p>We offer a minimum of 18 day returns guarantee on all our items and 30 day return on eligible items. If you are not completely satisfied with your item you may return the items to the seller, within the stipulated return period for a refund (&ldquo;money back guaranteed&rdquo;). Please, ensure you obtain a proof of return postage as items being returned are the responsibility of the customer until the items reach the seller. Refunds will take approximately 5 &ndash; 7 working days for the process once the goods have arrived to the seller. Sometimes it might take up to 30 days but in rare cases if you paid using credit card but in exceptional cases. We always advise payments are made through PayPal. Returned Items must be in their original packaging, and intact to avoid breakage in transit. . In the interest of hygiene, returns on earrings, cosmetics and underwear may not be accepted at any time. Swimwear may not be returned if the hygiene seal is broken. We guarantee to refund unworn or unwashed items when you return it in re-sellable condition,.</p><p><strong>Non-Returnable Items</strong></p><p>We don&rsquo;t accept returns for items such as food unless of course they&rsquo;re faulty. Our website and catalogue clearly show which items are excluded. If you&rsquo;re returning an electrical item, it must be unused and in its original sealed packaging.</p>', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', 1);
+INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `setting_id`) VALUES
+(1, 'TRADING', 20, 0, 64, 6, 10, 5, 10, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '<p><strong>Cancellation / Return / Exchange Policy.</strong></p><p>We offer a minimum of 18 day returns guarantee on all our items and 30 day return on eligible items. If you are not completely satisfied with your item you may return the items to the seller, within the stipulated return period for a refund (&ldquo;money back guaranteed&rdquo;). Please, ensure you obtain a proof of return postage as items being returned are the responsibility of the customer until the items reach the seller. Refunds will take approximately 5 &ndash; 7 working days for the process once the goods have arrived to the seller. Sometimes it might take up to 30 days but in rare cases if you paid using credit card but in exceptional cases. We always advise payments are made through PayPal. Returned Items must be in their original packaging, and intact to avoid breakage in transit. . In the interest of hygiene, returns on earrings, cosmetics and underwear may not be accepted at any time. Swimwear may not be returned if the hygiene seal is broken. We guarantee to refund unworn or unwashed items when you return it in re-sellable condition,.</p><p><strong>Non-Returnable Items</strong></p><p>We don&rsquo;t accept returns for items such as food unless of course they&rsquo;re faulty. Our website and catalogue clearly show which items are excluded. If you&rsquo;re returning an electrical item, it must be unused and in its original sealed packaging.</p>', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', 1);
 
 -- --------------------------------------------------------
 
@@ -3128,7 +3175,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `slug`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `introduce_yourself`, `business_return_email`, `landmark_2`, `landmark_1`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
 (1, 1, NULL, NULL, NULL, 75, 2, 'admin', 'admin', NULL, NULL, 'admin@gmail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', 'null', '', 'School road, mohakhali, Dhaka', '23', NULL, 'Banani, Mohakhali, Dhaka', '', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'admin', NULL, '$2a$12$w3Sd7LSp69CLMh.xMEcXoux6NAwPlS2xqZAFsTg328wwSQH4g97Lu', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, NULL, NULL),
-(2, 2, NULL, '1702800790', NULL, 90, 2, 'BIjon Ahmed', 'bijon-ahmed', '', '', 'bijon@gmail.com', '/backend/files/tHHFwZOJHI333EHXmdPq.jpg', '019999999', '', '', '23', '', '', 'null', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', '', '', NULL, NULL, NULL, NULL, NULL, '', '', '', '1', '', '', '16', '', '', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', '', '', '', NULL, '123456', NULL, '$2y$10$cIElrgVTgwhP9dVxRfhrp./EZf3t8QPUGox1fUPAOc581IQijGigC', NULL, 1, '2023-12-17 02:13:10', '2024-10-01 02:15:07', 1, 1, NULL, '', ''),
+(2, 2, NULL, '1702800790', NULL, 105, 2, 'BIjon Ahmed', 'bijon-ahmed', '', '', 'bijon@gmail.com', '/backend/files/tHHFwZOJHI333EHXmdPq.jpg', '019999999', '', '', '23', '', '', 'null', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', 'https://web.whatsapp.com/', '', '', NULL, NULL, NULL, NULL, NULL, '', '', '', '1', '', '', '16', '', '', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', '', '', '', NULL, '123456', NULL, '$2y$10$cIElrgVTgwhP9dVxRfhrp./EZf3t8QPUGox1fUPAOc581IQijGigC', NULL, 1, '2023-12-17 02:13:10', '2024-10-01 02:15:07', 1, 1, NULL, '', ''),
 (5, 2, NULL, NULL, NULL, NULL, NULL, 'Bazaar BD', 'bazaar-bd', 'Abc', 'def', 'Bazaarbd@gmail.com', '/backend/files/blog-2.jpg', '03425556466', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'abc', 'abc', 'abc', '23456', 'asdfghj', 'asdfg', NULL, NULL, NULL, 'seller1@gmail.com', 'seller1@gmail.com', 'Web Developer', 'asdf', NULL, NULL, NULL, NULL, NULL, 'asdfg', 'seller1@gmail.com', '/backend/files/EDvQZKC6a4FZBXw0gI2a.png', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:42:22', '2024-03-05 06:26:18', 1, 0, 1, NULL, NULL),
 (6, 2, NULL, NULL, NULL, NULL, NULL, 'Amar Deal', 'amar-deal', 'sdrftg', 'asdfbg', 'amardeal@gmail.com', '/backend/files/blog-3.jpg', '34567', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'asdfg', 'asdfg', 'asdfg', 'wsedfg', 'asdfg', 'asdfg', NULL, NULL, NULL, 'seller4@gmail.com', 'asdfg', 'Web Developer', 'asdfg', NULL, NULL, NULL, NULL, NULL, 'asdfg', 'sdf', '/backend/files/cDhWwsPMaLbbXgM2Ci08.jpg', 'password', NULL, '$2a$12$WRVu59xu0s710awg21ETnO2hb9ZYiQxo9LTu2ue7A4bgdoGsbpllK', NULL, NULL, '2024-01-27 03:53:59', '2024-09-22 14:21:06', 1, 0, 1, NULL, NULL),
 (7, 2, NULL, '1706591702', NULL, 15, 2, 'Ahmed1', 'ahmed1', NULL, NULL, 'Ahmed1@GMAIL.COM', '/backend/files/blog-4.jpg', NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Web Developer', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ahmed1@GMAIL.COM', NULL, '$2y$10$1rNkkkIAklVZQJzPbD8KhuHDcGR8DL1OB.gKno0eeNRsr9MlgFrae', NULL, NULL, '2024-01-30 05:15:03', '2024-01-30 05:15:03', 1, 0, NULL, NULL, NULL),
@@ -3155,7 +3202,10 @@ INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, 
 (34, 2, NULL, '1727515359', 0, NULL, 0, 'ibraheem', 'ibraheem', NULL, NULL, 'ibraheem@gmail.com', NULL, NULL, NULL, NULL, 'Bangladesh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'ibraheem', NULL, '$2y$10$85kIrlJ7R031BXcS/jeZCeOC4B/CDiiC1F0CCuENBbn8V26hBe8E6', NULL, NULL, '2024-09-28 03:22:39', '2024-09-28 03:22:39', 1, 0, NULL, NULL, NULL),
 (35, 2, NULL, '1727515503', 0, NULL, 0, 'Fahim', 'fahim', NULL, NULL, 'fahim@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'fahim@gmail.com', NULL, '$2y$10$VLYpfovgmMCFXOAaKRpaBubo6eGC1g2TOrxpzBK.zXOsD1FjfA5Zu', NULL, NULL, '2024-09-28 03:25:03', '2024-09-28 03:25:03', 1, 0, NULL, NULL, NULL),
 (36, 2, NULL, '1727584943', 0, NULL, 2, 'Mr. Shuvo', 'mr.-shuvo', NULL, NULL, 'shuvo@gmail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'shuvo@gmail.com', NULL, '$2y$10$3v.s7coXmYUlUjPX8iGK6eq00Bx2wbt5Z5jYh5QVTQG7xYYCJNpE6', NULL, NULL, '2024-09-28 22:42:23', '2024-09-28 22:42:23', 1, 0, NULL, NULL, NULL),
-(37, 3, NULL, '1727755584', 0, NULL, 0, 'BIjon Ahmed-1', 'bijon-ahmed-1', NULL, NULL, 'buyer@gmail.com', '/backend/files/mddBRDMpr50v0QWHhwk1.jpg', '01915728982', NULL, NULL, '12', NULL, NULL, NULL, 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, '55', NULL, NULL, 'As a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.<br />\r\n<br />\r\nAs a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.As a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.', NULL, NULL, NULL, NULL, NULL, NULL, 'buyer@gmail.com', NULL, '$2a$12$5MrL2.7MyozH6XccswiqNOAH7j.z9i1K6kEHiu.U4A7tGIecD86O.', NULL, NULL, '2024-09-30 22:06:24', '2024-09-30 22:06:24', 1, 1, NULL, NULL, NULL);
+(37, 3, NULL, '1727755584', 0, NULL, 0, 'BIjon Ahmed-1', 'bijon-ahmed-1', NULL, NULL, 'buyer@gmail.com', '/backend/files/mddBRDMpr50v0QWHhwk1.jpg', '01915728982', NULL, NULL, '12', NULL, NULL, NULL, 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, '55', NULL, NULL, 'As a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.<br />\r\n<br />\r\nAs a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.As a buyer, I am looking for transparent communication, exceptional customer service, and a seamless purchasing experience. I appreciate vendors who provide detailed product descriptions, customer reviews, and reliable support throughout the buying process.', NULL, NULL, NULL, NULL, NULL, NULL, 'buyer@gmail.com', NULL, '$2a$12$5MrL2.7MyozH6XccswiqNOAH7j.z9i1K6kEHiu.U4A7tGIecD86O.', NULL, NULL, '2024-09-30 22:06:24', '2024-09-30 22:06:24', 1, 1, NULL, NULL, NULL),
+(38, 2, NULL, '1727931991', 0, NULL, 2, 'Test1', 'test1', NULL, NULL, 'test1@gmail.com', NULL, NULL, NULL, NULL, '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test1@gmail.com', NULL, '$2y$10$pmAT6LXFaSjOWleCqbMDr.tSRHKk7BQ01MOjpI3ozYMiS4w4Z/SrO', NULL, NULL, '2024-10-02 23:06:31', '2024-10-02 23:06:31', 1, 0, NULL, NULL, NULL),
+(39, 2, NULL, '1727932358', 0, NULL, 2, 'test2', 'test2', NULL, NULL, 'test2@gmail.com', NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test2@gmail.com', NULL, '$2y$10$B02qQ4FK6YcjApYjaeA/mOqJFjHHRFSHh9ilWxALYyjDwv5z/r8.6', NULL, NULL, '2024-10-02 23:12:38', '2024-10-02 23:12:38', 1, 0, NULL, NULL, NULL),
+(40, 2, NULL, '1727932385', 0, NULL, 2, 'test3', 'test3', NULL, NULL, 'test3@gmail.com', NULL, NULL, NULL, NULL, '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test3@gmail.com', NULL, '$2y$10$/8jlsH3DDMwtLkk3naJUKOI7RHRbUtbH2FHNus74AKozb4VDi3x5.', NULL, NULL, '2024-10-02 23:13:06', '2024-10-02 23:13:06', 1, 0, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3543,7 +3593,7 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3555,7 +3605,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `orders_product`
@@ -3669,7 +3719,7 @@ ALTER TABLE `tbl_setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `wishlist`

@@ -31,6 +31,12 @@
                   class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders</button>
             </li>
             <li class="nav-item" role="presentation">
+              <button class="nav-link fw500 dark-color" @click="myearning" aria-selected="false"><i
+                  class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Earning </button>
+            </li>
+
+
+            <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="mysetting" aria-selected="false"><i class="fa fa-cogs"
                   aria-hidden="true"></i>&nbsp;Setting</button>
             </li>
@@ -91,7 +97,8 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
-
+                      <h3> My Total Earning: ${{ earning }}</h3> <nuxt-link to="/dashboard/earning">Details Earning Summary</nuxt-link>
+                      <hr/>
                       <ShareProfileLink />
                       <hr>
                       <h4 class="widget-title">My Skills</h4>
@@ -238,6 +245,7 @@ const countryName = ref('');
 const profName = ref('');
 const introduce_yourself = ref('');
 const profileLogo = ref('');
+const earning = ref('');
 const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
@@ -278,9 +286,19 @@ const mysetting = () => {
 const myorders = () => {
   router.push('/dashboard/orders')
 }
+
+
+const myearning = () => {
+  router.push('/dashboard/earning')
+}
+
 const mygig = () => {
   router.push('/dashboard/mygig/giglist')
 }
+
+
+
+
 
 const getExperience = async () => {
   try {
@@ -346,10 +364,25 @@ const getmlmList = async () => {
   }
 };
 
+
+const freelancerEarning = async () => {
+    try {
+      loading.value = true;
+      const response = await axios.get(`/order/getOrderForSellerEarning`);
+      earning.value = response.data.earning;
+    } catch (error) {
+      console.log(error);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  
 let intervalId = null;
 intervalId = setInterval(getAllOrdersList, 10000); // Set interval for 10 seconds
 onMounted(() => {
   getmlmList();
+  freelancerEarning();
   getAllOrdersList();
   getCertificates();
   getExperience();

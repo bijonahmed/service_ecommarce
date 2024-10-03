@@ -54,6 +54,7 @@
         </section>
 
         <div class="container">
+          <h3>Total Amount is : {{totalAmt}}</h3>
           <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
             <div class="packages_table table-responsive">
               <table class="table-style1 table at-savesearch">
@@ -160,6 +161,7 @@ const loading = ref(false);
 const route = useRoute();
 const errors = ref({});
 const orderData = ref('');
+const totalAmt = ref(0);
 const gigName = ref('');
 const orderId = ref('');
 
@@ -235,7 +237,8 @@ const getAllOrdersList = async () => {
   try {
     loading.value = true;
     const response = await axios.get(`/order/getOrder`);
-    orderData.value = response.data;
+    orderData.value = response.data.orders;
+    totalAmt.value = response.data.totalAmt;
   } catch (error) {
     console.log(error);
   } finally {

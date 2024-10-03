@@ -63,10 +63,10 @@
                         <span id="WrongCaptchaError" class="error">{{ captchaError }}</span>
                         <span class="text-danger">{{ errors.userCapInput }}</span>
                       </div>
-
+<!-- 
                       <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
                         <a class="fz14 ff-heading" href="#">Lost your password?</a>
-                      </div>
+                      </div> -->
 
                       <div class="d-grid mb20">
                         <button class="ud-btn btn-thm default-box-shadow2" type="submit">Login</button>

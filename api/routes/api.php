@@ -195,6 +195,7 @@ Route::group([
     Route::get('getOrder', [OrderController::class, 'getOrder']);
     Route::get('getOrderForSeller', [OrderController::class, 'getOrderForSeller']);
     Route::get('getOrderPlaceForSeller', [OrderController::class, 'getOrderPlaceForSeller']);
+    Route::get('getOrderForSellerEarning', [OrderController::class, 'getOrderForSellerEarning']);
     Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
  

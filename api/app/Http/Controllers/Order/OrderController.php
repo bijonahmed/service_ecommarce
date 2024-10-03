@@ -21,6 +21,7 @@ use App\Models\ordersProduct;
 use App\Models\productwarrantyhistory;
 use App\Models\trackingModel;
 use App\Models\WishList;
+use DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 
@@ -158,6 +159,78 @@ class OrderController extends Controller
         return response()->json($orders, 200);
     }
 
+
+
+
+
+    public function getOrderForSellerEarning()
+    {
+
+        $data = Order::where('sellerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->where('orders.order_status', 3)
+            ->get();
+
+        $orders = [];
+        $earning = 0;
+        foreach ($data as $v) {
+
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
+
+            if ($deliveryDateTime->isPast()) {
+                $formattedTime = "Time Over";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
+
+                // Format the remaining time
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $row             = DB::table('tbl_setting')->where('id', 1)->first();
+            $percentage      = $row->forSellerCommission; // Convert to float
+            $selectedPrice   = $v->selected_price; // Convert to float
+            $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
+            $originalPrice   = $v->selected_price; // Ensure selected_packages is also a float
+            $perResult       = floatval($perResult); // Ensure $perResult is a float
+            $result          =  $originalPrice - $perResult; // This will work without error
+            $earning += $result;
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'user_id'           => $v->user_id,
+                'gig_name'          => $v->gig_name,
+                'created_at'        => $v->created_at,
+                //'selected_price'    => "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result",
+                'selected_price'    => "$result",
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
+        }
+
+        $rdata['earning'] = $earning;
+        $rdata['orders']  = $orders;
+
+        return response()->json($rdata, 200);
+    }
+
+
+
+
+
     public function getOrderPlaceForSeller()
     {
 
@@ -266,6 +339,7 @@ class OrderController extends Controller
             ->get();
 
         $orders = [];
+        $totalAmt = 0;
         foreach ($data as $v) {
 
             $convDay = $v->delivery_day_convert_date;
@@ -287,7 +361,7 @@ class OrderController extends Controller
                     $remainingTime->s // Include seconds if you want to show them
                 );
             }
-
+            $totalAmt+= $v->selected_price; 
             $orders[] = [
                 'id'                => $v->id,
                 'orderId'           => $v->orderId,
@@ -303,7 +377,11 @@ class OrderController extends Controller
             ];
         }
 
-        return response()->json($orders, 200);
+
+        $rdata['totalAmt']  =$totalAmt;
+        $rdata['orders']    =$orders;
+
+        return response()->json($rdata, 200);
     }
 
     public function updateOrder(Request $request)

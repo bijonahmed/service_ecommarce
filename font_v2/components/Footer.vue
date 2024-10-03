@@ -45,8 +45,8 @@
                       <a href="#">Careers</a>
                       <a href="#">Press & News</a>
                       <a href="#">Partnerships</a>
-                      <a href="#">Privacy Policy</a>
-                      <a href="#">Terms of Service</a>
+                      <nuxt-link to="/privacy-and-policy">Privacy Policy</nuxt-link>
+                      <nuxt-link to="/terms-and-condition">Terms and condiitionb Policy</nuxt-link>
                       <a href="#">Investor Relations</a>
                     </div>
                   </div>
@@ -73,8 +73,8 @@
                     <ul class="ps-0">
                       <li><a href="#">Help & Support</a></li>
                       <li><a href="#">Trust & Safety</a></li>
-                      <li><a href="#">Selling on Freeio</a></li>
-                      <li><a href="#">Buying on Freeio</a></li>
+                      <li><nuxt-link to="/selling-on-isumax">Selling on isumax</nuxt-link></li>
+                      <li><nuxt-link to="/buying-on-isumax">Buying on isumax</nuxt-link></li>
                     </ul>
                   </div>
                 </div>
