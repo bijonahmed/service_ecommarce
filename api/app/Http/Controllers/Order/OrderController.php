@@ -159,10 +159,6 @@ class OrderController extends Controller
         return response()->json($orders, 200);
     }
 
-
-
-
-
     public function getOrderForSellerEarning()
     {
 
@@ -227,10 +223,6 @@ class OrderController extends Controller
         return response()->json($rdata, 200);
     }
 
-
-
-
-
     public function getOrderPlaceForSeller()
     {
 
@@ -279,6 +271,59 @@ class OrderController extends Controller
         }
 
         return response()->json($orders, 200);
+    }
+
+
+    public function allOrders(){
+
+
+        $data = Order::join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->get();
+
+        $orders = [];
+        foreach ($data as $v) {
+
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
+
+            if ($deliveryDateTime->isPast()) {
+                $formattedTime = "Time Over";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $seller = User::where('id',$v->sellerId)->first();
+            $buyer = User::where('id',$v->buyerId)->first();
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'seller'            => !empty($seller) ? $seller->name : "",
+                'buyer'             => !empty($buyer) ? $buyer->name : "---",
+                'created_at'        => !empty($v->created_at) ? date("d-M-Y",strtotime($v->created_at)) : "",
+                'selected_price'    => $v->selected_price,
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
+        }
+
+        return response()->json($orders, 200);
+
+
+
     }
 
     public function getOrderForSeller()
@@ -361,7 +406,7 @@ class OrderController extends Controller
                     $remainingTime->s // Include seconds if you want to show them
                 );
             }
-            $totalAmt+= $v->selected_price; 
+            $totalAmt += $v->selected_price;
             $orders[] = [
                 'id'                => $v->id,
                 'orderId'           => $v->orderId,
@@ -377,9 +422,8 @@ class OrderController extends Controller
             ];
         }
 
-
-        $rdata['totalAmt']  =$totalAmt;
-        $rdata['orders']    =$orders;
+        $rdata['totalAmt']  = $totalAmt;
+        $rdata['orders']    = $orders;
 
         return response()->json($rdata, 200);
     }

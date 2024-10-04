@@ -26,6 +26,7 @@ class User extends Authenticatable implements JWTSubject
     'show_password',
     'profession_name',
     'invite_code',
+    'ref_id',
     'userType',
     'join_id',
     'business_logo',

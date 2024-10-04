@@ -1,71 +1,91 @@
 <template>
-  <div class="row justify-content-center mt-5">
-      <div class="col-6">
-          <div class="card">
-              <div class="card-header">
-                  Create an account
-              </div>
-              <div class="card-body">
-                  <form @submit.prevent="registerUser">
-                      <div class="form-group mb-3">
-                          <label for="">Your name </label>
-                          <input type="text" v-model="registerForm.name" class="form-control" name="name" placeholder="Enter email" :class="{ 'is-invalid': registerForm.errors.has('name') }">
-                          <has-error :form="registerForm" field="name"></has-error>
-                      </div>
-                      <div class="form-group mb-3">
-                          <label for="">Your email </label>
-                          <input type="text" v-model="registerForm.email" class="form-control" name="email" placeholder="Enter email" :class="{ 'is-invalid': registerForm.errors.has('email') }">
-                          <has-error :form="registerForm" field="email"></has-error>
-                      </div>
-                      <div class="form-group mb-3">
-                          <label for="">Your Password</label>
-                          <input type="password" v-model="registerForm.password" class="form-control" name="password" placeholder="Enter password" :class="{ 'is-invalid': registerForm.errors.has('password') }">
-                          <has-error :form="registerForm" field="password"></has-error>
-                      </div>
-                      <div class="form-group d-flex justify-content-between align-items-center">
-                          <button type="submit" class="btn btn-success">Create an account</button>
-                          <nuxt-link :to="{ name: 'login' }">Account Login</nuxt-link>
-                      </div>
-                  </form>
-              </div>
-          </div>
-      </div>
-  </div>
+    <AdminLayout>
+        <div class="h-screen w-full flex justify-center">
+            <div class="lg:pt-7 pt-3 lg:px-12 px-6 lg:w-2/3 w-full lg:min-w-[800px]">
+                <main class="w-full">
+                    <div class="w-full md:max-w-[550px] max-w-[360px] mx-auto">
+                        <div class="mt-10">
+                            <h1 class="lg:text-5xl text-3xl text-center font-extrabold">
+                                Create your account
+                            </h1>
+
+                            <form class="mt-12" @submit.prevent="register()">
+                                <div>
+                                    <TextInput placeholder="Username" v-model:input="name" inputType="text"
+                                        :error="errors && errors.name ? errors.name[0] : ''" />
+                                </div>
+
+                                <div class="mt-4">
+                                    <TextInput placeholder="Email: link@gmail.com" v-model:input="email"
+                                        inputType="email" :error="errors && errors.email ? errors.email[0] : ''" />
+                                </div>
+
+                                <div class="mt-4">
+                                    <TextInput placeholder="Password" v-model:input="password" inputType="password"
+                                        :error="errors && errors.password ? errors.password[0] : ''" />
+                                </div>
+
+                                <div class="mt-4">
+                                    <TextInput placeholder="Confirm Password" v-model:input="confirmPassword"
+                                        inputType="password" />
+                                </div>
+
+                                <div class="mt-10">
+                                    <button type="submit" class="rounded-full w-full p-3 font-bold"
+                                        :disabled="(!name || !email || !password || !confirmPassword)"
+                                        :class="(name && email && password && confirmPassword) ?
+                                        'bg-[#8228D9] hover:bg-[#6c21b3] text-white' :
+                                        'bg-[#EFF0EB] text-[#A7AAA2]'">
+                                        Create account
+                                    </button>
+                                </div>
+                            </form>
+
+                            <div class="text-[14px] text-center pt-12">
+                                Already have an account?
+                                <NuxtLink to="/" class="text-[#8228D9] underline">
+                                    Log in
+                                </NuxtLink>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </AdminLayout>
 </template>
 
-<script>
-export default {
-  auth: 'guest',
-  data(){
-      return {
-          registerForm: this.$vform({
-              name: '',
-              email: '',
-              password: '',
-          }),
-      }
-  },
-  methods: {
-      async registerUser() {
-          try {
-              let data = await this.registerForm.post('/auth/register');
+<script setup>
+    import { useUserStore } from '~~/stores/user';
+    import AdminLayout from '~/layouts/AdminLayout.vue';
+    const router = useRouter()
+    const userStore = useUserStore()
 
-              await this.$auth.setUserToken(data.access_token);
-              
-              this.$toast.success({
-                  title: 'Success!',
-                  message: 'Registration Successful',
-              });
-              
-              this.registerForm.reset();
-          } catch (err) {
-              console.log(err)
-          }
-      }
-  }
-}
+    definePageMeta({
+        middleware: 'is-logged-in'
+
+    })
+
+    let name = ref(null)
+    let email = ref(null)
+    let password = ref(null)
+    let confirmPassword = ref(null)
+    let errors = ref(null)
+
+    const register = async () => {
+        errors.value = null
+
+        try {
+            await userStore.register(
+                name.value,
+                email.value,
+                password.value,
+                confirmPassword.value
+            )
+            router.push('/')
+        } catch (error) {
+            console.log(error)
+            errors.value = error.response.data.errors
+        }
+    }
 </script>
-
-<style>
-
-</style>

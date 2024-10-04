@@ -1,178 +1,316 @@
 <template>
-<div>
-    <!--start page wrapper -->
-    <div class="page-wrapper">
-        <div class="page-content">
-            <!--breadcrumb-->
-            <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-                <div class="ps-3">
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb mb-0 p-0">
-                            <li class="breadcrumb-item">
-                                <router-link to="/"><a href="javascript:;"><i class="bx bx-home-alt"></i></a></router-link>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Order List</li>
-                        </ol>
-                    </nav>
+    <title>Order List</title>
+    <div>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <p>Order List</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item">
+                                    <LazyNuxtLink to="/admin/dashboard">Dashboard</LazyNuxtLink>
+                                </li>
+                                
+                            </ol>
+                        </div>
+                    </div>
                 </div>
+            </section>
 
-            </div>
-            <!--end breadcrumb-->
-            <!-- <span class="loader"></span> -->
-            <div class="card">
-                <div class="card-body">
+            <section class="content">
+                <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md-10">
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control name" placeholder="Order ID" v-model="searchQuery.orderId" @input="handleSearch">
-                            </div>
-                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-lg-8 col-md-8 col-sm-12 mb-2">
+                                    <input type="text" v-model="searchQuery" class="form-control"
+                                        placeholder="Search Name" />
+                                </div>
 
-                        <div class="col-md-2">
-                            <div class="input-group mb-3">
-                                <button class="btn btn-primary w-100" type="button" @click="fetchData">Search</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div style="display: none;" class="customerSpinner">
-                        <div class="d-flex justify-content-center">
-                            <div class="spinner-border" role="status">
-                                <span class="visually-hidden">Loading...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table table-hover table-sm">
-                            <thead>
-                                <tr>
+                                <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
+                                    <select v-model="selectedFilter" class="form-control" @change="filterData">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                </div>
 
-                                    <th>OrderId</th>
-                                    <th>Order Date</th>
-                                    <th>Total</th>
-                                    <th class="text-center">Status</th>
-                                    <th class="text-center">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="item in paginatedData" :key="item.id">
-                                    <td>{{ item.orderId }}</td>
-                                    <td>{{ item.placeOn }} </td>
-                                    <td>{{ item.total }}</td>
-                                    <td class="text-center">{{ item.name }}</td>
-                                    <td>
+                                <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
+                                    <button @click="filterData()" class="btn btn-primary w-100">Filter</button>
+                                </div>
+                            </div>
+
+                            <br />
+
+                            <div class="card">
+                                <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                                    <Loader />
+                                </div>
+                                <div class="card-body">
+                                    <div>
+
+                                        <table class="table w-100 table-wrapper">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-left">OrderID</th>
+                                                    <th class="text-left">Date</th>
+                                                    <th class="text-left">Buyer Name</th>
+                                                    <th class="text-left">Seller Name</th>
+                                                    <th class="text-left">Package </th>
+                                                    <th class="text-left">Price</th>
+                                                    <th class="text-left">Status</th>
+                                                    <!-- <th class="text-left">Action</th> -->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr v-for="item in productdata" :key="item.id">
+                                                    <td class="text-left">{{ item.orderId }}</td>
+                                                    <td class="text-left">{{ item.created_at }}</td>
+                                                    <td class="text-left">{{ item.buyer }}</td>
+                                                    <td class="text-left">{{ item.seller }}</td>
+                                                    <td class="text-left"> {{ item.selected_packages }}</td>
+                                                    <td class="text-left">${{ item.selected_price }}</td>
+                                                    <td class="text-left">
+                                                        {{ getOrderStatus(item.order_status) }}
+                                                    </td>
+                                                     
+                                                </tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr>
+                                                    <th class="text-left">OrderID</th>
+                                                    <th class="text-left">Date</th>
+                                                    <th class="text-left">Buyer Name</th>
+                                                    <th class="text-left">Seller Name</th>
+                                                    <th class="text-left">Package </th>
+                                                    <th class="text-left">Price</th>
+                                                    <th class="text-left">Status</th>
+                                                    <!-- <th class="text-left">Action</th> -->
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+
                                         <center>
-                                            <button type="button" class="btn btn-warning bg-history-light" @click="edit(item.orderId)"><i class="bx bx-edit"></i></button>
+                                            <div class="pagination" style="text-align: center">
+                                                <button :disabled="currentPage === 1" @click="fetchData(currentPage - 1)">
+                                                    Previous
+                                                </button>
+                                                <template v-for="pageNumber in displayedPages" :key="pageNumber">
+                                                    <button @click="fetchData(pageNumber)">
+                                                        {{ pageNumber }}
+                                                    </button>
+                                                </template>
+                                                <button :disabled="currentPage === totalPages"
+                                                    @click="fetchData(currentPage + 1)">
+                                                    Next
+                                                </button>
+                                            </div>
                                         </center>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="pagenation">
-                        <div style="text-align: right;">
-                            <button @click="previousPage" :disabled="currentPage === 1" class="btn btn-primary btn-sm">
-                                <center><i class="lni lni-angle-double-left"></i></center>
-                            </button>
-                            <span>Page {{ currentPage }} of {{ totalPages }}</span>
-                            <button @click="nextPage" :disabled="currentPage === totalPages" class="btn btn-primary btn-sm">
-                                <center><i class="lni lni-angle-double-right"></i></center>
-                            </button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     </div>
-    <!--end page wrapper -->
-</div>
 </template>
 
-<script>
-import _ from 'lodash';
-export default {
-    head: {
-        title: 'Order List',
-    },
-    data() {
-        return {
-            data: [],
-            searchQuery: {
-                name: '',
-                orderId: '',
-                total: '',
-                status: 1
+<script setup>
+import { ref, watch, onMounted } from "vue";
+import axios from "axios";
+definePageMeta({
+    middleware: 'is-logged-out',
+    title: 'Admin' // Set your desired page title here
+
+})
+const router = useRouter();
+const loading = ref(false);
+const currentPage = ref(1);
+const pageSize = 10;
+const totalRecords = ref(0);
+const totalPages = ref(0);
+const productdata = ref([]);
+const searchQuery = ref(""); // Add a ref for the search query
+const selectedFilter = ref(1); // Add a ref for the search query
+const getOrderStatus = (status) => {
+  switch (status) {
+    case "1":
+      return "Order Placed";
+    case "2":
+      return "Completed";
+    case "3":
+      return "Delivered";
+    case "4":
+      return "Review";
+    case "5":
+      return "Order Cancelled";
+    default:
+      return "Unknown";
+  }
+}
+const fetchData = async (page) => {
+    try {
+        loading.value = true;
+        const response = await axios.get(`/order/allOrders`, {
+            params: {
+                page: page,
+                pageSize: pageSize,
+                searchQuery: searchQuery.value, // Pass the search query parameter
+                selectedFilter: selectedFilter.value, // Pass the search query parameter
             },
-            searchQueryPhone: '',
-            currentPage: 1,
-            perPage: 10, // Number of items per page
-        };
-    },
-    async mounted() {
-        await this.fetchData();
-    },
-    computed: {
-        totalPages() {
-            return Math.ceil(this.filteredData.length / this.perPage);
-        },
-        filteredData() {
-            let result = this.data;
-            if (this.searchQuery.orderId) {
-                result = result.filter(item =>
-                    item.orderId.toLowerCase().includes(this.searchQuery.orderId.toLowerCase())
-                );
-            }
-            return result;
-        },
+        });
+        productdata.value = response.data;
+        totalRecords.value = response.data.total_records;
+        totalPages.value = response.data.total_pages;
+        currentPage.value = response.data.current_page;
+    } catch (error) {
+        // Handle error
+    } finally {
+        loading.value = false;
+    }
+};
 
-        paginatedData() {
-            const startIndex = (this.currentPage - 1) * this.perPage;
-            return _.slice(this.filteredData, startIndex, startIndex + this.perPage);
-        },
-    },
-    methods: {
-        async fetchData() {
-            $(".customerSpinner").show();
-            try {
-                const response = await this.$axios.get(`/order/allOrdersAdmin`);
-                console.log("order" + response.data.orderdata);
+onMounted(() => {
+    fetchData(currentPage.value);
+});
 
-                this.data = response.data.orderdata.reverse();
-                $(".customerSpinner").hide();
-            } catch (error) {
-                console.error(error);
-            }
-        },
-        handleSearch() {
-            this.currentPage = 1;
-        },
-        previousPage() {
-            this.currentPage--;
-        },
-        nextPage() {
-            this.currentPage++;
-        },
+// Watch for changes in current page and fetch data accordingly
+watch(currentPage, (newPage) => {
+    fetchData(newPage);
+});
 
-        edit(orderId) {
-            this.$router.push({
-                path: '/orders/details',
-                query: {
-                    orderId: orderId
-                }
-            })
+// Define a method to handle editing
+const edit = (id) => {
 
+    router.push({
+        path: '/usermanagement/useredit',
+        query: {
+            parameter: id
         }
-    },
+    });
+    // Your logic for editing goes here
+    console.log('Editing item with id:', id);
+};
+
+// Define a method to handle editing
+const changePass = (id) => {
+
+    router.push({
+        path: '/usermanagement/changePassword',
+        query: {
+            parameter: id
+        }
+    });
+    // Your logic for editing goes here
+    console.log('Change Password id:', id);
+};
+
+// Define a method to handle deleting
+const deleteProduct = (id) => {
+    // Your logic for deleting goes here
+    console.log('Deleting item with id:', id);
+};
+
+// Define a method to handle previewing
+const preview = (id) => {
+    router.push({
+        path: '/products/preview',
+        query: {
+            parameter: id
+        }
+    });
+    console.log('Previewing item with id:', id);
+};
+
+// Compute the range of displayed pages
+const displayedPages = computed(() => {
+    const maxDisplayedPages = 10; // Maximum number of displayed pages
+    const startPage = Math.max(
+        1,
+        currentPage.value - Math.floor(maxDisplayedPages / 2)
+    );
+    const endPage = Math.min(
+        totalPages.value,
+        startPage + maxDisplayedPages - 1
+    );
+    return Array.from(
+        { length: endPage - startPage + 1 },
+        (_, i) => startPage + i
+    );
+});
+
+const filterData = () => {
+    fetchData(1); // Reset to first page when search query changes
 };
 </script>
 
-<style scoped>
-.pagenation {
-    margin-top: 10px;
+<style>
+.pagination {
+    display: inline-block;
+    text-align: center;
 }
 
-.pagination {
-    /*! display: flex; */
-    padding-left: 0;
-    list-style: none
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #2f2f2f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
-</style>
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button[disabled] {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.5rem;
+}
+
+.btnSize {
+    font-size: 12px;
+    padding: 3px;
+}
+
+/* Table */
+.table-wrapper {
+    width: 100%;
+    /* max-width: 500px; */
+    overflow-x: auto;
+}
+
+.table td,
+.table th {
+    padding: .2rem;
+    vertical-align: top;
+    border-top: 1px solid #dae2ea;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 1px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: rgb(221, 221, 221);
+}</style>

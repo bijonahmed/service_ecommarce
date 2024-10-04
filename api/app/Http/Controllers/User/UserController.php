@@ -23,13 +23,17 @@ use App\Models\BlogModel;
 use App\Models\blogCategory;
 use App\Models\Certificate;
 use App\Models\Profession;
-use App\Models\Courses;
+use App\Models\Setting;
 use App\Models\Gig;
+use Illuminate\Http\JsonResponse;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Skills;
 use App\Models\Deposit;
 use App\Models\Order;
+use App\Models\Notification;
+use App\Models\Withdraw;
+
 
 class UserController extends Controller
 {
@@ -43,7 +47,70 @@ class UserController extends Controller
         if (!empty($id)) {
             $user = User::find($id->id);
             $this->userid = $user->id;
+            $this->email = $user->email;
         }
+    }
+
+    public function dashboardCounting()
+    {
+        $user_row = User::find($this->userid);
+        $data['total_deposit']  = Deposit::where('status', 1)->count();
+        $data['total_withdraw'] = Withdraw::where('status', 1)->count();
+        $data['total_users']    = User::where('role_id', 2)->where('status', 1)->count();
+        $data['total_products'] =0;
+        $data['user_name']      = !empty($user_row->name) ? $user_row->name: "" ;
+       
+        return response()->json($data);
+    }
+
+    public function deleteNotification($id)
+    {
+
+        $manualAdjustment = Notification::find($id);
+        if ($manualAdjustment) {
+            // Delete the record
+            $manualAdjustment->delete();
+        }
+        $response = [
+            'message' => 'Successfully delete.',
+        ];
+        return response()->json($response);
+    }
+
+
+    public function getNotifications(Request $request)
+    {
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        // Get search query from the request
+        $searchQuery    = $request->searchQuery;
+        $selectedFilter = (int)$request->selectedFilter;
+        // dd($selectedFilter);
+        $query = Notification::orderBy('id', 'desc');
+
+        if ($searchQuery !== null) {
+            //$query->where('users.email', 'like', '%' . $searchQuery . '%');
+            $query->where('notification.name', $searchQuery);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            return [
+                'id'            => $item->id,
+                'name'          => substr($item->name, 0, 250),
+                'created_at'  => date("Y-M-d H:i:s", strtotime($item->created_at)), //$item->created_at,
+            ];
+        });
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
     }
 
     public function getmlmlists()
@@ -201,22 +268,6 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-    public function AllUsersList(Request $request)
-    {
-        try {
-            $rows = User::allUseers($request->all());
-            $response = [
-                'data' => $rows,
-                'message' => 'success'
-            ];
-        } catch (\Throwable $th) {
-            $response = [
-                'data' => [],
-                'message' => 'failed'
-            ];
-        }
-        return response()->json($response, 200);
-    }
 
     public function allemployeeType(Request $request)
     {
@@ -960,4 +1011,431 @@ class UserController extends Controller
         $response = "Password successfully changed!";
         return response()->json($response);
     }
+    // MLM Query 
+
+
+    public function checkmlmHistorys(Request $request){
+
+        $email    = $request->email; //$request->email;
+
+        $chkUser  = User::where('email', $email)->first();
+        $userId   = !empty($chkUser->id) ? $chkUser->id : "";
+
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL1->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL2->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level2_ids       = $checkL2->pluck('id')->toArray();
+
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL3->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+
+        $level3_ids = $checkL3->pluck('id')->toArray();
+
+        $data['level_1']        = $checkL1;
+        $data['level_2']        = $checkL2;
+        $data['level_3']        = $checkL3;
+        $data['level_1_count']  = count($checkL1);
+        $data['level_2_count']  = count($checkL2);
+        $data['level_3_count']  = count($checkL3);
+        $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
+        return response()->json($data);
+
+
+    }
+    public function checkLevelHistorys(Request $request)
+    {
+
+        $email    = $this->email; //$request->email;
+        $chkUser  = User::where('email', $email)->first();
+        $userId   = $chkUser->id;
+
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL1->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL2->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level2_ids       = $checkL2->pluck('id')->toArray();
+
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL3->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+
+        $level3_ids = $checkL3->pluck('id')->toArray();
+
+        $data['level_1']        = $checkL1;
+        $data['level_2']        = $checkL2;
+        $data['level_3']        = $checkL3;
+        $data['level_1_count']  = count($checkL1);
+        $data['level_2_count']  = count($checkL2);
+        $data['level_3_count']  = count($checkL3);
+        $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
+        return response()->json($data);
+    }
+
+    public function checkLevelHistory()
+    {
+
+        $userId           = $this->userid;
+
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL1->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL2->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+
+        $level2_ids       = $checkL2->pluck('id')->toArray();
+
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL3->transform(function ($item) {
+            $gloabl_setting   = Setting::find(1);
+            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
+            return $item;
+        });
+        $level3_ids       = $checkL3->pluck('id')->toArray();
+
+        $data['level_1']  = $checkL1;
+        $data['level_2']  = $checkL2;
+        $data['level_3']  = $checkL3;
+        $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
+
+        return response()->json($data);
+    }
+
+    public function getLevelDetails()
+    {
+
+        $userId           = $this->userid;
+        $checkL1          = User::where('join_id', $userId)->select('id', 'ocn_id', 'name', 'email', 'created_at', 'join_id')->get();
+
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level2_ids       = $checkL2->pluck('id')->toArray();
+
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level3_ids       = $checkL3->pluck('id')->toArray();
+
+        $data['level_1']  = count($level1_ids);
+        $data['level_2']  = count($level2_ids);
+        $data['level_3']  = count($level3_ids);
+        $data['levels']   = $checkL1;
+        $data['numberOfperson']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
+        $gloabl_setting   = Setting::find(1);
+        $data['levelBonus'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
+
+        // total referral earning
+
+        $team_1 = count($level1_ids) * $gloabl_setting->level_1_bonus;
+        $team_2 = count($level2_ids) * $gloabl_setting->level_2_bonus;
+        $team_3 = count($level3_ids) * $gloabl_setting->level_3_bonus;
+        $data['total_referal_warnings'] = $team_1 + $team_2 + $team_3;
+        return response()->json($data);
+    }
+
+
+
+
+    public function AllUsersList(Request $request)
+    {
+
+        $page          = $request->input('page', 1);
+        $selectedRole  = $request->input('selectedRole');
+        $selectedStatus = $request->input('selectedStatus');
+        $pageSize     = $request->input('pageSize', 10);
+        // Get search query from the request
+        $searchQuery    = $request->searchQuery;
+        $selectedFilter = (int)$request->selectedFilter;
+        // dd($selectedFilter);
+        $query = User::orderBy('users.id', 'desc')
+            ->join('rule', 'users.role_id', '=', 'rule.id')
+            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
+        if ($searchQuery !== null) {
+            //$query->where('users.email', 'like', '%' . $searchQuery . '%');
+            $query->where('users.email', $searchQuery);
+        }
+
+        if ($selectedStatus !== null) {
+            $query->where('users.status', $selectedStatus);
+        }
+        $query->where('users.role_id', $selectedRole);
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            $telegram       = !empty($item->telegram) ? $item->telegram : "None";
+            $phone          = !empty($item->phone_number) ? $item->phone_number : "";
+            $whtsapp        = !empty($item->whtsapp) ? $item->whtsapp : "None";
+            $status         = $item->status == 1  ? 'Active' : "Inactive";
+            $ref_id         = !empty($item->join_id) ? $item->join_id : ""; //$item->ref_id == 1  ? 'Active' : "None";
+            $chkInviteUser  = User::where('id', $item->join_id)->select('name', 'phone_number', 'email')->first();
+            $registerIP     = $item->register_ip;
+            $ipdat = @json_decode(file_get_contents(
+                "http://www.geoplugin.net/json.gp?ip=" . $registerIP
+            ));
+
+            return [
+                'id'            => $item->id,
+                'name'          => substr($item->name, 0, 250),
+                'rulename'      => substr($item->rulename, 0, 250),
+                'userInfo_1'    => "Name:" . $item->name,
+                'userInfo_2'    => "Phone:" . $phone,
+                'userInfo_3'    => "Email:" . $item->email,
+                'userInfo_4'    => "Telegram:" . $telegram,
+                'userInfo_5'    => "WhatsApp:" . $whtsapp,
+                'invite_user_1' =>  !empty($chkInviteUser->name) ? $chkInviteUser->name : "", //  "i --6658656656",//!empty("Name:" . $chkInviteUser) ? "Name:" . !empty($chkInviteUser->name) : "-",
+                'invite_user_2' =>  !empty($chkInviteUser->phone_number) ? $chkInviteUser->phone_number : "",
+                '', //!empty("Cell Phone:" . $chkInviteUser) ? "Cell Phone:" . $chkInviteUser->phone_number : "-",
+                'invite_user_3' => !empty($chkInviteUser->email) ? $chkInviteUser->email : "",
+                '', //!empty("Email:" . $chkInviteUser) ? "Email:" . !empty($chkInviteUser->email) : "",
+                'email'         => $item->email,
+                'register_ip'   => $item->register_ip,
+                'lastlogin_ip'  => $item->lastlogin_ip,
+
+                'register_country'   => !empty($ipdat->geoplugin_countryName) ? $ipdat->geoplugin_countryName : "",
+                'lastlogin_country'  => !empty($item->lastlogin_country) ?: "",
+
+                'created_at'  => date("Y-M-d H:i:s", strtotime($item->created_at)), //$item->created_at,
+                'updated_at'  => date("Y-M-d H:i:s", strtotime($item->updated_at)), //$item->updated_at,
+
+                'phone_number'  => $item->phone_number,
+                'show_password' => $item->show_password,
+                'status'        => $status,
+            ];
+        });
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
+    }
+
+
+
+    public function findUserDetails(Request $request)
+    {
+
+        $userid = $request->id;
+
+        $item   = User::join('rule', 'users.role_id', '=', 'rule.id')
+            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename')
+            ->where('users.id', $request->id)
+            ->first();
+
+        $setting    = Setting::where('id', 1)->first();
+
+        $order_data = Order::where('sellerId', $request->id)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id')
+            ->select('orders.*', 'gig.name as gig_title')
+            ->get();
+
+        $orders = [];
+        $priceSum = 0;
+        foreach ($order_data as $v) {
+
+            if($v->order_status ==3){
+                $priceSum+= $v->selected_price;
+            }
+           // echo "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result";
+            $orders[] = [
+                'id'                 => $v->id,
+                'orderId'            => $v->orderId,
+                'gig_title'          => $v->gig_title,
+                'fullname'           => $v->fullname,
+                'selected_packages'  => $v->selected_packages,
+                'selected_price'     => $v->selected_price,
+                'delivery_day'       => $v->delivery_day,
+                'order_status'       => $v->order_status
+            ];
+        }
+         $percentage      = $setting->forSellerCommission; // Convert to float
+         $selectedPrice   = $priceSum; // Convert to float
+         $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
+         $originalPrice   = $priceSum; // Ensure selected_packages is also a float
+         $perResult       = floatval($perResult); // Ensure $perResult is a float
+         $earning         =  $originalPrice - $perResult; // This will work without error
+
+
+        $telegram       = !empty($item->telegram) ? $item->telegram : "None";
+        $phone          = !empty($item->phone_number) ? $item->phone_number : "";
+        $whatsapp       = !empty($item->whatsapp) ? $item->whatsapp : "None";
+        $status         = $item->status == 1 ? 'Active' : "None";
+        $ref_id         = !empty($item->ref_id) ? $item->ref_id : "";
+        $chkInviteUser  = User::where('id', $ref_id)->select('name', 'phone_number', 'email')->first();
+        $registerIP     = $item->register_ip;
+        $ipdat          = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $registerIP));
+
+        if (!function_exists('convertScientificToDecimal')) {
+            function convertScientificToDecimal($value)
+            {
+                // Check if the value is in scientific notation
+                if (stripos($value, 'e') !== false) {
+                    list($base, $exponent) = explode('e', strtolower($value));
+                    // Calculate the number of decimal places
+                    $decimals = abs((int)$exponent);
+                    $number = bcmul($base, bcpow(10, $exponent, $decimals + strlen($base)));
+                    return rtrim(rtrim($number, '0'), '.');
+                }
+                return $value;
+            }
+        }
+
+        $data = [
+            'user_id'    => $item->id,
+            'name'       => substr($item->name, 0, 250),
+            'rulename'   => substr($item->rulename, 0, 250),
+            'userInfo_1' => $item->name,
+            'userInfo_2' => $phone,
+            'userInfo_3' => $item->email,
+            'userInfo_4' => $telegram,
+            'userInfo_5' => $whatsapp,
+            'invite_user_1' => !empty($chkInviteUser->name) ? $chkInviteUser->name : "",
+            'invite_user_2' => !empty($chkInviteUser->phone_number) ? $chkInviteUser->phone_number : "",
+            'invite_user_3' => !empty($chkInviteUser->email) ? $chkInviteUser->email : "",
+            'email'         => $item->email,
+            'register_ip'   => $item->register_ip,
+            'lastlogin_ip'  => $item->lastlogin_ip,
+            'register_country'  => isset($ipdat->geoplugin_countryName) ? $ipdat->geoplugin_countryName : "",
+            'lastlogin_country' => $item->lastlogin_country,
+            'created_at'        => date("Y-M-d H:i:s", strtotime($item->created_at)),
+            'updated_at'        => date("Y-M-d H:i:s", strtotime($item->updated_at)),
+            'phone_number'      => $item->phone_number,
+            'show_password'     => $item->show_password,
+            'u_details_user_id'  => $item->id,
+            'forSellerCommission' => $setting->forSellerCommission,
+            'u_details_kyc'     => !empty($item->doc_file) ? url($item->doc_file) : "",
+            'status'            => $status,
+            'total_success_deposit'       => 0,
+            'total_success_withdraw'      => 0,
+
+            'total_airdrop'               => 0,
+            'total_profit'                => $earning,
+            'total_commission'            => 0,
+
+            'total_expense'               => 0,
+            'register_bonus'              => 0,
+            'adj_type_sum'                => 0,
+            'adj_type_minus'              => 0,
+            // 'swap_tran'                   => $swaptran,
+        ];
+
+        $data['orders'] = $orders;
+        // dd($data);
+        return response()->json($data);
+    }
+
+
+    public function getComissionReport($userId)
+    {
+        $setting = Setting::find(1);
+        // echo "User ID: $userId<br/>";
+        $checkL1 = User::where('ref_id', $userId)->select('id', 'name', 'email', 'created_at', 'ref_id')->get();
+        //Level 1
+        $level1_ids = $checkL1->pluck('id')->toArray();
+        // dd($level1_ids);
+        $lev_profit_1 = 0;
+        foreach ($level1_ids as $id) {
+            $level_profit = !empty($setting->level_1_bonus) ? $setting->level_1_bonus : 0;
+            $lev_profit_1 += $level_profit;
+        }
+        $level1Profit = $lev_profit_1;
+        $data['level_1_profit'] = number_format($level1Profit, 2);
+        //Level 2
+        $checkL2    = User::whereIn('ref_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'ref_id')->get();
+        $level2_ids = $checkL2->pluck('id')->toArray();
+
+        $lev_profit_2 = 0;
+        foreach ($level2_ids as $id) {
+            $level_profit = !empty($setting->level_2_bonus) ? $setting->level_2_bonus : 0;
+            $lev_profit_2 += $level_profit;
+        }
+        $level2Profit = $lev_profit_2;
+
+        $data['level_2_profit'] = number_format($level2Profit, 2);
+        //Level 3
+        $checkL3    = User::whereIn('ref_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'ref_id')->get();
+        $level3_ids = $checkL3->pluck('id')->toArray();
+
+        $lev_profit_3 = 0;
+        foreach ($level3_ids as $id) {
+            $level_profit3 = !empty($setting->level_3_bonus) ? $setting->level_3_bonus : 0;
+            $lev_profit_3 += $level_profit3;
+        }
+        $level3Profit = $lev_profit_3;
+        $data['level_3_profit'] = number_format($level3Profit, 2);
+
+        $allsum = $level1Profit + $level2Profit + $level3Profit;
+        $data['commission_sum'] = number_format($allsum, 2);
+        return response()->json($data);
+        // return response()->json($data, 200);
+        //dd($data);
+    }
+
+    public function sendNotification(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name'                       => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // Check if a category with the same name already exists
+
+        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
+        $data = array(
+            'name'                       => $request->name,
+
+        );
+        $resdata['id']                    = Notification::insertGetId($data);
+        return response()->json($resdata);
+    }
+
 }

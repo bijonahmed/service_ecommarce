@@ -19,6 +19,7 @@ use App\Rules\MatchOldPassword;
 use App\Models\sliderSideAdsModel;
 use App\Http\Controllers\Controller;
 use App\Models\companyProfile;
+use App\Models\BuyToken;
 use App\Models\couponUseHistory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
@@ -112,7 +113,6 @@ class SettingController extends Controller
         return response()->json($response);
     }
 
-
     public function insertSalary(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -146,8 +146,6 @@ class SettingController extends Controller
         ];
         return response()->json($response);
     }
-
-
 
     public function insertPack(Request $request)
     {
@@ -348,7 +346,6 @@ class SettingController extends Controller
         return response()->json($response);
     }
 
-
     public function checkrowsallary($id)
     {
         $id = (int) $id;
@@ -360,7 +357,6 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
-
     public function checkrowPack($id)
     {
         $id = (int) $id;
@@ -371,8 +367,6 @@ class SettingController extends Controller
         ];
         return response()->json($response, 200);
     }
-
-
 
     public function getEmployeeTypeList(Request $request)
     {
@@ -423,8 +417,6 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
-
-
     public function getsalary(Request $request)
     {
         try {
@@ -442,7 +434,6 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
-
     public function getPack(Request $request)
     {
         try {
@@ -459,10 +450,6 @@ class SettingController extends Controller
         }
         return response()->json($response, 200);
     }
-
-
-
-
 
     public function getBankMasterlist(Request $request)
     {
@@ -591,8 +578,6 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
-
-
     public function checkrowBankMaster($id)
     {
         $id = (int) $id;
@@ -688,7 +673,6 @@ class SettingController extends Controller
             'status'    => 'string',
         ], $messages);
 
-
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         } else {
@@ -754,7 +738,6 @@ class SettingController extends Controller
             if (!empty($dealsBanner->imageOne) && File::exists(public_path($dealsBanner->imageOne))) {
                 File::delete(public_path($dealsBanner->imageOne));
             }
-
 
             if (!$request->hasFile('imageTwo')) {
                 $dealsBanner->update(["imageOne" => $imageName]);
@@ -869,7 +852,6 @@ class SettingController extends Controller
 
         $coupons = coupons::create($couponsData);
 
-
         if ($coupons) {
             return response()->json([
                 'status'    => true,
@@ -888,7 +870,6 @@ class SettingController extends Controller
         $formatedData = [];
         foreach ($coupons as $Key => $value) {
             $formatedData[] = [
-
 
                 'id'                => $value->id,
                 'name'          => $value->name,
@@ -1237,6 +1218,20 @@ class SettingController extends Controller
             'message' => 'Company profile settings updated successfully.'
         ], 200);
     }
+
+    public function settingrowSystem()
+    {
+        $data = Setting::find(1);
+
+        $buyToken = BuyToken::sum('usdt_amount');
+        $response = [
+            'data'     => $data,
+            'BuyToken' => $buyToken,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
     public function getProfileData()
     {
         $getData = companyProfile::get()->first();
@@ -1249,19 +1244,16 @@ class SettingController extends Controller
         $minShop = $request->query('minShop');
         $user_id = $request->query('user_id');
 
-
         $couponList = coupons::where('min_shopping', '<', $minShop)
             ->where('status', 1)
             ->limit(3)
             ->get();
-
 
         foreach ($couponList as $key => $coupon) {
 
             $usageRecord = CouponUseHistory::where('user_id', $user_id)
                 ->where('coupon_id', $coupon->id)
                 ->first();
-
 
             if ($usageRecord) {
                 unset($couponList[$key]);
@@ -1272,5 +1264,77 @@ class SettingController extends Controller
         // return false;
 
         return response()->json(['couponList' => array_values($couponList->toArray())]);
+    }
+
+    public function upateSetting(Request $request)
+    {
+        //dd($request->all());
+
+        $validator = Validator::make($request->all(), [
+            'name'        => 'required',
+            'email'       => 'required',
+            'currency'    => 'required',
+
+            'register_bonus'    => 'required',
+            'maximum_supply'    => 'required',
+            'total_supply'      => 'required',
+
+            'level_1_bonus'      => 'required',
+            'level_2_bonus'      => 'required',
+            'level_3_bonus'      => 'required',
+
+            'liquidity_total_supply'      => 'required',
+            'circlation'                  => 'required',
+            'beganing_price'              => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'name'              => !empty($request->name) ? $request->name : "",
+            'email'             => !empty($request->email) ? $request->email : "",
+            'address'           => !empty($request->address) ? $request->address : "",
+            'whatsApp'          => !empty($request->whatsApp) ? $request->whatsApp : "",
+            'description'       => !empty($request->description) ? $request->description : "",
+            'copyright'         => !empty($request->copyright) ? $request->copyright : "",
+            'currency'          => !empty($request->currency) ? $request->currency : "",
+            'fblink'            => !empty($request->fblink) ? $request->fblink : "",
+            'website'           => !empty($request->website) ? $request->website : "",
+            'telegram'          => !empty($request->telegram) ? $request->telegram : "",
+
+            'level_1_bonus'          => !empty($request->level_1_bonus) ? $request->level_1_bonus : "",
+            'level_2_bonus'          => !empty($request->level_2_bonus) ? $request->level_2_bonus : "",
+            'level_3_bonus'          => !empty($request->level_3_bonus) ? $request->level_3_bonus : "",
+
+            'deposit_service_charge'      => !empty($request->deposit_service_charge) ? $request->deposit_service_charge : "",
+            'withdraw_service_charge'     => !empty($request->withdraw_service_charge) ? $request->withdraw_service_charge : "",
+            'crypto_wallet_address'       => !empty($request->crypto_wallet_address) ? $request->crypto_wallet_address : "",
+            'store_policy'                => !empty($request->store_policy) ? $request->store_policy : "",
+            'register_bonus'              => !empty($request->register_bonus) ? $request->register_bonus : 0,
+            //'maximum_supply'              => !empty($request->maximum_supply) ? $request->maximum_supply : 0,
+            //  'total_supply'                => !empty($request->total_supply) ? $request->total_supply : 0,
+
+            'mininmum_deposit_amount'               => !empty($request->mininmum_deposit_amount) ? $request->mininmum_deposit_amount : 0,
+            'maximum_deposit_amount'                => !empty($request->maximum_deposit_amount) ? $request->maximum_deposit_amount : 0,
+            'minimum_withdrawal'                    => !empty($request->minimum_withdrawal) ? $request->minimum_withdrawal : 0,
+            'maximum_withdrawal'                    => !empty($request->maximum_withdrawal) ? $request->maximum_withdrawal : 0,
+            'daily_max_withdraw_request'            => !empty($request->daily_max_withdraw_request) ? $request->daily_max_withdraw_request : 0,
+            'withdrawal_free_amount'                => !empty($request->withdrawal_free_amount) ? $request->withdrawal_free_amount : 0,
+
+            'withdrawal_free_on_percentage'         => !empty($request->withdrawal_free_on_percentage) ? $request->withdrawal_free_on_percentage : 0,
+            'mimumun_transfer_amount_to_other_user' => !empty($request->mimumun_transfer_amount_to_other_user) ? $request->mimumun_transfer_amount_to_other_user : 0,
+            'maximum_transfer_amount_to_other_user' => !empty($request->maximum_transfer_amount_to_other_user) ? $request->maximum_transfer_amount_to_other_user : 0,
+            'transfer_fee_fixed_amount'             => !empty($request->transfer_fee_fixed_amount) ? $request->transfer_fee_fixed_amount : 0,
+            'traansfer_fee_on_percentage'           => !empty($request->traansfer_fee_on_percentage) ? $request->traansfer_fee_on_percentage : 0,
+        );
+
+        //dd($data);
+        DB::table('tbl_setting')->where('id', 1)->update($data);
+
+        $response = [
+            'message' => 'Successfull',
+        ];
+        return response()->json($response);
     }
 }

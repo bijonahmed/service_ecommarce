@@ -19,7 +19,7 @@ use App\Models\ProductAttributes;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
-use App\Models\ProductAttributeValue;
+use App\Models\PostCategory;
 use App\Models\HomeAroductSliderCategory;
 use Illuminate\Support\Facades\Validator;
 
@@ -41,8 +41,78 @@ class CategoryController extends Controller
         return response()->json($categories);
     }
 
+    public function edit(Request $request)
+    {
+        // dd($request->all());
 
-     
+        $slug     = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
+        // Save to database
+
+        $data = array(
+            'name'                      => $request->name,
+            'slug'                      => $slug,
+            'percentage_amt'            => !empty($request->percentage_amt) ? $request->percentage_amt : "",
+            'description'               => !empty($request->description) ? $request->description : "",
+            'meta_title'                => !empty($request->meta_title) ? $request->meta_title : "",
+            'meta_description'          => !empty($request->meta_description) ? $request->meta_description : "",
+            'meta_keyword'              => !empty($request->meta_keyword) ? $request->meta_keyword : "",
+            'parent_id'                 => !empty($request->parent_id) ? $request->parent_id : "",
+            'status'                    => !empty($request->status) ? $request->status : "",
+            'keyword'                   => !empty($request->keyword) ? $request->keyword : "",
+        );
+        if (!empty($request->file('file'))) {
+            $files = $request->file('file');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $data['file'] = $file_url;
+            //$data['file'] = $file_url;
+        }
+
+        if (!empty($request->file('bg_images'))) {
+            $files = $request->file('bg_images');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $data['bg_images'] = $file_url;
+            //$data['file'] = $file_url;
+        }
+
+        if (!empty($request->file('store_images'))) {
+            $files = $request->file('store_images');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $data['store_images'] = $file_url;
+            //$data['file'] = $file_url;
+        }
+        // dd($data); //bg_images
+
+        Categorys::where('id', $request->id)->update($data);
+
+        $response = [
+            'message' => 'Successfull',
+        ];
+        return response()->json($response);
+    }
+
+    public function postCategorysearch()
+    {
+        $data = PostCategory::where('status', 1)->get();
+        return response()->json($data);
+    }
 
     public function categoryProSlidersave(Request $request)
     {

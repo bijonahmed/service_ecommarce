@@ -194,29 +194,10 @@
               <br />
               <ReferralLink />
 
-              <table class="table table-bordered table-striped">
 
-                <thead class="thead-dark">
-                  <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Upline</th>
-                    <th>Register Date</th>
-                    <th>Bonus</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(v, index) in mlmData" :key="v.id">
-                    <td>{{ index + 1 }}</td> <!-- Displaying dynamic serial number -->
-                    <td>{{ v.name }}</td>
-                    <td>{{ v.upline }}</td>
-                    <td>{{ v.registerDate }}</td>
-                    <td>$0</td>
-                  </tr>
+             
 
-                  <!-- Add more rows as needed -->
-                </tbody>
-              </table>
+               <UserLevels/>
             </div>
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
@@ -336,6 +317,7 @@ const getSkills = async () => {
   }
 };
 const orderData = ref('');
+
 const getAllOrdersList = async () => {
   try {
     const response = await axios.get(`/order/getOrderPlaceForSeller`);

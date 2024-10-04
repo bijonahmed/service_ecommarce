@@ -1,0 +1,414 @@
+<template>
+    <title>Reward Center Management List</title>
+    <div>
+        <div class="content-wrapper">
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <p>Reward Center Management List</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item">
+                                    <LazyNuxtLink to="/admin/dashboard">Dashboard</LazyNuxtLink>
+                                </li>
+
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-lg-4 col-md-4 col-sm-12 mb-2">
+                                    <input type="email" v-model="searchEmail" class="form-control"
+                                        placeholder="Search Email" />
+                                </div>
+
+
+
+
+                                <div class="col-lg-4 col-md-4 col-sm-6 mb-2">
+                                    <select v-model="selectedFilter" class="form-control" @change="filterData">
+                                        <option value="5">All</option>
+                                        <option value="0">Review</option>
+                                        <option value="2">Reject</option>
+                                        <option value="1">Approved</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-lg-1 col-md-2 col-sm-6 mb-2">
+                                    <button @click="filterData()" class="btn btn-primary w-100">Filter</button>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                                    <Loader />
+                                </div>
+                                <div class="card-body">
+
+                                    <!-- <button type="button" class="btn btn-primary" @click="openModal">
+                                        Launch static backdrop modal
+                                    </button> -->
+
+                                    <table class="table w-100 table-wrapper">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-left">Name</th>
+                                                <th class="text-left">User Info</th>
+                                                <th class="text-left">Date</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Images</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(pro, index) in productdata" :key="index">
+                                                <td class="text-left">{{ pro.rewardCenterName }}</td>
+                                                <td class="text-left"><small>Name: {{ pro.user_info_name }}<br />Email:
+                                                        {{ pro.user_info_email }}<br />Phone: {{ pro.user_info_phone
+                                                        }}</small></td>
+                                                <td class="text-left">{{ pro.created_at }}</td>
+                                                <td class="text-center">
+                                                    <span v-if="pro.sts == 0"
+                                                        class="badge rounded-pill bg-secondary w-100"> {{ pro.status
+                                                        }}</span>
+                                                    <span class="badge rounded-pill bg-success w-100"
+                                                        v-if="pro.sts == 1">{{ pro.status }}</span>
+                                                    <span class="badge rounded-pill bg-danger w-100"
+                                                        v-if="pro.sts == 2">{{ pro.status }}</span>
+                                                </td>
+
+                                                <td class="text-center"><img :src="pro.thumnail_img"
+                                                        class="img img-thumbnail" style="height:60px; width: 100%;" />
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                        <button class="btn btn-default btn-sm btn-flat"
+                                                            @click="preview(pro)"><i
+                                                                class="fas fa-eye"></i>Action</button>
+                                                        <!-- <span @click="edit(pro.id)"><button type="button"><i
+                                                                        class="fas fa-edit btnSize"></i></button></span> -->
+                                                    </center>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th class="text-left">Name</th>
+                                                <th class="text-left">User Info</th>
+                                                <th class="text-left">Date</th>
+                                                <th class="text-center">Status</th>
+                                                <th class="text-center">Images</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+
+                                    <center>
+                                        <div class="pagination" style="text-align: center; font-size: 12px;">
+                                            <button :disabled="currentPage === 1" @click="fetchData(currentPage - 1)">
+                                                Previous
+                                            </button>
+                                            <template v-for="pageNumber in displayedPages" :key="pageNumber">
+                                                <button @click="fetchData(pageNumber)">
+                                                    {{ pageNumber }}
+                                                </button>
+                                            </template>
+                                            <button :disabled="currentPage === totalPages"
+                                                @click="fetchData(currentPage + 1)">
+                                                Next
+                                            </button>
+                                        </div>
+                                    </center>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+
+
+
+        <!-- start Modal  -->
+        <!-- Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+            aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <form @submit.prevent="saveData()" id="formrest" class="forms-sample" enctype="multipart/form-data">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <input type="hidden" v-model="rewardCenterId" />
+
+                            <div class="row mb-3 required">
+                                <label for="input-name-1" class="col-sm-2 col-form-label required-label">Status</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control" aria-label=".form-select-sm example"
+                                        v-model="reward_status">
+                                        <option selected>Select</option>
+                                        <option value="0">Review</option>
+                                        <option value="1">Active</option>
+                                        <option value="2">Reject</option>
+
+                                    </select>
+                                    <span class="text-danger" v-if="errors.status">{{ errors.status[0] }}</span>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                @click="closeModal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+
+
+
+            </div>
+        </div>
+        <!-- End Modal  -->
+
+
+    </div>
+</template>
+<script setup>
+import { ref, watch, onMounted } from "vue";
+import axios from "axios";
+import swal from 'sweetalert2';
+definePageMeta({
+    middleware: 'is-logged-out',
+})
+
+const router = useRouter();
+const loading = ref(false);
+const currentPage = ref(1);
+const pageSize = 10;
+const totalRecords = ref(0);
+const totalPages = ref(0);
+const productdata = ref([]);
+const searchOrderId = ref("");
+const searchEmail = ref("");
+const selectedFilter = ref(5); // Add a ref for the search query
+const rewardCenterId = ref('');
+const reward_status = ref('');
+const errors = ref({});
+// Get today's date in YYYY-MM-DD format
+const today = new Date();
+const yyyy = today.getFullYear();
+const mm = String(today.getMonth() + 1).padStart(2, '0');
+const dd = String(today.getDate()).padStart(2, '0');
+const formattedDate = `${yyyy}-${mm}-${dd}`;
+// Define a reactive ref to store the current date
+const filterFrmDate = ref(formattedDate);
+const filterToDate = ref(formattedDate);
+const fetchData = async (page) => {
+    try {
+        loading.value = true;
+        const response = await axios.get(`/reward/reward-request-list`, {
+            params: {
+                page: page,
+                pageSize: pageSize,
+                searchEmail: searchEmail.value, // Pass the search query parameter
+                selectedFilter: selectedFilter.value, // Pass the search query parameter
+
+
+            },
+        });
+        productdata.value = response.data.data;
+        totalRecords.value = response.data.total_records;
+        totalPages.value = response.data.total_pages;
+        currentPage.value = response.data.current_page;
+    } catch (error) {
+        // Handle error
+    } finally {
+        loading.value = false;
+    }
+};
+
+onMounted(() => {
+    fetchData(currentPage.value);
+});
+
+// Watch for changes in current page and fetch data accordingly
+watch(currentPage, (newPage) => {
+    fetchData(newPage);
+});
+
+
+const saveData = () => {
+    const formData = new FormData();
+    formData.append('rewardCenterId', rewardCenterId.value);
+    formData.append('reward_status', reward_status.value);
+    axios.post('/reward/insertrwardStatus', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    }).then((res) => {
+        $('#formrest')[0].reset();
+        success_noti();
+     
+        router.push({
+            path: '/walletmanagement/reward-center-management',
+        });
+        filterData();
+        closeModal();
+
+    }).catch(error => {
+        if (error.response && error.response.status === 422) {
+            errors.value = error.response.data.errors;
+        } else {
+            // Handle other types of errors here
+            console.error("An error occurred:", error);
+        }
+    });
+};
+
+const success_noti = () => {
+    //alert("Your data has been successfully inserted.");
+    const Toast = swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = swal.stopTimer;
+            toast.onmouseleave = swal.resumeTimer;
+        }
+    });
+    Toast.fire({
+        icon: "success",
+        title: "Has been successfully update."
+    });
+};
+
+
+
+
+const closeModal = () => {
+    $("#staticBackdrop").modal('hide');
+}
+
+const openModal = () => {
+    $("#staticBackdrop").modal('show');
+}
+// Define a method to handle previewing
+const preview = (pro) => {
+    openModal();
+    console.log("====" + pro.sts);
+    rewardCenterId.value = pro.id;
+    reward_status.value = pro.sts;
+
+
+
+
+
+};
+
+// Compute the range of displayed pages
+const displayedPages = computed(() => {
+    const maxDisplayedPages = 10; // Maximum number of displayed pages
+    const startPage = Math.max(
+        1,
+        currentPage.value - Math.floor(maxDisplayedPages / 2)
+    );
+    const endPage = Math.min(
+        totalPages.value,
+        startPage + maxDisplayedPages - 1
+    );
+    return Array.from(
+        { length: endPage - startPage + 1 },
+        (_, i) => startPage + i
+    );
+});
+
+
+const filterData = () => {
+    fetchData(1); // Reset to first page when search query changes
+};
+</script>
+
+
+<style>
+.pagination {
+    display: inline-block;
+    text-align: center;
+}
+
+.pagination button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    background-color: #2f2f2f;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.pagination button:hover {
+    background-color: #0056b3;
+}
+
+.pagination button[disabled] {
+    background-color: #6c757d;
+    cursor: not-allowed;
+}
+
+.card-body {
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 0.5rem;
+}
+
+.btnSize {
+    font-size: 12px;
+    padding: 3px;
+}
+
+/* Table */
+.table-wrapper {
+    width: 100%;
+    /* max-width: 500px; */
+    overflow-x: auto;
+}
+
+.table td,
+.table th {
+    padding: .2rem;
+    vertical-align: top;
+    border-top: 1px solid #dae2ea;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    padding: 1px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:hover {
+    background-color: rgb(221, 221, 221);
+}
+</style>

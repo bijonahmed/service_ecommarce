@@ -17,6 +17,8 @@ use App\Http\Controllers\Product\ProductController;
 use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Chat\ChatController;
+use App\Http\Controllers\Deposits\DepositController;
+use App\Http\Controllers\Post\PostController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -27,10 +29,6 @@ use App\Http\Controllers\Chat\ChatController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-
-
-
-
 
 Route::group([
     'prefix' => 'chat'
@@ -43,6 +41,18 @@ Route::group([
     Route::get('/getChatUsers', [ChatController::class, 'getChatUsers']);
 });
 
+Route::group([
+    'prefix' => 'post'
+], function () {
+
+    Route::post('save', [PostController::class, 'save']);
+    Route::post('userRequestPost', [PostController::class, 'userRequestPost']);
+    Route::post('update', [PostController::class, 'update']);
+    Route::get('postrow/{id}', [PostController::class, 'postrow']);
+    Route::get('allPost', [PostController::class, 'allPostList']);
+    Route::get('allPosts', [PostController::class, 'allPosts']);
+    Route::get('postCategoryData', [PostController::class, 'postCategoryData']);
+});
 
 Route::group([
     'middleware' => 'api',
@@ -96,6 +106,14 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::get('dashboardCounting', [UserController::class, 'dashboardCounting']);
+    Route::get('deleteNotification/{id}', [UserController::class, 'deleteNotification']);
+    Route::get('getNotifications', [UserController::class, 'getNotifications']);
+    Route::post('sendNotification', [UserController::class, 'sendNotification']);
+    Route::get('findUserDetails', [UserController::class, 'findUserDetails']);
+    Route::get('allUsers', [UserController::class, 'AllUsersList']);
+    Route::get('checkmlmHistorys', [UserController::class, 'checkmlmHistorys']);
+    Route::get('checkLevelHistorys', [UserController::class, 'checkLevelHistorys']);
     Route::get('getmlmlists', [UserController::class, 'getmlmlists']);
     Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
     Route::get('getDeposit', [UserController::class, 'getDeposit']);
@@ -137,6 +155,38 @@ Route::group([
     Route::get('cardlist/{id}', [UserController::class, 'getCard']);
     Route::get('blogs', [UserController::class, 'getblogs']);
 });
+
+Route::group([
+    'prefix' => 'deposit'
+], function () {
+
+    Route::get('getDepositfetchdata', [DepositController::class, 'getDepositfetchdata']);
+    Route::get('getWithdrwalfetchdata', [DepositController::class, 'getWithdrwalfetchdata']);
+    Route::get('getSendReceived', [DepositController::class, 'getSendReceived']);
+    Route::get('getWithMethodList', [DepositController::class, 'getWithMethodList']);
+    Route::get('getWithdrawRequest', [DepositController::class, 'getWithdrawRequest']);
+    Route::post('depositRequest', [DepositController::class, 'depositRequest']);
+    Route::post('withdrawRequest', [DepositController::class, 'withdrawRequest']);
+    Route::post('sendReciverBuySell', [DepositController::class, 'sendReciverBuySell']);
+    Route::get('filterRechargeList', [DepositController::class, 'filterRechargeList']);
+    Route::get('depositrow/{id}', [DepositController::class, 'depositrow']);
+    Route::get('withdrawrow/{id}', [DepositController::class, 'withdrawrow']);
+    Route::get('getWithMethodRow/', [DepositController::class, 'getWithMethodRow']);
+    Route::get('deposit-list', [DepositController::class, 'getDepositList']);
+    Route::get('withdrawal-list', [DepositController::class, 'getwithdrawalList']);
+    Route::post('updateDepositRequest', [DepositController::class, 'updateDepositRequest']);
+    Route::post('updateWithDrawRequest', [DepositController::class, 'updateWithDrawRequest']);
+    Route::post('addWithDrawMethod', [DepositController::class, 'addWithDrawMethod']);
+    Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
+});
+
+Route::group([
+    'middleware' => 'api',
+    'prefix' => 'product'
+], function () {
+    Route::get('dashboardCounting', [ProductController::class, 'dashboardCounting']);
+});
+
 Route::group([
     // 'middleware' => 'api',
     'prefix' => 'category'
@@ -147,7 +197,7 @@ Route::group([
     Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
     Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
     Route::get('getSpeacialCategoryList', [CategoryController::class, 'getSpeacialCategoryList']);
-
+    Route::post('edit', [CategoryController::class, 'edit']);
     Route::get('getInacCategoryList', [CategoryController::class, 'allInacCategory']);
     Route::get('getProductCategoryList', [CategoryController::class, 'getProductCategoryList']);
     Route::get('removeProctCategory', [CategoryController::class, 'removeProctCategory']);
@@ -162,6 +212,7 @@ Route::group([
     Route::get('attributes-list', [CategoryController::class, 'getAttributeList']);
     Route::get('attributes-val-list', [CategoryController::class, 'getAttributeValList']);
     Route::post('speacialCatSave', [CategoryController::class, 'speacialCatSave']);
+    Route::get('postCategorysearch', [CategoryController::class, 'postCategorysearch']);
 });
 
 Route::group([
@@ -198,7 +249,6 @@ Route::group([
     Route::get('getOrderForSellerEarning', [OrderController::class, 'getOrderForSellerEarning']);
     Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);
- 
 });
 
 Route::group(['prefix' => 'unauthenticate'], function () {
@@ -208,10 +258,6 @@ Route::group(['prefix' => 'unauthenticate'], function () {
     Route::get('geteducation', [UnauthenticatedController::class, 'geteducation']);
     Route::get('skillsData', [UnauthenticatedController::class, 'skillsData']);
     Route::get('getCertificate', [UnauthenticatedController::class, 'getCertificate']);
-
-
-
-
     Route::get('getFindCategorys', [UnauthenticatedController::class, 'getFindCategorys']);
     Route::get('getSubCategoryList', [UnauthenticatedController::class, 'getSubCategoryList']);
     Route::get('getCategoryList', [UnauthenticatedController::class, 'allCategorys']);
@@ -229,10 +275,11 @@ Route::group([
     // sliders     
     Route::post('addslidersImages', [SettingController::class, 'saveslidersImages']);
     Route::post('deleteSlider', [SettingController::class, 'deleteSliderimage']);
-
+    Route::post('upateSetting', [SettingController::class, 'upateSetting']);
     Route::post('companyProfile', [SettingController::class, 'updateCompanyProfile']);
     Route::get('getCompanyData', [SettingController::class, 'getProfileData']);
     Route::get('getcoupons', [SettingController::class, 'getcoupos']);
+    Route::get('settingrowSystem', [SettingController::class, 'settingrowSystem']);
 });
 
 Route::group([
