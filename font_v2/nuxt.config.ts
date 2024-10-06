@@ -20,6 +20,9 @@ export default defineNuxtConfig({
         process.env.NODE_ENV === "production" ? "https://api.isumax.com/api/" : "http://127.0.0.1:8000/api/",
     },
   },
+  async asyncData({ $nuxt }) {
+    $nuxt.$store.commit('SET_CACHE_HEADER', 'no-store');
+  },
   pages: true,
   devtools: { enabled: false },
   experimental: {

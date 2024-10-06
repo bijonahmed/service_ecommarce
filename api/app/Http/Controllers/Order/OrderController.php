@@ -473,6 +473,7 @@ class OrderController extends Controller
 
         $chkSeller = Gig::where('id', $request->gig_id)->select('user_id')->first();
 
+
         $gig_id                 = $request->gig_id;
         $seller_id              = $chkSeller->user_id ? $chkSeller->user_id : "";
         $fullname               = $request->fullname;
@@ -483,6 +484,9 @@ class OrderController extends Controller
         $cvc                    = $request->cvc;
         $SelectedPackages       = $request->SelectedPackages;
         $SelectedPrice          = $request->SelectedPrice;
+        $delivery_day           = $request->delivery_day;
+
+
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
@@ -499,6 +503,8 @@ class OrderController extends Controller
             'cvc'                 => $cvc,
             'selected_packages'   => $SelectedPackages, // Assuming this is an array and needs to be stored as JSON
             'selected_price'      => $SelectedPrice,
+            'delivery_day'        => $delivery_day,
+            'delivery_day_convert_date' => Carbon::now()->addDays($delivery_day),
             'orderId'             => $randomNum,
             'order_status'        => 1, // Order Placed
         ];

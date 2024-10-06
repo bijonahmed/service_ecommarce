@@ -104,12 +104,11 @@ class AuthController extends Controller
                 return response()->json(['slugerror' => 'This name is already taken. Please choose another.'], 400);
             }
 
-
             $user = User::create([
                 'name'          => $request->name,
                 'slug'          => $slug,
                 'email'         => $request->email,
-                'role_id'       => 2,
+                'role_id'       => $request->userType,
                 'status'        => 1,
                 'country_1'     => $request->country_1,
                 'ip'            => $ipaddress,
@@ -224,7 +223,7 @@ class AuthController extends Controller
             $proId         = !empty($user) ? $user->profession_name : "";
             $chkCountry    = Country::where('id', $countryid)->first();
             $chkProfession = Profession::where('id', $proId)->first();
-            $response['profileLogo']  = url(!empty($user->image) ? $user->image : '/profileLogo');
+            $response['profileLogo']  = !empty($user->image) ? url($user->image) : ""; //url(!empty($user->image) ? $user->image : '');
             $response['businessLogo'] = url(!empty($user->business_logo) ? $user->business_logo : '/businessLogo');
             $response['joindate']     = date("Y-M-d", strtotime($user->created_at));
             $response['countryName']  = !empty($chkCountry) ? $chkCountry->countryname : "";

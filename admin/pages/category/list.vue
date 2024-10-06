@@ -14,7 +14,7 @@
                                     <LazyNuxtLink to="/admin/dashboard">Home</LazyNuxtLink>
                                 </li>
                                 <li class="breadcrumb-item active">
-                                    <LazyNuxtLink to="/category/add">New</LazyNuxtLink>
+                                    <LazyNuxtLink to="/category/addcategory">New</LazyNuxtLink>
                                 </li>
 
 

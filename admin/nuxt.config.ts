@@ -10,7 +10,7 @@ export default defineNuxtConfig({
  
   runtimeConfig: {
     public: {
-     baseURL: process.env.NODE_ENV === "production" ? "https://apifangame.futuregenit.com/api/" : "http://127.0.0.1:8000/api/",
+     baseURL: process.env.NODE_ENV === "production" ? "https://api.isumax.com/api/" : "http://127.0.0.1:8000/api/",
     //baseURL: 'https://apifangame.futuregenit.com/api/' //"http://127.0.0.1:8000/api/", 
     },
   },

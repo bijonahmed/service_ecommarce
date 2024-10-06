@@ -1,5 +1,6 @@
 <template>
   <div>
+    <center class="text-dark"><b><u>Buyer Panel</u></b></center>
     <div class="col-lg-12" style="margin-top: 10px;;">
       <div class="ui-content container">
         <div class="navpill-style1">

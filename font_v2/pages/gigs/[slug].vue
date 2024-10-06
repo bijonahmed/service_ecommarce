@@ -238,7 +238,7 @@
                                 </div>
                                 <div class="d-grid">
                                   <a href="#" class="ud-btn btn-thm"
-                                    @click="setPrice('Basic', responseData.basic_price)" v-if="isLoggedIn">Continue ${{
+                                    @click="setPrice('Basic', responseData.basic_price , responseData.basic_delivery_days)" v-if="isLoggedIn">Continue ${{
                                       responseData.basic_price }}<i class="fal fa-arrow-right-long"></i></a>
 
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
@@ -270,7 +270,7 @@
                                 </div>
                                 <div class="d-grid">
                                   <a href="#" class="ud-btn btn-thm"
-                                    @click="setPrice('Standart', responseData.standard_price)"
+                                    @click="setPrice('Standart', responseData.standard_price, responseData.stn_delivery_days)"
                                     v-if="isLoggedIn">Continue ${{
                                       responseData.standard_price }}<i class="fal fa-arrow-right-long"></i></a>
 
@@ -302,7 +302,7 @@
                                 <div class="d-grid">
 
                                   <a href="#" class="ud-btn btn-thm"
-                                    @click="setPrice('Premium', responseData.premium_price)" v-if="isLoggedIn">Continue
+                                    @click="setPrice('Premium', responseData.premium_price, responseData.premium_delivery_days)" v-if="isLoggedIn">Continue
                                     ${{ responseData.premium_price }}<i class="fal fa-arrow-right-long"></i></a>
 
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
@@ -342,7 +342,7 @@
                             </div>
                             <div class="d-grid">
 
-                              <a href="#" class="ud-btn btn-thm" @click="setPrice('Single', responseData.price)"
+                              <a href="#" class="ud-btn btn-thm" @click="setPrice('Single', responseData.price, responseData.delivery_day)"
                                 v-if="isLoggedIn">Continue
                                 ${{ responseData.price }}<i class="fal fa-arrow-right-long"></i></a>
 
@@ -618,6 +618,7 @@ const billing_address = ref('');
 const card_number = ref('');
 const expiration_date = ref('');
 const cvc = ref('');
+const deliveryday = ref('');
 
 const contactSend = async () => {
   try {
@@ -651,6 +652,7 @@ const submitFrm = () => {
   formData.append("cvc", cvc.value);
   formData.append("SelectedPackages", SelectedPackages.value);
   formData.append("SelectedPrice", SelectedPrice.value);
+  formData.append("delivery_day", deliveryday.value);
   const headers = {
     "Content-Type": "multipart/form-data",
   };
@@ -677,10 +679,11 @@ const submitFrm = () => {
     });
 };
 
-const setPrice = async (packages, price) => {
+const setPrice = async (packages, price, delivery_day) => {
   console.log('Pack:' + packages + "--Selected Price:---" + price);
   SelectedPackages.value = packages;
   SelectedPrice.value = price;
+  deliveryday.value = delivery_day;
 
   const setprice = price;
   try {

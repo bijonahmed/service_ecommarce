@@ -131,8 +131,8 @@ let countryData = ref('');
 
 
 const userTypes = ref([
-  { value: 'seller', text: 'Seller' },
-  { value: 'buyer', text: 'Buyer' }
+  { value: '2', text: 'Seller' },
+  { value: '3', text: 'Buyer' }
 ]);
 //getAllcountrys
 const checkEmail = async () => {

@@ -58,9 +58,7 @@
                         <div class="table-responsive" v-if="report">
 
                             <div class="loading-indicator" v-if="loading">
-                                <div class="loader-container">
-                                    <img src="/loader/loader.gif" alt="Loader" />
-                                </div>
+                               
                             </div>
 
                             <center>
