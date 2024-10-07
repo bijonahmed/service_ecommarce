@@ -1,60 +1,56 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  ssr: false,
+  css: [
+    'nprogress/nprogress.css', // Include NProgress CSS
+  ],
+  
+  ssr: false, // Disable Server Side Rendering (if needed)
+  
   router: {
     options: {
-      hashMode: false,
+      hashMode: false, // Disable hash mode
     },
   },
- 
+
   nitro: {
     prerender: {
       crawlLinks: true,
       failOnError: false,
     },
   },
-  
+
   runtimeConfig: {
     public: {
-      baseURL:
-        process.env.NODE_ENV === "production" ? "https://api.isumax.com/api/" : "http://127.0.0.1:8000/api/",
+      baseURL: process.env.NODE_ENV === "production" 
+        ? "https://api.isumax.com/api/" 
+        : "http://127.0.0.1:8000/api/",
     },
   },
-  async asyncData({ $nuxt }) {
-    $nuxt.$store.commit('SET_CACHE_HEADER', 'no-store');
-  },
-  pages: true,
-  devtools: { enabled: false },
-  experimental: {
-    payloadExtraction: true,
-  },
-  //css: ["~/assets/css/main.css"],
 
-  // postcss: {
-  //   plugins: {
-  //     tailwindcss: {},
-  //     autoprefixer: {},
-  //   },
-  // },
+  // Use the proper page-level `asyncData` in your pages, not in `nuxt.config.ts`
+  
+  pages: true, // Enable automatic page creation
+
+  devtools: { enabled: false },
+
+  experimental: {
+    payloadExtraction: true, // Enable payload extraction
+  },
+
   plugins: [
-    // Specify the path to your plugin file
-    "~/plugins/axios.js",
-    "~/plugins/jquery.js",
-    //"~/plugins/google-analytics.js",
-    //"~/plugins/navMenu.js",
-    // "~/plugins/bootstrap.js",
-    //"~/plugins/echo.client.js",
-    //"~/plugins/v-paste.js",
-    //'~/plugins/swiper.js'
-    // Add other plugins as needed
+    '~/plugins/nprogress.ts', // Register NProgress plugin here
+    '~/plugins/axios.js',
+    '~/plugins/jquery.js',
   ],
+
   modules: [
-    "nuxt-icon",
-    "nuxt-lodash",
-    "@pinia/nuxt",
-    "@pinia-plugin-persistedstate/nuxt",
-    "@vite-pwa/nuxt",
+    'nuxt-icon',
+    'nuxt-lodash',
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@vite-pwa/nuxt',
   ],
+
   pwa: {
     manifest: {
       name: "Service Management",
@@ -85,9 +81,8 @@ export default defineNuxtConfig({
       charset: "utf-8",
       viewport: "width=device-width, initial-scale=1, maximum-scale=1",
       
-      // Add CSS file
+      // Add your CSS links
       link: [
-        //Fronend 
         { rel: "stylesheet", href: "/css/bootstrap.min.css" },
         { rel: "stylesheet", href: "/css/jquery-ui.min.css" },
         { rel: "stylesheet", href: "/css/ace-responsive-menu.css" },
@@ -101,10 +96,9 @@ export default defineNuxtConfig({
         { rel: "stylesheet", href: "/css/ud-custom-spacing.css" },
         { rel: "stylesheet", href: "/css/dashbord_navitaion.css" },
         { rel: "stylesheet", href: "/css/responsive.css" },
-        
-         //'~/assets/css/global.css', 
       ],
-      // Add JavaScript file
+
+      // Add JavaScript files
       script: [
         { src: "/js/jquery-3.6.4.min.js", type: "text/javascript" },
         { src: "/js/jquery-migrate-3.0.0.min.js", type: "text/javascript" },
@@ -119,8 +113,7 @@ export default defineNuxtConfig({
         { src: "/js/jquery.counterup.js", type: "text/javascript" },
         { src: "/js/pricing-table.js", type: "text/javascript" },
         { src: "/js/script.js", type: "text/javascript" },  
-        { src: "/js/dashboard-script.js", type: "text/javascript" }, 
-        
+        { src: "/js/dashboard-script.js", type: "text/javascript" },
       ],
     },
   },

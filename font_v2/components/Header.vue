@@ -26,10 +26,12 @@
                         <div v-for="(subCategoryGroup, index) in groupedSubCategories(category.children)" :key="index"
                           class="row mb-1">
                           <div v-for="subCategory in subCategoryGroup" :key="subCategory.id" class="col-6">
-                            <div class="h6 cat-title"> <nuxt-link :to="`/category/${subCategory.slug}`">{{ subCategory.name }}</nuxt-link></div>
+                            <div class="h6 cat-title"> <nuxt-link :to="`/category/${subCategory.slug}`">{{
+                              subCategory.name }}</nuxt-link></div>
                             <ul class="ps-0">
                               <li v-for="subSubCategory in subCategory.children" :key="subSubCategory.id">
-                                <a href="#"><nuxt-link :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name }}</nuxt-link></a>
+                                <a href="#"><nuxt-link :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name
+                                    }}</nuxt-link></a>
                               </li>
 
                             </ul>
@@ -44,10 +46,12 @@
               <!-- Responsive Menu Structure-->
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
                 <li v-if="isLoggedIn">
-                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="userStore.role_id==2"><i class="fa fa-home"></i>My Dashboard</nuxt-link>
-                  <nuxt-link class="list-item pe-0" to="/dashboard/buyer/welcome" v-if="userStore.role_id==3"><i class="fa fa-home"></i>My Dashboard</nuxt-link>
-                  
-                  </li>
+                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="userStore.role_id == 2"><i
+                      class="fa fa-home"></i>My Dashboard</nuxt-link>
+                  <nuxt-link class="list-item pe-0" to="/dashboard/buyer/welcome" v-if="userStore.role_id == 3"><i
+                      class="fa fa-home"></i>My Dashboard</nuxt-link>
+
+                </li>
               </ul>
             </div>
           </div>
@@ -55,26 +59,55 @@
             <div class="d-flex align-items-center">
               <!-- <a class="login-info" data-bs-toggle="modal" href="#exampleModalToggle" role="button"><span
                   class="flaticon-loupe"></span></a> -->
-              <nuxt-link class="login-info mx15-xl mx30 list-item pe-0" to="/seller"><span
+              <nuxt-link class="login-info mx15-xl mx30 list-item pe-0" v-if="!isLoggedIn" to="/seller"><span
                   class="d-none d-xl-inline-block">Become a</span> Seller</nuxt-link>
 
               <nuxt-link class="login-info mr15-xl mr30" to="/sign-in" v-if="!isLoggedIn"><i class="fa fa-sign-in"></i>
                 Sign in</nuxt-link>
-              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2" v-if="!isLoggedIn" to="/sign-up">Sign
+              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2 me-2" v-if="!isLoggedIn" to="/sign-up">Sign
                 up</nuxt-link>
-              <nuxt-link class="login-info mr15-xl mr30" to="#" v-if="isLoggedIn" @click="logout"><i
-                  class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link>
+
+              <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
+                <li v-if="isLoggedIn" class="me-2">
+                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="isLoggedIn"><i
+                      class="fa fa-cart-shopping "></i></nuxt-link>
+
+                </li>
+              </ul>
+              <div class="dropdown ms-2" v-if="isLoggedIn">
+                <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img :src="imagePreview || '/blank_user.jpg'" style="height: 30px;width: 30px;" alt=""
+                    class="img-fluid rounded-circle bordered">
+                </a>
+
+                <ul class="dropdown-menu bordered-0">
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/myprofile"><i
+                        class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
+                        class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist"><i class="fa fa-list"></i>&nbsp;My
+                      Gig</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
+                        class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
+                        class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/earning"><i
+                        class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
+                        class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
 
 
+
+                  <li><nuxt-link class="dropdown-item" to="#" @click="logout()"><i
+                        class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link></li>
+                </ul>
+              </div>
 
             </div>
           </div>
         </div>
       </div>
     </nav>
-
-
-
     <div class="hiddenbar-body-ovelay"></div>
 
   </header>
@@ -93,7 +126,21 @@ const { isLoggedIn } = storeToRefs(userStore)
 import Swal from "sweetalert2";
 const loading = ref(false);
 const router = useRouter();
+const name = ref();
+const imagePreview = ref();
 
+
+
+const getUserRow = async () => {
+  try {
+    const response = await axios.post("/auth/me");
+    console.log("Response data:", response.data.name); // Log the response data
+    name.value = response.data.name;
+    imagePreview.value = response.data.profileLogo;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
 
 computed(async () => {
   try {
@@ -190,6 +237,7 @@ const navbarScrollfixed = () => {
 onMounted(async () => {
   fetchCatData();
   navbarScrollfixed();
+  getUserRow();
 });
 
 </script>

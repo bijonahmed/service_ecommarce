@@ -25,14 +25,16 @@
                     </div>
                 </section>
                 <!-- Breadcumb Sections -->
-            
+
                 <DashboardMainConentTabs />
                 <div />
             </div>
         </div>
-        <div class="loading-indicator" v-if="loading" style="text-align: center;">
-            <Loader />
-        </div>
+            <div class="d-flex justify-content-center loading-indicator" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                </div>
+            </div>
 
         <!-- Modal Template -->
         <div class="modal fade" id="profileUpdateModal" tabindex="-1" aria-labelledby="profileUpdateModalLabel"

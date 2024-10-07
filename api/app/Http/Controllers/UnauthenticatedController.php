@@ -237,7 +237,7 @@ class UnauthenticatedController extends Controller
             $rows                = Gig::where('category_id', $categoryID)
                 ->where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
-                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'users.image as freelancer_images')
+                ->select('gig.*', 'users.name as user_name', 'users.email as user_email','types', 'users.image as freelancer_images')
                 ->orderBy('gig.id', 'desc')
                 ->paginate(20);
 
@@ -247,13 +247,20 @@ class UnauthenticatedController extends Controller
                     'id'                => $v->id,
                     'user_id'           => $v->user_id,
                     'name'              => $v->name,
+                    'user_name'         => $v->user_name,
                     'gig_slug'          => $v->gig_slug,
+                    'basic_price'       => $v->basic_price,
+                    'types'             => $v->types,
                     'price'             => $v->price,
                     'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
                     'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
 
                 ];
             }
+
+           // dd($data);
+
+
             return response()->json([
                 'data' => $data,
                 'pagination' => [

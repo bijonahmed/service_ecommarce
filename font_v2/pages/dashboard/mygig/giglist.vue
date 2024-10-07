@@ -27,8 +27,8 @@
                 <!-- Breadcumb Sections -->
 
                 <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
-                </div>
+                    <Loader v-if="loading" style="text-align: center;" />
+                </div>  
                 <section class="breadcumb-section">
                     <div class="container">
                         <div class="row">
@@ -43,7 +43,6 @@
                             <div class="col-sm-4 col-lg-2">
                                 <div class="d-flex align-items-center justify-content-sm-end">
                                     <div class="share-save-widget d-flex align-items-center">
-                                        <span class="icon flaticon-share dark-color fz12 mr10"></span>
                                         <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
                                     </div>
 
@@ -63,39 +62,46 @@
                                 <h4 class="mb-30">My GIG List</h4>
                             </div>
                             <div class="col-md-6 text-end" style="margin-bottom: 20px;">
-                                <nuxt-link to="/dashboard/mygig/creategig" class="btn btn-primary">Create
+                                <nuxt-link to="/dashboard/mygig/creategig" class="btn btn-primary text-white">Create
                                     Gig</nuxt-link>
                             </div>
                             <div class="col-sm-6 col-xl-3" v-for="gig in gigData" :key="gig.id">
                                 <div class="listing-style1">
                                     <div class="list-thumb">
+                                        <!-- Delete -->
                                         <img class="w-100" :src="gig.thumbnail_images" alt="">
                                         <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
                                                 class="fa-solid fa-trash"></i></a>
-
-                                                
+                                        <!-- Share  -->
+                                        <nuxt-link href="#" class="listing-fav fz12" style="left: 20px;"><i
+                                                class="fa-solid fa-share"></i></nuxt-link>
+                                        <!-- Edit  -->
+                                        <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`" class="listing-fav fz12 "
+                                            style="top: 65px;"><i class="fa-solid fa-pen"></i></nuxt-link>
                                     </div>
 
-                                    <div align="right"><nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`"><button type="button" class="btn btn-primary text-white"><i class="fa-solid fa-pen"></i>&nbsp;Edit</button></nuxt-link></div>
+                                    <!-- <div align="right">
+                                        <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`">
+                                        <button type="button" class="btn btn-primary text-white"><i class="fa-solid fa-pen"></i>&nbsp;Edit</button>
+                                    </nuxt-link></div> -->
                                     <div class="list-content">
                                         <p class="list-text body-color fz14 mb-1">{{ gig.category_name }}</p>
-                                        <h6 class="list-title"> <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`"> {{ gig.name }}</nuxt-link></h6>
-
-                                        <span v-if="gig.status == 1">
-                                            <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span class="badge bg-primary rounded-pill">Live View</span></nuxt-link>
-                                        </span>
-                                        <span v-else>
-                                            <span class="badge bg-danger rounded-pill">Not Publish</span>
-                                        </span>
-
-                                       
-
-
+                                        <h6 class="list-title"> <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`">
+                                                {{ gig.name }}</nuxt-link></h6>
                                         <hr class="my-2">
-                                        <div class="list-meta mt15">
+                                        <div class="list-meta mt15 d-flex justify-content-between align-items-center">
                                             <div class="budget">
                                                 <p class="mb-0 body-color">Starting at<span
                                                         class="fz17 fw500 dark-color ms-1">${{ gig.price }}</span></p>
+                                            </div>
+                                            <div>
+                                                <span v-if="gig.status == 1">
+                                                    <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span
+                                                            class="badge bg-primary rounded-pill p-2">Preview</span></nuxt-link>
+                                                </span>
+                                                <span v-else>
+                                                    <span class="badge bg-danger rounded-pill">Not Publish</span>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -200,8 +206,9 @@ const gigList = async () => {
 };
 
 onMounted(() => {
-    gigList();
     getCatList();
+    gigList();
+   
 
 });
 

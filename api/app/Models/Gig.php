@@ -20,6 +20,7 @@ class Gig extends Model
         'category',
         'content',
         'image',
+        'order_rules',
         'name',
         'thumbnail_images',
         'types',

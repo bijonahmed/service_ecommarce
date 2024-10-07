@@ -33,13 +33,53 @@
         <button id="align-right" type="button" title="Right"><i class="fa fa-align-right"></i></button>
       </div>
       <div class="editor" contenteditable></div>
+    <p :class="{'limit-exceeded': wordCount > 1200}">
+      <small>Characters: {{ charCount }}/1200</small>
+    </p>
+    <p v-if="wordCount > 1200" class="error-message">Word limit exceeded! Please reduce the content.</p>
+
+
+
+
+
+
     </div>
   </template>
   
   <script setup>
   import { onMounted } from 'vue';
   
+  const charCount = ref(0);
+  // Function to handle character limit
+function handleCharLimit() {
+  const editor = document.querySelector('.editor');
+  const content = editor.innerText; // Get the current text content
+
+  charCount.value = content.length; // Update character count
+
+  // If character count exceeds limit, prevent further input
+  if (charCount.value > 1200) {
+    editor.innerText = content.slice(0, 1200); // Trim content to 1200 characters
+    charCount.value = 1200; // Update character count to the limit
+    placeCaretAtEnd(editor); // Place the caret at the end
+  }
+}
+
+// Function to place caret at the end of the contentEditable element
+function placeCaretAtEnd(el) {
+  el.focus();
+  const range = document.createRange();
+  range.selectNodeContents(el);
+  range.collapse(false);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+}
+
+
   onMounted(() => {
+
+    document.querySelector('.editor').addEventListener('input', handleCharLimit);
     // jQuery event listeners
     $('#bold').on('click', function(event) {
       event.preventDefault();
@@ -108,7 +148,15 @@
   </script>
   
   <style scoped>
-  
+.error-message {
+  color: red;
+  font-weight: bold;
+}
+
+.limit-exceeded {
+  color: red;
+}
+
   .wrap {
     width: 100%;
     min-width: 500px;

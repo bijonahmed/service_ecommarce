@@ -13,7 +13,6 @@
                 <div class="col-lg-12">
                   <div class="listings_category_nav_list_menu">
                     <ul class="mb0 d-flex ps-0">
-
                       <li v-for="data in categoryData" :key="data.id">
                         <nuxt-link :to="`/category/${data.slug}`">
                           {{ data.name }}
@@ -41,15 +40,18 @@
                 </div>
                 <div class="col-sm-4 col-lg-2">
                   <div class="d-flex align-items-center justify-content-sm-end">
-                    <div class="share-save-widget d-flex align-items-center">
+                    <div class="share-save-widget d-flex align-items-center" @click="currentPageCopy">
                       <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                      <div class="h6 mb-0">Share</div>
+                      <div class="h6 mb-0"><a href="#">Share</a></div>
+                     
                     </div>
+                    
                     <div class="share-save-widget d-flex align-items-center ml15">
                       <span class="icon flaticon-like dark-color fz12 mr10"></span>
                       <div class="h6 mb-0">Save</div>
                     </div>
                   </div>
+                  <div v-if="message" class="alert alert-success mt-2">{{ message }}</div>
                 </div>
               </div>
             </div>
@@ -65,7 +67,7 @@
                 <div class="col-lg-8">
                   <h2>{{ responseData.name }}</h2>
                   <div class="column wow fadeInUp">
-                    <div class="row mt30">
+                    <div class="row mt30 d-none">
                       <div class="col-sm-6 col-md-4">
                         <div class="iconbox-style1 contact-style d-flex align-items-start mb30">
                           <div class="icon flex-shrink-0"><span class="flaticon-calendar"></span></div>
@@ -99,7 +101,7 @@
                       <div class="carousel-inner">
                         <div v-for="(item, index) in carouselItems" :key="index.id"
                           :class="['carousel-item', { active: index === 0 }]">
-                          <img :src="item.image_path" class="d-block w-100" :alt="item.alt">
+                          <img :src="item.image_path" class="d-block w-100 h-100" :alt="item.alt">
                         </div>
                       </div>
                       <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
@@ -138,7 +140,7 @@
 
                             </div>
 
-                            <div class="col-md-12">
+                            <div class="col-md-12 d-none">
                               <div class="position-relative bdrb1 pb50">
                                 <a href="#" class="ud-btn btn-light-thm">See More<i
                                     class="fal fa-arrow-right-long"></i></a>
@@ -147,7 +149,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="bsp_reveiw_wrt">
+                      <div class="bsp_reveiw_wrt d-none">
                         <h6 class="fz17">Add a Review</h6>
                         <p class="text">Your email address will not be published. Required fields are marked *</p>
                         <h6>Your rating of this product</h6>
@@ -620,6 +622,22 @@ const expiration_date = ref('');
 const cvc = ref('');
 const deliveryday = ref('');
 
+const message = ref('');
+
+const currentPageCopy = async () => {
+  try {
+    // Get the current page URL
+    const currentUrl = window.location.href;
+    await navigator.clipboard.writeText(currentUrl);
+    message.value = 'URL copied to clipboard!';
+    setTimeout(() => {
+      message.value = '';
+    }, 2000);
+  } catch (err) {
+    console.error('Failed to copy: ', err);
+    message.value = 'Failed to copy URL.';
+  }
+};
 const contactSend = async () => {
   try {
     // $('#payment_modal').modal('hide');

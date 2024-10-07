@@ -215,41 +215,40 @@
             <!-- Popular Services -->
             <!-- Browse talent by category -->
 
-            <section class="">
+            <section class="mt-50">
                 <div class="container">
                     <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
                         <div class="col-lg-9">
                             <div class="main-title2">
-                                <h2 class="title">Browse by category</h2>
+                                <h2 class="title"> <nuxt-link class="ud-btn2" to="/all-category">Browse All Categories<i
+                                            class="fal fa-arrow-right-long"></i></nuxt-link></h2>
                             </div>
                         </div>
-                        <div class="col-lg-3">
 
-                            <div class="main-title2 text-left" style="text-align: right;">
-                                <nuxt-link class="ud-btn2" to="/all-category">All Categories<i
-                                        class="fal fa-arrow-right-long"></i></nuxt-link>
-                            </div>
-
-                        </div>
                     </div>
 
-                    <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                    <!-- <div class="loading-indicator" v-if="loading" style="text-align: center;">
                         <Loader />
-                    </div>
+                    </div> -->
+
+
+                    <center><button class="btn btn-primary" type="button" disabled v-if="loading">
+                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button></center>
 
                     <div class="row">
                         <div v-for="(category, index) in limitedCategories" :key="index"
-                            class="col-6 col-md-4 col-xl-3">
-                            <div class="iconbox-style1">
-
-                                <div class="details mt-2">
-                                    <nuxt-link :to="`/category/${category.slug}`" class="text-muted">
-                                        <p class="text-black">{{ category.name }}</p>
-                                    </nuxt-link>
-                                </div>
+                            class="col-6 col-md-4 col-lg-3 mb-4">
+                            <div class="category-item">
+                                <nuxt-link :to="`/category/${category.slug}`" class="category-link">
+                                    <span class="category-index">{{ index + 1 }}. </span>
+                                    <span class="category-name">{{ category.name }}</span>
+                                </nuxt-link>
                             </div>
                         </div>
                     </div>
+
 
                 </div>
             </section>
@@ -375,6 +374,56 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.category-item {
+    padding: 15px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    text-align: left;
+    transition: transform 0.3s ease-in-out;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.category-item:hover {
+    transform: translateY(-5px);
+}
+
+.category-link {
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-weight: 500;
+    color: #333;
+}
+
+.category-index {
+    margin-right: 8px;
+    font-weight: bold;
+    color: #007bff;
+    /* Adjust color if needed */
+}
+
+.category-name {
+    color: #333;
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .col-md-4 {
+        flex: 0 0 50%;
+        /* Adjust to 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+
+    .col-md-4,
+    .col-lg-3 {
+        flex: 0 0 100%;
+        /* Stack in a single column on extra-small screens */
+    }
+}
+
 .owl-carousel .item {
     height: 200px;
     /* Set height as needed */
@@ -398,7 +447,7 @@ onMounted(() => {
     border: 1px solid #ddd;
     /* Change this to your desired border color */
     overflow: hidden;
-    padding: 20px;
+    padding: 20px !important;
     text-align: center;
     transition: transform 0.3s;
 }

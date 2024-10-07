@@ -115,12 +115,16 @@
               </div>
 
 
+
+
+
               <div class="row">
+                
                 <div class="col-sm-2 col-sm-3" v-for="data in responseData" :key="data.id">
                   <div class="listing-style1">
                     <div class="list-thumb">
                       <!-- Dynamically set the image source -->
-                      <img class="w-100"
+                      <img class="w-100 gig_image"
                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
                         alt="Listing Image">
                       <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a>
@@ -135,16 +139,22 @@
                       <div class="list-meta d-flex justify-content-between align-items-center mt15">
                         <a href="#">
                           <span class="position-relative mr10">
-                            <img class="rounded-circle" :src="data.freelancer_images" alt="Freelancer Photo"
-                              style="height: 50px;width: 50px;">
+                            <img class="rounded-circle" :src="data.freelancer_images || '/blank_user.jpg'"
+                              alt="Freelancer Photo" style="height: 50px;width: 50px;">
                             <span class="online-badge" style="height: 10px;width: 10px;"></span>
                           </span>
                           <span class="fz14">{{ data.user_name || '' }}</span>
                         </a>
                         <div class="budget">
-                          <p class="mb-0 body-color">
-                            Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.price || '0.00' }}</span>
+                          
+                          <p v-if="data.types == 1">
+                            Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.price }}</span>
                           </p>
+
+                          <p v-if="data.types == 2">
+                            Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.basic_price }}</span>
+                          </p>
+                           
                         </div>
                       </div>
                     </div>
@@ -154,15 +164,11 @@
               </div>
               <div class="row">
                 <div class="mbp_pagination mt30 text-center" v-if="currentPage < totalPages">
-      <button
-        class="btn btn-primary"
-        @click="fetchData"
-        :disabled="isLoading"
-      >
-        <span v-if="isLoading">Loading...</span>
-        <span v-else>Load More</span>
-      </button>
-    </div>
+                  <button class="btn btn-primary" @click="fetchData" :disabled="isLoading">
+                    <span v-if="isLoading">Loading...</span>
+                    <span v-else>Load More</span>
+                  </button>
+                </div>
 
               </div>
             </div>
@@ -217,11 +223,7 @@ const fetchData = async (page = 1) => {
         page: page, // Pass the page number
       },
     });
-    if (page === 1) {
-      responseData.value = response.data.data;
-    } else {
-      responseData.value.push(...response.data.data);
-    }
+    responseData.value.push(...response.data.data);
     currentPage.value = response.data.pagination.current_page;
     totalPages.value = response.data.pagination.last_page;
   } catch (error) {
@@ -257,6 +259,9 @@ onMounted(() => {
 </script>
 
 <style scoped>
+/* .gig_image{
+  height: 250px;
+} */
 .mbp_pagination {
   display: flex;
   justify-content: center;

@@ -1,0 +1,8 @@
+/* assets/css/nprogress.css */
+#nprogress .bar {
+  background: #29d; /* Change loader color */
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+}

@@ -79,6 +79,9 @@ class GigController extends Controller
                 'basic_description'     => $row->basic_description,
                 'basic_delivery_days'   => $row->basic_delivery_days,
                 'source_file'           => $row->source_file,
+
+                'order_rules'           => $row->order_rules,
+
                 'standard_price'        => $row->standard_price,
                 'stn_descrition'        => $row->stn_descrition,
                 'stn_delivery_days'     => $row->stn_delivery_days,
@@ -125,13 +128,14 @@ class GigController extends Controller
        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
-            'name'              => 'required|string|max:255',
+            'name'              => 'required|max:80',
             'category_id'       => 'required',
             'type'              => 'required|string',
             'thumbnail_images'  => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'images.*'          => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'status'            => 'required',
-            'gig_description'   => 'required',
+            'order_rules'       => 'required',
+            'gig_description'   => 'required|max:1200',
         ], [
             // Custom messages
             'name.required' => 'The name is required.',
@@ -274,13 +278,15 @@ class GigController extends Controller
 
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'name'              => 'required|string|max:255',
+            'name'              => 'required|max:80',
             'category_id'       => 'required',
             'type'              => 'required|string',
             'thumbnail_images'  => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'images.*'          => 'nullable|image|mimes:jpeg,png,jpg,gif',
             'status'            => 'required',
+            'order_rules'       => 'required',
             'gig_description'   => 'required',
+            'thumbnail_images'  => 'required',
         ], [
             // Custom messages
             'name.required' => 'The name is required.',
@@ -403,6 +409,13 @@ class GigController extends Controller
         $gig = new Gig($data);
         $gig->save();
 
+        if(!empty($data['thumbnail_images'])){
+            GigImagesHistory::create([
+                'gig_id' => $gig->id, // Associate the image with the newly created gig
+                'image_path' => $data['thumbnail_images']
+            ]);
+        }
+       
         foreach ($imageUrls as $imageUrl) {
             GigImagesHistory::create([
                 'gig_id' => $gig->id, // Associate the image with the newly created gig

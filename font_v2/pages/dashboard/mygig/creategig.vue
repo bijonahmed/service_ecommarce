@@ -26,9 +26,9 @@
         </section>
         <!-- Breadcumb Sections -->
 
-        <div class="loading-indicator" v-if="loading" style="text-align: center;">
+        <!-- <div class="loading-indicator" v-if="loading" style="text-align: center;">
           <Loader />
-        </div>
+        </div> -->
         <section class="breadcumb-section">
           <div class="container">
             <div class="row">
@@ -44,7 +44,6 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <span class="icon flaticon-share dark-color fz12 mr10"></span>
                     <div class="h6 mb-0"><nuxt-link to="/dashboard/mygig/giglist">Back</nuxt-link></div>
                   </div>
 
@@ -65,8 +64,10 @@
                     <div class="row">
                       <div class="col-sm-12">
                         <div class="">
+                          <p>{{ remainingChars }} characters left</p>
+                          <p v-if="remainingChars === 0" style="color: red;">You have reached the character limit!</p>
                           <label class="heading-color ff-heading fw500 mb10">Title</label>
-                          <input type="text" class="form-control" placeholder="i will" v-model="name">
+                          <input type="text" class="form-control" placeholder="i will" v-model="name" maxlength="80">
                           <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                         </div>
                       </div>
@@ -121,50 +122,25 @@
                         </div>
                       </div>
 
-
-                      
-                        <div class="col-sm-4 single_pack">
-                          <div class="">
-                            <label class="heading-color ff-heading fw500 mb10">Regular Price</label>
-                            <input type="text" class="form-control" placeholder="$15" v-model="price" @input="validateInput" min="0">
-                            <span class="text-danger" v-if="priceError">{{ priceError }}</span>
-                            <span class="text-danger" v-if="errors.price">{{ errors.price[0] }}</span>
-                          </div>
-                        </div>
-                        <div class="col-sm-4 single_pack">
-                          <div class="">
-                            <label class="heading-color ff-heading fw500 mb10">Delivery Days</label>
-                            <input type="text" class="form-control" placeholder="3" v-model="delivery_day" @input="validateInput" min="0">
-                            <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
-                          </div>
-                        </div>
-                   
-
-
-                      <!-- <div class="col-sm-4">
+                      <div class="col-sm-4 single_pack">
                         <div class="">
-                          <div class="form-style1">
-                            <label class="heading-color ff-heading fw500 mb10">Language Name</label>
-                            <input type="text" class="form-control" placeholder="English, Arabic.."
-                              v-model="language_name">
-                            <span class="text-danger" v-if="errors.language_name">{{ errors.language_name[0] }}</span>
-                          </div>
+                          <label class="heading-color ff-heading fw500 mb10">Regular Price</label>
+                          <input type="text" class="form-control" placeholder="$15" v-model="price"
+                            @input="validateInput" min="0">
+                          <span class="text-danger" v-if="priceError">{{ priceError }}</span>
+                          <span class="text-danger" v-if="errors.price">{{ errors.price[0] }}</span>
                         </div>
                       </div>
-                      <div class="col-sm-4">
+                      <div class="col-sm-4 single_pack">
                         <div class="">
-                          <div class="form-style1">
-                            <label class="heading-color ff-heading fw500 mb10">Language Type</label>
-                            <select class="form-control" v-model="language_type">
-                              <option value="">Select</option>
-                              <option value="1">Fluent </option>
-                              <option value="2">Conversational</option>
-                              <option value="3">Native</option>
-                            </select>
-                            <span class="text-danger" v-if="errors.language_type">{{ errors.language_type[0] }}</span>
-                          </div>
+                          <label class="heading-color ff-heading fw500 mb10">Delivery Days</label>
+                          <input type="text" class="form-control" placeholder="3" v-model="delivery_day"
+                            @input="validateInput" min="0">
+                          <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
                         </div>
-                      </div> -->
+                      </div>
+
+
 
                       <div class="col-md-12">
                         <div class="mb10">
@@ -173,25 +149,42 @@
                           <span class="text-danger" v-if="errors.gig_description">{{ errors.gig_description[0] }}</span>
                         </div>
                       </div>
+
+
+                      <div class="col-md-12">
+                        <div class="mb10">
+                          <label class="heading-color ff-heading fw500 mb10">Order Rules</label>
+                          <textarea class="form-control" rows="15" v-model="order_rules" style="height: 200px;"></textarea>
+                          <span class="text-danger" v-if="errors.order_rules">{{ errors.order_rules[0] }}</span>
+                        </div>
+                      </div>
+
+
+
+
+
+
                     </div>
 
-
-                    
                     <div class="row multiple_pack">
                       <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
                         <b><u>Basic</u></b><br>
                         <label for="basic_price">Price:</label>
                         <input type="text" id="basic_price" class="form-control" placeholder="Enter price"
                           v-model="basic_price" @input="validateInput" min="0">
-                          <span class="text-danger" v-if="errors.basic_price">{{ errors.basic_price[0] }}</span>
+                        <span class="text-danger" v-if="errors.basic_price">{{ errors.basic_price[0] }}</span>
 
                         <label for="basic_description">Short Description:</label>
-                        <textarea class="form-control" placeholder="Enter description"
-                          v-model="basic_description"></textarea>
+
+
+                        <textarea class="form-control" @input="checkCharLimit('basic_description')" maxlength="200"
+                          v-model="basic_description" placeholder="Basic Description (max 200 characters)"></textarea>
+                        <small>Characters: {{ basicCharCount }}/200</small>
 
                         <label for="basic_delivery_days">Delivery Days:</label>
                         <input type="text" id="basic_delivery_days" class="form-control"
-                          placeholder="Enter delivery days" v-model="basic_delivery_days" @input="validateInput" min="0">
+                          placeholder="Enter delivery days" v-model="basic_delivery_days" @input="validateInput"
+                          min="0">
 
                         <label for="source_file_basic">Source File:</label>
                         <select id="source_file_basic" class="form-control" v-model="source_file">
@@ -205,11 +198,14 @@
                         <label for="standard_price">Price:</label>
                         <input type="text" id="standard_price" class="form-control" placeholder="Enter price"
                           v-model="standard_price" @input="validateInput" min="0">
-                          <span class="text-danger" v-if="errors.standard_price">{{ errors.standard_price[0] }}</span>
+                        <span class="text-danger" v-if="errors.standard_price">{{ errors.standard_price[0] }}</span>
 
                         <label for="standard_description">Short Description:</label>
-                        <textarea class="form-control" placeholder="Enter description"
-                          v-model="stn_descrition"></textarea>
+                        <textarea class="form-control" v-model="stn_descrition"
+                          @input="checkCharLimit('stn_description')" maxlength="200"
+                          placeholder="STN Description (max 200 characters)"></textarea>
+
+                        <small>Characters: {{ stnCharCount }}/200</small>
 
                         <label for="standard_delivery_days">Delivery Days:</label>
                         <input type="text" id="standard_delivery_days" class="form-control"
@@ -227,15 +223,18 @@
                         <label for="premium_price">Price:</label>
                         <input type="text" id="premium_price" class="form-control" placeholder="Enter price"
                           v-model="premium_price" @input="validateInput" min="0">
-                          <span class="text-danger" v-if="errors.premium_price">{{ errors.premium_price[0] }}</span>
+                        <span class="text-danger" v-if="errors.premium_price">{{ errors.premium_price[0] }}</span>
 
                         <label for="premium_description">Short Description:</label>
-                        <textarea class="form-control" placeholder="Enter description"
-                          v-model="premium_description" ></textarea>
+                        <textarea class="form-control" @input="checkCharLimit('premium_description')" maxlength="200"
+                          placeholder="Premium Description (max 200 characters)"
+                          v-model="premium_description"></textarea>
+                        <small>Characters: {{ premiumCharCount }}/200</small>
 
                         <label for="premium_delivery_days">Delivery Days:</label>
                         <input type="text" id="premium_delivery_days" class="form-control"
-                          placeholder="Enter delivery days" v-model="premium_delivery_days" @input="validateInput" min="0">
+                          placeholder="Enter delivery days" v-model="premium_delivery_days" @input="validateInput"
+                          min="0">
 
                         <label for="source_file_premium">Source File:</label>
                         <select id="source_file_premium" class="form-control" v-model="premium_source_file">
@@ -245,19 +244,21 @@
                       </div>
                     </div>
 
-
-
-
                     <div class="row">
                       <!-- Thumbnail Image Upload -->
                       <div class="col-sm-6">
                         <label class="heading-color ff-heading fw500 mb10">Thumbnail Image</label>
                         <input type="file" class="form-control" accept="image/*" @change="previewThumbnail"
                           ref="thumbnailInput" />
+
+
+                        <button type="button" class="d-none" @click="clearThumbnail">Clear Thumbnail</button>
+
                         <div v-if="thumbnail_images" class="thumbnail-preview mt-2">
                           <img :src="thumbnail_images" alt="Thumbnail Preview" class="thumbnail-image" />
                           <button @click="removeThumbnail" type="button" class="btn btn-danger remove-btn">Remove
                             Thumbnail</button>
+
                         </div>
                         <span class="text-danger" v-if="errors.thumbnail_images">{{ errors.thumbnail_images[0] }}</span>
                       </div>
@@ -285,7 +286,8 @@
                         </select>
                       </div>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100 mt-3" id="submit-button"> Submit </button>
+                    <button type="submit" class="btn btn-primary w-100 mt-3 text-white" id="submit-button"> Submit
+                    </button>
 
                   </form>
                 </div>
@@ -301,7 +303,37 @@
     </div>
 
     <!-- Modal Template -->
+    <div class="modal fade" id="profileUpdateModal" tabindex="-1" aria-labelledby="profileUpdateModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="profileUpdateModalLabel">Profile Update Required</h5>
+            <!-- <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+          </div>
+          <div class="modal-body">
+            <center>Update Your Profile Images.<br>
+              <small>Image must be exactly 200x200 pixels</small>
+            </center>
+            <br />
+            <div class="image-upload">
+              <input type="file" class="form-control" @change="handleFileUpload" accept="image/*" />
+              <div v-if="imagePreview">
+                <img :src="imagePreview" alt="Image Preview" class="preview-image" />
+              </div>
+              <div v-if="uploadStatus">
+                <p>{{ uploadStatus }}</p>
+              </div>
+            </div>
 
+          </div>
+          <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+            <button type="button" class="btn btn-primary text-white" @click="uploadImage">Save Changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
     <Footer />
   </body>
 </template>
@@ -334,6 +366,7 @@ const language_type = ref('');
 const price = ref('');
 const delivery_day = ref('');
 const thumbnailInput = ref('')
+const uploadStatus = ref(null);
 //
 const basic_price = ref('');
 const basic_description = ref('');
@@ -350,12 +383,13 @@ const premium_description = ref('');
 const premium_delivery_days = ref('');
 const premium_source_file = ref('Yes');
 //
+const order_rules = ref('');
 const status = ref(1);
 const priceError = ref('');
 const subcatData = ref([]);
 const catData = ref([]);
 const inSubcatData = ref([]);
-
+const profileLogo = ref('');
 const showType = () => {
   const gigtype = type.value;
   $(".multiple_pack").toggle(gigtype == 2);
@@ -363,15 +397,168 @@ const showType = () => {
 };
 const thumbnail_images = ref(null); // to store the thumbnail image
 const images = ref([]); // to store multiple images
+const imageFile = ref(null);
+const imagePreview = ref(null);
+const stn_description = ref('');
+
+
+// const basic_description = ref('');
+// const stn_description = ref('');
+// const premium_description = ref('');
+
+const basicCharCount = ref(0);
+const stnCharCount = ref(0);
+const premiumCharCount = ref(0);
+
+// Function to check character limit
+function checkCharLimit(descriptionKey) {
+  const description = {
+    basic_description,
+    stn_description,
+    premium_description
+  }[descriptionKey];
+
+  // Update character count
+  if (description.value.length <= 200) {
+    if (descriptionKey === 'basic_description') {
+      basicCharCount.value = description.value.length;
+    } else if (descriptionKey === 'stn_description') {
+      stnCharCount.value = description.value.length;
+    } else if (descriptionKey === 'premium_description') {
+      premiumCharCount.value = description.value.length;
+    }
+  } else {
+    // Trim value to 200 characters if exceeded
+    description.value = description.value.slice(0, 200);
+  }
+}
+// Handle file upload event
+const handleFileUpload = (event) => {
+  const file = event.target.files[0]; // Get the selected file
+  if (file && file.type.startsWith('image/')) {
+    imageFile.value = file;
+    imagePreview.value = URL.createObjectURL(file);
+  } else {
+    imageFile.value = null;
+    imagePreview.value = null;
+  }
+};
+
+
+const maxChars = 80;
+const remainingChars = computed(() => maxChars - name.value.length);
+
 // Method to preview thumbnail
+
 const previewThumbnail = (event) => {
   const file = event.target.files[0];
   if (file) {
-    thumbnail_images.value = URL.createObjectURL(file);
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      // Check the dimensions
+      if (img.width === 330 && img.height === 220) {
+        thumbnail_images.value = url; // Set the thumbnail image if dimensions are valid
+      } else {
+        //alert('Invalid image dimensions. Please upload an image of 330x220 pixels.'); // Show an error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid image dimensions',
+          text: 'Invalid image dimensions. Please upload an image of 330x220 pixels.',
+        });
+        clearThumbnail(); // Clear the thumbnail image path
+      }
+      URL.revokeObjectURL(url); // Release the object URL
+    };
+
+    img.onerror = () => {
+      //alert('Error loading the image. Please select a valid image file.'); // Error loading the image
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error loading the image. Please select a valid image file.',
+      });
+      clearThumbnail(); // Clear the thumbnail image path
+    };
+
+    img.src = url; // Set the source of the image to trigger the onload event
   } else {
-    thumbnail_images.value = null;
+    clearThumbnail(); // Clear the thumbnail if no file is selected
   }
 };
+
+// Function to clear the thumbnail image path and reset state
+const clearThumbnail = () => {
+  thumbnail_images.value = null; // Clear the thumbnail image path
+  const fileInput = document.querySelector('input[type="file"]'); // Get the file input element
+  if (fileInput) {
+    fileInput.value = ''; // Clear the file input value
+  }
+};
+
+
+
+// Function to upload the image to Laravel API
+const uploadImage = async () => {
+  if (!imageFile.value) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const img = new Image();
+    img.src = event.target.result;
+    img.onload = async () => {
+      const width = img.width;
+      const height = img.height;
+      if (width === 200 && height === 200) {
+        // Proceed with uploading the image
+        const formData = new FormData();
+        formData.append('image', imageFile.value); // Add image to FormData
+
+        try {
+          const response = await axios.post('/auth/updateProfileImages', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+
+          uploadStatus.value = 'Image uploaded successfully!'; // Success message
+          console.log(response.data); // Handle server response (e.g., URL of uploaded image)
+          imagePreview.value = response.data.profileLogo;
+          $("#profileUpdateModal").modal("hide");
+
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Has been successfully update your profile.",
+            showConfirmButton: false,
+            timer: 3000,
+          });
+          //profileUpdateModal
+
+        } catch (error) {
+          uploadStatus.value = 'Error uploading the image.'; // Error message
+          console.error('Error uploading image:', error);
+        }
+      } else {
+        uploadStatus.value = 'Image must be exactly 200x200 pixels.';
+
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Image must be exactly 200x200 pixels.",
+          showConfirmButton: false,
+          timer: 3000
+        });
+
+
+      }
+    };
+  };
+
+  // Read the image file as a data URL
+  reader.readAsDataURL(imageFile.value);
+};
+
 
 
 
@@ -381,12 +568,10 @@ const removeThumbnail = () => {
   thumbnailInput.value = '' // Reset the file input
 };
 
-
-
 const submitForm = async () => {
   try {
     // Get the content of the editor
-    editorContent.value = document.querySelector('.editor').innerHTML; 
+    editorContent.value = document.querySelector('.editor').innerHTML;
     console.log("editor value: " + editorContent.value);
 
     // Create a new FormData object
@@ -412,12 +597,13 @@ const submitForm = async () => {
     formData.append('premium_delivery_days', premium_delivery_days.value);
     formData.append('premium_source_file', premium_source_file.value);
     formData.append('gig_description', editorContent.value);
+    formData.append('order_rules', order_rules.value);
     formData.append('status', status.value);
 
     // Append thumbnail image if it exists
     const inputElement = proxy.$refs.thumbnailInput; // Access the input through proxy
     if (inputElement && inputElement.files.length > 0) {
-      formData.append('thumbnail_images', inputElement.files[0]); 
+      formData.append('thumbnail_images', inputElement.files[0]);
     }
 
     // Append multiple images
@@ -470,18 +656,45 @@ const submitForm = async () => {
   }
 };
 
-
 // Method to preview multiple images
 const previewImages = (event) => {
   const files = event.target.files;
-  images.value = []; // reset the images array
+  images.value = []; // Reset the images array
+
   for (let i = 0; i < files.length; i++) {
-    images.value.push({
-      url: URL.createObjectURL(files[i]),
-      file: files[i] // store the file for further use if needed
-    });
+    const img = new Image(); // Create a new Image object
+    img.src = URL.createObjectURL(files[i]); // Create a URL for the image file
+
+    img.onload = () => {
+      // Validate dimensions
+      if (img.width === 330 && img.height === 220) {
+        images.value.push({
+          url: img.src,
+          file: files[i], // Store the file for further use if needed
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid image dimensions',
+          text: 'Invalid image dimensions. Please upload an image of 330x220 pixels.',
+        });
+        // Clear the input if the dimensions are invalid
+        event.target.value = ""; // Clear the input path
+      }
+    };
+
+    img.onerror = () => {
+      // alert("Invalid image file."); // Alert for invalid image file
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error loading the image. Please select a valid image file.',
+      });
+      event.target.value = ""; // Clear the input path
+    };
   }
 };
+
 
 // Method to remove a specific image
 const removeImage = (index) => {
@@ -490,7 +703,7 @@ const removeImage = (index) => {
 
 const validateInput = () => {
   // Create an array of your price fields
-  const priceFields = [price,basic_price, standard_price, premium_price,delivery_day,basic_delivery_days,stn_delivery_days,premium_delivery_days];
+  const priceFields = [price, basic_price, standard_price, premium_price, delivery_day, basic_delivery_days, stn_delivery_days, premium_delivery_days];
   priceFields.forEach((field) => {
     field.value = field.value.replace(/[^0-9]/g, ''); // Allow only numbers
     if (field.value === '') {
@@ -512,7 +725,6 @@ const getCatList = async () => {
     loading.value = false;
   }
 };
-
 
 const getCategoryAll = async () => {
   try {
@@ -538,9 +750,6 @@ const getSubCategory = async () => {
   }
 };
 
-
-
-
 const getinSubCategory = async () => {
   try {
     const categoryId = subcategory_id.value; // Assuming you have category_id defined somewhere
@@ -556,18 +765,32 @@ const getinSubCategory = async () => {
   }
 };
 
+const chkUserrow = async () => {
+  try {
+    const response = await axios.post(`/auth/me`);
+    profileLogo.value = response.data.profileLogo;
+    if (!response.data.profileLogo) {
+      // Initialize the modal
+      const modal = new bootstrap.Modal(document.getElementById('profileUpdateModal'), {
+        backdrop: 'static', // Prevent closing by clicking outside
+        keyboard: false     // Prevent closing with the Esc key
+      });
+      // Show the modal
+      modal.show();
+    }
 
-
-
-
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
+};
 onMounted(() => {
+  getCatList();
+  chkUserrow();
   getCategoryAll();
   $(".multiple_pack").hide();
-  getCatList();
+
 
 });
-
-
 
 </script>
 
@@ -586,14 +809,20 @@ onMounted(() => {
 .image-preview,
 .thumbnail-preview {
   position: relative;
-  width: 100px;
-  height: 130px;
+  width: 330px;
+  /* Updated to 330px */
+  height: 220px;
+  /* Updated to 220px */
+  overflow: hidden;
+  /* Optional: This ensures any overflow is hidden */
 }
 
 .thumbnail-image,
 .preview-image {
-  max-width: 100%;
-  max-height: 100px;
+  width: 330px;
+  /* Updated to 330px */
+  height: 220px;
+  /* Updated to 220px */
   border-radius: 10px;
 }
 
@@ -629,7 +858,6 @@ onMounted(() => {
   border-radius: 10px;
   padding: 20px;
 }
-
 
 b {
   color: #333;
@@ -700,5 +928,32 @@ select:disabled {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.textarea-box {
+  position: relative;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+small {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
 }
 </style>

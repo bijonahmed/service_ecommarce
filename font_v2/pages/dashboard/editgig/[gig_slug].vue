@@ -41,7 +41,7 @@
                 <div class="col-sm-4 col-lg-2">
                   <div class="d-flex align-items-center justify-content-sm-end">
                     <div class="share-save-widget d-flex align-items-center">
-                      <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                      
                       <div class="h6 mb-0"><nuxt-link to="/dashboard/mygig/giglist">Back</nuxt-link></div>
                     </div>
 
@@ -66,10 +66,12 @@
                       <div class="row">
                         <div class="col-sm-12">
                           <div class="">
-                            <label class="heading-color ff-heading fw500 mb10">Title</label>
-                            <input type="text" class="form-control" placeholder="i will" v-model="name">
-                            <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
-                          </div>
+                          <p>{{ remainingChars }} characters left</p>
+                          <p v-if="remainingChars === 0" style="color: red;">You have reached the character limit!</p>
+                          <label class="heading-color ff-heading fw500 mb10">Title</label>
+                          <input type="text" class="form-control" placeholder="i will" v-model="name" maxlength="80">
+                          <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                        </div>
                         </div>
                         <div class="col-sm-4">
                           <div class="">
@@ -153,6 +155,17 @@
                               }}</span>
                           </div>
                         </div>
+
+
+                        <div class="col-md-12">
+                        <div class="mb10">
+                          <label class="heading-color ff-heading fw500 mb10">Order Rules</label>
+                          <textarea class="form-control" rows="15" v-model="order_rules" style="height: 200px;"></textarea>
+                          <span class="text-danger" v-if="errors.order_rules">{{ errors.order_rules[0] }}</span>
+                        </div>
+                      </div>
+
+                      
                       </div>
 
 
@@ -260,7 +273,7 @@
                           Selected Images
                           <div class="row">
                             <div v-for="image in imgHisttory" :key="image.id" class="image-preview">
-                              <img :src="image.url" style="height: 60px; width:60px;" />
+                              <img :src="image.url"/>
                               <button @click="delImage(image.id)" type="button"
                                 class="btn btn-danger btn-sm remove-btn">Remove</button>
                             </div>
@@ -324,6 +337,7 @@ const catData = ref([]);
 const inSubcatData = ref([]);
 const images = ref([]);
 const imgHisttory = ref([]);
+const order_rules  = ref([]);
 //
 const editorContent = ref('');
 const name = ref('');
@@ -369,6 +383,60 @@ const isActive = (slug) => {
 };
 
 
+const previewThumbnail = (event) => {
+  const file = event.target.files[0];
+  if (file) {
+    const img = new Image();
+    const url = URL.createObjectURL(file);
+
+    img.onload = () => {
+      // Check the dimensions
+      if (img.width === 330 && img.height === 220) {
+        thumbnail_images.value = url; // Set the thumbnail image if dimensions are valid
+      } else {
+        //alert('Invalid image dimensions. Please upload an image of 330x220 pixels.'); // Show an error message
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid image dimensions',
+          text: 'Invalid image dimensions. Please upload an image of 330x220 pixels.',
+        });
+        clearThumbnail(); // Clear the thumbnail image path
+      }
+      URL.revokeObjectURL(url); // Release the object URL
+    };
+
+    img.onerror = () => {
+      //alert('Error loading the image. Please select a valid image file.'); // Error loading the image
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error loading the image. Please select a valid image file.',
+      });
+      clearThumbnail(); // Clear the thumbnail image path
+    };
+
+    img.src = url; // Set the source of the image to trigger the onload event
+  } else {
+    clearThumbnail(); // Clear the thumbnail if no file is selected
+  }
+};
+
+// Function to clear the thumbnail image path and reset state
+const clearThumbnail = () => {
+  thumbnail_images.value = null; // Clear the thumbnail image path
+  const fileInput = document.querySelector('input[type="file"]'); // Get the file input element
+  if (fileInput) {
+    fileInput.value = ''; // Clear the file input value
+  }
+};
+
+// Method to remove thumbnail
+const removeThumbnail = () => {
+  thumbnail_images.value = null;
+  thumbnailInput.value = '' // Reset the file input
+};
+
+
 const submitForm = async () => {
   try {
     // Create a new FormData object
@@ -394,7 +462,7 @@ const submitForm = async () => {
     formData.append('premium_source_file', premium_source_file.value);
     formData.append('gig_description', editorContent.value);
     formData.append('status', status.value);
-
+    formData.append('order_rules', order_rules.value);
     // Append thumbnail image if it exists
     const inputElement = proxy.$refs.thumbnailInput; // Access the input through proxy
     if (inputElement && inputElement.files.length > 0) {
@@ -458,15 +526,41 @@ const submitForm = async () => {
 // Method to preview multiple images
 const previewImages = (event) => {
   const files = event.target.files;
-  images.value = []; // reset the images array
+  images.value = []; // Reset the images array
+
   for (let i = 0; i < files.length; i++) {
-    images.value.push({
-      url: URL.createObjectURL(files[i]),
-      file: files[i] // store the file for further use if needed
-    });
+    const img = new Image(); // Create a new Image object
+    img.src = URL.createObjectURL(files[i]); // Create a URL for the image file
+
+    img.onload = () => {
+      // Validate dimensions
+      if (img.width === 330 && img.height === 220) {
+        images.value.push({
+          url: img.src,
+          file: files[i], // Store the file for further use if needed
+        });
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Invalid image dimensions',
+          text: 'Invalid image dimensions. Please upload an image of 330x220 pixels.',
+        });
+        // Clear the input if the dimensions are invalid
+        event.target.value = ""; // Clear the input path
+      }
+    };
+
+    img.onerror = () => {
+      // alert("Invalid image file."); // Alert for invalid image file
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error loading the image. Please select a valid image file.',
+      });
+      event.target.value = ""; // Clear the input path
+    };
   }
 };
-
 // Method to remove a specific image
 const removeImage = (index) => {
   images.value.splice(index, 1); // remove the image at the given index
@@ -575,6 +669,7 @@ const checkrow = async () => {
     type.value = response.data.data.types;
     editorContent.value = response.data.data.gig_description;
     price.value = response.data.data.price;
+    order_rules.value = response.data.data.order_rules;
     delivery_day.value = response.data.data.delivery_day;
     basic_price.value = response.data.data.basic_price;
     basic_description.value = response.data.data.basic_description;
@@ -621,9 +716,11 @@ const getCategorys = async () => {
     // Handle error
   }
 };
+
+const maxChars = 80;
+const remainingChars = computed(() => maxChars - name.value.length);
 onMounted(() => {
   getCategoryAll();
-
   getCatList();
   checkrow();
   getCategorys();
@@ -632,6 +729,166 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.text-danger {
+  color: red;
+}
+
+.thumbnail-preview,
+.image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-preview,
+.thumbnail-preview {
+  position: relative;
+  width: 330px;
+  height: 220px;
+  overflow: hidden;
+  /* Optional: This ensures any overflow is hidden */
+}
+
+.thumbnail-image,
+.preview-image {
+  width: 330px;
+  /* Updated to 330px */
+  height: 220px;
+  /* Updated to 220px */
+  border-radius: 10px;
+}
+
+.remove-btn {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  background-color: #dc3545;
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 0;
+  border-radius: 0 0 10px 10px;
+  cursor: pointer;
+  border: none;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -10px;
+}
+
+.col-4,
+.col-3 {
+  flex: 1;
+  min-width: 300px;
+  max-width: 33.33%;
+  box-sizing: border-box;
+  margin: 10px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  padding: 20px;
+}
+
+b {
+  color: #333;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+  display: block;
+  color: #555;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus,
+select:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+input::placeholder {
+  color: #aaa;
+}
+
+select {
+  cursor: pointer;
+}
+
+select option {
+  padding: 10px;
+}
+
+input[type="text"]:disabled,
+select:disabled {
+  background-color: #f8f9fa;
+  border-color: #ddd;
+  cursor: not-allowed;
+}
+
+.body_content {
+  padding: 100px;
+}
+
+@media (max-width: 991.98px) {
+  .body_content {
+    padding: 20px 20px 150px;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .body_content {
+    padding: 20px 10px;
+  }
+}
+
+.categories_list_section {
+  border-bottom: 1px solid #E9E9E9;
+  padding: 7px 0 3px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.textarea-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.textarea-box {
+  position: relative;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+  resize: none;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+small {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 12px;
+  color: #888;
+}
+ 
 .text-danger {
   color: red;
 }

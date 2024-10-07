@@ -45,8 +45,9 @@
                       <div class="list-meta d-sm-flex align-items-center mt30">
                         <a class="position-relative freelancer-single-style" href="#">
                           <span class="online"></span>
-                          <img class="w-100 wa-sm mb15-sm" :src="profileLogo || 'profile_default.png'"
-                            style="height:150px; border-radius: 10px;;" alt="Freelancer Photo">
+                            <img class=" wa-sm mb15-sm rounded-circle" style="height:150px; width: 150px; overflow: hidden; object-fit: cover;" :src="profileLogo || '/blank_user.jpg'"
+                            alt="Photo">
+
                         </a>
                         <div class="ml20 ml0-xs">
                           <h5 class="title mb-1">{{ name }}</h5>

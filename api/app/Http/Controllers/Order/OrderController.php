@@ -39,6 +39,47 @@ class OrderController extends Controller
         }
     }
 
+    public function aceptOder(Request $request)
+    {
+
+        $orderId = $request->orderId;
+
+        if (empty($orderId)) {
+            return response()->json(['error' => 'Order ID is required.'], 400);
+        }
+
+        $order = Order::where('orderId', $orderId)->first();
+        if (!$order) {
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+
+        $order->order_status = 2; // Update the status as needed
+        $order->save();
+
+        return response()->json(['message' => 'Order rejected successfully.']);
+    }
+
+
+    public function rejectOrder(Request $request)
+    {
+
+        $orderId = $request->orderId;
+
+        if (empty($orderId)) {
+            return response()->json(['error' => 'Order ID is required.'], 400);
+        }
+
+        $order = Order::where('orderId', $orderId)->first();
+        if (!$order) {
+            return response()->json(['error' => 'Order not found.'], 404);
+        }
+
+        $order->order_status = 3; // Update the status as needed
+        $order->save();
+
+        return response()->json(['message' => 'Order rejected successfully.']);
+    }
+
     public function orderStatusRow($id)
     {
         try {
@@ -223,13 +264,14 @@ class OrderController extends Controller
         return response()->json($rdata, 200);
     }
 
-    public function getOrderPlaceForSeller()
+    public function getOrderPlaceForSeller(Request $request)
     {
 
-        $data = Order::where('sellerId', $this->userid)
+        $orderStatusId = $request->orderStatusId;
+        $data          = Order::where('sellerId', $this->userid)
             ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
             ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
-            ->where('orders.order_status', 1)
+            ->where('orders.order_status', $orderStatusId)
             ->get();
 
         $orders = [];
@@ -260,7 +302,7 @@ class OrderController extends Controller
                 'orderId'           => $v->orderId,
                 'gig_slug'          => $v->gig_slug,
                 'user_id'           => $v->user_id,
-                'gig_name'          => $v->gig_name,
+                'gig_name'          => substr($v->gig_name, 0, 30) . '...',
                 'created_at'        => $v->created_at,
                 'selected_price'    => $v->selected_price,
                 'selected_packages' => $v->selected_packages,
@@ -270,11 +312,30 @@ class OrderController extends Controller
             ];
         }
 
-        return response()->json($orders, 200);
+        if ($orderStatusId == 1) {
+            $ordata['placeOrders'] = $orders;
+        }
+
+        if ($orderStatusId == 2) {
+            $ordata['inprogressOrders'] = $orders;
+        }
+
+
+        if ($orderStatusId == 3) {
+            $ordata['cancelOrders'] = $orders;
+        }
+
+        if ($orderStatusId == 4) {
+            $ordata['deliveryOrders'] = $orders;
+        }
+
+
+        return response()->json($ordata, 200);
     }
 
 
-    public function allOrders(){
+    public function allOrders()
+    {
 
 
         $data = Order::join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
@@ -302,8 +363,8 @@ class OrderController extends Controller
                 );
             }
 
-            $seller = User::where('id',$v->sellerId)->first();
-            $buyer = User::where('id',$v->buyerId)->first();
+            $seller = User::where('id', $v->sellerId)->first();
+            $buyer = User::where('id', $v->buyerId)->first();
 
             $orders[] = [
                 'id'                => $v->id,
@@ -311,7 +372,7 @@ class OrderController extends Controller
                 'gig_slug'          => $v->gig_slug,
                 'seller'            => !empty($seller) ? $seller->name : "",
                 'buyer'             => !empty($buyer) ? $buyer->name : "---",
-                'created_at'        => !empty($v->created_at) ? date("d-M-Y",strtotime($v->created_at)) : "",
+                'created_at'        => !empty($v->created_at) ? date("d-M-Y", strtotime($v->created_at)) : "",
                 'selected_price'    => $v->selected_price,
                 'selected_packages' => $v->selected_packages,
                 'order_status'      => $v->order_status,
@@ -321,9 +382,6 @@ class OrderController extends Controller
         }
 
         return response()->json($orders, 200);
-
-
-
     }
 
     public function getOrderForSeller()

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <center class="text-dark"><b><u>Seller Panel</u></b></center>
+
     <div class="col-lg-12" style="margin-top: 10px;;">
       <div class="ui-content container">
         <div class="navpill-style1">
@@ -8,13 +8,13 @@
             <li class="nav-item" role="presentation">
               <button class="nav-link active fw500 dark-color" id="pills-home-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                  class="fa fa-home" aria-hidden="true"></i>&nbsp;Welcome</button>
+                  class="fa fa-home" aria-hidden="true"></i>&nbsp;Dashboard</button>
             </li>
-            <li class="nav-item" role="presentation">
+            <!-- <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" id="pills-profile-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
                 aria-selected="false"><i class="fa fa-link" aria-hidden="true"></i>&nbsp;Refer a Friend</button>
-            </li>
+            </li> -->
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="chatbox"><i class="fa fa-commenting"
                   aria-hidden="true"></i>&nbsp;Messages</button>
@@ -35,7 +35,6 @@
               <button class="nav-link fw500 dark-color" @click="myearning" aria-selected="false"><i
                   class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Earning </button>
             </li>
-
 
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="mysetting" aria-selected="false"><i class="fa fa-cogs"
@@ -64,11 +63,12 @@
                           <div class="list-meta d-sm-flex align-items-center mt30">
                             <a class="position-relative freelancer-single-style" href="#">
                               <span class="online"></span>
-                              <img class="w-100 wa-sm mb15-sm" :src="profileLogo || 'profile_default.png'"
-                                style="height:150px; border-radius: 10px;;" alt="Freelancer Photo">
+                              <img class=" wa-sm mb15-sm rounded-circle"
+                                style="height:150px; width: 150px; overflow: hidden; object-fit: cover;"
+                                :src="profileLogo || '/blank_user.jpg'" alt="Freelancer Photo">
                             </a>
                             <div class="ml20 ml0-xs">
-                              <h5 class="title mb-1">{{ name }}</h5>
+                              <h5 class="title mb-1">{{ name }} <b>(Seller Panel)</b></h5>
                               <p class="mb-0">{{ profName }}</p>
                               <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
@@ -98,8 +98,9 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
-                      <h3> My Total Earning: ${{ earning }}</h3> <nuxt-link to="/dashboard/earning">Details Earning Summary</nuxt-link>
-                      <hr/>
+                      <h3> My Total Earning: ${{ earning }}</h3> <nuxt-link to="/dashboard/earning">Details Earning
+                        Summary</nuxt-link>
+                      <hr />
                       <ShareProfileLink />
                       <hr>
                       <h4 class="widget-title">My Skills</h4>
@@ -153,33 +154,180 @@
                     </div>
 
                     <div class="col-lg-8">
-                      <center>
-                        <h3><u>Active Orders</u></h3>
-                        <small>Automatic updates every 10 seconds.</small>
-                      </center>
-                      <div class="order-list">
-                        <div class="card text-center mt-2" v-for="(order, index) in orderData" :key="index">
-                          <div class="card-header">
-                            Order ID: {{ order.orderId }}
+
+                      <div class="custom-tab-container">
+                        <!-- Custom Nav Tabs -->
+                        <ul class="custom-nav-tabs nav nav-tabs" id="orderTabs" role="tablist">
+                          <li class="custom-tab-item nav-item" role="presentation" @click="getOrderStatus(1)">
+                            <a class="custom-tab-link nav-link active" id="new-order-tab" data-bs-toggle="tab"
+                              href="#new-order" role="tab" aria-controls="new-order" aria-selected="true">Place
+                              Order</a>
+                          </li>
+                          <li class="custom-tab-item nav-item" role="presentation">
+                            <a class="custom-tab-link nav-link" id="inprogress-tab" @click="getOrderStatus(2)"
+                              data-bs-toggle="tab" href="#inprogress" role="tab" aria-controls="inprogress"
+                              aria-selected="false">In
+                              Progress</a>
+                          </li>
+                          <li class="custom-tab-item nav-item" role="presentation">
+                            <a class="custom-tab-link nav-link" id="cancel-tab" data-bs-toggle="tab" href="#cancel"
+                              @click="getOrderStatus(3)" role="tab" aria-controls="cancel"
+                              aria-selected="false">Cancel</a>
+                          </li>
+                          <li class="custom-tab-item nav-item" role="presentation">
+                            <a class="custom-tab-link nav-link" id="delivery-tab" data-bs-toggle="tab" href="#delivery"
+                              @click="getOrderStatus(4)" role="tab" aria-controls="delivery"
+                              aria-selected="false">Delivery</a>
+                          </li>
+                        </ul>
+
+                        <!-- Custom Tab Content -->
+                        <div class="tab-content" id="orderTabContent">
+                          <div class="tab-pane fade show active" id="new-order" role="tabpanel"
+                            aria-labelledby="new-order-tab">
+                            <div class="">
+                              <div class="table-responsive">
+                                <table class="table table-bordered table-hover">
+                                  <thead class="thead-dark">
+                                    <tr>
+                                      <th scope="col">Order ID</th>
+                                      <th scope="col">Gig Title</th>
+                                      <th scope="col">
+                                        <center>Date</center>
+                                      </th>
+                                      <th scope="col">Action</th> <!-- Action Column -->
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr v-for="(order, index) in orderData" :key="index">
+                                      <td>#{{ order.orderId }}</td>
+                                      <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
+                                        order.selected_price }}</td>
+                                      <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                      <td>
+                                        <button class="btn btn-success btn-sm text-white me-2"
+                                          @click="acceptMyOrders(order.orderId)">Accept</button>
+                                        <button class="btn btn-danger btn-sm text-white"
+                                          @click="rejectOrders(order.orderId)">Cancel</button>
+                                      </td>
+                                    </tr>
+
+                                  </tbody>
+                                </table>
+
+                              </div>
+                            </div>
+
                           </div>
-                          <div class="card-body">
-                            <h5 class="card-title"><span class="ms-3">{{ order.gig_name }}</span></h5>
-                            <p class="card-text">
-                              Order Date: {{ formatDate(order.created_at) }}<br />
-                              Amount: ${{ order.selected_price }}<br />
-                              Order Status:
-                              <span v-if="order.order_status == 1">Order Placed</span>
-                              <span v-if="order.order_status == 2">Completed</span>
-                              <span v-if="order.order_status == 3">Delivered</span>
-                              <span v-if="order.order_status == 4">Under Review</span>
-                              <span v-if="order.order_status == 5">Order Cancelled</span><br />
-                              Packages: {{ order.selected_packages }}
-                            </p>
-                            <nuxt-link :to="`/gigs/${order.gig_slug}`" class="btn btn-primary text-white">View
-                              Gig</nuxt-link>
+                          <div class="tab-pane fade" id="inprogress" role="tabpanel" aria-labelledby="inprogress-tab">
+                            <!-- <p>Custom Content for In Progress.</p> -->
+
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Gig Title</th>
+                                    <th scope="col">
+                                      <center>Date</center>
+                                    </th>
+                                    <th scope="col">Action</th> <!-- Action Column -->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(order, index) in inprogressData" :key="index">
+                                    <td>#{{ order.orderId }}</td>
+                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
+                                      order.selected_price }}</td>
+                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td>
+                                
+                                      <button class="btn btn-danger btn-sm text-white"
+                                        @click="rejectOrders(order.orderId)">Cancel</button>
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
+                            </div>
                           </div>
-                          <div class="card-footer text-muted">
-                            {{ order.reamingitime }}
+                          <div class="tab-pane fade" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
+                            <!-- <p>Custom Content for Cancel.</p> -->
+
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Gig Title</th>
+                                    <th scope="col">
+                                      <center>Date</center>
+                                    </th>
+                                    <th scope="col">Status</th> <!-- Action Column -->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(order, index) in cancelData" :key="index">
+                                    <td>#{{ order.orderId }}</td>
+                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
+                                      order.selected_price }}</td>
+                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td class="bg bg-danger text-white text-center">
+                                      Cancel
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
+                            </div>
+                          </div>
+                          <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
+                            <!-- <p>Custom Content for Delivery.</p> -->
+
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Gig Title</th>
+                                    <th scope="col">
+                                      <center>Date</center>
+                                    </th>
+                                    <th scope="col">Action</th> <!-- Action Column -->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(order, index) in deliveryData" :key="index">
+                                    <td>#{{ order.orderId }}</td>
+                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
+                                      order.selected_price }}</td>
+                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td>
+                                      ===
+                                    </td>
+                                  </tr>
+
+                                </tbody>
+                              </table>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                           </div>
                         </div>
                       </div>
@@ -191,15 +339,7 @@
               </section>
 
             </div>
-            <div class="tab-pane fade fz15 text" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-              <br />
-              <ReferralLink />
 
-
-             
-
-               <UserLevels/>
-            </div>
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
         </div>
@@ -236,12 +376,111 @@ definePageMeta({
   middleware: "is-logged-out",
 });
 
-const profileModal = ref(null);
+
+
+const acceptMyOrders = async (orderId) => {
+
+  // Show confirmation alert
+  const { isConfirmed } = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you really want to accept this order?',
+    icon: 'success',
+    showCancelButton: true,
+    confirmButtonColor: '#007bff', // Set confirm button color to blue
+    cancelButtonColor: '#d33', // You can keep the cancel button color as is or change it
+    confirmButtonText: 'Yes, acept it!',
+    cancelButtonText: 'No, cancel!',
+  });
+
+  if (isConfirmed) {
+    try {
+
+      console.log('Rejecting order with ID:', orderId); // Log the orderId
+      // Send the request to reject the order
+      const response = await axios.get(`/order/aceptOder`, {
+        params: { orderId } // Passing orderId as a query parameter
+      });
+
+      // Check if response is successful (you can adjust this based on your API response)
+      if (response.status === 200) {
+        Swal.fire({
+          title: 'Rejected!',
+          text: 'The order has been accept.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+        getOrderStatus();
+        // Optionally handle the response data here
+        // skillsdata.value = response.data.skillsdata; // If needed
+      } else {
+        throw new Error('Failed to reject the order');
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error rejecting the order. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+
+}
+
+const rejectOrders = async (orderId) => {
+
+  // Show confirmation alert
+  const { isConfirmed } = await Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you really want to reject this order?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#d33',
+    cancelButtonColor: '#3085d6',
+    confirmButtonText: 'Yes, reject it!',
+    cancelButtonText: 'No, cancel!',
+  });
+
+  if (isConfirmed) {
+    try {
+
+      console.log('Rejecting order with ID:', orderId); // Log the orderId
+      // Send the request to reject the order
+      const response = await axios.get(`/order/rejectOrder`, {
+        params: { orderId } // Passing orderId as a query parameter
+      });
+
+      // Check if response is successful (you can adjust this based on your API response)
+      if (response.status === 200) {
+        Swal.fire({
+          title: 'Rejected!',
+          text: 'The order has been rejected.',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+        getOrderStatus();
+        // Optionally handle the response data here
+        // skillsdata.value = response.data.skillsdata; // If needed
+      } else {
+        throw new Error('Failed to reject the order');
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'There was an error rejecting the order. Please try again.',
+        icon: 'error',
+        confirmButtonText: 'OK',
+      });
+    }
+  }
+};
+
 
 const chkUserrow = async () => {
   try {
     const response = await axios.post(`/auth/me`);
-    //console.log("Profile Status: ", response.data.profile_status);
     name.value = response.data.name;
     joindate.value = response.data.joindate;
     countryName.value = response.data.countryName;
@@ -269,7 +508,6 @@ const myorders = () => {
   router.push('/dashboard/orders')
 }
 
-
 const myearning = () => {
   router.push('/dashboard/earning')
 }
@@ -277,10 +515,6 @@ const myearning = () => {
 const mygig = () => {
   router.push('/dashboard/mygig/giglist')
 }
-
-
-
-
 
 const getExperience = async () => {
   try {
@@ -317,24 +551,12 @@ const getSkills = async () => {
     console.log(error);
   }
 };
-const orderData = ref('');
-
-const getAllOrdersList = async () => {
-  try {
-    const response = await axios.get(`/order/getOrderPlaceForSeller`);
-    orderData.value = response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 
 // Function to format the date
 const formatDate = (date) => {
   const options = { year: 'numeric', month: 'long', day: 'numeric' };
   return new Date(date).toLocaleDateString(undefined, options);
 };
-
 
 const getmlmList = async () => {
   try {
@@ -347,26 +569,56 @@ const getmlmList = async () => {
   }
 };
 
-
 const freelancerEarning = async () => {
-    try {
-      loading.value = true;
-      const response = await axios.get(`/order/getOrderForSellerEarning`);
-      earning.value = response.data.earning;
-    } catch (error) {
-      console.log(error);
-    } finally {
-      loading.value = false;
-    }
-  };
+  try {
+    loading.value = true;
+    const response = await axios.get(`/order/getOrderForSellerEarning`);
+    earning.value = response.data.earning;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+};
 
-  
-let intervalId = null;
-intervalId = setInterval(getAllOrdersList, 10000); // Set interval for 10 seconds
+const orderData = ref([]);
+const inprogressData = ref([]);
+const cancelData = ref([]);
+const deliveryData = ref([]);
+
+
+const getOrderStatus = async (orderStatusId = 1) => {
+  try {
+    const response = await axios.get(`/order/getOrderPlaceForSeller`, {
+      params: { orderStatusId } // Passing orderStatusId as a query parameter
+    });
+
+    if (orderStatusId = 1) {
+      orderData.value = response.data.placeOrders;
+    }
+
+    if (orderStatusId = 2) {
+      inprogressData.value = response.data.inprogressOrders;
+    }
+
+    if (orderStatusId = 3) {
+      cancelData.value = response.data.cancelOrders;
+    }
+
+    if (orderStatusId = 4) {
+      deliveryData.value = response.data.deliveryOrders;
+    }
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 onMounted(() => {
   getmlmList();
   freelancerEarning();
-  getAllOrdersList();
+  getOrderStatus();
   getCertificates();
   getExperience();
   getEducations();
@@ -398,7 +650,6 @@ onMounted(() => {
   box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
   /* Deeper shadow on hover */
 }
-
 
 .card-header {
   font-weight: bold;
@@ -453,22 +704,6 @@ onMounted(() => {
   /* Darker blue on hover */
 }
 
-.body_content {
-  padding: 100px;
-}
-
-@media (max-width: 991.98px) {
-  .body_content {
-    padding: 20px 20px 150px;
-  }
-}
-
-@media (max-width: 575.98px) {
-  .body_content {
-    padding: 20px 10px;
-  }
-}
-
 .categories_list_section {
   border-bottom: 1px solid #E9E9E9;
   padding: 7px 0 3px;
@@ -476,5 +711,75 @@ onMounted(() => {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Custom Tab Container */
+.custom-tab-container {
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  width: 100%
+}
+
+/* Custom Tab Links */
+.custom-nav-tabs {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: 0;
+  list-style: none;
+  border-bottom: 2px solid #ccc;
+}
+
+.custom-tab-item {
+  flex: 1;
+  text-align: center;
+}
+
+.custom-tab-link {
+  display: block;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: 500;
+  color: #555;
+  background-color: #e9ecef;
+  text-decoration: none;
+  border-radius: 5px 5px 0 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-tab-link:hover,
+.custom-tab-link:focus {
+  background-color: #185a48;
+  color: #333;
+}
+
+.custom-tab-link.active {
+  background-color: #1f4b3f;
+  color: white;
+  border-bottom: 3px solid #fff;
+}
+
+/* Custom Tab Content */
+.tab-pane {
+  padding: 10px;
+  background-color: white;
+  border-radius: 0 0 5px 5px;
+  box-shadow: 0 2px 4px rgba(119, 118, 118, 0.1);
+}
+
+/* Responsive Tabs */
+@media (max-width: 767px) {
+  .custom-nav-tabs {
+    flex-direction: column;
+  }
+
+  .custom-tab-item {
+    margin-bottom: 10px;
+  }
+}
+
+.table-responsive {
+  max-width: 100%;
+  overflow-x: auto;
 }
 </style>
