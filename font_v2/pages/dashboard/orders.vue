@@ -76,14 +76,19 @@
                         </span></div>
                     </th>
                     <td class="vam">{{ formatDate(order.created_at) }}</td>
-                    <td class="vam">{{ order.reamingitime }}</td>
+                    <td class="vam">{{ order.dayconvtDate }}</td>
                     <td class="vam">${{ order.selected_price }}</td>
                     <td class="vam">
-                      <span v-if="order.order_status == 1">Order Placed</span>
-                      <span v-if="order.order_status == 2">Completed</span>
-                      <span v-if="order.order_status == 3">Delivered</span>
-                      <span v-if="order.order_status == 4">Under Review</span>
-                      <span v-if="order.order_status == 5">Order Cancelled</span>
+                      <span :class="{
+                  'badge bg-warning': order.order_status == 2,
+                  'badge bg-danger': order.order_status == 3,
+                  'badge bg-primary': order.order_status == 4,
+                  'badge bg-success': order.order_status == 5,
+                  'badge bg-secondary': order.order_status !== 2 && order.order_status !== 3 && order.order_status !== 4 && order.order_status !== 5
+                }">
+                    {{ order.ostatus }}
+                  </span>
+
                     </td>
 
                     <td class="vam" style="text-align: center;">

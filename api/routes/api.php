@@ -241,6 +241,9 @@ Route::group([
 Route::group([
     'prefix' => 'order'
 ], function () {
+    Route::post('updateDeliveryGig', [OrderController::class, 'updateDeliveryGig']);
+    Route::get('checkOrder', [OrderController::class, 'checkOrder']);
+    Route::get('getOrderCounting', [OrderController::class, 'getOrderCounting']);
     Route::get('aceptOder', [OrderController::class, 'aceptOder']);
     Route::get('rejectOrder', [OrderController::class, 'rejectOrder']);
     Route::post('updateOrder', [OrderController::class, 'updateOrder']);

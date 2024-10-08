@@ -90,20 +90,27 @@ class ChatController extends Controller
             ], 422);
         }
 
-        $imagePath = null;
-        if ($request->hasFile('files')) {
-            $file = $request->file('files'); // Use the 'file' method for individual files
-            $fileName = "/backend/files/" . time() . "." . $file->getClientOriginalExtension();
-            // Move the uploaded file to the specified directory
-            $file->move(public_path("backend/files"), $fileName);
-            $imagePath = $fileName;
+        $imagePaths = []; // Initialize an array to store file paths
+
+        if ($request->hasFile('images')) {
+            $files = $request->file('images'); // Get the array of files
+
+            foreach ($files as $file) {
+                if ($file->isValid()) { // Check if the file is valid
+                    $fileName = "/backend/files/" . time() . '_' . uniqid() . "." . $file->getClientOriginalExtension(); // Unique filename
+                    // Move the uploaded file to the specified directory
+                    $file->move(public_path("backend/files"), $fileName);
+                    $imagePaths[] = $fileName; // Add the file path to the array
+                }
+            }
         }
+
 
         $rdata['user_id']        = $this->userid;
         $rdata['to_id']          = $request->recipientId;
         $rdata['sender_id']      = $this->userid;
         $rdata['message']        = $request->message;
-        $rdata['files']          = $imagePath;
+        $rdata['files']          = $imagePaths;
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);

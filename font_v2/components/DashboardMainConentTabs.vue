@@ -32,8 +32,8 @@
                   class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="myearning" aria-selected="false"><i
-                  class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Earning </button>
+              <button class="nav-link fw500 dark-color" @click="myearning" aria-selected="false">
+                <i class="	fas fa-dollar-sign" aria-hidden="true"></i>&nbsp;Withdraw </button>
             </li>
 
             <li class="nav-item" role="presentation">
@@ -68,7 +68,7 @@
                                 :src="profileLogo || '/blank_user.jpg'" alt="Freelancer Photo">
                             </a>
                             <div class="ml20 ml0-xs">
-                              <h5 class="title mb-1">{{ name }} <b>(Seller Panel)</b></h5>
+                              <h5 class="title mb-1">{{ name }} <b>(Seller Account)</b></h5>
                               <p class="mb-0">{{ profName }}</p>
                               <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
@@ -160,28 +160,50 @@
                         <ul class="custom-nav-tabs nav nav-tabs" id="orderTabs" role="tablist">
                           <li class="custom-tab-item nav-item" role="presentation" @click="getOrderStatus(1)">
                             <a class="custom-tab-link nav-link active" id="new-order-tab" data-bs-toggle="tab"
-                              href="#new-order" role="tab" aria-controls="new-order" aria-selected="true">Place
-                              Order</a>
+                              href="#new-order" role="tab" aria-controls="new-order" aria-selected="true">
+                              Place Order
+                              <span class="badge bg-primary" style="position: absolute; top: 0; right: 0;">{{
+                                placeOrdersCount }}</span>
+                            </a>
                           </li>
                           <li class="custom-tab-item nav-item" role="presentation">
                             <a class="custom-tab-link nav-link" id="inprogress-tab" @click="getOrderStatus(2)"
                               data-bs-toggle="tab" href="#inprogress" role="tab" aria-controls="inprogress"
-                              aria-selected="false">In
-                              Progress</a>
+                              aria-selected="false">
+                              In Progress
+                              <span class="badge bg-primary" style="position: absolute; top: 0; right: 0;">{{
+                                inprogressOrdersCount }}</span>
+                            </a>
                           </li>
                           <li class="custom-tab-item nav-item" role="presentation">
                             <a class="custom-tab-link nav-link" id="cancel-tab" data-bs-toggle="tab" href="#cancel"
-                              @click="getOrderStatus(3)" role="tab" aria-controls="cancel"
-                              aria-selected="false">Cancel</a>
+                              @click="getOrderStatus(3)" role="tab" aria-controls="cancel" aria-selected="false">
+                              Cancel
+                              <span class="badge bg-primary" style="position: absolute; top: 0; right: 0;">{{
+                                cancelOrdersCount }}</span>
+                            </a>
                           </li>
                           <li class="custom-tab-item nav-item" role="presentation">
                             <a class="custom-tab-link nav-link" id="delivery-tab" data-bs-toggle="tab" href="#delivery"
-                              @click="getOrderStatus(4)" role="tab" aria-controls="delivery"
-                              aria-selected="false">Delivery</a>
+                              @click="getOrderStatus(4)" role="tab" aria-controls="delivery" aria-selected="false">
+                              Delivered
+                              <span class="badge bg-primary" style="position: absolute; top: 0; right: 0;">{{
+                                deliveryOrdersCount }}</span>
+                            </a>
+                          </li>
+
+
+                          <li class="custom-tab-item nav-item" role="presentation">
+                            <a class="custom-tab-link nav-link" id="complete-tab" data-bs-toggle="tab" href="#complete"
+                              @click="getOrderStatus(5)" role="tab" aria-controls="complete" aria-selected="false">
+                              Complete
+                              <span class="badge bg-primary" style="position: absolute; top: 0; right: 0;">{{
+                                completeOrdersCount }}</span>
+                            </a>
                           </li>
                         </ul>
 
-                        <!-- Custom Tab Content -->
+                        <!-- Custom Tab Content complete -->
                         <div class="tab-content" id="orderTabContent">
                           <div class="tab-pane fade show active" id="new-order" role="tabpanel"
                             aria-labelledby="new-order-tab">
@@ -201,8 +223,8 @@
                                   <tbody>
                                     <tr v-for="(order, index) in orderData" :key="index">
                                       <td>#{{ order.orderId }}</td>
-                                      <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
-                                        order.selected_price }}</td>
+                                      <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
+                                        order.selected_price }}</nuxt-link></td>
                                       <td class="text-center">{{ formatDate(order.created_at) }}</td>
                                       <td>
                                         <button class="btn btn-success btn-sm text-white me-2"
@@ -226,24 +248,25 @@
                               <table class="table table-bordered table-hover">
                                 <thead class="thead-dark">
                                   <tr>
-                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Order ID & Date</th>
                                     <th scope="col">Gig Title</th>
                                     <th scope="col">
-                                      <center>Date</center>
+                                      <center>Reaming Time</center>
                                     </th>
                                     <th scope="col">Action</th> <!-- Action Column -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="(order, index) in inprogressData" :key="index">
-                                    <td>#{{ order.orderId }}</td>
-                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
-                                      order.selected_price }}</td>
-                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td>#{{ order.orderId }}<br />{{ formatDate(order.created_at) }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
+                                      order.selected_price }}</nuxt-link></td>
+                                    <td class="text-center" v-html="order.reamingitime"></td>
                                     <td>
-                                
-                                      <button class="btn btn-danger btn-sm text-white"
-                                        @click="rejectOrders(order.orderId)">Cancel</button>
+                                      <nuxt-link :to="`/dashboard/orderDetails/${order.orderId}`"
+                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
+
+                                      <!-- <button class="btn btn-primary btn-sm text-white" @click="rejectOrders(order.orderId)">Details</button> -->
                                     </td>
                                   </tr>
 
@@ -270,11 +293,11 @@
                                 <tbody>
                                   <tr v-for="(order, index) in cancelData" :key="index">
                                     <td>#{{ order.orderId }}</td>
-                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
-                                      order.selected_price }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
+                                      order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="bg bg-danger text-white text-center">
-                                      Cancel
+                                    <td class="text-danger text-center">
+                                      Canceled
                                     </td>
                                   </tr>
 
@@ -301,11 +324,12 @@
                                 <tbody>
                                   <tr v-for="(order, index) in deliveryData" :key="index">
                                     <td>#{{ order.orderId }}</td>
-                                    <td>{{ order.gig_name }} ({{ order.selected_packages }}) Price: ${{
-                                      order.selected_price }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
+                                      order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
                                     <td>
-                                      ===
+                                      <nuxt-link :to="`/dashboard/orderDetails/${order.orderId}`"
+                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
                                     </td>
                                   </tr>
 
@@ -314,19 +338,39 @@
 
                             </div>
 
+                          </div>
 
+                          <div class="tab-pane fade" id="complete" role="tabpanel" aria-labelledby="complete-tab">
+                            <!-- <p>Custom Content for Delivery.</p> -->
 
+                            <div class="table-responsive">
+                              <table class="table table-bordered table-hover">
+                                <thead class="thead-dark">
+                                  <tr>
+                                    <th scope="col">Order ID</th>
+                                    <th scope="col">Gig Title</th>
+                                    <th scope="col">
+                                      <center>Date</center>
+                                    </th>
+                                    <th scope="col">Action</th> <!-- Action Column -->
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for="(order, index) in completeData" :key="index">
+                                    <td>#{{ order.orderId }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
+                                      order.selected_price }}</nuxt-link></td>
+                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td>
+                                      <nuxt-link :to="`/dashboard/orderDetails/${order.orderId}`"
+                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
+                                    </td>
+                                  </tr>
 
+                                </tbody>
+                              </table>
 
-
-
-
-
-
-
-
-
-
+                            </div>
 
                           </div>
                         </div>
@@ -376,8 +420,6 @@ definePageMeta({
   middleware: "is-logged-out",
 });
 
-
-
 const acceptMyOrders = async (orderId) => {
 
   // Show confirmation alert
@@ -404,7 +446,7 @@ const acceptMyOrders = async (orderId) => {
       // Check if response is successful (you can adjust this based on your API response)
       if (response.status === 200) {
         Swal.fire({
-          title: 'Rejected!',
+          title: 'Accept!',
           text: 'The order has been accept.',
           icon: 'success',
           confirmButtonText: 'OK',
@@ -476,7 +518,6 @@ const rejectOrders = async (orderId) => {
     }
   }
 };
-
 
 const chkUserrow = async () => {
   try {
@@ -585,6 +626,30 @@ const orderData = ref([]);
 const inprogressData = ref([]);
 const cancelData = ref([]);
 const deliveryData = ref([]);
+const completeData = ref([]);
+const placeOrdersCount = ref(0);
+const inprogressOrdersCount = ref(0);
+const deliveryOrdersCount = ref(0);
+const cancelOrdersCount = ref(0);
+const completeOrdersCount = ref(0);
+
+
+
+
+const getOrderCounting = async () => {
+  try {
+    const response = await axios.get(`/order/getOrderCounting`);
+
+    placeOrdersCount.value = response.data.placeOrdersCount;
+    inprogressOrdersCount.value = response.data.inprogressOrdersCount;
+    cancelOrdersCount.value = response.data.cancelOrdersCount;
+    deliveryOrdersCount.value = response.data.deliveryOrdersCount;
+    completeOrdersCount.value = response.data.completeOrdersCount;
+
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 
 const getOrderStatus = async (orderStatusId = 1) => {
@@ -599,8 +664,8 @@ const getOrderStatus = async (orderStatusId = 1) => {
 
     if (orderStatusId = 2) {
       inprogressData.value = response.data.inprogressOrders;
-    }
 
+    }
     if (orderStatusId = 3) {
       cancelData.value = response.data.cancelOrders;
     }
@@ -609,13 +674,19 @@ const getOrderStatus = async (orderStatusId = 1) => {
       deliveryData.value = response.data.deliveryOrders;
     }
 
+    if (orderStatusId = 5) {
+      completeData.value = response.data.completeOrders;
+    }
+
+    getOrderCounting();
+
   } catch (error) {
     console.log(error);
   }
 };
 
-
 onMounted(() => {
+  getOrderCounting();
   getmlmList();
   freelancerEarning();
   getOrderStatus();
@@ -692,11 +763,7 @@ onMounted(() => {
 
 .btn-primary {
   background-color: #007bff;
-  /* Primary button color */
   border: none;
-  /* Remove border */
-  border-radius: 20px;
-  /* Round button corners */
 }
 
 .btn-primary:hover {
@@ -776,6 +843,20 @@ onMounted(() => {
   .custom-tab-item {
     margin-bottom: 10px;
   }
+}
+
+.custom-tab-link {
+  position: relative;
+  /* Add relative positioning to the link */
+}
+
+.badge {
+  position: absolute;
+  /* Position the badge absolutely */
+  top: 0;
+  /* Adjust the vertical position */
+  right: 0;
+  /* Adjust the horizontal position */
 }
 
 .table-responsive {

@@ -11,7 +11,7 @@ class OrderStatus extends Model
     use HasFactory;
    
     public $table = "order_status";
-    protected $fillable = ['name', 'description'];
+    protected $fillable = ['id','name', 'description'];
     
 }
 
