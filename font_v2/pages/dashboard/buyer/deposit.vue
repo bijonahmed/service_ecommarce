@@ -53,112 +53,45 @@
                     </div>
                 </section>
 
-                <!-- Start Profile -->
-                <div class="container">
+                <div class="container mt-5">
+                    <form @submit.prevent="handleSubmit" class="shadow p-4 rounded bg-light">
+                        <div class="mb-3">
+                            <label for="amount" class="form-label">Enter Amount</label>
+                            <input type="text" class="form-control" v-model="amount" @input="validateInput"
+                                placeholder="0.00" />
+                            <span class="text-danger" v-if="errors.amount">{{ errors.amount[0] }}</span>
+                        </div>
 
-                    <div class="row">
-                        <div class="col-xl-12">
-                            <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
-
-                                <div class="col-lg-12">
-
-                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                                                data-bs-target="#home" type="button" role="tab" aria-controls="home"
-                                                aria-selected="true">Deposit</button>
-                                        </li>
-
-
-                                    </ul>
-                                    <div class="tab-content" id="myTabContent">
-                                        <div class="tab-pane fade show active" id="home" role="tabpanel"
-                                            aria-labelledby="home-tab">
-
-
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <form class="form-style1" @submit.prevent="submitFrm()"
-                                                        id="formrest">
-                                                        <div class="row">
-                                                            <div class="col-sm-4">
-                                                                <div class="mb20">
-                                                                    <label
-                                                                        class="heading-color ff-heading fw500 mb10">Crypto
-                                                                        Address</label>
-                                                                    <input type="text" class="form-control"
-                                                                        v-model="depositArr.frm_wallet_address">
-                                                                    <span class="text-danger"
-                                                                        v-if="errors.frm_wallet_address">{{
-                                                                            errors.frm_wallet_address[0] }}</span>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-sm-4">
-                                                                <div class="mb20">
-                                                                    <label
-                                                                        class="heading-color ff-heading fw500 mb10">Amount</label>
-                                                                    <input type="text" class="form-control"
-                                                                        @input="validateInput"
-                                                                        v-model="depositArr.amount">
-                                                                    <span class="text-danger" v-if="errors.amount">{{
-                                                                        errors.amount[0] }}</span>
-                                                                </div>
-                                                            </div>
-
-                                                            <div class="col-md-12">
-                                                                <div class="text-start">
-                                                                    <button type="submit" class="ud-btn btn-thm">Save<i
-                                                                            class="fal fa-arrow-right-long"></i></button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </form>
-                                                    <!-- END -->
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <br/>
-                                                    <div class="table-responsive">
-                                                <table class="table table-bordered pt-2">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Deposit ID</th>
-                                                            <th>Amount</th>
-                                                            <th>Status</th>
-                                                            <th>Wallet Address</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr v-for="deposit in DepositData" :key="deposit.id">
-                                                            <td>{{ deposit.depositID }}</td>
-                                                            <td>${{ deposit.deposit_amount }}</td>
-                                                            <td>{{ getStatus(deposit.status) }}</td>
-                                                            <td>{{ deposit.frm_wallet_address }}</td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                            </div>
-
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-
+                        <h5 class="mb-3">Select Payment Method</h5>
+                        <div class="row mb-4">
+                            <div class="col-md-6 d-grid mb-3">
+                                <div class="payment-option" :class="{ selected: selectedPayment === 'paypal' }"
+                                    @click="selectPaymentOption('paypal')">
+                                    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png"
+                                        alt="Pay with PayPal" class="payment-image" />
+                                    <span class="payment-label">PayPal</span>
                                 </div>
                             </div>
-                            <br />
-
+                            <div class="col-md-6 d-grid mb-3">
+                                <div class="payment-option" :class="{ selected: selectedPayment === 'visa' }"
+                                    @click="selectPaymentOption('visa')">
+                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
+                                        alt="Pay with Visa" class="payment-image" />
+                                    <span class="payment-label">Visa</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <!-- END Profile -->
-                    <div />
-                </div>
-            </div>
-        </div>
-        <!-- Modal Template -->
 
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-primary text-white">Proceed to Pay</button>
+                        </div>
+                    </form>
+                </div>
+
+
+            </div>
+            <!-- Modal Template -->
+        </div>
         <Footer />
     </body>
 </template>
@@ -188,15 +121,74 @@ const depositArr = ref({
     frm_wallet_address: ''
 });
 
+
+
+const amount = ref(0);
+const selectedPayment = ref(null);
+
+const selectPaymentOption = (option) => {
+    selectedPayment.value = option;
+};
+
+const handleSubmit = async () => {
+    if (!selectedPayment.value) {
+        alert('Please select a payment option.');
+        return;
+    }
+
+    const numericAmount = parseFloat(amount.value);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+        alert('Please enter a valid amount.');
+        return;
+    }
+
+   // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
+    try {
+        const response = await axios.post('/user/getWaypaymentConfirm', {
+            paymentMethod: selectedPayment.value,
+            amount: numericAmount
+
+        }).catch((error) => {
+            if (error.response && error.response.status === 422) {
+                errors.value = error.response.data.errors;
+            } else {
+                // Handle other types of errors here
+                console.error("An error occurred:", error);
+            }
+        });;
+
+        Swal.fire({
+            title: 'Success!',
+            text: 'Payment successful.',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+
+        // Handle the response as needed
+        //alert(`Payment successful: ${response.data.message}`);
+    } catch (error) {
+        console.error('Error during payment:', error);
+        alert('There was an error processing your payment. Please try again.');
+    }
+
+
+};
+
+const validateInput = () => {
+    // Replace any non-numeric characters
+    amount.value = amount.value.replace(/[^0-9.]/g, '');
+    // Ensure that only one decimal point can be present
+    const parts = amount.value.split('.');
+    if (parts.length > 2) {
+        amount.value = parts[0] + '.' + parts[1].slice(0, 1); // Keep only the first decimal
+    }
+};
+
 const getStatus = (status) => {
     return status === 0 ? 'Pending' :
         status === 1 ? 'Approved' :
             status === 2 ? 'Rejected' :
                 'Unknown';
-};
-const validateInput = () => {
-    // Remove non-numeric characters from the input
-    depositArr.value.amount = depositArr.value.amount.replace(/[^0-9]/g, '');
 };
 
 
@@ -260,11 +252,36 @@ onMounted(() => {
 </script>
 
 <style scoped>
-.preview-image {
-    max-width: 300px;
-    max-height: 300px;
-    margin-top: 10px;
-    border: 2px solid #ddd;
+.payment-option {
+    cursor: pointer;
+    border: 2px solid transparent;
+    padding: 15px;
+    text-align: center;
+    transition: border-color 0.3s;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-option:hover {
+    border-color: #007bff;
+}
+
+.payment-option.selected {
+    border-color: #007bff;
+    background-color: #f0f9ff;
+    /* Light blue background when selected */
+}
+
+.payment-image {
+    width: 100%;
+    max-width: 120px;
+    margin-bottom: 10px;
+}
+
+.payment-label {
+    display: block;
+    font-weight: bold;
 }
 
 .body_content {

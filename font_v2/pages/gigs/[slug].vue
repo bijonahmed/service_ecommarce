@@ -439,67 +439,40 @@
         <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="payment_modalLabel">Payment Information</h5>
+              <h5 class="modal-title" id="payment_modalLabel">Order Summary</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
                 <input type="hidden" value="gig_id" v-model="gig_id" />
                 <!-- Billing Information -->
-                <div class="mb-3">
-                  <label for="fullName" class="form-label">Selected Packages</label>
-                  <input type="text" class="form-control" id="fullName" v-model="SelectedPackages" disabled readonly>
-                </div>
 
-                <div class="mb-3">
-                  <label for="fullName" class="form-label">Selected Price</label>
-                  <input type="text" class="form-control" v-model="SelectedPrice" disabled readonly>
-                </div>
-                <div class="mb-3">
-                  <label for="fullName" class="form-label">Full Name</label>
-                  <input type="text" class="form-control" id="fullName" placeholder="Enter your full name"
-                    v-model="fullname">
-                  <span class="text-danger" v-if="errors.fullname">{{ errors.fullname[0] }}</span>
-                </div>
-
-                <div class="mb-3">
-                  <label for="emailAddress" class="form-label">Email Address</label>
-                  <input type="email" class="form-control" id="emailAddress" placeholder="Enter your email"
-                    v-model="email_address">
-                  <span class="text-danger" v-if="errors.email_address">{{ errors.email_address[0] }}</span>
-                </div>
-
-                <div class="mb-3">
-                  <label for="billingAddress" class="form-label">Billing Address</label>
-                  <input type="text" class="form-control" id="billingAddress" placeholder="Enter your billing address"
-                    v-model="billing_address">
-                  <span class="text-danger" v-if="errors.billing_address">{{ errors.billing_address[0] }}</span>
-                </div>
-
-                <!-- Card Information -->
-                <h5 class="mb-3">Card Details</h5>
-
-                <div class="mb-3">
-                  <label for="cardNumber" class="form-label">Card Number</label>
-                  <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456"
-                    v-model="card_number">
-                  <span class="text-danger" v-if="errors.card_number">{{ errors.card_number[0] }}</span>
-                </div>
-
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label for="cardExpiry" class="form-label">Expiration Date</label>
-                    <input type="text" class="form-control" id="cardExpiry" placeholder="MM/YY"
-                      v-model="expiration_date">
-                    <span class="text-danger" v-if="errors.expiration_date">{{ errors.expiration_date[0] }}</span>
-                  </div>
-
-                  <div class="col-md-6 mb-3">
-                    <label for="cardCVC" class="form-label">CVC</label>
-                    <input type="text" class="form-control" id="cardCVC" placeholder="CVC" v-model="cvc">
-                    <span class="text-danger" v-if="errors.cvc">{{ errors.cvc[0] }}</span>
+                <div class="container mt-4">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-4">
+                          <p class="mb-1">Your order amount:</p>
+                          <h5 class="text-success">${{ formatPrice(SelectedPrice) }}</h5>
+                        </div>
+                        <div class="col-4">
+                          <p class="mb-1">Order Service Fee:</p>
+                          <h5 class="text-warning">${{ formatPrice(serviceFee) }}</h5>
+                        </div>
+                        <div class="col-4">
+                          <p class="mb-1">Tips & Others:</p>
+                          <h5 class="text-warning">${{ formatPrice(tips) }}</h5>
+                        </div>
+                        <div class="col-4">
+                          <p class="mb-1">Subtotal:</p>
+                          <h5 class="font-weight-bold">${{ formatPrice(subtotal) }}</h5>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+                <br />
+
                 <!-- Payment Submit Button -->
                 <button type="submit" class="btn btn-primary w-100 text-white">Payment Confirm</button>
               </form>
@@ -590,7 +563,8 @@
         <div class="modal-dialog modal-dialog-centered">
           <div class="modal-content">
             <div class="modal-header bg-danger">
-              <h1 class="modal-title fs-5 text-white" id="validation_staticBackdropLabel">Profile Image Upload Required</h1>
+              <h1 class="modal-title fs-5 text-white" id="validation_staticBackdropLabel">Profile Image Upload Required
+              </h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -625,6 +599,10 @@ import { storeToRefs } from 'pinia';
 const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore)
 
+
+const serviceFee = ref(2);
+const tips = ref(0);
+
 const gig_id = ref("");
 const captchaInput = ref("");
 const userCapInput = ref("");
@@ -645,6 +623,16 @@ const cvc = ref('');
 const deliveryday = ref('');
 
 const message = ref('');
+
+const formatPrice = (price) => {
+  if (isNaN(price)) return '0.00'; // Handle non-numeric input
+  return Number(price).toFixed(2); // Convert to number and format to 2 decimal places
+};
+
+
+const subtotal = computed(() => {
+  return SelectedPrice.value + serviceFee.value; // Sum of SelectedPrice and serviceFee
+});
 
 
 const goToProfile = () => {
@@ -693,13 +681,11 @@ const contactSend = async () => {
 const submitFrm = () => {
 
   const formData = new FormData();
+  const subtotal  = serviceFee.value + SelectedPrice.value;
   formData.append("gig_id", gig_id.value);
-  formData.append("fullname", fullname.value);
-  formData.append("email_address", email_address.value);
-  formData.append("billing_address", billing_address.value);
-  formData.append("card_number", card_number.value);
-  formData.append("expiration_date", expiration_date.value);
-  formData.append("cvc", cvc.value);
+  formData.append("service_fee", serviceFee.value);
+  formData.append("sub_total", subtotal);
+  formData.append("tips", tips);
   formData.append("SelectedPackages", SelectedPackages.value);
   formData.append("SelectedPrice", SelectedPrice.value);
   formData.append("delivery_day", deliveryday.value);
@@ -713,7 +699,7 @@ const submitFrm = () => {
       Swal.fire({
         icon: 'success',
         title: 'Order Confirm',
-        text: 'Your order confirm please.',
+        text: 'Your Order Successfuly Confirm.',
       });
       $('#payment_modal').modal('hide');
 
@@ -740,15 +726,26 @@ const setPrice = async (packages, price, delivery_day) => {
     const response = await axios.get(`/user/checkDepositBalance`);
     console.log("Deposit Amount is: " + response.data.depositAmount);
     const depositAmount = response.data.depositAmount;
+    serviceFee.value = response.data.tradeFee;
 
     if (depositAmount >= setprice) {
       $('#payment_modal').modal('show');
     } else {
       // If depositAmount is smaller than price
+      const depositLink = '/dashboard/buyer/deposit'; // Dynamic link
+
       Swal.fire({
         icon: 'error',
-        title: 'Deposit too low',
-        text: 'Your deposit is less than the required amount.',
+        title: 'Insufficient balance',
+        html: `
+        <p>Please make a deposit.</p>
+        <a href="${depositLink}" target="_blank" style="color: #007bff; text-decoration: underline;">
+            Click here to deposit
+        </a>
+    `,
+        // showCloseButton: true, // Optional: Show a close button
+        // showCancelButton: true, // Optional: Show a cancel button
+        confirmButtonText: 'Okay', // Optional: Custom text for the confirm button
       });
     }
   } catch (error) {

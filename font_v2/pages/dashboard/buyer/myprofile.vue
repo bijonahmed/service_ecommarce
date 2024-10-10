@@ -164,6 +164,7 @@
                             </div>
                           </div>
 
+
                           <div class="col-md-12">
                             <div class="mb10">
                               <label class="heading-color ff-heading fw500 mb10">Introduce Yourself</label>
@@ -205,7 +206,7 @@
               </div>
               <br />
               <br />
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative d-none">
                 <div class="bdrb1 pb15 mb25">
                   <h5 class="list-title">Skills</h5>
                 </div>
@@ -258,7 +259,7 @@
                   </div>
                 </div>
               </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative d-none">
                 <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
                   <h5 class="list-title">Education</h5>
                   <a href="#" class="add-more-btn text-thm" data-bs-toggle="modal"
@@ -287,7 +288,7 @@
 
                 </div>
               </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative d-none">
                 <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
                   <h5 class="list-title">Work &amp; Experience</h5>
                   <a href="javascript:void(0);" class="add-more-btn text-thm" data-bs-toggle="modal"
@@ -316,7 +317,7 @@
 
                 </div>
               </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative d-none">
                 <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
                   <h5 class="list-title">Certification</h5>
                   <a href="javascript:void(0);" class="add-more-btn text-thm" data-bs-toggle="modal"

@@ -163,10 +163,6 @@
                       </div>
 
 
-
-
-
-
                     </div>
 
                     <div class="row multiple_pack">
@@ -350,8 +346,8 @@
           <div class="modal-body">
             <center style="text-align:justify">Your country is not selected in your profile. Please go to your profile
               page to update it.</center><br />
-            <center><Nuxt-Link to="/dashboard/myprofile" ><button
-                  class="btn btn-primary text-white" @click="goToProfile">Profile</button></Nuxt-Link></center>
+            <center><Nuxt-Link to="/dashboard/myprofile"><button class="btn btn-primary text-white"
+                  @click="goToProfile">Profile</button></Nuxt-Link></center>
           </div>
         </div>
       </div>
@@ -369,9 +365,9 @@
             <center style="text-align:justify">Please introduce yourself in your profile. Please go to your profile page
               to update it.</center><br />
             <center><button class="btn btn-primary text-white" @click="goToProfile">
-    Profile
-  </button>
-</center>
+                Profile
+              </button>
+            </center>
           </div>
         </div>
       </div>
@@ -493,11 +489,11 @@ const remainingChars = computed(() => maxChars - name.value.length);
 
 
 const goToProfile = () => {
-      // Check if running in the browser
-      if (process.client) {
-        window.location.href = '/dashboard/myprofile';
-      }
-    }
+  // Check if running in the browser
+  if (process.client) {
+    window.location.href = '/dashboard/myprofile';
+  }
+}
 // Method to preview thumbnail
 
 const previewThumbnail = (event) => {

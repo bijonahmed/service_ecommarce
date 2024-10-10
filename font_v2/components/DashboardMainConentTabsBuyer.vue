@@ -103,6 +103,8 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
+                      <h3> Available Balance: ${{ depositAmount }}</h3>
+                      <hr />
                       <ShareProfileLinkBuyer />
 
                       <h4 class="widget-title">My Skills</h4>
@@ -430,6 +432,7 @@ const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
 const orderData = ref('');
+const depositAmount = ref(0);
 
 definePageMeta({
   middleware: "is-logged-out",
@@ -479,41 +482,18 @@ const mlm = () => {
   router.push('/dashboard/buyer/mlm')
 }
 
-const getExperience = async () => {
+const getBalance = async () => {
   try {
-    const response = await axios.get(`/user/getExperience`);
-    expdata.value = response.data.expdata;
+    const response = await axios.get(`/user/checkDepositBalance`);
+    depositAmount.value = response.data.show_depositAmount;
   } catch (error) {
     console.log(error);
   }
 };
 
-const getEducations = async () => {
-  try {
-    const response = await axios.get(`/user/geteducation`);
-    euddata.value = response.data.euddata;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const getCertificates = async () => {
-  try {
-    const response = await axios.get(`/user/getCertificate`);
-    certificatedata.value = response.data.certificatedata;
-  } catch (error) {
-    console.log(error);
-  }
-};
 
-const getSkills = async () => {
-  try {
-    const response = await axios.get(`/user/skillsData`);
-    skillsdata.value = response.data.skillsdata;
-  } catch (error) {
-    console.log(error);
-  }
-};
+
 const getAllOrdersList = async () => {
   try {
     const response = await axios.get(`/order/getOrderPlace`);
@@ -629,13 +609,10 @@ const getOrderStatus = async (orderStatusId = 1) => {
 
 
 onMounted(() => {
+  getBalance();
   getOrderCounting();
   getOrderStatus();
   getAllOrdersList();
-  getCertificates();
-  getExperience();
-  getEducations();
-  getSkills();
   chkUserrow();
 });
 onBeforeUnmount(() => {

@@ -676,16 +676,61 @@ class UserController extends Controller
     public function checkDepositBalance()
     {
 
-        $orderAmount = Order::where('buyerId', $this->userid)
-            ->where('order_status', 1)
+        $settingrow   = Setting::find(1);
+
+        $completeAmount = Order::where('buyerId', $this->userid)
+            ->where('order_status', 5)
+            ->sum(DB::raw('sub_total + tips'));
+
+        $returnAmount = Order::where('buyerId', $this->userid)
+            ->where('order_status', 3)
             ->sum('selected_price');
+
+        $orderAmount = Order::where('buyerId', $this->userid)
+            ->whereNotIn('order_status', [3])
+            ->sum('sub_total');
+
+        // Calculate 5% of the complete amount
+        // echo "Complete Amount : $completeAmount<br>";
+        // $fivePercentOfCompleteAmount = $completeAmount * 0.05;
+        // echo $fivePercentOfCompleteAmount;
+        // exit;
+
+        // If you need to return or use this value
+        //  return $fivePercentOfCompleteAmount;
+
+        // echo "canel amount is : $returnAmount--------------------order amount : $orderAmount-";
+        // exit; 
+
+        $result      = $orderAmount + $returnAmount;
+        $orderAmount = $result;
+
+
+
+
+
+
+
+
+
+
 
         $depositAmt = Deposit::where('user_id', $this->userid)
             ->where('status', 1)
             ->sum('deposit_amount');
         try {
             // Calculate the deposit amount
-            $data['depositAmount'] = abs($depositAmt - $orderAmount);
+
+
+
+            $result = abs($depositAmt - $orderAmount);
+
+
+            $data['depositAmount']      = $result;
+            $data['show_depositAmount'] = number_format($result, 2);
+            $data['tradeFee']           = $settingrow->trade_fee;
+
+            //$data['depositAmount'] = abs($depositAmt - $orderAmount);
 
             return response()->json($data);
         } catch (\Exception $e) {
@@ -693,17 +738,44 @@ class UserController extends Controller
         }
     }
 
+
+    public function getWaypaymentConfirm(Request $request)
+    {
+
+        //  dd($request->all());
+        $request->validate([
+            'amount'                  => 'required',
+            //  'frm_wallet_address'      => 'required',
+        ]);
+        $rdata = [
+            'user_id'           => $this->userid, // Assuming you are using authentication
+            'deposit_amount'    => $request->amount,
+            'frm_wallet_address' => "", // $request->frm_wallet_address,
+            'payment_method'    => $request->paymentMethod,
+            'status'            => 0,
+        ];
+        $data =  Deposit::create($rdata);
+
+        $uniqueDepositID = 'DEP' . str_pad($data->id, 6, '0', STR_PAD_LEFT); // E.g., "DEP000123"
+        $data->update(['depositID' => $uniqueDepositID]);
+
+        return response()->json([
+            'message' => 'added successfully!',
+            'data'    => $data
+        ]);
+    }
+
     public function saveDeposit(Request $request)
     {
         //dd($request->all());
         $request->validate([
             'amount'                  => 'required',
-            'frm_wallet_address'      => 'required',
+            //  'frm_wallet_address'      => 'required',
         ]);
         $rdata = [
             'user_id'           => $this->userid, // Assuming you are using authentication
             'deposit_amount'    => $request->amount,
-            'frm_wallet_address' => $request->frm_wallet_address,
+            'frm_wallet_address' => "", // $request->frm_wallet_address,
             'payment_method'    => 'TRX(TRC20)',
             'status'            => 0,
         ];

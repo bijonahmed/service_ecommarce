@@ -11,7 +11,9 @@ export default defineNuxtConfig({
       hashMode: false, // Disable hash mode
     },
   },
-
+  async asyncData({ $nuxt }) {
+    $nuxt.$store.commit('SET_CACHE_HEADER', 'no-store');
+  },
   nitro: {
     prerender: {
       crawlLinks: true,

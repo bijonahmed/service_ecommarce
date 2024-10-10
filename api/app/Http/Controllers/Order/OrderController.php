@@ -319,30 +319,9 @@ class OrderController extends Controller
             ->where('orders.order_status', 5)
             ->get();
 
-        $orders = [];
+       
         $earning = 0;
         foreach ($data as $v) {
-
-            $convDay = $v->delivery_day_convert_date;
-            $currentDateTime = Carbon::now();
-            $deliveryDateTime = Carbon::parse($convDay);
-
-            if ($deliveryDateTime->isPast()) {
-                $formattedTime = "Time Over";
-            } else {
-                // Calculate the difference
-                $remainingTime = $currentDateTime->diff($deliveryDateTime);
-
-                // Format the remaining time
-                $formattedTime = sprintf(
-                    '%d days, %d hours, %d minutes, %d seconds',
-                    $remainingTime->days,
-                    $remainingTime->h,
-                    $remainingTime->i,
-                    $remainingTime->s // Include seconds if you want to show them
-                );
-            }
-
             $row             = DB::table('tbl_setting')->where('id', 1)->first();
             $percentage      = $row->forSellerCommission; // Convert to float
             $selectedPrice   = $v->selected_price; // Convert to float
@@ -350,30 +329,10 @@ class OrderController extends Controller
             $originalPrice   = $v->selected_price; // Ensure selected_packages is also a float
             $perResult       = floatval($perResult); // Ensure $perResult is a float
             $result          =  $originalPrice - $perResult; // This will work without error
-            $earning += $v->selected_price; //$result;
-
-            $orders[] = [
-                'id'                => $v->id,
-                'orderId'           => $v->orderId,
-                'gig_slug'          => $v->gig_slug,
-                'user_id'           => $v->user_id,
-                'gig_name'          => $v->gig_name,
-                'created_at'        => $v->created_at,
-                //'selected_price'    => "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result",
-                'selected_price'    => "$result",
-                'selected_packages' => $v->selected_packages,
-                'order_status'      => $v->order_status,
-                'reamingitime'      => $formattedTime,
-
-            ];
+            $earning += $result;
+            
         }
-
-        $receivable_amount = Withdraw::where('withdraw.user_id', $this->userid)->where('status', 1)->sum('receivable_amount');
-        $receivable_amount = $receivable_amount ?: 0;
-        // Calculate the remaining earning
-        $rdata['earning']  = $earning - $receivable_amount;
-        $rdata['orders']   = $orders;
-
+        $rdata['earning']  = $earning;
         return response()->json($rdata, 200);
     }
 
@@ -437,6 +396,7 @@ class OrderController extends Controller
             ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
             ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
             ->where('orders.order_status', $orderStatusId)
+            ->orderby('orders.id', 'desc')
             ->get();
 
         $orders = [];
@@ -769,31 +729,17 @@ class OrderController extends Controller
 
     public function submitOrder(Request $request)
     {
-        //  dd($request->all());
-
+        //dd($request->all());
         $validator = FacadesValidator::make(
             $request->all(),
             [
                 'gig_id'                 => 'required',
-                'fullname'               => 'required',
-                'email_address'          => 'required',
-                'billing_address'        => 'required',
-                'card_number'            => 'required',
-                'expiration_date'        => 'required',
-                'cvc'                    => 'required',
                 'SelectedPackages'       => 'required',
                 'SelectedPrice'          => 'required',
 
             ],
             [
                 'gig_id'                => 'Gig is required',
-                'fullname'              => 'Fullname is required',
-                'email_address'         => 'Email address is required',
-                'billing_address'       => 'Billing address Address is required',
-                'card_number'           => 'Card is required',
-                'expiration_date'       => 'Expire date is required',
-                'cvc'                   => 'CVC is required',
-
             ]
         );
 
@@ -804,33 +750,47 @@ class OrderController extends Controller
         $chkSeller = Gig::where('id', $request->gig_id)->select('user_id')->first();
 
 
+        $lev1_comm = 5;
+        $lev2_comm = 4;
+        $lev3_comm = 3;
+        $lev4_comm = 2;
+        $lev5_comm = 1;
+
+        $serviceFee     = $request->service_fee;
+        $lev1CommAmount = ($lev1_comm / 100) * $serviceFee;
+        $lev2CommAmount = ($lev2_comm / 100) * $serviceFee;
+        $lev3CommAmount = ($lev3_comm / 100) * $serviceFee;
+        $lev4CommAmount = ($lev4_comm / 100) * $serviceFee;
+        $lev5CommAmount = ($lev5_comm / 100) * $serviceFee;
+
+        $subTotal = is_numeric($request->sub_total) ? (float) $request->sub_total : 0; // Cast to float or set to 0 if non-numeric
+        $tips = is_numeric($request->tips) ? (float) $request->tips : 0; // Cast to float or set to 0 if non-numeric
+        $total = $subTotal + $tips; 
+
+
         $gig_id                 = $request->gig_id;
         $seller_id              = $chkSeller->user_id ? $chkSeller->user_id : "";
-        $fullname               = $request->fullname;
-        $email_address          = $request->email_address;
-        $billing_address        = $request->billing_address;
-        $card_number            = $request->card_number;
-        $expiration_date        = $request->expiration_date;
-        $cvc                    = $request->cvc;
+        $service_fee            = $request->service_fee;
+        $sub_total              = $total;
         $SelectedPackages       = $request->SelectedPackages;
         $SelectedPrice          = $request->SelectedPrice;
         $delivery_day           = $request->delivery_day;
-
-
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
 
         // Create an array with the necessary fields
         $orderData = [
             'gig_id'              => $gig_id,
+            'tips'                => $tips,
+            'lev_1'               => $lev1CommAmount,
+            'lev_2'               => $lev2CommAmount,
+            'lev_3'               => $lev3CommAmount,
+            'lev_4'               => $lev4CommAmount,
+            'lev_5'               => $lev5CommAmount,
             'sellerId'            => $seller_id,
-            'fullname'            => $fullname,
-            'email_address'       => $email_address,
             'buyerId'             => $this->userid,
-            'billing_address'     => $billing_address,
-            'card_number'         => $card_number,
-            'expiration_date'     => $expiration_date,
-            'cvc'                 => $cvc,
+            'service_fee'         => $service_fee,
+            'sub_total'           => $sub_total,
             'selected_packages'   => $SelectedPackages, // Assuming this is an array and needs to be stored as JSON
             'selected_price'      => $SelectedPrice,
             'delivery_day'        => $delivery_day,

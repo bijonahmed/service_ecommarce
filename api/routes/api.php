@@ -118,6 +118,8 @@ Route::group([
     Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
     Route::get('getDeposit', [UserController::class, 'getDeposit']);
     Route::post('saveDeposit', [UserController::class, 'saveDeposit']);
+    Route::post('getWaypaymentConfirm', [UserController::class, 'getWaypaymentConfirm']);
+    
     Route::post('add-certificate', [UserController::class, 'addcertificate']);
     Route::post('add-experience', [UserController::class, 'addExperience']);
     Route::post('add-education', [UserController::class, 'addeducation']);

@@ -217,8 +217,6 @@ class AuthController extends Controller
                 $response[$column] = $value;
             }
 
-             
-
             $countryid     = !empty($user) ? $user->country_1 : "";
             $proId         = !empty($user) ? $user->profession_name : "";
             $chkCountry    = Country::where('id', $countryid)->first();

@@ -633,8 +633,6 @@ const cancelOrdersCount = ref(0);
 const completeOrdersCount = ref(0);
 
 
-
-
 const getOrderCounting = async () => {
   try {
     const response = await axios.get(`/order/getOrderCounting`);
