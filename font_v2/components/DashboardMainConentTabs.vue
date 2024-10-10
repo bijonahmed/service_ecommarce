@@ -32,7 +32,7 @@
                   class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders</button>
             </li>
             <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="myearning" aria-selected="false">
+              <button class="nav-link fw500 dark-color" @click="mywithdraw" aria-selected="false">
                 <i class="	fas fa-dollar-sign" aria-hidden="true"></i>&nbsp;Withdraw </button>
             </li>
 
@@ -65,7 +65,7 @@
                               <span class="online"></span>
                               <img class=" wa-sm mb15-sm rounded-circle"
                                 style="height:150px; width: 150px; overflow: hidden; object-fit: cover;"
-                                :src="profileLogo || '/blank_user.jpg'" alt="Freelancer Photo">
+                                :src="profileLogo || '/blank_user.jpg'" alt="">
                             </a>
                             <div class="ml20 ml0-xs">
                               <h5 class="title mb-1">{{ name }} <b>(Seller Account)</b></h5>
@@ -98,8 +98,7 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
-                      <h3> My Total Earning: ${{ earning }}</h3> <nuxt-link to="/dashboard/earning">Details Earning
-                        Summary</nuxt-link>
+                      <h3> My Total Earning: ${{ earning }}</h3>
                       <hr />
                       <ShareProfileLink />
                       <hr>
@@ -153,9 +152,9 @@
                       </div>
                     </div>
 
-                    <div class="col-lg-8">
+            <div class="col-lg-8">
 
-                      <div class="custom-tab-container">
+                    <div class="custom-tab-container">
                         <!-- Custom Nav Tabs -->
                         <ul class="custom-nav-tabs nav nav-tabs" id="orderTabs" role="tablist">
                           <li class="custom-tab-item nav-item" role="presentation" @click="getOrderStatus(1)">
@@ -549,8 +548,8 @@ const myorders = () => {
   router.push('/dashboard/orders')
 }
 
-const myearning = () => {
-  router.push('/dashboard/earning')
+const mywithdraw = () => {
+  router.push('/dashboard/withdrawalrequest')
 }
 
 const mygig = () => {
@@ -687,9 +686,9 @@ const getOrderStatus = async (orderStatusId = 1) => {
 
 onMounted(() => {
   getOrderCounting();
+  getOrderStatus();
   getmlmList();
   freelancerEarning();
-  getOrderStatus();
   getCertificates();
   getExperience();
   getEducations();

@@ -59,6 +59,8 @@
             <div class="col-xl-12">
               <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
 
+
+
                 <div class="col-lg-12">
                   <form class="form-style1" @submit.prevent="submitForm" enctype="multipart/form-data">
                     <div class="row">
@@ -154,7 +156,8 @@
                       <div class="col-md-12">
                         <div class="mb10">
                           <label class="heading-color ff-heading fw500 mb10">Order Rules</label>
-                          <textarea class="form-control" rows="15" v-model="order_rules" style="height: 200px;"></textarea>
+                          <textarea class="form-control" rows="15" v-model="order_rules"
+                            style="height: 200px;"></textarea>
                           <span class="text-danger" v-if="errors.order_rules">{{ errors.order_rules[0] }}</span>
                         </div>
                       </div>
@@ -334,6 +337,46 @@
         </div>
       </div>
     </div>
+
+
+    <!-- country Modal -->
+    <div class="modal fade" id="myModalCountry" tabindex="-1" aria-labelledby="myModalCountryLabel" aria-hidden="true"
+      data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalCountryLabel">Message</h5>
+          </div>
+          <div class="modal-body">
+            <center style="text-align:justify">Your country is not selected in your profile. Please go to your profile
+              page to update it.</center><br />
+            <center><Nuxt-Link to="/dashboard/myprofile" ><button
+                  class="btn btn-primary text-white" @click="goToProfile">Profile</button></Nuxt-Link></center>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- introduce yourself Modal -->
+    <div class="modal fade" id="myModalintroduceYourSelf" tabindex="-1" aria-labelledby="myModalintroduceYourSelfLabel"
+      aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="myModalintroduceYourSelfLabel">Message</h5>
+          </div>
+          <div class="modal-body">
+            <center style="text-align:justify">Please introduce yourself in your profile. Please go to your profile page
+              to update it.</center><br />
+            <center><button class="btn btn-primary text-white" @click="goToProfile">
+    Profile
+  </button>
+</center>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <Footer />
   </body>
 </template>
@@ -402,8 +445,8 @@ const imagePreview = ref(null);
 const stn_description = ref('');
 
 
-// const basic_description = ref('');
-// const stn_description = ref('');
+const country_1 = ref('');
+const introduce_yourself = ref('');
 // const premium_description = ref('');
 
 const basicCharCount = ref(0);
@@ -448,6 +491,13 @@ const handleFileUpload = (event) => {
 const maxChars = 80;
 const remainingChars = computed(() => maxChars - name.value.length);
 
+
+const goToProfile = () => {
+      // Check if running in the browser
+      if (process.client) {
+        window.location.href = '/dashboard/myprofile';
+      }
+    }
 // Method to preview thumbnail
 
 const previewThumbnail = (event) => {
@@ -769,6 +819,17 @@ const chkUserrow = async () => {
   try {
     const response = await axios.post(`/auth/me`);
     profileLogo.value = response.data.profileLogo;
+    country_1.value = response.data.country_1;
+    introduce_yourself.value = response.data.introduce_yourself;
+
+    if (response.data.country_1 === null) {
+      $('#myModalCountry').modal('show');
+    }
+
+    if (response.data.introduce_yourself === '') {
+      $('#myModalintroduceYourSelf').modal('show');
+    }
+
     if (!response.data.profileLogo) {
       // Initialize the modal
       const modal = new bootstrap.Modal(document.getElementById('profileUpdateModal'), {

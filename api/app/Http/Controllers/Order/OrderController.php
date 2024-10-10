@@ -12,7 +12,7 @@ use App\Models\Order;
 use Carbon\Carbon;
 use Validator;
 use App\Models\OrderStatus;
-use App\Models\OrderHistory;
+use App\Models\Withdraw;
 use App\Models\ProductCategory;
 use App\Models\CategoryCommissionHistory;
 use App\Models\couponUseHistory;
@@ -90,7 +90,7 @@ class OrderController extends Controller
 
         $order   = Order::where('orders.orderId', $orderId)
             ->join('gig', 'orders.gig_id', '=', 'gig.id')  // Join orders with gigs table
-            ->select('gig.id', 'orders.buyerId', 'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description', 'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 'gig.types', 'orders.selected_packages', 'orders.selected_price', 'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
+            ->select('gig.id', 'orders.sellerId', 'orders.buyerId', 'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description', 'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 'gig.types', 'orders.selected_packages', 'orders.selected_price', 'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
             ->first();
 
         $imgHistory = GigImagesHistory::where('gig_id', $order->id)->get();
@@ -141,6 +141,10 @@ class OrderController extends Controller
         $data['order_status']          = !empty($orderStatusName) ?  $orderStatusName->name : "";
         $data['ordsts']                = !empty($order->order_status) ?  $order->order_status : "";
         $data['imgdata']               = $imgdata;
+
+        $data['buyerId']               = $order->buyerId;
+        $data['sellerId']              = $order->sellerId;
+        //  dd($data);
 
         return response()->json(['data' => $data]);
     }
@@ -312,7 +316,7 @@ class OrderController extends Controller
         $data = Order::where('sellerId', $this->userid)
             ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
             ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
-            ->where('orders.order_status', 3)
+            ->where('orders.order_status', 5)
             ->get();
 
         $orders = [];
@@ -346,7 +350,7 @@ class OrderController extends Controller
             $originalPrice   = $v->selected_price; // Ensure selected_packages is also a float
             $perResult       = floatval($perResult); // Ensure $perResult is a float
             $result          =  $originalPrice - $perResult; // This will work without error
-            $earning += $result;
+            $earning += $v->selected_price; //$result;
 
             $orders[] = [
                 'id'                => $v->id,
@@ -364,13 +368,37 @@ class OrderController extends Controller
             ];
         }
 
-        $rdata['earning'] = $earning;
-        $rdata['orders']  = $orders;
+        $receivable_amount = Withdraw::where('withdraw.user_id', $this->userid)->where('status', 1)->sum('receivable_amount');
+        $receivable_amount = $receivable_amount ?: 0;
+        // Calculate the remaining earning
+        $rdata['earning']  = $earning - $receivable_amount;
+        $rdata['orders']   = $orders;
 
         return response()->json($rdata, 200);
     }
 
 
+
+    public function getOrderCountBuyer(Request $request)
+    {
+
+        $data = Order::where('buyerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->get();
+
+        // Group orders by order_status
+        $groupedOrders = $data->groupBy('order_status');
+
+        // Initialize order counts
+        $ordata['placeOrdersCount']      = isset($groupedOrders[1]) ? count($groupedOrders[1]) : 0;
+        $ordata['inprogressOrdersCount'] = isset($groupedOrders[2]) ? count($groupedOrders[2]) : 0;
+        $ordata['cancelOrdersCount']     = isset($groupedOrders[3]) ? count($groupedOrders[3]) : 0;
+        $ordata['deliveryOrdersCount']   = isset($groupedOrders[4]) ? count($groupedOrders[4]) : 0;
+        $ordata['completeOrdersCount']   = isset($groupedOrders[5]) ? count($groupedOrders[5]) : 0;
+
+        return response()->json($ordata, 200);
+    }
 
     public function getOrderCounting(Request $request)
     {
@@ -404,7 +432,6 @@ class OrderController extends Controller
 
     public function getOrderPlaceForSeller(Request $request)
     {
-
         $orderStatusId = $request->orderStatusId;
         $data          = Order::where('sellerId', $this->userid)
             ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
@@ -476,6 +503,99 @@ class OrderController extends Controller
         $ordata['deliveryOrdersCount']   = count($orders);
         $ordata['cancelOrdersCount']     = count($orders);
         $ordata['completeOrdersCount']   = count($orders);
+        return response()->json($ordata, 200);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $data['order_status'] = $request->status;
+        Order::where('orderId', $request->oId)->update($data);
+        return response()->json("update successfully", 200);
+    }
+
+
+    public function cancelOrderBuyer($orderId)
+    {
+
+        $orderId = $orderId;
+        $status_id = 3;
+        $data['order_status'] = $status_id;
+        Order::where('orderId', $orderId)->update($data);
+        return response()->json("update successfully", 200);
+    }
+
+
+    public function getOrderPlaceForByer(Request $request)
+    {
+
+        $orderStatusId = $request->orderStatusId;
+        $data          = Order::where('buyerId', $this->userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->where('orders.order_status', $orderStatusId)
+            ->get();
+
+        $orders = [];
+        foreach ($data as $v) {
+
+            $convDay = $v->delivery_day_convert_date;
+            $currentDateTime = Carbon::now();
+            $deliveryDateTime = Carbon::parse($convDay);
+
+            if ($deliveryDateTime->isPast()) {
+                // $formattedTime = "<span style='color:black;'>Time Out<br/><small style='font-size: 10px;'>Request a time extension from the details page.</small></span>";
+                $formattedTime = "<span style='color:black;'>Time Out</span>";
+            } else {
+                // Calculate the difference
+                $remainingTime = $currentDateTime->diff($deliveryDateTime);
+
+                //echo $remainingTime."<br>";
+
+                // Format the remaining time
+                $formattedTime = sprintf(
+                    '%d days, %d hours, %d minutes, %d seconds',
+                    $remainingTime->days,
+                    $remainingTime->h,
+                    $remainingTime->i,
+                    $remainingTime->s // Include seconds if you want to show them
+                );
+            }
+
+            $orders[] = [
+                'id'                => $v->id,
+                'orderId'           => $v->orderId,
+                'gig_slug'          => $v->gig_slug,
+                'user_id'           => $v->user_id,
+                'gig_name'          => substr($v->gig_name, 0, 30) . '...',
+                'created_at'        => $v->created_at,
+                'ddcovertDate'      => $v->delivery_day_convert_date,
+                'selected_price'    => $v->selected_price,
+                'selected_packages' => $v->selected_packages,
+                'order_status'      => $v->order_status,
+                'reamingitime'      => $formattedTime,
+
+            ];
+        }
+
+        if ($orderStatusId == 1) {
+            $ordata['placeOrders']   = $orders;
+        }
+
+        if ($orderStatusId == 2) {
+            $ordata['inprogressOrders'] = $orders;
+        }
+
+        if ($orderStatusId == 3) {
+            $ordata['cancelOrders']   = $orders;
+        }
+
+        if ($orderStatusId == 4) {
+            $ordata['deliveryOrders'] = $orders;
+        }
+        if ($orderStatusId == 5) {
+            $ordata['completeOrders'] = $orders;
+        }
+
         return response()->json($ordata, 200);
     }
 

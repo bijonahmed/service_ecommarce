@@ -45,8 +45,14 @@
                       <div class="list-meta d-sm-flex align-items-center mt30">
                         <a class="position-relative freelancer-single-style" href="#">
                           <span class="online"></span>
-                          <img class="w-100 wa-sm mb15-sm" :src="profileLogo || 'profile_default.png'"
-                            style="height:150px; border-radius: 10px;;" alt="Freelancer Photo">
+
+
+                          <img class=" wa-sm mb15-sm rounded-circle"
+                            style="height:150px; width: 150px; overflow: hidden; object-fit: cover;"
+                            :src="profileLogo || '/blank_user.jpg'" alt="">
+
+
+
                         </a>
                         <div class="ml20 ml0-xs">
                           <h5 class="title mb-1">{{ name }}</h5>
@@ -81,56 +87,68 @@
                 <h4>Description</h4>
                 <p class="text mb30 text-justify" style="text-align: justify;" v-html="introduce_yourself"></p>
 
-                
+
                 <div class="col-lg-9">
-                  <h4 class="widget-title">My Skills</h4>
-                      <div class="tag-list mt30">
-                        <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
-                      </div>
+                  <span v-if="skillsdata && skillsdata.length > 0">
+                    <h4 class="widget-title">My Skills</h4>
+                    <div class="tag-list mt30">
+                      <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
+                    </div>
+                  </span>
                   <!-- ============{{ userResponseData.profile_status }}======== -->
                   <div class="service-about">
-                    <hr class="opacity-100 mb10 mt10">
-                    <h4 class="mb30">Education</h4>
-                    <div class="educational-quality_">
+                    <span v-if="euddata && euddata.length > 0">
+                      <hr class="opacity-100 mb10 mt10">
+                      <h4 class="mb30">Education</h4>
+                      <div class="educational-quality_">
+                        <div class="wrapper mb40" v-for="edu in euddata" :key="edu.id">
+                          <span class="tag">{{ edu.year }}</span>
+                          <h5 class="mt15">{{ edu.subject }}</h5>
+                          <h6 class="text-thm">{{ edu.college }}</h6>
+                          <p>{{ edu.description }}
+                          </p>
+                        </div>
+                      </div>
+                    </span>
 
-                      <div class="wrapper mb40" v-for="edu in euddata" :key="edu.id">
-                        <span class="tag">{{ edu.year }}</span>
-                        <h5 class="mt15">{{ edu.subject }}</h5>
-                        <h6 class="text-thm">{{ edu.college }}</h6>
-                        <p>{{ edu.description }}
-                        </p>
+
+                    <span v-if="expdata && expdata.length > 0">
+                      <hr class="opacity-100 mb60">
+                      <h4 class="mb30">Work & Experience</h4>
+                      <div class="educational-quality_">
+                        <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
+                          <span class="tag">{{ edu.year }}</span>
+                          <h5 class="mt15">{{ edu.role }}</h5>
+                          <h6 class="text-thm">{{ edu.company }}</h6>
+                          <p>{{ edu.description }}
+                          </p>
+                        </div>
+
+                      </div>
+                    </span>
+
+                    <span v-if="certificatedata && certificatedata.length > 0">
+                      <hr class="opacity-100 mb60">
+                      <h4 class="mb30">Awards adn Certificates</h4>
+                      <div class="educational-quality__">
+                        <div class="wrapper mb40" v-for="cer in certificatedata" :key="cer.id">
+                          <span class="tag">{{ cer.year }}</span>
+                          <h5 class="mt15">{{ cer.course_name }}</h5>
+                          <h6 class="text-thm">{{ cer.institute_name }}</h6>
+                          <p>{{ cer.description }}
+                          </p>
+                        </div>
+
                       </div>
 
-                    </div>
-                    <hr class="opacity-100 mb60">
-                    <h4 class="mb30">Work & Experience</h4>
-                    <div class="educational-quality_">
-                      <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
-                        <span class="tag">{{ edu.year }}</span>
-                        <h5 class="mt15">{{ edu.role }}</h5>
-                        <h6 class="text-thm">{{ edu.company }}</h6>
-                        <p>{{ edu.description }}
-                        </p>
-                      </div>
 
-                    </div>
-                    <hr class="opacity-100 mb60">
-                    <h4 class="mb30">Awards adn Certificates</h4>
-                    <div class="educational-quality__">
-                      <div class="wrapper mb40" v-for="cer in certificatedata" :key="cer.id">
-                        <span class="tag">{{ cer.year }}</span>
-                        <h5 class="mt15">{{ cer.course_name }}</h5>
-                        <h6 class="text-thm">{{ cer.institute_name }}</h6>
-                        <p>{{ cer.description }}
-                        </p>
-                      </div>
+                    </span>
 
-                    </div>
 
                   </div>
                 </div>
 
-               
+
 
               </div>
             </div>

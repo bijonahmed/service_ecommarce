@@ -154,13 +154,19 @@ Route::group([
     Route::get('getTime', [UserController::class, 'getTime']);
     Route::get('cardlist/{id}', [UserController::class, 'getCard']);
     Route::get('blogs', [UserController::class, 'getblogs']);
+    Route::post('addWalletAddress', [UserController::class, 'addWalletAddress']);
+    Route::get('getwithdrawalMethod', [UserController::class, 'getwithdrawalMethod']);
+    Route::post('addwithdrawal', [UserController::class, 'addwithdrawal']);
+    
+    
 });
 
 Route::group([
     'prefix' => 'deposit'
 ], function () {
 
-    Route::get('getDepositfetchdata', [DepositController::class, 'getDepositfetchdata']);
+    Route::post('saveWithdrawal', [UserController::class, 'saveWithdrawal']);
+    Route::post('addwithdrawal', [DepositController::class, 'getWithdrwalfetchdata']);
     Route::get('getWithdrwalfetchdata', [DepositController::class, 'getWithdrwalfetchdata']);
     Route::get('getSendReceived', [DepositController::class, 'getSendReceived']);
     Route::get('getWithMethodList', [DepositController::class, 'getWithMethodList']);
@@ -174,10 +180,11 @@ Route::group([
     Route::get('getWithMethodRow/', [DepositController::class, 'getWithMethodRow']);
     Route::get('deposit-list', [DepositController::class, 'getDepositList']);
     Route::get('withdrawal-list', [DepositController::class, 'getwithdrawalList']);
+    Route::get('getwithdrawList', [DepositController::class, 'getwithdrawList']);
     Route::post('updateDepositRequest', [DepositController::class, 'updateDepositRequest']);
     Route::post('updateWithDrawRequest', [DepositController::class, 'updateWithDrawRequest']);
     Route::post('addWithDrawMethod', [DepositController::class, 'addWithDrawMethod']);
-    Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
+    // Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
 });
 
 Route::group([
@@ -241,9 +248,12 @@ Route::group([
 Route::group([
     'prefix' => 'order'
 ], function () {
+    Route::get('updateStatus', [OrderController::class, 'updateStatus']);
+    Route::get('cancel-order-buyer/{orderId}', [OrderController::class, 'cancelOrderBuyer']);
     Route::post('updateDeliveryGig', [OrderController::class, 'updateDeliveryGig']);
     Route::get('checkOrder', [OrderController::class, 'checkOrder']);
     Route::get('getOrderCounting', [OrderController::class, 'getOrderCounting']);
+    Route::get('getOrderCountBuyer', [OrderController::class, 'getOrderCountBuyer']);
     Route::get('aceptOder', [OrderController::class, 'aceptOder']);
     Route::get('rejectOrder', [OrderController::class, 'rejectOrder']);
     Route::post('updateOrder', [OrderController::class, 'updateOrder']);
@@ -251,6 +261,7 @@ Route::group([
     Route::get('getOrder', [OrderController::class, 'getOrder']);
     Route::get('getOrderForSeller', [OrderController::class, 'getOrderForSeller']);
     Route::get('getOrderPlaceForSeller', [OrderController::class, 'getOrderPlaceForSeller']);
+    Route::get('getOrderPlaceForByer', [OrderController::class, 'getOrderPlaceForByer']);
     Route::get('getOrderForSellerEarning', [OrderController::class, 'getOrderForSellerEarning']);
     Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
     Route::get('allOrders', [OrderController::class, 'allOrders']);

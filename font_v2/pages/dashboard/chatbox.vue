@@ -61,9 +61,9 @@
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
-                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item text-white"
-                  :class="['chat-user-item', { selected: selectedUserId === user.id }]" 
-                    >
+                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                      class="chat-user-item text-white"
+                      :class="['chat-user-item', { selected: selectedUserId === user.id }]">
                       <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
                       <span>{{ user.user_name }}</span>
                     </li>
@@ -80,7 +80,6 @@
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
-
                       <img
                         :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
                         alt="Profile Picture" class="profile-picture" />
@@ -136,7 +135,7 @@
     <Footer />
   </body>
 </template>
- 
+
 <script setup>
 definePageMeta({
   middleware: "is-logged-out",
@@ -202,8 +201,6 @@ async function sendMessage() {
       },
     });
     console.log(response);
-
-    // Handle the response
     fetchChatHistory(); // Refresh the chat history after sending the message
     messageContent.value = ''; // Clear the message input
     uploadedFile.value = null; // Clear the file input
@@ -216,7 +213,7 @@ async function sendMessage() {
     }
   }
 }
- 
+
 // Automatically reload the chat history every 5 seconds
 const fetchChatHistory = async () => {
   //loading.value = true; // Set loading to true
@@ -334,7 +331,7 @@ onMounted(() => {
 
 });
 
- 
+
 // Clear the interval when the component is unmounted
 onBeforeUnmount(() => {
   clearInterval(intervalId); // Stop the interval when the component is destroyed

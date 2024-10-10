@@ -41,15 +41,16 @@
                 <div class="col-sm-4 col-lg-2">
                   <div class="d-flex align-items-center justify-content-sm-end">
                     <div class="share-save-widget d-flex align-items-center" @click="currentPageCopy">
-                      <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                      <div class="h6 mb-0"><a href="#">Share</a></div>
-                     
+
+                      <!-- <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                      <div class="h6 mb-0"><a href="#">Share</a></div> -->
+
                     </div>
-                    
-                    <div class="share-save-widget d-flex align-items-center ml15">
+
+                    <!-- <div class="share-save-widget d-flex align-items-center ml15">
                       <span class="icon flaticon-like dark-color fz12 mr10"></span>
                       <div class="h6 mb-0">Save</div>
-                    </div>
+                    </div> -->
                   </div>
                   <div v-if="message" class="alert alert-success mt-2">{{ message }}</div>
                 </div>
@@ -240,7 +241,8 @@
                                 </div>
                                 <div class="d-grid">
                                   <a href="#" class="ud-btn btn-thm"
-                                    @click="setPrice('Basic', responseData.basic_price , responseData.basic_delivery_days)" v-if="isLoggedIn">Continue ${{
+                                    @click="setPrice('Basic', responseData.basic_price, responseData.basic_delivery_days)"
+                                    v-if="isLoggedIn">Continue ${{
                                       responseData.basic_price }}<i class="fal fa-arrow-right-long"></i></a>
 
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
@@ -304,7 +306,8 @@
                                 <div class="d-grid">
 
                                   <a href="#" class="ud-btn btn-thm"
-                                    @click="setPrice('Premium', responseData.premium_price, responseData.premium_delivery_days)" v-if="isLoggedIn">Continue
+                                    @click="setPrice('Premium', responseData.premium_price, responseData.premium_delivery_days)"
+                                    v-if="isLoggedIn">Continue
                                     ${{ responseData.premium_price }}<i class="fal fa-arrow-right-long"></i></a>
 
                                   <a href="#" class="ud-btn btn-thm" v-if="!isLoggedIn" data-bs-toggle="modal"
@@ -344,7 +347,8 @@
                             </div>
                             <div class="d-grid">
 
-                              <a href="#" class="ud-btn btn-thm" @click="setPrice('Single', responseData.price, responseData.delivery_day)"
+                              <a href="#" class="ud-btn btn-thm"
+                                @click="setPrice('Single', responseData.price, responseData.delivery_day)"
                                 v-if="isLoggedIn">Continue
                                 ${{ responseData.price }}<i class="fal fa-arrow-right-long"></i></a>
 
@@ -580,6 +584,24 @@
         </div>
       </div>
 
+      <!-- Validation Modal -->
+      <div class="modal fade" id="validation_staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+        tabindex="-1" aria-labelledby="validation_staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header bg-danger">
+              <h1 class="modal-title fs-5 text-white" id="validation_staticBackdropLabel">Profile Image Upload Required</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <h3>Kindly upload your profile picture first.</h3>
+              <center><button type="button" class="btn btn-info" @click="goToProfile">Profile</button></center>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
     </body>
 
   </div>
@@ -623,6 +645,16 @@ const cvc = ref('');
 const deliveryday = ref('');
 
 const message = ref('');
+
+
+const goToProfile = () => {
+  router.push('/dashboard/buyer/myprofile').then(() => {
+    if (process.client) { // Ensure it's run on the client side only
+      window.location.reload() // Forces a reload after navigating
+    }
+  })
+}
+
 
 const currentPageCopy = async () => {
   try {
@@ -860,7 +892,24 @@ const getCatList = async () => {
 const isActive = (slug) => {
   return slug === route.params.slug; // Compare slug with the current route's slug
 };
+
+const defaultParticularData = async () => {
+  try {
+    const response = await axios.post("/auth/me");
+    //profileLogo.value = response.data.profileLogo;
+
+    if (response.data.profileLogo == '') {
+      $('#validation_staticBackdrop').modal('show');
+    }
+    console.log("Profile Images: " + response.data.profileLogo);
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};
+
 onMounted(() => {
+  defaultParticularData();
   createCaptcha();
   checkrow();
   getCatList();

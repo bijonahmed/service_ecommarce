@@ -20,7 +20,7 @@ use App\Models\PaymentCard;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\BlogModel;
-use App\Models\blogCategory;
+use App\Models\WithdrawMethod;
 use App\Models\Certificate;
 use App\Models\Profession;
 use App\Models\Setting;
@@ -57,9 +57,9 @@ class UserController extends Controller
         $data['total_deposit']  = Deposit::where('status', 1)->count();
         $data['total_withdraw'] = Withdraw::where('status', 1)->count();
         $data['total_users']    = User::where('role_id', 2)->where('status', 1)->count();
-        $data['total_products'] =0;
-        $data['user_name']      = !empty($user_row->name) ? $user_row->name: "" ;
-       
+        $data['total_products'] = 0;
+        $data['user_name']      = !empty($user_row->name) ? $user_row->name : "";
+
         return response()->json($data);
     }
 
@@ -286,6 +286,63 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
+    function generateUnique4DigitNumber($existingNumbers = [])
+    {
+        do {
+            $uniqueNumber = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        } while (in_array($uniqueNumber, $existingNumbers));
+
+        return md5($uniqueNumber);
+    }
+
+
+    public function saveWithdrawal(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'withdrawal_amount'  => 'required',
+            'wallet_address'     => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::find($this->userid);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+
+        $userid        = $this->userid;
+        $depositAmount = Order::where('sellerId', $userid)->select('selected_price')->where('order_status', 5)->sum('selected_price');
+        $setting       = Setting::find(1);
+
+        if ($request->withdrawal_amount < $setting->minimum_withdrawal) {
+            return response()->json(['errors' => ['error_minim_usdt' => ['Minimum USDT balance is ', $setting->minimum_withdrawal]]], 422);
+        }
+
+        if ($request->withdrawal_amount > $depositAmount) {
+            return response()->json(['errors' => ['error_usdt' => ['You have no sufficiant USDT balance']]], 422);
+        }
+
+
+        $uniqueID = 'W.' . $this->generateUnique4DigitNumber();
+        $data = array(
+            'withdrawID'     => $uniqueID,
+            'depscription'   => $uniqueID,
+            'withdrawal_amount' => $request->withdrawal_amount,
+            'wallet_address' => $request->wallet_address,
+            'status'         => 0,
+            'payment_method' => 'USDTTRC-20',
+            'user_id'        => $this->userid
+        );
+        $last_Id = Withdraw::insertGetId($data);
+
+
+        return response()->json(['data' => 'Successfully send your request.'], 200);
+    }
+
     public function editUserId($id)
     {
         $data = User::checkUserRow($id);
@@ -368,6 +425,55 @@ class UserController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+
+
+
+    public function getwithdrawalMethod()
+    {
+
+        $data = WithdrawMethod::where('user_id', $this->userid)->get();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+
+    public function addWalletAddress(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name'           => 'required',
+            'account_number' => 'required|unique:withdrawal_method,account_number', // Add unique validation
+        ], [
+            'name.required'           => 'The withdrawal method field is required.',
+            'account_number.required' => 'The wallet number field is required.',
+            'account_number.unique'   => 'The wallet number has already been taken.', // Custom message for unique validation
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'name'             => !empty($request->name) ? $request->name : "",
+            'user_id'          => $this->userid,
+            'account_number'   => $request->account_number,
+        );
+        if (empty($request->id)) {
+            $id = WithdrawMethod::insertGetId($data);
+        } else {
+            $id = $request->id;
+            WithdrawMethod::where('id', $request->id)->update($data);
+        }
+        $response = [
+            'message' => 'User register successfully insert UserID:' . $id
+        ];
+        return response()->json($response);
+    }
+
+
 
     public function saveDepartment(Request $request)
     {
@@ -1014,7 +1120,8 @@ class UserController extends Controller
     // MLM Query 
 
 
-    public function checkmlmHistorys(Request $request){
+    public function checkmlmHistorys(Request $request)
+    {
 
         $email    = $request->email; //$request->email;
 
@@ -1057,8 +1164,6 @@ class UserController extends Controller
         $data['level_3_count']  = count($checkL3);
         $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
         return response()->json($data);
-
-
     }
     public function checkLevelHistorys(Request $request)
     {
@@ -1278,10 +1383,10 @@ class UserController extends Controller
         $priceSum = 0;
         foreach ($order_data as $v) {
 
-            if($v->order_status ==3){
-                $priceSum+= $v->selected_price;
+            if ($v->order_status == 3) {
+                $priceSum += $v->selected_price;
             }
-           // echo "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result";
+            // echo "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result";
             $orders[] = [
                 'id'                 => $v->id,
                 'orderId'            => $v->orderId,
@@ -1293,12 +1398,12 @@ class UserController extends Controller
                 'order_status'       => $v->order_status
             ];
         }
-         $percentage      = $setting->forSellerCommission; // Convert to float
-         $selectedPrice   = $priceSum; // Convert to float
-         $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
-         $originalPrice   = $priceSum; // Ensure selected_packages is also a float
-         $perResult       = floatval($perResult); // Ensure $perResult is a float
-         $earning         =  $originalPrice - $perResult; // This will work without error
+        $percentage      = $setting->forSellerCommission; // Convert to float
+        $selectedPrice   = $priceSum; // Convert to float
+        $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
+        $originalPrice   = $priceSum; // Ensure selected_packages is also a float
+        $perResult       = floatval($perResult); // Ensure $perResult is a float
+        $earning         =  $originalPrice - $perResult; // This will work without error
 
 
         $telegram       = !empty($item->telegram) ? $item->telegram : "None";
@@ -1437,5 +1542,4 @@ class UserController extends Controller
         $resdata['id']                    = Notification::insertGetId($data);
         return response()->json($resdata);
     }
-
 }

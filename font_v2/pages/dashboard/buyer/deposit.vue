@@ -43,7 +43,6 @@
                             <div class="col-sm-4 col-lg-2">
                                 <div class="d-flex align-items-center justify-content-sm-end">
                                     <div class="share-save-widget d-flex align-items-center">
-                                        <span class="icon flaticon-share dark-color fz12 mr10"></span>
                                         <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link>
                                         </div>
                                     </div>
@@ -69,79 +68,82 @@
                                                 data-bs-target="#home" type="button" role="tab" aria-controls="home"
                                                 aria-selected="true">Deposit</button>
                                         </li>
-                                        <li class="nav-item" role="presentation">
-                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                                                data-bs-target="#profile" type="button" role="tab"
-                                                aria-controls="profile" aria-selected="false">Deposit List</button>
-                                        </li>
+
 
                                     </ul>
                                     <div class="tab-content" id="myTabContent">
                                         <div class="tab-pane fade show active" id="home" role="tabpanel"
                                             aria-labelledby="home-tab">
 
-                                            <!-- Start -->
-                                            <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
-                                                <div class="row">
-                                                    <div class="col-sm-4">
-                                                        <div class="mb20">
-                                                            <label class="heading-color ff-heading fw500 mb10">Crypto
-                                                                Address</label>
-                                                            <input type="text" class="form-control"
-                                                                v-model="depositArr.frm_wallet_address">
-                                                            <span class="text-danger"
-                                                                v-if="errors.frm_wallet_address">{{
-                                                                    errors.frm_wallet_address[0] }}</span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4">
-                                                        <div class="mb20">
-                                                            <label
-                                                                class="heading-color ff-heading fw500 mb10">Amount</label>
-                                                            <input type="text" class="form-control"
-                                                                @input="validateInput" v-model="depositArr.amount">
-                                                            <span class="text-danger" v-if="errors.amount">{{
-                                                                errors.amount[0] }}</span>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="col-md-12">
-                                                        <div class="text-start">
-                                                            <button type="submit" class="ud-btn btn-thm">Save<i
-                                                                    class="fal fa-arrow-right-long"></i></button>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <form class="form-style1" @submit.prevent="submitFrm()"
+                                                        id="formrest">
+                                                        <div class="row">
+                                                            <div class="col-sm-4">
+                                                                <div class="mb20">
+                                                                    <label
+                                                                        class="heading-color ff-heading fw500 mb10">Crypto
+                                                                        Address</label>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="depositArr.frm_wallet_address">
+                                                                    <span class="text-danger"
+                                                                        v-if="errors.frm_wallet_address">{{
+                                                                            errors.frm_wallet_address[0] }}</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-4">
+                                                                <div class="mb20">
+                                                                    <label
+                                                                        class="heading-color ff-heading fw500 mb10">Amount</label>
+                                                                    <input type="text" class="form-control"
+                                                                        @input="validateInput"
+                                                                        v-model="depositArr.amount">
+                                                                    <span class="text-danger" v-if="errors.amount">{{
+                                                                        errors.amount[0] }}</span>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12">
+                                                                <div class="text-start">
+                                                                    <button type="submit" class="ud-btn btn-thm">Save<i
+                                                                            class="fal fa-arrow-right-long"></i></button>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
+                                                    </form>
+                                                    <!-- END -->
                                                 </div>
-                                            </form>
-                                            <!-- END -->
-                                        </div>
-                                        <div class="tab-pane fade" id="profile" role="tabpanel"
-                                            aria-labelledby="profile-tab">
-                                            <br />
-                                         
-                                            <div class="table-responsive">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Deposit ID</th>
-            <th>Deposit Amount</th>
-            <th>Status</th>
-            <th>Wallet Address</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="deposit in DepositData" :key="deposit.id">
-            <td>{{ deposit.depositID }}</td>
-            <td>${{ deposit.deposit_amount }}</td>
-            <td>{{ getStatus(deposit.status) }}</td>
-            <td>{{ deposit.frm_wallet_address }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
-                                        </div>
+                                                <div class="col-md-6">
+                                                    <br/>
+                                                    <div class="table-responsive">
+                                                <table class="table table-bordered pt-2">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Deposit ID</th>
+                                                            <th>Amount</th>
+                                                            <th>Status</th>
+                                                            <th>Wallet Address</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr v-for="deposit in DepositData" :key="deposit.id">
+                                                            <td>{{ deposit.depositID }}</td>
+                                                            <td>${{ deposit.deposit_amount }}</td>
+                                                            <td>{{ getStatus(deposit.status) }}</td>
+                                                            <td>{{ deposit.frm_wallet_address }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        
                                     </div>
 
                                 </div>
@@ -187,15 +189,26 @@ const depositArr = ref({
 });
 
 const getStatus = (status) => {
-  return status === 0 ? 'Pending' : 
-         status === 1 ? 'Approved' : 
-         status === 2 ? 'Rejected' : 
-         'Unknown';
+    return status === 0 ? 'Pending' :
+        status === 1 ? 'Approved' :
+            status === 2 ? 'Rejected' :
+                'Unknown';
 };
 const validateInput = () => {
     // Remove non-numeric characters from the input
     depositArr.value.amount = depositArr.value.amount.replace(/[^0-9]/g, '');
 };
+
+
+const getCatList = async () => {
+    try {
+        const response = await axios.get(`/unauthenticate/getFindCategorys`);
+        categoryData.value = response.data;
+    } catch (error) {
+        // Handle error
+    }
+};
+
 
 const submitFrm = () => {
     const formData = new FormData();
@@ -206,6 +219,10 @@ const submitFrm = () => {
     };
     axios.post("/user/saveDeposit", formData, { headers })
         .then((res) => {
+            getDeposit();
+
+            depositArr.value.amount == '';
+            depositArr.value.frm_wallet_address == '';
             document.getElementById("formrest").reset();
             Swal.fire({
                 title: 'Success!',
@@ -235,7 +252,7 @@ const getDeposit = async () => {
 };
 
 onMounted(() => {
-
+    getCatList();
     getDeposit();
 
 });

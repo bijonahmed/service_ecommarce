@@ -43,7 +43,6 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <span class="icon flaticon-share dark-color fz12 mr10"></span>
                     <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link></div>
                   </div>
 
@@ -62,8 +61,7 @@
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
                     <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item"
-                  :class="['chat-user-item', { selected: selectedUserId === user.id }]" 
-                    >
+                      :class="['chat-user-item', { selected: selectedUserId === user.id }]">
                       <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
                       <span>{{ user.user_name }}</span>
                     </li>
@@ -81,8 +79,9 @@
                   <div class="" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
-                      <img :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
-                        alt="Profile Picture" class="profile-picture" />
+                      <img
+                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
+                        class="profile-picture" />
 
                       <div class="message-content">
                         <strong class="sender-name">{{ message.sender_name }}</strong>
@@ -159,7 +158,7 @@ const messageContent = ref('');
 const user_name = ref('');
 const chatContainer = ref(null); // Reference for the chat container
 const isUserAtBottom = ref(true); // Track if the user is at the bottom
-const senderId = ref(37); // Set this to the ID of the logged-in buyer
+const senderId = ref(''); // Set this to the ID of the logged-in buyer
 const recipientId = ref(''); // The ID of the recipient (seller)
 const selectedUserId = ref(null);
 // Send a new message
@@ -216,7 +215,7 @@ async function sendMessage() {
     }
   }
 }
- 
+
 // Automatically reload the chat history every 5 seconds
 const fetchChatHistory = async () => {
   //loading.value = true; // Set loading to true
@@ -306,8 +305,21 @@ const getChatusersList = async () => {
   }
 };
 
+
+const getParticularData = async () => {
+  try {
+    const response = await axios.post(`/auth/me`);
+    senderId.value = response.data.user_id;
+  } catch (error) {
+    // Handle error
+  }
+};
+
+
+
 let intervalId;
 onMounted(() => {
+  getParticularData();
   fetchChatHistory(); // Fetch chat history immediately
   intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
   // Attach scroll event listener to track user scrolling
@@ -321,7 +333,7 @@ onMounted(() => {
 
 });
 
- 
+
 // Clear the interval when the component is unmounted
 onBeforeUnmount(() => {
   clearInterval(intervalId); // Stop the interval when the component is destroyed
@@ -335,27 +347,36 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-
 .chat-user-list {
-  list-style-type: none; /* Remove default list styling */
-  padding: 0; /* Remove default padding */
+  list-style-type: none;
+  /* Remove default list styling */
+  padding: 0;
+  /* Remove default padding */
 }
 
 .chat-user-item {
-  cursor: pointer; /* Change cursor to pointer */
-  padding: 10px; /* Add some padding */
-  display: flex; /* Align items */
-  align-items: center; /* Center items vertically */
+  cursor: pointer;
+  /* Change cursor to pointer */
+  padding: 10px;
+  /* Add some padding */
+  display: flex;
+  /* Align items */
+  align-items: center;
+  /* Center items vertically */
 }
 
 .chat-user-item:hover {
-  background-color: #f0f0f0; /* Light gray background on hover */
+  background-color: #f0f0f0;
+  /* Light gray background on hover */
 }
 
 .selected {
-  background-color: #007bff; /* Blue background for selected item */
-  color: white; /* White text for selected item */
+  background-color: #007bff;
+  /* Blue background for selected item */
+  color: white;
+  /* White text for selected item */
 }
+
 .message_container {
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;

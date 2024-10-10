@@ -391,6 +391,7 @@ class AuthController extends Controller
             'country_1'       => 'required',
             'phone_number'    => 'required',
             'profession_name' => 'required',
+            'introduce_yourself' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -404,6 +405,7 @@ class AuthController extends Controller
             'country_1'       => $request->country_1,
             'phone_number'    => $request->phone_number,
             'profession_name' => $request->profession_name,
+            'introduce_yourself' => $request->introduce_yourself,
             'profile_status'  => 1,
         ];
 

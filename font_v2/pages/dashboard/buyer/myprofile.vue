@@ -43,7 +43,6 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <span class="icon flaticon-share dark-color fz12 mr10"></span>
                     <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link></div>
                   </div>
 
@@ -446,7 +445,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" id="submitExperience">Add Experience</button>
+              <button type="submit" class="btn btn-primary text-white" id="submitExperience">Add Experience</button>
             </div>
           </div>
         </div>
@@ -486,7 +485,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary text-white">Save changes</button>
             </div>
           </div>
         </div>
@@ -839,25 +838,50 @@ const handleFileUpload = (event) => {
 // Function to upload the image to Laravel API
 const uploadImage = async () => {
   if (!imageFile.value) return;
+  const reader = new FileReader();
+  reader.onload = (event) => {
+    const img = new Image();
+    img.src = event.target.result;
+    img.onload = async () => {
+      const width = img.width;
+      const height = img.height;
+      if (width === 200 && height === 200) {
+        // Proceed with uploading the image
+        const formData = new FormData();
+        formData.append('image', imageFile.value); // Add image to FormData
 
-  const formData = new FormData();
-  formData.append('image', imageFile.value); // Add image to FormData
-  try {
-    const response = await axios.post('/auth/updateProfileImages', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+        try {
+          const response = await axios.post('/auth/updateProfileImages', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
 
-    uploadStatus.value = 'Image uploaded successfully!'; // Success message
-    console.log(response.data); // Handle server response (e.g., URL of uploaded image)
-    imagePreview.value = response.data.profileLogo;
-    location.reload();
-    router.push("/dashboard/buyer/myprofile");
-  } catch (error) {
-    uploadStatus.value = 'Error uploading the image.'; // Error message
-    console.error('Error uploading image:', error);
-  }
+          uploadStatus.value = 'Image uploaded successfully!'; // Success message
+          console.log(response.data); // Handle server response (e.g., URL of uploaded image)
+          imagePreview.value = response.data.profileLogo;
+        } catch (error) {
+          uploadStatus.value = 'Error uploading the image.'; // Error message
+          console.error('Error uploading image:', error);
+        }
+      } else {
+        uploadStatus.value = 'Image must be exactly 200x200 pixels.';
+
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Image must be exactly 200x200 pixels.",
+            showConfirmButton: false,
+            timer: 3000
+        });
+
+
+      }
+    };
+  };
+
+  // Read the image file as a data URL
+  reader.readAsDataURL(imageFile.value);
 };
 
 const submitFrm = () => {

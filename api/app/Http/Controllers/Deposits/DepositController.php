@@ -539,6 +539,48 @@ class DepositController extends Controller
         return response()->json($tran, 200);
     }
 
+
+    public function getwithdrawList(Request $request)
+    {
+
+
+        $data = Withdraw::orderBy('withdraw.id', 'desc')
+            ->select('withdraw.*', 'users.name', 'users.email', 'users.phone_number')
+            ->join('users', 'withdraw.user_id', '=', 'users.id') // Join condition
+            ->where('withdraw.user_id', $this->userid)
+            ->orderBy('withdraw.id', 'desc')->get(); // Sorting by 'id' in descending order
+        $tran = [];
+
+        
+        foreach ($data as $v) {
+
+            if ($v->status == 0) {
+                $wStatus = '<span style="color: orange; background-color: rgba(255, 165, 0, 0.2); padding: 5px; border-radius: 3px;">Review</span>';
+            } elseif ($v->status == 1) {
+                $wStatus = '<span style="color: green; background-color: rgba(0, 128, 0, 0.2); padding: 5px; border-radius: 3px;">Approved</span>';
+            } elseif ($v->status == 2) {
+                $wStatus = '<span style="color: red; background-color: rgba(255, 0, 0, 0.2); padding: 5px; border-radius: 3px;">Reject</span>';
+            } else {
+                $wStatus = '<span style="color: gray; background-color: rgba(128, 128, 128, 0.2); padding: 5px; border-radius: 3px;">Unknown Status</span>';
+            }
+
+            $tran[] = [
+                'id'             => $v->id,
+                'withdrawID'     => $v->withdrawID,
+                'payment_method' => $v->payment_method,
+                'account_number' => $v->account_number,
+                'wStatus'        => $wStatus,
+                'status'         => $v->status,
+                'withdrawal_amount'  => $v->withdrawal_amount,
+                'wallet_address'     => $v->wallet_address,
+                'created_at'     => date("d-m-Y", strtotime($v->created_at)),
+            ];
+        }
+
+
+
+        return response()->json($tran, 200);
+    }
     public function getwithdrawalList(Request $request)
     {
         // dd($request->all());
@@ -696,7 +738,7 @@ class DepositController extends Controller
     public function getDepositList(Request $request)
     {
 
-     
+
 
         $page           = $request->input('page', 1);
         $pageSize       = $request->input('pageSize', 10);
@@ -726,7 +768,7 @@ class DepositController extends Controller
         //     // Filter by 'to' date only
         //     $query->whereDate('deposit.created_at', $filterToDate);
         // }
-        
+
 
         if (!empty($searchEmail)) {
             $query->where('users.email', $searchEmail);
@@ -821,6 +863,7 @@ class DepositController extends Controller
             return response()->json($error);
         }
     }
+
 
     public function getWithMethodRow(Request $request)
     {

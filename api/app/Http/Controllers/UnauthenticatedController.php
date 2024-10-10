@@ -59,21 +59,20 @@ class UnauthenticatedController extends Controller
             )
             ->get();
 
-            $gigList = [];
-            foreach ($filterData as $v) {
-                $gigList[] = [
-                    'id'                => $v->id,
-                    'user_id'           => $v->user_id,
-                    'name'              => $v->name,
-                    'gig_slug'          => $v->gig_slug,
-                    'user_name'         => $v->user_name,
-                    'price'             => $v->price,
-                    'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
-                    'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
-    
-                ];
-            }
+        $gigList = [];
+        foreach ($filterData as $v) {
+            $gigList[] = [
+                'id'                => $v->id,
+                'user_id'           => $v->user_id,
+                'name'              => $v->name,
+                'gig_slug'          => $v->gig_slug,
+                'user_name'         => $v->user_name,
+                'price'             => $v->price,
+                'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
+                'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
 
+            ];
+        }
 
         $row                =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
         $chkCountry         =   Country::where('id', $row->country_1)->first();
@@ -237,7 +236,7 @@ class UnauthenticatedController extends Controller
             $rows                = Gig::where('category_id', $categoryID)
                 ->where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
-                ->select('gig.*', 'users.name as user_name', 'users.email as user_email','types', 'users.image as freelancer_images')
+                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images')
                 ->orderBy('gig.id', 'desc')
                 ->paginate(20);
 
@@ -258,8 +257,7 @@ class UnauthenticatedController extends Controller
                 ];
             }
 
-           // dd($data);
-
+            // dd($data);
 
             return response()->json([
                 'data' => $data,
@@ -329,8 +327,6 @@ class UnauthenticatedController extends Controller
         $findProfession = Profession::where('id', $userRecords->profession_name)->first();
         $proName        = !empty($findProfession) ? $findProfession->name : "";
 
-
-
         $imagesgrows   = GigImagesHistory::where('gig_id', $userRecords->id)->get();
 
         $imgrows = [];
@@ -340,9 +336,6 @@ class UnauthenticatedController extends Controller
                 'image_path'  => !empty($v->image_path) ? url($v->image_path) : "",
             ];
         }
-
-
-
 
         $data = [
             'gig_id'                => $userRecords->id ?? "",

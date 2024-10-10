@@ -10,6 +10,8 @@ use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Events\Message;
+use Illuminate\Support\Str;
+
 
 class ChatController extends Controller
 {
@@ -68,7 +70,6 @@ class ChatController extends Controller
         $rdata['sender_id']      = $this->userid;
         $rdata['message']        = "Congratulations on your new gig: \"$gigName\"! 🎉. We wish you great success!"; //$request->message;
         $rdata['files']          = '';
-
         //  dd($rdata);
         $message = MyMessage::insertGetId($rdata);
 
@@ -78,6 +79,8 @@ class ChatController extends Controller
     public function sendMessages(Request $request)
     {
 
+    
+    //dd($request->all());
         $validator = Validator::make($request->all(), [
             'senderId'        => 'required', // Set this to the ID of the logged-in buyer
             'recipientId'     => 'required', // The ID of the recipient (seller)
@@ -90,20 +93,20 @@ class ChatController extends Controller
             ], 422);
         }
 
-        $imagePaths = []; // Initialize an array to store file paths
-
-        if ($request->hasFile('images')) {
-            $files = $request->file('images'); // Get the array of files
-
-            foreach ($files as $file) {
-                if ($file->isValid()) { // Check if the file is valid
-                    $fileName = "/backend/files/" . time() . '_' . uniqid() . "." . $file->getClientOriginalExtension(); // Unique filename
-                    // Move the uploaded file to the specified directory
-                    $file->move(public_path("backend/files"), $fileName);
-                    $imagePaths[] = $fileName; // Add the file path to the array
-                }
-            }
+        $imagePaths="";
+        if (!empty($request->file('files'))) {
+            $files = $request->file('files');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $imagePaths = $file_url;
         }
+
+
 
 
         $rdata['user_id']        = $this->userid;
@@ -111,6 +114,7 @@ class ChatController extends Controller
         $rdata['sender_id']      = $this->userid;
         $rdata['message']        = $request->message;
         $rdata['files']          = $imagePaths;
+
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);
@@ -142,7 +146,9 @@ class ChatController extends Controller
         // Prepare the response data
         $data = [];
         foreach ($messages as $message) {
-            $user = User::find($message->sender_id); // Fetch sender's details
+            $user = User::find($this->userid); // Fetch sender's details
+            $to_user = User::find($message->to_id);
+            $sender_user = User::find($this->userid);
             $data[] = [
                 'id'          => $message->id,
                 'user_id'     => $message->sender_id,
@@ -151,8 +157,8 @@ class ChatController extends Controller
                 'sender_id'   => $this->userid, //$message->sender_id,
                 'files'             => !empty($message->files) ? url($message->files) : "",
                 'created_at'        => $message->created_at->format('Y-m-d H:i:s'),
-                'sender_profile_picture'      => !empty($user->image) ? url($user->image) : "", //"http://www.21technology.com.bd/public/uploads/all/Ho1Gfsb4Pfq34QVrx0anM7xiMvn4KhP8NuzvOqF5.webp",
-                'recipient_profile_picture'   => "http://www.21technology.com.bd/public/uploads/all/VoeSyzbwkN1C24clMws73UwPK9SdlptgbDx1MTsJ.jpg",
+                'sender_profile_picture'      => !empty($sender_user->image) ? url($sender_user->image) : "", //!empty($user->image) ? url($user->image) : "===", 
+                'recipient_profile_picture'   => !empty($to_user->image) ? url($to_user->image) : "",
                 'sender_name' => $user ? $user->name : "Unknown"
             ];
         }
