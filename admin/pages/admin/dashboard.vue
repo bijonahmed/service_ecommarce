@@ -136,12 +136,12 @@
                         
                       </div>
                       <div class="row">
-                        <div class="col-6">
+                        <div class="col-12">
                           <ChartComponent />
                         </div>
-                        <div class="col-6">
+                        <!-- <div class="col-6">
                           <usersJoinReg />
-                        </div>
+                        </div> -->
                       </div>
                     </div>
                   </div>

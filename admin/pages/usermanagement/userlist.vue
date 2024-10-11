@@ -222,7 +222,7 @@
             <hr/>
 
            <!-- Start MLM -->
-              <UserLevels :user-email="u_details_email" />
+              <!-- <UserLevels :user-email="u_details_email" /> -->
 
             <!-- END MLM -->
  

@@ -96,7 +96,7 @@ const menuItems = ref([
 
       { label: "Super Admin list", icon: "fa-circle", route: "/usermanagement/superadmin-list", },
       { label: "User list", icon: "fa-circle", route: "/usermanagement/userlist", },
-      { label: 'Affiliate ', icon: 'fa-circle', route: '/usermanagement/affiliate' },
+      { label: 'MLM ', icon: 'fa-circle', route: '/usermanagement/affiliate' },
 
 
     ],

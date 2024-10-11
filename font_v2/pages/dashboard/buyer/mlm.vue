@@ -55,9 +55,57 @@
 
                 <!-- Start Profile -->
                 <div class="container">
-
                     <ReferralLink />
-                    <UserLevels />
+                </div>
+
+                <div class="container mt-5">
+                    <h4 class="mb-4">Referral Commission</h4>
+                    Amount : ${{ sumAmount }}
+                    <table class="table table-striped table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Received From</th>
+                                <th scope="col">Commission Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Example rows -->
+                            <tr v-for="com in comissionData" :key="com.id">
+                                <td>{{ com.orderId }}</td>
+                                <td>{{ com.commission_recv_frm_name }}
+                                    <!-- <br/>ID:{{com.commission_recev_frm}} -->
+                                </td>
+                                <td>${{ com.amount }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+
+
+                <div class="container d-none">
+                    <button @click="fetchUserLevels">Call</button>
+                    <div class="container mt-5">
+                        <h2>User Levels</h2>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Level</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="user in levelData" :key="user.id">
+                                    <td>{{ user.name }}</td>
+                                    <td>{{ user.level }}</td>
+                                    <td>{{ user.amount }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>
@@ -77,466 +125,52 @@ import Swal from "sweetalert2";
 
 const router = useRouter();
 const categoryData = ref([]);
+const comissionData = ref([]);
 const loading = ref(false);
 const route = useRoute();
-
+const sumAmount = ref(0);
 definePageMeta({
     middleware: "is-logged-out",
 });
 
-const profileModal = ref(null);
-const errors = ref({});
-const id = ref('');
-const name = ref('');
-const email = ref('');
-const phone_number = ref("");
-const github = ref("");
-const website = ref("");
-const gender = ref(1);
-const twitter = ref("");
-const country_1 = ref('');
-const introduce_yourself = ref('');
-const profession_name = ref('');
-const professionData = ref([]);
-const CountryData = ref([]);
-const imageFile = ref(null);
-const imagePreview = ref(null);
-const uploadStatus = ref(null);
-const skillsdata = ref([]);
-const euddata = ref([]);
-const expdata = ref([]);
-const certificatedata = ref([]);
+const levelData = ref([]);
 
-const skillInput = ref(''); // Reactive variable for input
-const skills = ref([]); // Reactive array for skills
-const skillsError = ref(''); // Reactive variable for error message
-const skillInputRef = ref(null); // Reference for the input element
 
-//Add education 
-const education = ref({
-    year: '',
-    subject: '',
-    college: '',
-    description: ''
-});
-//Add experience 
-const experience = ref({
-    year: '',
-    role: '',
-    company: '',
-    description: ''
-});
 
-//Certificate
-const certificate = ref({
-    year: '',
-    course_name: '',
-    institute_name: '',
-    description: ''
-});
 
-const errorMessage = ref('');
-
-const submitCertifiate = async () => {
+const getRefferalCommission = async () => {
+    loading.value = true;
     try {
-        const response = await axios.post('/user/add-certificate', certificate.value);
-        console.log('Certificate added successfully:', response.data);
-        certificate.value = {
-            year: '',
-            course_name: '',
-            institute_name: '',
-            description: ''
-        };
-        errorMessage.value = ''; // Clear any previous error messages
-        $('#addCertificationeModal').modal('hide');
-        getCertificates();
-    } catch (error) {
-        // Check if there's a response from the server
-        if (error.response) {
-            if (error.response.status === 422) {
-                // Validation errors
-                errors.value = error.response.data.errors; // Assuming `errors` is defined as a reactive variable
-                console.error("Validation errors:", errors.value);
-            } else {
-                console.error("Server error:", error.response.data.message || error.response.data);
-                errorMessage.value = 'An error occurred while adding education. Please try again.';
-            }
-        } else {
-            console.error("An error occurred:", error);
-            errorMessage.value = 'Failed to add education. Please check your connection and try again.';
-        }
+        const response = await axios.get("/order/referralCommission");
+        comissionData.value = response.data.data;
+        sumAmount.value = response.data.sumAmount;
+    } catch (err) {
+        console.log(err)
+    } finally {
+        loading.value = false;
     }
 };
 
-const submitExperience = async () => {
+
+
+
+
+
+const fetchUserLevels = async () => {
+    loading.value = true;
+    const email = 'test50@gmail.com';
     try {
-        const response = await axios.post('/user/add-experience', experience.value);
-        console.log('Education added successfully:', response.data);
-        experience.value = {
-            year: '',
-            role: '',
-            company: '',
-            description: ''
-        };
-        errorMessage.value = ''; // Clear any previous error messages
-        $('#addExperienceModal').modal('hide');
-        getExperience();
-    } catch (error) {
-        // Check if there's a response from the server
-        if (error.response) {
-            if (error.response.status === 422) {
-                // Validation errors
-                errors.value = error.response.data.errors; // Assuming `errors` is defined as a reactive variable
-                console.error("Validation errors:", errors.value);
-            } else {
-                console.error("Server error:", error.response.data.message || error.response.data);
-                errorMessage.value = 'An error occurred while adding education. Please try again.';
-            }
-        } else {
-            console.error("An error occurred:", error);
-            errorMessage.value = 'Failed to add education. Please check your connection and try again.';
-        }
-    }
-};
-
-const submitEducation = async () => {
-    try {
-        const response = await axios.post('/user/add-education', education.value);
-        console.log('Education added successfully:', response.data);
-        education.value = {
-            year: '',
-            subject: '',
-            college: '',
-            description: ''
-        };
-        errorMessage.value = ''; // Clear any previous error messages
-        $('#addEducationModal').modal('hide');
-        getEducations();
-    } catch (error) {
-        // Check if there's a response from the server
-        if (error.response) {
-            if (error.response.status === 422) {
-                // Validation errors
-                errors.value = error.response.data.errors; // Assuming `errors` is defined as a reactive variable
-                console.error("Validation errors:", errors.value);
-            } else {
-                console.error("Server error:", error.response.data.message || error.response.data);
-                errorMessage.value = 'An error occurred while adding education. Please try again.';
-            }
-        } else {
-            console.error("An error occurred:", error);
-            errorMessage.value = 'Failed to add education. Please check your connection and try again.';
-        }
-    }
-};
-
-const removeCertificate = async (id) => {
-    // Show SweetAlert confirmation dialog
-    const { isConfirmed } = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    });
-
-    if (!isConfirmed) return; // Exit if the user cancels
-
-    try {
-        const response = await axios.get(`/user/delete-certificate/${id}`);
-        console.log('Certificate deleted successfully:', response.data);
-        getCertificates();
-        Swal.fire({
-            title: 'Deleted!',
-            text: 'Your Certificate record has been deleted.',
-            icon: 'success',
-            confirmButtonText: 'OK'
+        const response = await axios.get("/user/checkLevelHistorys", {
+            params: { email },
         });
-    } catch (error) {
-        console.error('Error deleting Certificate:', error);
-        // Show error message
-        Swal.fire({
-            title: 'Error!',
-            text: 'There was an error deleting your Certificate record.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
+        levelData.value = response.data.finalResponse;
+    } catch (err) {
+        console.log(err)
+    } finally {
+        loading.value = false;
     }
 };
 
-const removeExperience = async (id) => {
-    // Show SweetAlert confirmation dialog
-    const { isConfirmed } = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    });
-
-    if (!isConfirmed) return; // Exit if the user cancels
-
-    try {
-        const response = await axios.get(`/user/delete-experience/${id}`);
-        console.log('Education deleted successfully:', response.data);
-        getExperience();
-        Swal.fire({
-            title: 'Deleted!',
-            text: 'Your exprience record has been deleted.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    } catch (error) {
-        console.error('Error deleting exprience:', error);
-        // Show error message
-        Swal.fire({
-            title: 'Error!',
-            text: 'There was an error deleting your exprience record.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    }
-};
-
-const removeEducation = async (id) => {
-    // Show SweetAlert confirmation dialog
-    const { isConfirmed } = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    });
-
-    if (!isConfirmed) return; // Exit if the user cancels
-
-    try {
-        const response = await axios.get(`/user/delete-education/${id}`);
-        console.log('Education deleted successfully:', response.data);
-        getEducations();
-        Swal.fire({
-            title: 'Deleted!',
-            text: 'Your education record has been deleted.',
-            icon: 'success',
-            confirmButtonText: 'OK'
-        });
-    } catch (error) {
-        console.error('Error deleting education:', error);
-        // Show error message
-        Swal.fire({
-            title: 'Error!',
-            text: 'There was an error deleting your education record.',
-            icon: 'error',
-            confirmButtonText: 'OK'
-        });
-    }
-};
-
-const addSkill = () => {
-    const trimmedSkill = skillInput.value.trim(); // Trim input
-
-    if (trimmedSkill) {
-        if (!skills.value.includes(trimmedSkill)) {
-            skills.value.push(trimmedSkill); // Add skill to the list
-            skillInput.value = ''; // Clear input field
-            skillsError.value = ''; // Clear any error messages
-            skillInputRef.value.focus(); // Focus back on the input field
-        } else {
-            skillsError.value = 'Skill already added.'; // Handle duplicate skill
-            skillInputRef.value.focus(); // Focus back on the input field even with an error
-        }
-    } else {
-        skillsError.value = 'Please enter a skill.'; // Handle empty input
-        skillInputRef.value.focus(); // Focus back on the input field even with an error
-    }
-};
-const removeSkill = (index) => {
-    skills.value.splice(index, 1);
-};
-
-const removeListfrmSkills = async (id) => {
-    try {
-        const response = await axios.get('/user/removeSkill', {
-            params: {
-                id: id,
-            }
-        });
-        console.log('Response:', response.data.message);
-        getSkills();
-        //  console.log('Response:', response.data);
-    } catch (error) {
-        console.error('Error fetching countries:', error);
-    }
-
-}
-const submitskills = async () => {
-    if (skills.value.length === 0) {
-        skillsError.value = 'Please add at least one skill before submitting.'; // Ensure there are skills to submit
-        return;
-    }
-    try {
-        const response = await axios.post('/user/addskills', {
-            skills: skills.value, // Send the entire array of skills
-        });
-
-        skillsdata.value = response.data.skillsdata;
-        skills.value = []; // Clear skills after successful submission
-        skillsError.value = ''; // Clear any error messages
-        skillInputRef.value.focus(); // Focus back on the input field
-    } catch (error) {
-        skillsError.value = 'Failed to submit skills. Please try again.'; // Handle error
-        console.error("Error submitting skills:", error);
-    }
-
-}
-
-// Handle file upload event
-const handleFileUpload = (event) => {
-    const file = event.target.files[0]; // Get the selected file
-    if (file && file.type.startsWith('image/')) {
-        imageFile.value = file;
-        imagePreview.value = URL.createObjectURL(file);
-    } else {
-        imageFile.value = null;
-        imagePreview.value = null;
-    }
-};
-
-// Function to upload the image to Laravel API
-const uploadImage = async () => {
-    if (!imageFile.value) return;
-
-    const formData = new FormData();
-    formData.append('image', imageFile.value); // Add image to FormData
-    try {
-        const response = await axios.post('/auth/updateProfileImages', formData, {
-            headers: {
-                'Content-Type': 'multipart/form-data',
-            },
-        });
-
-        uploadStatus.value = 'Image uploaded successfully!'; // Success message
-        console.log(response.data); // Handle server response (e.g., URL of uploaded image)
-        imagePreview.value = response.data.profileLogo;
-        location.reload();
-        router.push("/dashboard/buyer/myprofile");
-    } catch (error) {
-        uploadStatus.value = 'Error uploading the image.'; // Error message
-        console.error('Error uploading image:', error);
-    }
-};
-
-const submitFrm = () => {
-    const formData = new FormData();
-    formData.append("name", name.value);
-    formData.append("email", email.value);
-    formData.append("phone_number", phone_number.value);
-    formData.append("github", github.value);
-    formData.append("website", website.value);
-    formData.append("gender", gender.value);
-    formData.append("twitter", twitter.value);
-    formData.append("country_1", country_1.value);
-    formData.append("introduce_yourself", introduce_yourself.value);
-    formData.append("profession_name", profession_name.value);
-
-    const headers = {
-        "Content-Type": "multipart/form-data",
-    };
-    axios.post("/auth/updateprofileFrontendSeller", formData, { headers })
-        .then((res) => {
-            document.getElementById("formrest").reset();
-            router.push("/dashboard/buyer/welcome");
-        })
-        .catch((error) => {
-            if (error.response && error.response.status === 422) {
-                errors.value = error.response.data.errors;
-            } else {
-                // Handle other types of errors here
-                console.error("An error occurred:", error);
-            }
-        });
-};
-
-const getUserRow = async () => {
-    try {
-        const response = await axios.post("/auth/me");
-        console.log("Response data:", response.data.name); // Log the response data
-        name.value = response.data.name;
-        email.value = response.data.email;
-        phone_number.value = response.data.phone_number !== null && response.data.phone_number !== undefined ? response.data.phone_number : ""; //response.data.phone_number;
-        website.value = response.data.website !== null && response.data.website !== undefined ? response.data.website : ""; // response.data.website;
-        github.value = response.data.github !== null && response.data.github !== undefined ? response.data.github : "";  //response.data.github;
-        twitter.value = response.data.twitter !== null && response.data.twitter !== undefined ? response.data.twitter : "";
-        id.value = response.data.id;
-        gender.value = response.data.gender;
-        profession_name.value = response.data.profession_name;
-        country_1.value = response.data.country_1;
-        introduce_yourself.value = response.data.introduce_yourself;
-        imagePreview.value = response.data.profileLogo;
-    } catch (error) {
-        console.error("Error fetching data:", error);
-    }
-};
-
-const getCountry = async () => {
-    try {
-        const response = await axios.get(`/user/getCountry`);
-        CountryData.value = response.data.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getProfession = async () => {
-    try {
-        const response = await axios.get(`/user/allprofession`);
-        professionData.value = response.data.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getExperience = async () => {
-    try {
-        const response = await axios.get(`/user/getExperience`);
-        expdata.value = response.data.expdata;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getCertificates = async () => {
-    try {
-        const response = await axios.get(`/user/getCertificate`);
-        certificatedata.value = response.data.certificatedata;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getEducations = async () => {
-    try {
-        const response = await axios.get(`/user/geteducation`);
-        euddata.value = response.data.euddata;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-const getSkills = async () => {
-    try {
-        const response = await axios.get(`/user/skillsData`);
-        skillsdata.value = response.data.skillsdata;
-    } catch (error) {
-        console.log(error);
-    }
-};
 
 const getCatList = async () => {
     try {
@@ -551,13 +185,7 @@ const getCatList = async () => {
 };
 
 onMounted(() => {
-    getCertificates();
-    getExperience();
-    getEducations();
-    getSkills();
-    getCountry();
-    getProfession();
-    getUserRow();
+    getRefferalCommission();
     getCatList();
 
 });
@@ -565,6 +193,10 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.table {
+    margin-top: 20px;
+}
+
 .preview-image {
     max-width: 300px;
     max-height: 300px;

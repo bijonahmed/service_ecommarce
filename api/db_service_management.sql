@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 08, 2024 at 09:43 AM
+-- Generation Time: Oct 11, 2024 at 02:34 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -1148,9 +1148,10 @@ INSERT INTO `deposit` (`id`, `depositID`, `user_id`, `deposit_amount`, `receivab
 (14, 'DEPOSIT.24ec8468b67314c2013d215b77034476', 9, 200.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.24ec8468b67314c2013d215b77034476', NULL, 0, NULL, '2024-08-02 17:57:31', '2024-08-02 17:57:31'),
 (21, 'DEP000021', 37, 900.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVK', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-04 11:20:47', '2024-10-01 11:20:47'),
 (22, 'DEP000022', 37, 890.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-04 11:21:12', '2024-10-01 11:21:12'),
-(23, 'DEP000023', 20, 33444.00, NULL, 'TRX(TRC20)', 'l;asdkfgpakspodfasdf658989', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-04 04:51:55', '2024-10-02 04:51:55'),
-(24, 'DEP000023', 20, 33444.00, NULL, 'TRX(TRC20)', 'l;asdkfgpakspodfasdf658989', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-04 04:51:55', '2024-10-02 04:51:55'),
-(25, 'DEP000025', 19, 50000.00, 50000.00, 'TRX(TRC20)', 'asdfsdfsdfsdfsdf', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-05 01:29:44', '2024-10-05 01:29:44');
+(25, 'DEP000025', 2, 50000.00, 50000.00, 'TRX(TRC20)', 'asdfsdfsdfsdfsdf', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-05 01:29:44', '2024-10-05 01:29:44'),
+(26, 'DEP000026', 19, 5000.00, NULL, 'TRX(TRC20)', '0xA1b2C3d4E5F6g7H8i9J0kL1M2nO3P4Q5rS6t7U8V', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-10 07:33:39', '2024-10-10 07:33:39'),
+(27, 'DEP000027', 19, 4560.00, NULL, 'TRX(TRC20)', '0xA1b2C3d4E5F6g7H8i9J0kL1M2nO3P4Q5rS6t7U882', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-10 07:35:07', '2024-10-10 07:35:07'),
+(31, 'DEP000031', 20, 2000.00, 2000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-10 09:36:47', '2024-10-10 09:36:47');
 
 -- --------------------------------------------------------
 
@@ -1309,6 +1310,41 @@ INSERT INTO `gig_images_history` (`id`, `gig_id`, `image_path`, `created_at`, `u
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `level_commission`
+--
+
+CREATE TABLE `level_commission` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `orderId` varchar(255) DEFAULT NULL,
+  `buyerId` bigint(20) UNSIGNED NOT NULL,
+  `buyer_name` varchar(255) NOT NULL,
+  `level` int(11) NOT NULL,
+  `amount` decimal(10,2) NOT NULL,
+  `commission_recev_frm` bigint(20) UNSIGNED NOT NULL,
+  `commission_recv_frm_name` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `level_commission`
+--
+
+INSERT INTO `level_commission` (`id`, `orderId`, `buyerId`, `buyer_name`, `level`, `amount`, `commission_recev_frm`, `commission_recv_frm_name`, `created_at`, `updated_at`) VALUES
+(1, '2012170-24', 27, 'Test40', 1, 0.10, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
+(2, '2012170-24', 26, 'test30', 2, 0.08, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
+(3, '2012170-24', 25, 'test21', 3, 0.06, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
+(4, '2012170-24', 24, 'test20', 4, 0.04, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
+(5, '2012170-24', 23, 'Test3', 5, 0.02, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
+(6, '2011038-24', 27, 'Test40', 1, 0.10, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
+(7, '2011038-24', 26, 'test30', 2, 0.08, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
+(8, '2011038-24', 25, 'test21', 3, 0.06, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
+(9, '2011038-24', 24, 'test20', 4, 0.04, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
+(10, '2011038-24', 23, 'Test3', 5, 0.02, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `manufacturers`
 --
 
@@ -1425,7 +1461,18 @@ INSERT INTO `messages` (`id`, `user_id`, `to_id`, `sender_id`, `message`, `files
 (86, 19, 2, 19, 'HI', NULL, '2024-10-05 01:31:45', '2024-10-05 01:31:45'),
 (87, 19, 2, 19, 'are you there', NULL, '2024-10-05 01:32:00', '2024-10-05 01:32:00'),
 (88, 2, 19, 2, 'Congratulations successfully your order delivered', NULL, '2024-10-08 06:38:19', '2024-10-08 06:38:19'),
-(89, 2, 19, 2, 'Congratulations successfully your order delivered', '/backend/files/1728369987.zip', '2024-10-08 06:46:27', '2024-10-08 06:46:27');
+(89, 2, 19, 2, 'Congratulations successfully your order delivered', '/backend/files/1728369987.zip', '2024-10-08 06:46:27', '2024-10-08 06:46:27'),
+(90, 19, 2, 19, 'Congratulations successfully yoCongratulations successfully yo', '[]', '2024-10-10 05:20:00', '2024-10-10 05:20:00'),
+(91, 19, 2, 19, 'asdfasdasdasd', '[]', '2024-10-10 05:20:18', '2024-10-10 05:20:18'),
+(92, 19, 2, 19, 'sdfsdfsdf', '/backend/files/WBB20a3PEwVbvOqNndi9.jpg', '2024-10-10 05:37:59', '2024-10-10 05:37:59'),
+(93, 19, 2, 19, 'Note:\r\nBootstrap provides button groups to group a series of buttons together on a single line. Here’s how you can create a simple button group using Bootstrap:', '', '2024-10-10 05:38:43', '2024-10-10 05:38:43'),
+(94, 19, 2, 19, 'Test', '', '2024-10-10 05:39:31', '2024-10-10 05:39:31'),
+(95, 19, 2, 19, 'TTT', '/backend/files/TzTFvhkNFgp0NFfqSYpb.jpg', '2024-10-10 05:39:39', '2024-10-10 05:39:39'),
+(96, 19, 2, 19, 'Okay sir', '', '2024-10-10 05:44:15', '2024-10-10 05:44:15'),
+(97, 19, 2, 19, 'I\'ll check tomorrow', '', '2024-10-10 05:44:25', '2024-10-10 05:44:25'),
+(98, 19, 2, 19, '123', '/backend/files/VrttK6BI9EuxJwaybSeq.jpg', '2024-10-10 05:46:40', '2024-10-10 05:46:40'),
+(99, 19, 2, 19, 'সংকটকালীন সময়ে জনসাধারণের পাশে থাকতে না পেরে দুঃখ প্রকাশ সাকিবের', '', '2024-10-10 05:46:54', '2024-10-10 05:46:54'),
+(100, 19, 2, 19, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-10 07:11:03', '2024-10-10 07:11:03');
 
 -- --------------------------------------------------------
 
@@ -1485,39 +1532,31 @@ CREATE TABLE `orders` (
   `gig_id` int(11) DEFAULT NULL,
   `buyerId` int(11) DEFAULT NULL,
   `sellerId` int(11) DEFAULT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
-  `email_address` varchar(255) DEFAULT NULL,
-  `billing_address` varchar(255) DEFAULT NULL,
-  `card_number` int(11) NOT NULL DEFAULT 1,
-  `expiration_date` varchar(255) DEFAULT NULL,
-  `cvc` varchar(255) DEFAULT NULL,
   `selected_packages` varchar(255) DEFAULT NULL,
   `selected_price` varchar(255) DEFAULT NULL,
+  `tips` int(11) DEFAULT NULL,
+  `service_fee` decimal(10,2) DEFAULT NULL,
+  `sub_total` decimal(10,2) DEFAULT NULL,
   `delivery_day` int(11) DEFAULT NULL,
   `delivery_day_convert_date` datetime DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL COMMENT '1=Order Placed, 2=In Progess, 3=Cancel, 4=Delivery, 5=Complete',
-  `return_status` text NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp()
+  `updated_at` datetime DEFAULT current_timestamp(),
+  `lev_1` decimal(10,2) DEFAULT NULL,
+  `lev_2` decimal(10,2) DEFAULT NULL,
+  `lev_3` decimal(10,2) DEFAULT NULL,
+  `lev_4` decimal(10,2) DEFAULT NULL,
+  `lev_5` decimal(10,2) DEFAULT NULL,
+  `return_status` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `fullname`, `email_address`, `billing_address`, `card_number`, `expiration_date`, `cvc`, `selected_packages`, `selected_price`, `delivery_day`, `delivery_day_convert_date`, `order_status`, `return_status`, `created_at`, `updated_at`) VALUES
-(1, '3786416-24', 1, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 3, '2024-10-05 08:10:30', '3', '', '2024-10-01 11:22:37', '2024-10-07 11:32:19'),
-(2, '3789875-24', 1, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Single', '910', 2, '2024-10-04 02:47:59', '3', '', '2024-10-01 11:31:30', '2024-10-07 11:43:43'),
-(3, '3783698-24', 2, 19, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Standart', '150', 4, '2024-10-06 08:10:46', '5', '', '2024-10-01 11:40:58', '2024-10-08 06:58:13'),
-(4, '3763470-24', 2, 37, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '100', 6, '2024-10-08 08:10:51', '3', '', '2024-10-01 11:41:21', '2024-10-07 15:52:23'),
-(5, '2094616-24', 2, 20, 2, 'Bijon', 'mdbijon@gmail.com', 'DHK', 65898989, '98989', '9565', 'Basic', '15', NULL, NULL, '4', '', '2024-10-01 22:53:07', '2024-10-08 07:36:02'),
-(7, '1980191-24', 3, 19, 2, 'Test', 'test@gmail.com', 'dfsdf', 65959, '99', '989', 'Single', '5000', NULL, NULL, '3', '', '2024-10-04 19:31:26', '2024-10-08 07:40:39'),
-(8, '1979404-24', 3, 19, 2, 'sdf', 'test@gmail.com', 'sdfsdf', 0, '33', '33', 'Single', '5000', 3, NULL, '4', '', '2024-10-04 19:40:58', '2024-10-08 06:53:35'),
-(9, '1995010-24', 4, 19, 2, 'sdf', 'test@gmail.com', 'sdfsdf', 0, '33', '33', 'Single', '5000', 3, '2024-10-08 01:45:33', '3', '', '2024-10-04 19:45:33', '2024-10-08 07:34:46'),
-(10, '1952152-24', 4, 19, 2, 'dzs', 'sdf@gmail.com', 'sdfsdf', 0, 'sdf', 'sd', 'Basic', '15', 0, '2024-10-05 01:47:07', '4', '', '2024-10-04 19:47:07', '2024-10-08 07:41:30'),
-(11, '1916574-24', 4, 19, 2, 'dzs', 'sdf@gmail.com', 'sdfsdf', 0, 'sdf', 'sd', 'Premium', '600', 5, '2024-10-10 01:47:35', '1', '', '2024-10-04 19:47:35', '2024-10-08 05:02:29'),
-(12, '1935269-24', 4, 19, 2, 'Md. Gazi Giash Uddin Bijon Ahmed', 'mdbijon@gmail.com', 'Dhaka Bangladesh', 59899899, '54989', '989999', 'Single', '15', 3, '2024-10-10 09:34:08', '1', '', '2024-10-07 03:34:08', '2024-10-07 16:01:24'),
-(13, '1934318-24', 4, 19, 2, 'Ahmed', 'ahmed@gmail.com', 'Dhaka', 2147483647, '34434', '8878', 'Single', '1500', 56, '2024-12-02 09:59:51', '3', '', '2024-10-07 03:59:51', '2024-10-07 11:32:30');
+INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `selected_packages`, `selected_price`, `tips`, `service_fee`, `sub_total`, `delivery_day`, `delivery_day_convert_date`, `order_status`, `created_at`, `updated_at`, `lev_1`, `lev_2`, `lev_3`, `lev_4`, `lev_5`, `return_status`) VALUES
+(1, '2012170-24', 4, 28, 2, 'Single', '1500', 0, 2.00, 1502.00, 56, '2024-12-05 12:31:22', '5', '2024-10-10 06:31:22', '2024-10-11 09:07:30', 0.10, 0.08, 0.06, 0.04, 0.02, ''),
+(2, '2011038-24', 3, 28, 2, 'Standart', '400', 0, 2.00, 402.00, 4, '2024-10-15 02:49:01', '5', '2024-10-10 20:49:01', '2024-10-11 09:08:22', 0.10, 0.08, 0.06, 0.04, 0.02, '');
 
 -- --------------------------------------------------------
 
@@ -3035,7 +3074,14 @@ INSERT INTO `skills` (`id`, `user_id`, `name`, `created_at`, `updated_at`) VALUE
 (15, 2, 'TypeScript', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
 (19, 37, 'HTML', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
 (20, 37, 'JS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
-(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52');
+(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
+(22, 19, 'HTML', '2024-10-09 20:38:51', '2024-10-09 20:38:51'),
+(23, 19, 'CSS', '2024-10-09 20:38:51', '2024-10-09 20:38:51'),
+(24, 19, 'JS', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
+(25, 19, 'SDFSD', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
+(26, 19, 'SDF', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
+(27, 19, 'SFD', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
+(28, 19, 'SF', '2024-10-09 20:38:52', '2024-10-09 20:38:52');
 
 -- --------------------------------------------------------
 
@@ -3092,22 +3138,13 @@ INSERT INTO `tasks` (`id`, `title`, `description`, `project_id`, `emp_id`, `type
 CREATE TABLE `tbl_setting` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `forSellerCommission` int(11) DEFAULT NULL,
-  `forBuyerCommission` int(11) DEFAULT NULL,
-  `deposit_service_charge` int(11) DEFAULT NULL COMMENT '%',
-  `convert_php_amt` float DEFAULT NULL,
-  `withdraw_service_charge` int(11) DEFAULT NULL COMMENT '%',
-  `withdraw_minimum_amount` int(11) DEFAULT NULL,
-  `minimum_trade_amount` int(11) DEFAULT NULL,
-  `minimum_deposit_amount` int(11) DEFAULT NULL,
+  `forSellerCommission` int(11) DEFAULT NULL COMMENT 'company_commission',
   `level_1_bonus` int(11) DEFAULT NULL,
   `level_2_bonus` int(11) DEFAULT NULL,
   `level_3_bonus` int(11) DEFAULT NULL,
-  `trade_fee` int(11) DEFAULT NULL COMMENT '%',
-  `first_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
-  `second_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
-  `third_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
-  `trade_percent` int(11) DEFAULT NULL COMMENT '%',
+  `level_4_bonus` int(11) DEFAULT NULL,
+  `level_5_bonus` int(11) DEFAULT NULL,
+  `service_fee` int(11) DEFAULT NULL COMMENT 'service fee',
   `tel` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `address` text NOT NULL,
@@ -3158,8 +3195,8 @@ CREATE TABLE `tbl_setting` (
 -- Dumping data for table `tbl_setting`
 --
 
-INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `forBuyerCommission`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `whatsApp`, `website`, `telegram`, `register_bonus`, `setting_id`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `withdrawal_free_on_percentage`, `minimum_withdrawal`, `maximum_withdrawal`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`) VALUES
-(1, 'TRADING', 20, 10, 0, 64, 6, 10, 5, 10, 3, 2, 1, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 5, 1, '5200', 3333, 4544, 45, 4, 34, 333, 22, 22, 22, 2);
+INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `level_4_bonus`, `level_5_bonus`, `service_fee`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `whatsApp`, `website`, `telegram`, `register_bonus`, `setting_id`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `withdrawal_free_on_percentage`, `minimum_withdrawal`, `maximum_withdrawal`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`) VALUES
+(1, 'ISUMAX', 5, 5, 4, 3, 2, 1, 2, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 5, 1, '0', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -3234,7 +3271,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `slug`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `business_return_email`, `landmark_2`, `landmark_1`, `introduce_yourself`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
 (1, 1, NULL, NULL, NULL, 75, 2, 'BIjon1', 'admin', '', '', 'dev1@mail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', '01915728982', '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, 'dev1@mail.com', NULL, '$2a$12$mfR8IIUFgQAWxN52iXB./ezTrEsA3IsXBg8Ts2bKygT4HmQhLKU/y', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, '', ''),
-(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon Ahmede', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/6yN2idCPul2OCoD9ORpM.jpeg', '019999999', '', '', '23', 'Bangladesh', '', 'null', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
+(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon Ahmede', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/6yN2idCPul2OCoD9ORpM.jpeg', '019999999', '', '', '23', 'Bangladesh', '', NULL, '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\n<br />\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
 (3, 2, NULL, '1727692410', 0, 20, 0, 'ahmed', 'ahmed', NULL, NULL, 'user1@gmail.com', NULL, '03425556466', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user1@gmail.com', NULL, '$2y$10$AyWKzUO4Ml.P1f.mnuREBuqJLx/UPMAGZ3tTVg.FSxJdqq.JPKLea', NULL, NULL, '2024-09-30 10:33:30', '2024-09-30 10:33:30', 1, 1, NULL, NULL, NULL),
 (4, 2, NULL, '1727701401', 0, NULL, 3, 'Amir Naseem-1', 'amir-naseem-1', NULL, NULL, 'amirnaseem6362@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amir6453', NULL, '$2y$10$LkrQbobmAkH1TG4xTzwLdemF8Z0vnvcGdu8nkkCU6JqpTfaOQAM9S', NULL, NULL, '2024-09-30 13:03:22', '2024-09-30 13:03:22', 1, 0, NULL, NULL, NULL),
 (5, 2, NULL, '1727726602', 0, NULL, 3, 'Amir Naseem', 'amir-naseem', NULL, NULL, 'amirnaseem2647@gmail.com', NULL, '03440761564', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amnailar@2647', NULL, '$2y$10$P8WEPiIAgqGN4yiC3AnFguJ.wtp0/B/9sjMR79IBVDeUxMrvr3NeG', NULL, NULL, '2024-09-30 20:03:22', '2024-09-30 20:03:22', 1, 1, NULL, NULL, NULL),
@@ -3249,7 +3286,16 @@ INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, 
 (14, 2, NULL, '1727952359', 0, NULL, 7, 'Ayesha4', 'ayesha4', NULL, NULL, 'Ayesha4@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha4@gmail.com', NULL, '$2y$10$/ohHl3gFGPSb4.QeZjCOleNR8ffqrJ8FZO9kSCJCuneKY25zuytjC', NULL, NULL, '2024-10-03 10:45:59', '2024-10-03 10:45:59', 1, 0, NULL, NULL, NULL),
 (15, 2, NULL, '1727952406', 0, NULL, 7, 'Ayesha5', 'ayesha5', NULL, NULL, 'Ayesha5@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$MGWSo6FbhVlJdtitVqNz5e1bdzVKCQ9SdQXVTRl1cCTp/isKLI6x6', NULL, NULL, '2024-10-03 10:46:46', '2024-10-03 10:46:46', 1, 0, NULL, NULL, NULL),
 (16, 2, NULL, '1727952460', 0, NULL, 7, 'Ayesha6', 'ayesha6', NULL, NULL, 'Ayesha6@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$iK3L7Rqt20XjkbRSSaIVU.sN6NnfTsu447KsGGS5Mwvx1H5a6GERW', NULL, NULL, '2024-10-03 10:47:40', '2024-10-03 10:47:40', 1, 0, NULL, NULL, NULL),
-(19, 3, NULL, '1727952460', 0, NULL, 7, 'Ayesha6333', 'ayesh333a6', NULL, NULL, 'Ayesh2a6@gmail.com', NULL, '655455', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$iK3L7Rqt20XjkbRSSaIVU.sN6NnfTsu447KsGGS5Mwvx1H5a6GERW', NULL, NULL, '2024-10-03 10:47:40', '2024-10-03 10:47:40', 1, 1, NULL, NULL, NULL);
+(19, 3, NULL, '1727952460', 0, NULL, 1, 'Ayesha6333', 'ayesh333a6', NULL, NULL, 'Ayesh2a6@gmail.com', '/backend/files/KPeloUqk0AYIJwjqooxv.png', '655455', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, 'A buyer is an individual or entity that acquires goods or services in exchange for money or other forms of payment. Buyers play a crucial role in the marketplace, driving demand for products and influencing supply chains. They make purchasing decisions based on various factors, such as price, quality, brand reputation, and personal or business needs. Buyers can range from everyday consumers purchasing for personal use to large corporations procuring goods in bulk for operational purposes. Their preferences and behavior often shape market trends, making them key players in the economy.', NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$iK3L7Rqt20XjkbRSSaIVU.sN6NnfTsu447KsGGS5Mwvx1H5a6GERW', NULL, NULL, '2024-10-03 10:47:40', '2024-10-03 10:47:40', 1, 1, NULL, NULL, NULL),
+(20, 3, NULL, '1728530105', 3, 15, 19, 'TestBuyer', 'testbuyer', NULL, NULL, 'testbuyer@gmail.com', '/backend/files/gWPB9RnT1Cc4If7yIdKS.jpeg', '0569898999', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '345', NULL, NULL, NULL, NULL, NULL, 'A buyer is an individual or entity that acquires goods or services in exchange for money or other forms of payment. Buyers play a crucial role in the marketplace, driving demand for products and influencing supply chains. They make purchasing decisions based on various factors, such as price, quality, brand reputation, and personal or business needs. Buyers can range from everyday consumers purchasing for personal use to large corporations procuring goods in bulk for operational purposes. Their preferences and behavior often shape market trends, making them key players in the economy.', NULL, NULL, NULL, 'testbuyer@gmail.com', NULL, '$2y$10$XOv0ekbymskSaWeZ/l6GG.zJMWlorl0vYR1h4..ppWB6kXWZlJTRi', NULL, NULL, '2024-10-09 21:15:05', '2024-10-09 21:15:05', 1, 1, NULL, NULL, NULL),
+(21, 3, NULL, '1728613209', 3, 10, 20, 'Test1', 'test1', NULL, NULL, 'test1@mail.com', NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test1@mail.com', NULL, '$2y$10$v3jFyE6aSdc9y1qcCkPKmOZ9OSGlCYOhok9JRZIBGSD75laXMYJX6', NULL, NULL, '2024-10-10 20:20:10', '2024-10-10 20:20:10', 1, 0, NULL, NULL, NULL),
+(22, 3, NULL, '1728614286', 3, NULL, 21, 'Test2', 'test2', NULL, NULL, 'test2@mail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test2@mail.com', NULL, '$2y$10$iCL0Q4q1pjH1ZXtOpAgnPe.lxqrJKfmzQSKsn0mfbu3ObH0/xu4eu', NULL, NULL, '2024-10-10 20:38:06', '2024-10-10 20:38:06', 1, 0, NULL, NULL, NULL),
+(23, 3, NULL, '1728614307', 3, NULL, 22, 'Test3', 'test3', NULL, NULL, 'test3@mail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test3@mail.com', NULL, '$2y$10$5nHW9SEScSv4Gk/EK6fYGO1LAApPogieYaWyZHzZ.FqzE9RJEOarO', NULL, NULL, '2024-10-10 20:38:27', '2024-10-10 20:38:27', 1, 0, NULL, NULL, NULL),
+(24, 3, NULL, '1728614536', 3, NULL, 23, 'test20', 'test20', NULL, NULL, 'test20@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test20@gmail.com', NULL, '$2y$10$lBQAhrvEQDGb6dqu3gC3yuYwDP9tJbc1CKFkLltuxFyVsg8H1Tzu.', NULL, NULL, '2024-10-10 20:42:16', '2024-10-10 20:42:16', 1, 0, NULL, NULL, NULL),
+(25, 3, NULL, '1728614599', 3, 5, 24, 'test21', 'test21', NULL, NULL, 'test21@gmail.com', NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test21@gmail.com', NULL, '$2y$10$IsN434nP11eQWZcQUKdi6eGa2dEoUCM6YREEfvGH3bPDAED7edlwi', NULL, NULL, '2024-10-10 20:43:19', '2024-10-10 20:43:19', 1, 0, NULL, NULL, NULL),
+(26, 3, NULL, '1728614672', 3, 5, 25, 'test30', 'test30', NULL, NULL, 'test30@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test30@gmail.com', NULL, '$2y$10$nykaZnbDenyL.AbxKmw4/eGDdm1RP.7ZRlCPAq7B3ffGKj2ofi.li', NULL, NULL, '2024-10-10 20:44:32', '2024-10-10 20:44:32', 1, 0, NULL, NULL, NULL),
+(27, 3, NULL, '1728614771', 3, 5, 26, 'Test40', 'test40', NULL, NULL, 'test40@gmail.com', NULL, '0149157287982', NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'test40@gmail.com', NULL, '$2y$10$a4rGbh6mYyabmPgiDBooE.kG2wmtp1NPx2tJnEetJMW3/BefcQ2Y2', NULL, NULL, '2024-10-10 20:46:11', '2024-10-10 20:46:11', 1, 1, NULL, NULL, NULL),
+(28, 3, NULL, '1728614799', 3, NULL, 27, 'test50', 'test50', NULL, NULL, 'test50@gmail.com', NULL, '01915728982', NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'test50@gmail.com', NULL, '$2a$12$HXiG7vvs2de2UcGCC1ojTeTh1YHz1MteDNA7PZo163XQF8pEve.PK', NULL, NULL, '2024-10-10 20:46:39', '2024-10-10 20:46:39', 1, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3306,7 +3352,9 @@ CREATE TABLE `withdraw` (
 --
 
 INSERT INTO `withdraw` (`id`, `withdrawID`, `depscription`, `payment_method`, `withdrawal_amount`, `user_id`, `receivable_amount`, `wallet_address`, `withdrawal_pin`, `remarks`, `approved_by`, `transection_fee`, `payable_amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'W.4fa91c19016cb1f807ea47b5a959d518', 'W.4fa91c19016cb1f807ea47b5a959d518', 'TRX(TRC20)', '500', 9, 500, 'XXXXXXX878888iyuiyiuyiu', '123456', NULL, NULL, 0, NULL, 1, '2024-08-03 04:34:06', '2024-08-03 04:34:06');
+(1, 'W.b7aa68fca7cb9d8801b6f092244b88a0', 'W.b7aa68fca7cb9d8801b6f092244b88a0', 'USDTTRC-20', '34', 2, NULL, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', NULL, NULL, NULL, 0, NULL, 0, '2024-10-09 05:50:19', '2024-10-09 05:50:19'),
+(2, 'W.3983e1512aa570c564fab522bdb3efa5', 'W.3983e1512aa570c564fab522bdb3efa5', 'USDTTRC-20', '45', 2, 45, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, 0, NULL, 1, '2024-10-09 05:50:45', '2024-10-09 05:50:45'),
+(3, 'W.b430bedaf544d495473ae9767afc7111', 'W.b430bedaf544d495473ae9767afc7111', 'USDTTRC-20', '40', 2, NULL, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, 0, NULL, 0, '2024-10-09 06:15:47', '2024-10-09 06:15:47');
 
 -- --------------------------------------------------------
 
@@ -3325,6 +3373,16 @@ CREATE TABLE `withdrawal_method` (
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `withdrawal_method`
+--
+
+INSERT INTO `withdrawal_method` (`id`, `user_id`, `name`, `account_number`, `currency_type_id`, `wallet_address`, `remarks`, `created_at`, `updated_at`) VALUES
+(1, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', NULL, NULL, NULL, '2024-10-09 02:56:12', '2024-10-09 02:56:12'),
+(5, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, '2024-10-09 03:20:02', '2024-10-09 03:20:02'),
+(6, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy2', NULL, NULL, NULL, '2024-10-09 03:31:28', '2024-10-09 03:31:28'),
+(7, 19, 'USDT TRC-20', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi', NULL, NULL, NULL, '2024-10-10 07:40:36', '2024-10-10 07:40:36');
 
 --
 -- Indexes for dumped tables
@@ -3431,6 +3489,12 @@ ALTER TABLE `gig`
 -- Indexes for table `gig_images_history`
 --
 ALTER TABLE `gig_images_history`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `level_commission`
+--
+ALTER TABLE `level_commission`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3605,7 +3669,8 @@ ALTER TABLE `withdraw`
 -- Indexes for table `withdrawal_method`
 --
 ALTER TABLE `withdrawal_method`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `account_number` (`account_number`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -3675,7 +3740,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `deposit`
 --
 ALTER TABLE `deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `education`
@@ -3687,7 +3752,7 @@ ALTER TABLE `education`
 -- AUTO_INCREMENT for table `experience`
 --
 ALTER TABLE `experience`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -3708,6 +3773,12 @@ ALTER TABLE `gig_images_history`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
+-- AUTO_INCREMENT for table `level_commission`
+--
+ALTER TABLE `level_commission`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT for table `manufacturers`
 --
 ALTER TABLE `manufacturers`
@@ -3717,7 +3788,7 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3735,7 +3806,7 @@ ALTER TABLE `notification`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `orders_product`
@@ -3825,7 +3896,7 @@ ALTER TABLE `send_message`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -3849,7 +3920,7 @@ ALTER TABLE `tbl_setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
@@ -3861,13 +3932,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `withdraw`
 --
 ALTER TABLE `withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `withdrawal_method`
 --
 ALTER TABLE `withdrawal_method`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

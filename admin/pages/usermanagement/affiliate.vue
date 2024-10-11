@@ -6,7 +6,7 @@
                 <div class="container-fluid">
                     <div class="row mb-2">
                         <div class="col-sm-6">
-                            <p>Affiliate Report</p>
+                            <p>MLM Report</p>
                         </div>
                         <div class="col-sm-6">
                             <ol class="breadcrumb float-sm-right">
@@ -32,7 +32,7 @@
 
 
                                     <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
-                                        <button @click="filterData()" class="btn btn-primary w-100">
+                                        <button type="button" @click="fetchUserLevels()" class="btn btn-primary w-100">
                                             Filter
                                         </button>
                                     </div>
@@ -53,8 +53,31 @@
                                 </div>
                             </div>
 
-                            <UserLevels :user-email="u_details_email" />
 
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th class="w-10">SL NO</th>
+                                        <th>OrderID</th>
+                                        <th>Upline</th>
+                                        <th>Level</th>
+                                        <th class="w-20">Received From</th>
+                                        <th class="text-center">Commission</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(user, index) in storeData" :key="user.id"
+                                        :style="{ backgroundColor: getOrderGroupColor(user.orderId) }">
+                                        <td>{{ index + 1 }}</td>
+                                        <td>{{ user.orderId }}</td>
+                                        <td>{{ user.buyer_name }}</td>
+                                        <td>{{ user.level }}</td>
+                                        <td>{{ user.commission_recv_frm_name }}</td>
+                                        <td class="text-center">{{ user.amount }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <p v-if="totalCommission">Total Users: ${{ totalCommission }}</p>
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -76,20 +99,65 @@ definePageMeta({
 });
 
 const router = useRouter();
-const searchQuery = ref(""); 
-const u_details_email = ref(""); 
+const searchQuery = ref("");
+const loading = ref(false);
+const error = ref([]);
+const storeData = ref([]);
+
+
+// List of colors to cycle through for different groups
+const colors = [
+    '#f2f2f2', '#d1e7dd', '#f8d7da', '#cfe2ff', '#fefefe',
+    '#ffebcc', '#e6ccff', '#ffcccc', '#ccffcc', '#ffccff',
+    '#cceeff', '#ff99cc', '#ccff99', '#99ccff', '#ff9966',
+    '#ffcc99', '#ccccff', '#99ffcc', '#ffcc00', '#ccff00',
+    '#00ffcc', '#ff0066', '#cc00ff', '#66ff99', '#ff66cc',
+    '#66ccff', '#ff6699', '#cccc66', '#66ffcc', '#ff3366',
+    '#cc3366', '#ff66ff', '#cc6699', '#ff9933', '#66ff00',
+    '#99ff00', '#ff3300', '#ff99ff', '#ff3399', '#00ccff',
+    '#ff0033', '#ccff33', '#ffcc33', '#33ff66', '#9933ff',
+    '#3399ff', '#33ccff', '#ff6633', '#33ffcc', '#66cc99'
+];
+
+// Function to return a color based on the orderId group
+const getOrderGroupColor = (orderId) => {
+    const uniqueOrderIds = Array.from(new Set(storeData.value.map(user => user.orderId)));
+    const colorIndex = uniqueOrderIds.indexOf(orderId) % colors.length; // Cycle through colors
+    return colors[colorIndex];
+};
+
 
 // Function to assign searchQuery value to u_details_email
-const filterData = async () => {
-    // Assign the value properly using .value
-    u_details_email.value = searchQuery.value; 
+const fetchUserLevels = async () => {
+
+    loading.value = true;
+    error.value = null;
+
+    try {
+        const response = await axios.get("/user/checkmlmHistorys", {
+            params: {
+                txtsearch: searchQuery.value,
+            }
+        });
+        storeData.value = response.data.data;
+    } catch (err) {
+        error.value = err.response
+            ? err.response.data.error
+            : "An error occurred while fetching user data.";
+    } finally {
+        loading.value = false;
+    }
 };
+
+// Computed property to calculate the total commission
+const totalCommission = computed(() => {
+    return storeData.value.reduce((sum, user) => sum + parseFloat(user.amount), 0).toFixed(2);
+});
 
 </script>
 
 
 <style>
-
 /* Table */
 .table-wrapper {
     width: 100%;

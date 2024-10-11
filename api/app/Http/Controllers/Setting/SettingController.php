@@ -1222,11 +1222,8 @@ class SettingController extends Controller
     public function settingrowSystem()
     {
         $data = Setting::find(1);
-
-        $buyToken = BuyToken::sum('usdt_amount');
         $response = [
             'data'     => $data,
-            'BuyToken' => $buyToken,
             'message' => 'success'
         ];
         return response()->json($response, 200);
@@ -1275,17 +1272,14 @@ class SettingController extends Controller
             'email'       => 'required',
             'currency'    => 'required',
 
-            'register_bonus'    => 'required',
-            'maximum_supply'    => 'required',
-            'total_supply'      => 'required',
-
+            'register_bonus'     => 'required',
             'level_1_bonus'      => 'required',
             'level_2_bonus'      => 'required',
             'level_3_bonus'      => 'required',
-
-            'liquidity_total_supply'      => 'required',
-            'circlation'                  => 'required',
-            'beganing_price'              => 'required',
+            'level_4_bonus'      => 'required',
+            'level_5_bonus'      => 'required',
+            'service_fee'        => 'required',
+            
 
         ]);
         if ($validator->fails()) {
@@ -1306,27 +1300,12 @@ class SettingController extends Controller
             'level_1_bonus'          => !empty($request->level_1_bonus) ? $request->level_1_bonus : "",
             'level_2_bonus'          => !empty($request->level_2_bonus) ? $request->level_2_bonus : "",
             'level_3_bonus'          => !empty($request->level_3_bonus) ? $request->level_3_bonus : "",
+            'level_4_bonus'          => !empty($request->level_4_bonus) ? $request->level_4_bonus : "",
+            'level_5_bonus'          => !empty($request->level_5_bonus) ? $request->level_5_bonus : "",
 
-            'deposit_service_charge'      => !empty($request->deposit_service_charge) ? $request->deposit_service_charge : "",
-            'withdraw_service_charge'     => !empty($request->withdraw_service_charge) ? $request->withdraw_service_charge : "",
-            'crypto_wallet_address'       => !empty($request->crypto_wallet_address) ? $request->crypto_wallet_address : "",
-            'store_policy'                => !empty($request->store_policy) ? $request->store_policy : "",
+            'service_fee'      => !empty($request->service_fee) ? $request->service_fee : "",
             'register_bonus'              => !empty($request->register_bonus) ? $request->register_bonus : 0,
-            //'maximum_supply'              => !empty($request->maximum_supply) ? $request->maximum_supply : 0,
-            //  'total_supply'                => !empty($request->total_supply) ? $request->total_supply : 0,
-
-            'mininmum_deposit_amount'               => !empty($request->mininmum_deposit_amount) ? $request->mininmum_deposit_amount : 0,
-            'maximum_deposit_amount'                => !empty($request->maximum_deposit_amount) ? $request->maximum_deposit_amount : 0,
-            'minimum_withdrawal'                    => !empty($request->minimum_withdrawal) ? $request->minimum_withdrawal : 0,
-            'maximum_withdrawal'                    => !empty($request->maximum_withdrawal) ? $request->maximum_withdrawal : 0,
-            'daily_max_withdraw_request'            => !empty($request->daily_max_withdraw_request) ? $request->daily_max_withdraw_request : 0,
-            'withdrawal_free_amount'                => !empty($request->withdrawal_free_amount) ? $request->withdrawal_free_amount : 0,
-
-            'withdrawal_free_on_percentage'         => !empty($request->withdrawal_free_on_percentage) ? $request->withdrawal_free_on_percentage : 0,
-            'mimumun_transfer_amount_to_other_user' => !empty($request->mimumun_transfer_amount_to_other_user) ? $request->mimumun_transfer_amount_to_other_user : 0,
-            'maximum_transfer_amount_to_other_user' => !empty($request->maximum_transfer_amount_to_other_user) ? $request->maximum_transfer_amount_to_other_user : 0,
-            'transfer_fee_fixed_amount'             => !empty($request->transfer_fee_fixed_amount) ? $request->transfer_fee_fixed_amount : 0,
-            'traansfer_fee_on_percentage'           => !empty($request->traansfer_fee_on_percentage) ? $request->traansfer_fee_on_percentage : 0,
+         
         );
 
         //dd($data);

@@ -118,44 +118,7 @@
                       <div class="service-about">
                         <h4>Description</h4>
                         <p class="text mb30 text-justify" style="text-align: justify;">{{ introduce_yourself }}</p>
-
-                        <hr class="opacity-100 mb60 mt60">
-                        <h4 class="mb30">Education</h4>
-                        <div class="educational-quality_">
-
-                          <div class="wrapper mb40" v-for="edu in euddata" :key="edu.id">
-                            <span class="tag">{{ edu.year }}</span>
-                            <h5 class="mt15">{{ edu.subject }}</h5>
-                            <h6 class="text-thm">{{ edu.college }}</h6>
-                            <p style="text-align: justify;">{{ edu.description }}
-                            </p>
-                          </div>
-
-                        </div>
-                        <hr class="opacity-100 mb60">
-                        <h4 class="mb30">Work & Experience</h4>
-                        <div class="educational-quality_">
-                          <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
-                            <span class="tag">{{ edu.year }}</span>
-                            <h5 class="mt15">{{ edu.role }}</h5>
-                            <h6 class="text-thm">{{ edu.company }}</h6>
-                            <p style="text-align: justify;">{{ edu.description }}
-                            </p>
-                          </div>
-
-                        </div>
-                        <hr class="opacity-100 mb60">
-                        <h4 class="mb30">Awards adn Certificates</h4>
-                        <div class="educational-quality__">
-                          <div class="wrapper mb40" v-for="cer in certificatedata" :key="cer.id">
-                            <span class="tag">{{ cer.year }}</span>
-                            <h5 class="mt15">{{ cer.course_name }}</h5>
-                            <h6 class="text-thm">{{ cer.institute_name }}</h6>
-                            <p style="text-align: justify;">{{ cer.description }}
-                            </p>
-                          </div>
-
-                        </div>
+ 
 
                       </div>
                     </div>
@@ -342,7 +305,7 @@
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
                                     <td>
                                       <nuxt-link :to="`/dashboard/buyer/orderDetails/${order.orderId}`"
-                                      class="btn-sm btn btn-primary text-white">Details</nuxt-link>
+                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
                                     </td>
                                   </tr>
 
@@ -376,7 +339,7 @@
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
                                     <td>
                                       <nuxt-link :to="`/dashboard/buyer/orderDetails/${order.orderId}`"
-                                      class="btn-sm btn btn-primary text-white">Details</nuxt-link>
+                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
                                     </td>
                                   </tr>
 

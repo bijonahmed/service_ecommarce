@@ -2,26 +2,27 @@
 
 namespace App\Http\Controllers\Order;
 
-use App\Http\Controllers\Controller;
-use App\Models\Categorys;
-use Illuminate\Http\Request;
-use App\Models\Product;
-//use Darryldecode\Cart\Cart;
-use Illuminate\Support\Facades\Session;
-use App\Models\Order;
-use Carbon\Carbon;
-use Validator;
-use App\Models\OrderStatus;
-use App\Models\Withdraw;
-use App\Models\ProductCategory;
-use App\Models\CategoryCommissionHistory;
-use App\Models\couponUseHistory;
-use App\Models\Gig;
-use App\Models\ordersProduct;
-use App\Models\MyMessage;
-use App\Models\GigImagesHistory;
 use DB;
+use Validator;
+use Carbon\Carbon;
+use App\Models\Gig;
+//use Darryldecode\Cart\Cart;
 use App\Models\User;
+use App\Models\Order;
+use App\Models\Product;
+use App\Models\Withdraw;
+use App\Models\Categorys;
+use App\Models\MyMessage;
+use App\Models\OrderStatus;
+use Illuminate\Http\Request;
+use App\Models\ordersProduct;
+use App\Models\LevelCommission;
+use App\Models\ProductCategory;
+use App\Models\couponUseHistory;
+use App\Models\GigImagesHistory;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Session;
+use App\Models\CategoryCommissionHistory;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class OrderController extends Controller
@@ -38,6 +39,119 @@ class OrderController extends Controller
         }
     }
 
+    public function referralCommission()
+    {
+
+        $result = LevelCommission::where('buyerId', $this->userid)->get();
+        $sumAmount = $result->sum('amount');
+        $formattedSumAmount = number_format($sumAmount, 2, '.', '');
+        return response()->json([
+            'data' => $result,
+            'sumAmount' => $formattedSumAmount // Include the sum in the response
+        ]);
+    }
+
+    public function updateStatus(Request $request)
+    {
+        $data['order_status'] = $request->status;
+        Order::where('orderId', $request->oId)->update($data);
+        $userId   = $this->userid;
+        $userrow  = User::find($userId);
+
+        if ($request->status == 5) {
+
+            $lev1Sum = Order::where('buyerId', $userId)
+                ->where('orderId', $request->oId)
+                ->where('order_status', 5)
+                ->sum('lev_1');
+
+            $lev2Sum = Order::where('buyerId', $userId)
+                ->where('orderId', $request->oId)
+                ->where('order_status', 5)
+                ->sum('lev_2');
+
+            $lev3Sum = Order::where('buyerId', $userId)
+                ->where('orderId', $request->oId)
+                ->where('order_status', 5)
+                ->sum('lev_3');
+
+            $lev4Sum = Order::where('buyerId', $userId)
+                ->where('orderId', $request->oId)
+                ->where('order_status', 5)
+                ->sum('lev_4');
+
+            $lev5Sum = Order::where('buyerId', $userId)
+                ->where('orderId', $request->oId)
+                ->where('order_status', 5)
+                ->sum('lev_5');
+
+            $results = DB::select("
+            WITH RECURSIVE LevelCount AS (
+            SELECT id, join_id, name, 0 AS level -- Start at 0 for the target user
+            FROM users
+            WHERE id = '$userId' AND role_id = 3
+            UNION ALL
+            SELECT u.id, u.join_id, u.name, lc.level + 1
+            FROM users u
+            INNER JOIN LevelCount lc ON u.id = lc.join_id
+            WHERE lc.level < 5 )
+            SELECT id, name, level AS level
+            FROM LevelCount
+            WHERE id <> '$userId'
+            ORDER BY level
+    ");
+
+            // Initialize an array to hold the final results
+            $finalResults = [];
+            foreach ($results as $result) {
+                switch ($result->level) {
+                    case 1:
+                        $comAmount = $lev1Sum;
+                        break;
+                    case 2:
+                        $comAmount = $lev2Sum;
+                        break;
+                    case 3:
+                        $comAmount = $lev3Sum;
+                        break;
+                    case 4:
+                        $comAmount = $lev4Sum;
+                        break;
+                    case 5:
+                        $comAmount = $lev5Sum;
+                        break;
+                }
+
+                $finalResults[] = [
+                    'buyerId'                 => $result->id,
+                    'name'                    => $result->name,
+                    'level'                   => $result->level,
+                    'amount'                  => $comAmount,
+                    'commission_recev_frm'    => $userId,
+                    'orderId'                 => $request->oId, // oId == orderId
+                    'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
+                ];
+
+
+                LevelCommission::insert([
+                    'buyerId'                 => $result->id,
+                    'buyer_name'              => $result->name,
+                    'level'                   => $result->level,
+                    'amount'                  => $comAmount,
+                    'commission_recev_frm'    => $userId,
+                    'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
+                    'orderId'                 => $request->oId, // oId == orderId
+                    'created_at'              => now(),
+                    'updated_at'              => now(),
+                ]);
+            }
+
+            //  $data['finalResponse'] = $finalResults;
+            return response()->json(['message' => 'Order complete successfully.']);
+        }
+
+        return response()->json("update successfully", 200);
+    }
 
     public function updateDeliveryGig(Request $request)
     {
@@ -48,9 +162,6 @@ class OrderController extends Controller
             'buyerId'        => 'required',
             'images'         => 'required',
         ]);
-
-
-
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -113,7 +224,6 @@ class OrderController extends Controller
         $data['subCategoryName']    = !empty($findSubCategory->name) ? $findCategory->name : "";
         $data['inSubCategoryName']  = !empty($findinSubCategory->name) ? $findCategory->name : "";
 
-
         $data['buyerId']            = $order->buyerId;
         $data['buyerName']          = !empty($buyerInfo->name) ? $buyerInfo->name : "";
         $data['types']              = $order->types;
@@ -168,7 +278,6 @@ class OrderController extends Controller
 
         return response()->json(['message' => 'Order rejected successfully.']);
     }
-
 
     public function rejectOrder(Request $request)
     {
@@ -319,7 +428,6 @@ class OrderController extends Controller
             ->where('orders.order_status', 5)
             ->get();
 
-       
         $earning = 0;
         foreach ($data as $v) {
             $row             = DB::table('tbl_setting')->where('id', 1)->first();
@@ -330,13 +438,10 @@ class OrderController extends Controller
             $perResult       = floatval($perResult); // Ensure $perResult is a float
             $result          =  $originalPrice - $perResult; // This will work without error
             $earning += $result;
-            
         }
         $rdata['earning']  = $earning;
         return response()->json($rdata, 200);
     }
-
-
 
     public function getOrderCountBuyer(Request $request)
     {
@@ -387,7 +492,6 @@ class OrderController extends Controller
 
         return response()->json($ordata, 200);
     }
-
 
     public function getOrderPlaceForSeller(Request $request)
     {
@@ -466,14 +570,6 @@ class OrderController extends Controller
         return response()->json($ordata, 200);
     }
 
-    public function updateStatus(Request $request)
-    {
-        $data['order_status'] = $request->status;
-        Order::where('orderId', $request->oId)->update($data);
-        return response()->json("update successfully", 200);
-    }
-
-
     public function cancelOrderBuyer($orderId)
     {
 
@@ -483,7 +579,6 @@ class OrderController extends Controller
         Order::where('orderId', $orderId)->update($data);
         return response()->json("update successfully", 200);
     }
-
 
     public function getOrderPlaceForByer(Request $request)
     {
@@ -559,10 +654,8 @@ class OrderController extends Controller
         return response()->json($ordata, 200);
     }
 
-
     public function allOrders()
     {
-
 
         $data = Order::join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
             ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
@@ -640,7 +733,6 @@ class OrderController extends Controller
                     $remainingTime->s // Include seconds if you want to show them
                 );
             }
-
 
             $ostatus = OrderStatus::where('id', $v->order_status)->first();
 
@@ -749,7 +841,6 @@ class OrderController extends Controller
 
         $chkSeller = Gig::where('id', $request->gig_id)->select('user_id')->first();
 
-
         $lev1_comm = 5;
         $lev2_comm = 4;
         $lev3_comm = 3;
@@ -765,8 +856,7 @@ class OrderController extends Controller
 
         $subTotal = is_numeric($request->sub_total) ? (float) $request->sub_total : 0; // Cast to float or set to 0 if non-numeric
         $tips = is_numeric($request->tips) ? (float) $request->tips : 0; // Cast to float or set to 0 if non-numeric
-        $total = $subTotal + $tips; 
-
+        $total = $subTotal + $tips;
 
         $gig_id                 = $request->gig_id;
         $seller_id              = $chkSeller->user_id ? $chkSeller->user_id : "";

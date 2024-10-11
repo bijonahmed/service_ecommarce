@@ -600,7 +600,7 @@ const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore)
 
 
-const serviceFee = ref(2);
+const serviceFee = ref('');
 const tips = ref(0);
 
 const gig_id = ref("");
@@ -614,12 +614,6 @@ const captchaValid = ref(false);
 const SelectedPackages = ref('');
 const SelectedPrice = ref('');
 //for insert
-const fullname = ref("");
-const email_address = ref('');
-const billing_address = ref('');
-const card_number = ref('');
-const expiration_date = ref('');
-const cvc = ref('');
 const deliveryday = ref('');
 
 const message = ref('');
@@ -726,7 +720,7 @@ const setPrice = async (packages, price, delivery_day) => {
     const response = await axios.get(`/user/checkDepositBalance`);
     console.log("Deposit Amount is: " + response.data.depositAmount);
     const depositAmount = response.data.depositAmount;
-    serviceFee.value = response.data.tradeFee;
+    serviceFee.value = response.data.service_fee;
 
     if (depositAmount >= setprice) {
       $('#payment_modal').modal('show');

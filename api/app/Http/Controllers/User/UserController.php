@@ -7,33 +7,34 @@ use Auth;
 use File;
 use Helper;
 use Validator;
-use App\Models\User;
-use App\Models\Profile;
-use App\Models\SellerAds;
-use Illuminate\Support\Str;
-use function Ramsey\Uuid\v1;
-use Illuminate\Http\Request;
-use App\Rules\MatchOldPassword;
-use PhpParser\Node\Stmt\TryCatch;
-use App\Http\Controllers\Controller;
-use App\Models\PaymentCard;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Crypt;
-use App\Models\BlogModel;
-use App\Models\WithdrawMethod;
-use App\Models\Certificate;
-use App\Models\Profession;
-use App\Models\Setting;
 use App\Models\Gig;
-use Illuminate\Http\JsonResponse;
-use App\Models\Education;
-use App\Models\Experience;
+use App\Models\User;
+use App\Models\Order;
 use App\Models\Skills;
 use App\Models\Deposit;
-use App\Models\Order;
-use App\Models\Notification;
+use App\Models\Profile;
+use App\Models\Setting;
 use App\Models\Withdraw;
-
+use App\Models\BlogModel;
+use App\Models\Education;
+use App\Models\SellerAds;
+use App\Models\Experience;
+use App\Models\Profession;
+use App\Models\Certificate;
+use App\Models\PaymentCard;
+use Illuminate\Support\Str;
+use App\Models\Notification;
+use function Ramsey\Uuid\v1;
+use Illuminate\Http\Request;
+use App\Models\WithdrawMethod;
+use App\Models\LevelCommission;
+use App\Rules\MatchOldPassword;
+use Illuminate\Http\JsonResponse;
+use PhpParser\Node\Stmt\TryCatch;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Crypt;
+use App\Http\Controllers\Order\OrderController; // Import the AnotherController
 
 class UserController extends Controller
 {
@@ -61,6 +62,68 @@ class UserController extends Controller
         $data['user_name']      = !empty($user_row->name) ? $user_row->name : "";
 
         return response()->json($data);
+    }
+
+
+    public function checkDepositBalance()
+    {
+
+
+        $odController  = new OrderController();
+        $response      = $odController->referralCommission();
+        $commissionAmt = $response instanceof JsonResponse ? $response->getData(true)['sumAmount'] : 0;
+
+        $settingrow   = Setting::find(1);
+
+        $completeAmount = Order::where('buyerId', $this->userid)
+            ->where('order_status', 5)
+            ->sum(DB::raw('sub_total + tips'));
+
+        $returnAmount = Order::where('buyerId', $this->userid)
+            ->where('order_status', 3)
+            ->sum('selected_price');
+
+        $orderAmount = Order::where('buyerId', $this->userid)
+            ->whereNotIn('order_status', [3])
+            ->sum('sub_total');
+
+        /*
+        Calculate 5% of the complete amount
+        echo "Complete Amount : $completeAmount<br>";
+        $fivePercentOfCompleteAmount = $completeAmount * 0.05;
+        echo $fivePercentOfCompleteAmount;
+        exit;
+        If you need to return or use this value
+         return $fivePercentOfCompleteAmount;
+
+        echo "canel amount is : $returnAmount--------------------order amount : $orderAmount-";
+        exit; 
+        */
+
+        $result      = $orderAmount + $returnAmount + $commissionAmt;
+        $orderAmount = $result;
+
+        $depositAmt = Deposit::where('user_id', $this->userid)
+            ->where('status', 1)
+            ->sum('deposit_amount');
+        try {
+            // Calculate the deposit amount
+
+
+
+            $result = abs($depositAmt - $orderAmount);
+
+
+            $data['depositAmount']      = $result;
+            $data['show_depositAmount'] = number_format($result, 2);
+            $data['service_fee']        = $settingrow->service_fee;
+
+            //$data['depositAmount'] = abs($depositAmt - $orderAmount);
+
+            return response()->json($data);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Failed Please try again later.'], 500);
+        }
     }
 
     public function deleteNotification($id)
@@ -673,71 +736,6 @@ class UserController extends Controller
         }
     }
 
-    public function checkDepositBalance()
-    {
-
-        $settingrow   = Setting::find(1);
-
-        $completeAmount = Order::where('buyerId', $this->userid)
-            ->where('order_status', 5)
-            ->sum(DB::raw('sub_total + tips'));
-
-        $returnAmount = Order::where('buyerId', $this->userid)
-            ->where('order_status', 3)
-            ->sum('selected_price');
-
-        $orderAmount = Order::where('buyerId', $this->userid)
-            ->whereNotIn('order_status', [3])
-            ->sum('sub_total');
-
-        // Calculate 5% of the complete amount
-        // echo "Complete Amount : $completeAmount<br>";
-        // $fivePercentOfCompleteAmount = $completeAmount * 0.05;
-        // echo $fivePercentOfCompleteAmount;
-        // exit;
-
-        // If you need to return or use this value
-        //  return $fivePercentOfCompleteAmount;
-
-        // echo "canel amount is : $returnAmount--------------------order amount : $orderAmount-";
-        // exit; 
-
-        $result      = $orderAmount + $returnAmount;
-        $orderAmount = $result;
-
-
-
-
-
-
-
-
-
-
-
-        $depositAmt = Deposit::where('user_id', $this->userid)
-            ->where('status', 1)
-            ->sum('deposit_amount');
-        try {
-            // Calculate the deposit amount
-
-
-
-            $result = abs($depositAmt - $orderAmount);
-
-
-            $data['depositAmount']      = $result;
-            $data['show_depositAmount'] = number_format($result, 2);
-            $data['tradeFee']           = $settingrow->trade_fee;
-
-            //$data['depositAmount'] = abs($depositAmt - $orderAmount);
-
-            return response()->json($data);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Failed Please try again later.'], 500);
-        }
-    }
-
 
     public function getWaypaymentConfirm(Request $request)
     {
@@ -1195,91 +1193,72 @@ class UserController extends Controller
     public function checkmlmHistorys(Request $request)
     {
 
-        $email    = $request->email; //$request->email;
+        $email    = $request->txtsearch; //$request->email;
 
         $chkUser  = User::where('email', $email)->first();
         $userId   = !empty($chkUser->id) ? $chkUser->id : "";
-
-        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL1->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
-            return $item;
-        });
-
-        $level1_ids       = $checkL1->pluck('id')->toArray();
-        // Fetch level 2 users based on level 1 IDs
-        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL2->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
-            return $item;
-        });
-
-        $level2_ids       = $checkL2->pluck('id')->toArray();
-
-        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL3->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
-            return $item;
-        });
-
-
-        $level3_ids = $checkL3->pluck('id')->toArray();
-
-        $data['level_1']        = $checkL1;
-        $data['level_2']        = $checkL2;
-        $data['level_3']        = $checkL3;
-        $data['level_1_count']  = count($checkL1);
-        $data['level_2_count']  = count($checkL2);
-        $data['level_3_count']  = count($checkL3);
-        $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
-        return response()->json($data);
+        $records  = LevelCommission::where('commission_recev_frm', $userId)->get();
+        if (!$records) {
+            return response()->json([
+                'message' => 'No completed orders found for this user. Once an order is completed, the commission will be credited.',
+                'data' => []
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Order found',
+                'data' => $records
+            ]);
+        }
     }
     public function checkLevelHistorys(Request $request)
     {
+        ///dd($request->all());
 
         $email    = $this->email; //$request->email;
         $chkUser  = User::where('email', $email)->first();
         $userId   = $chkUser->id;
 
-        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL1->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_1_bonus; // Adding the extra key with value 6
-            return $item;
-        });
+        // Execute the recursive query
+        $results = DB::select("
+        WITH RECURSIVE LevelCount AS (
+        SELECT id, join_id, name, 0 AS level -- Start at 0 for the target user
+        FROM users
+        WHERE id = '$userId' AND role_id = 3
+        UNION ALL
+        SELECT u.id, u.join_id, u.name, lc.level + 1
+        FROM users u
+        INNER JOIN LevelCount lc ON u.id = lc.join_id
+        WHERE lc.level < 5
+    )
+    SELECT id, name, level AS level
+    FROM LevelCount
+    WHERE id <> '$userId'
+    ORDER BY level
+");
 
-        $level1_ids       = $checkL1->pluck('id')->toArray();
-        // Fetch level 2 users based on level 1 IDs
-        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL2->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
-            return $item;
-        });
+        // Initialize an array to hold the final results
+        $finalResults = [];
 
-        $level2_ids       = $checkL2->pluck('id')->toArray();
+        // Add id, name, and amount in the foreach loop
+        foreach ($results as $result) {
+            $finalResults[] = [
+                'id' => $result->id,
+                'name' => $result->name,
+                'level' => $result->level,
+                'amount' => $this->calculateAmount($result->level), // Calculate the amount based on the level or any other logic
+            ];
+        }
 
-        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
-        $checkL3->transform(function ($item) {
-            $gloabl_setting   = Setting::find(1);
-            $item['level_commision'] = $gloabl_setting->level_2_bonus; // Adding the extra key with value 6
-            return $item;
-        });
+        $data['finalResponse'] = $finalResults;
 
-
-        $level3_ids = $checkL3->pluck('id')->toArray();
-
-        $data['level_1']        = $checkL1;
-        $data['level_2']        = $checkL2;
-        $data['level_3']        = $checkL3;
-        $data['level_1_count']  = count($checkL1);
-        $data['level_2_count']  = count($checkL2);
-        $data['level_3_count']  = count($checkL3);
-        $data['total']    = count($level1_ids) + count($level2_ids) + count($level3_ids);
+        // dd($data['finalResponse']);
         return response()->json($data);
+    }
+
+    private function calculateAmount($level)
+    {
+        // Example logic for calculating the amount based on level
+        return $level * 100; // Replace this logic as needed
     }
 
     public function checkLevelHistory()

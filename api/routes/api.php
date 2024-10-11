@@ -250,6 +250,7 @@ Route::group([
 Route::group([
     'prefix' => 'order'
 ], function () {
+    Route::get('referralCommission', [OrderController::class, 'referralCommission']);
     Route::get('updateStatus', [OrderController::class, 'updateStatus']);
     Route::get('cancel-order-buyer/{orderId}', [OrderController::class, 'cancelOrderBuyer']);
     Route::post('updateDeliveryGig', [OrderController::class, 'updateDeliveryGig']);

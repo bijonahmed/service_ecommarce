@@ -63,7 +63,6 @@
                     <th scope="col">OrderDate</th>
                     <th scope="col">Delivery Time</th>
                     <th scope="col">Amount</th>
-                    <th scope="col text-center" style="text-align: center;">Status</th>
                     <th scope="col text-center" style="text-align: center;">Action</th>
                   </tr>
                 </thead>
@@ -78,18 +77,8 @@
                     <td class="vam">{{ formatDate(order.created_at) }}</td>
                     <td class="vam">{{ order.reamingitime }}</td>
                     <td class="vam">${{ order.selected_price }}</td>
-                    <td class="vam">
-                      <span v-if="order.order_status == 1">Order Placed</span>
-                      <span v-if="order.order_status == 2">Completed</span>
-                      <span v-if="order.order_status == 3">Delivered</span>
-                      <span v-if="order.order_status == 4">Under Review</span>
-                      <span v-if="order.order_status == 5">Order Cancelled</span>
-                    </td>
-
                     <td class="vam" style="text-align: center;">
-                      <a href="#" @click="showDetails(order)">
-                        <i class="fa-solid fa-list-check"></i>&nbsp;Status
-                      </a>
+                     
                       <a href="#" @click="getAllOrdersList">
                         <i class="fa fa-refresh" aria-hidden="true"></i> Reload
                       </a>

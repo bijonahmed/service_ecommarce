@@ -52,38 +52,6 @@ import axios from "axios";
 
 const loading = ref(true);
 const error = ref(null);
-const level_1 = ref([]);
-const level_2 = ref([]);
-const level_3 = ref([]);
-
-const total = ref(0);
-
-const level_1_count = computed(() => level_1.value.length);
-const level_2_count = computed(() => level_2.value.length);
-const level_3_count = computed(() => level_3.value.length);
-
-
-// Define the prop
-const props = defineProps({
-  userEmail: {
-    type: String, // Specify the type (in this case, a String)
-    required: true // Make it required if needed
-  }
-});
-// Access the prop directly
-// Merging users from all levels into one array
-const mergedUsers = computed(() => {
-  return [
-    ...level_1.value.map((user) => ({ ...user, level: "Level 1" })),
-    ...level_2.value.map((user) => ({ ...user, level: "Level 2" })),
-    ...level_3.value.map((user) => ({ ...user, level: "Level 3" })),
-  ];
-});
-
-// Calculate total count of all users
-const totalCount = computed(
-  () => level_1_count.value + level_2_count.value + level_3_count.value
-);
 
 
 
@@ -98,14 +66,6 @@ const fetchUserLevels = async (email) => {
 
     const data = response.data;
 
-    // Assigning API response to component data
-    level_1.value = data.level_1;
-    level_2.value = data.level_2;
-    level_3.value = data.level_3;
-    level_1_count.value = data.level_1_count;
-    level_2_count.value = data.level_2_count;
-    level_3_count.value = data.level_3_count;
-    total.value = data.total;
   } catch (err) {
     error.value = err.response
       ? err.response.data.error
