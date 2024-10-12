@@ -182,13 +182,7 @@
             <div class="container-fluid">
               <h2 class="text-center">Order Details</h2>
               <div class="text-center">
-                <h5 class="badge bg-warning text-dark" style="font-size: 20px;">
-                  If the order status is delivered, the company will deduct {{ forSellerCommission }}% of the seller's
-                  total
-                  amount from the
-                  order
-                  price.
-                </h5><br />
+                
 
               </div>
               <div class="table-responsive" v-if="orders">
@@ -197,7 +191,7 @@
                     <tr>
                       <th>OrderID</th>
                       <th>Gig Name</th>
-                      <th>Buyer Full Name</th>
+                      <th>Buyer Name</th>
                       <th>Packages</th>
                       <th>Price</th>
                       <th>Delivery Day</th>
@@ -212,7 +206,7 @@
                       <td>{{ order.selected_packages }}</td>
                       <td>${{ order.selected_price }}</td>
                       <td>{{ order.delivery_day }} Days</td>
-                      <td><span> {{ getOrderStatus(order.order_status) }}</span>
+                      <td><span> {{ order.order_status }}</span>
                       </td>
                     </tr>
                   </tbody>
@@ -407,23 +401,7 @@ const logoutUsers = async () => {
   }
 };
 
-
-const getOrderStatus = (status) => {
-  switch (status) {
-    case "1":
-      return "Order Placed";
-    case "2":
-      return "Completed";
-    case "3":
-      return "Delivered";
-    case "4":
-      return "Review";
-    case "5":
-      return "Order Cancelled";
-    default:
-      return "Unknown";
-  }
-}
+ 
 
 const success_noti = () => {
   const Toast = swal.mixin({

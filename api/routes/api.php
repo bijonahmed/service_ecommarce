@@ -106,6 +106,8 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::post('updateUser', [UserController::class, 'updateUser']);
+    Route::get('allrolelist', [UserController::class, 'allrolelist']);
     Route::get('dashboardCounting', [UserController::class, 'dashboardCounting']);
     Route::get('deleteNotification/{id}', [UserController::class, 'deleteNotification']);
     Route::get('getNotifications', [UserController::class, 'getNotifications']);

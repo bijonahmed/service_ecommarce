@@ -230,7 +230,7 @@ const saveData = () => {
         .then((res) => {
             document.getElementById('formrest').reset();
             success_noti();
-            router.push('/user/user-list');
+            router.push('/usermanagement/userlist');
         }).catch(error => {
             if (error.response && error.response.status === 422) {
                 errors.value = error.response.data.errors;

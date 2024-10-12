@@ -21,6 +21,7 @@ use App\Models\SellerAds;
 use App\Models\Experience;
 use App\Models\Profession;
 use App\Models\Certificate;
+use App\Models\OrderStatus;
 use App\Models\PaymentCard;
 use Illuminate\Support\Str;
 use App\Models\Notification;
@@ -479,6 +480,58 @@ class UserController extends Controller
         ];
         return response()->json($response, 200);
     }
+    public function updateUser(Request $request)
+    {
+    //dd($request->all());
+         
+        $user = User::find($this->userid);
+        if ($request->email === $user->email) {
+            // $unqie=uniqid();
+            //  $email= $request->email.$unqie;
+        } else {
+            $email = $request->email;
+        }
+
+       // $data['f_name']          = $request->fname;
+      //  $data['l_name']          = $request->lname;
+        $data['name']            = $request->fname.' '.$request->lname;
+        $data['phone_number']    = $request->phone_number;
+        $data['email']           = $request->email;
+       // $data['whtsapp']         = $request->whtsapp;
+    //    $data['nationality_id']  = $request->nationality_id;
+
+
+        if (!empty($request->file('file'))) {
+            $files = $request->file('file');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $data['image'] = $file_url;
+        }
+
+        User::where('id', $this->userid)->update($data);
+        $response = [
+            'message' => 'User successfully update:',
+        ];
+        return response()->json($response);
+    }
+
+
+    public function allrolelist()
+    {
+        $data = User::getRoleList();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($data, 200);
+    }
+
+
     public function getTime()
     {
         $data = User::getTimes();
@@ -1418,6 +1471,28 @@ class UserController extends Controller
 
         $userid = $request->id;
 
+
+
+        $data = Order::where('sellerId', $userid)
+            ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug') // Select desired fields
+            ->where('orders.order_status', 5)
+            ->get();
+
+        $earning = 0;
+        foreach ($data as $v) {
+            $row             = DB::table('tbl_setting')->where('id', 1)->first();
+            $percentage      = $row->forSellerCommission; // Convert to float
+            $selectedPrice   = $v->selected_price; // Convert to float
+            $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
+            $originalPrice   = $v->selected_price; // Ensure selected_packages is also a float
+            $perResult       = floatval($perResult); // Ensure $perResult is a float
+            $result          =  $originalPrice - $perResult; // This will work without error
+            $earning += $result;
+        }
+        //$rdata['earning']  = $earning;
+
+
         $item   = User::join('rule', 'users.role_id', '=', 'rule.id')
             ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename')
             ->where('users.id', $request->id)
@@ -1437,24 +1512,22 @@ class UserController extends Controller
             if ($v->order_status == 3) {
                 $priceSum += $v->selected_price;
             }
+
+            $buyer = User::where('id', $v->buyerId)->select('name')->first();
+            $orderSts =  OrderStatus::where('id', $v->order_status)->select('name')->first();
             // echo "Orginal price: $originalPrice--Per.Amount :$perResult ----Final Amt: $result";
             $orders[] = [
                 'id'                 => $v->id,
                 'orderId'            => $v->orderId,
                 'gig_title'          => $v->gig_title,
-                'fullname'           => $v->fullname,
+                'fullname'           => !empty($buyer) ? $buyer->name : "",
                 'selected_packages'  => $v->selected_packages,
                 'selected_price'     => $v->selected_price,
                 'delivery_day'       => $v->delivery_day,
-                'order_status'       => $v->order_status
+                'order_status'       => !empty($orderSts->name) ? $orderSts->name : "",
             ];
         }
-        $percentage      = $setting->forSellerCommission; // Convert to float
-        $selectedPrice   = $priceSum; // Convert to float
-        $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
-        $originalPrice   = $priceSum; // Ensure selected_packages is also a float
-        $perResult       = floatval($perResult); // Ensure $perResult is a float
-        $earning         =  $originalPrice - $perResult; // This will work without error
+        //01915
 
 
         $telegram       = !empty($item->telegram) ? $item->telegram : "None";
