@@ -6,35 +6,18 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
-                <section class="categories_list_section overflow-hidden">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="listings_category_nav_list_menu">
-                                    <ul class="mb0 d-flex ps-0">
-                                        <li v-for="data in categoryData" :key="data.id">
-                                            <nuxt-link :to="`/category/${data.slug}`">
-                                                {{ data.name }}
-                                            </nuxt-link>
-                                        </li>
-                                        <!-- {{categoryData}} -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+
                 <!-- Breadcumb Sections -->
 
                 <DashboardMainConentTabs />
                 <div />
             </div>
         </div>
-            <div class="d-flex justify-content-center loading-indicator" v-if="loading">
-                <div class="spinner-border" role="status">
-                    <span class="sr-only">Loading...</span>
-                </div>
+        <div class="d-flex justify-content-center loading-indicator" v-if="loading">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
+        </div>
 
         <!-- Modal Template -->
         <div class="modal fade" id="profileUpdateModal" tabindex="-1" aria-labelledby="profileUpdateModalLabel"
@@ -245,6 +228,7 @@ const submitProfileUpdate = async () => {
 
 // Function to fetch user data
 const chkUserrow = async () => {
+    loading.value = true;
     try {
         const response = await axios.post(`/auth/me`);
         //console.log("Profile Status: ", response.data.profile_status);
@@ -266,6 +250,8 @@ const chkUserrow = async () => {
 
     } catch (error) {
         console.error("Error fetching user data:", error);
+    } finally {
+        loading.value = false;
     }
 };
 
@@ -296,7 +282,7 @@ onMounted(() => {
     getCountrys();
     professionlist();
     chkUserrow();
-    getCatList();
+    //  getCatList();
 
 });
 

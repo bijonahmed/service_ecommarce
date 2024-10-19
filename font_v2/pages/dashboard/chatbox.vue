@@ -6,24 +6,7 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+                                                                                      
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -43,7 +26,7 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <span class="icon flaticon-share dark-color fz12 mr10"></span>
+                   
                     <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
                   </div>
 
@@ -57,12 +40,13 @@
         <div class="dashboard__content content">
           <div class="row">
             <div class="col-lg-3">
+              <!-- <button @click="getChatusersList">Test</button> -->
               <div class="message_container">
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
                     <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
-                      class="chat-user-item text-white"
+                      class="chat-user-item"
                       :class="['chat-user-item', { selected: selectedUserId === user.id }]">
                       <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
                       <span>{{ user.user_name }}</span>
@@ -296,7 +280,7 @@ const getCatList = async () => {
 
 const getChatusersList = async () => {
   try {
-    const response = await axios.get(`/chat/getChatUsers`);
+    const response = await axios.get(`/chat/getChatUsersTo`);
     chatUsers.value = response.data;
   } catch (error) {
     // Handle error
@@ -327,7 +311,7 @@ onMounted(() => {
   }
   getChatusersList();
   fetchChatHistory();
-  getCatList();
+  //getCatList();
 
 });
 
@@ -420,7 +404,7 @@ onBeforeUnmount(() => {
 
 .chat-user-item:hover {
   background-color: #075e54;
-  color: white;
+   
 }
 
 
@@ -540,10 +524,7 @@ onBeforeUnmount(() => {
   padding: 10px;
 }
 
-.input-group {
-  display: flex;
-  align-items: center;
-}
+
 
 textarea {
   border: 1px solid #ccc;

@@ -6,24 +6,7 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+      
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -1013,7 +996,7 @@ onMounted(() => {
   getCountry();
   getProfession();
   getUserRow();
-  getCatList();
+  //getCatList();
 
 });
 

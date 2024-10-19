@@ -6,29 +6,8 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
-                <section class="categories_list_section overflow-hidden">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="listings_category_nav_list_menu">
-                                    <ul class="mb0 d-flex ps-0">
-                                        <li v-for="data in categoryData" :key="data.id">
-                                            <nuxt-link :to="`/category/${data.slug}`">
-                                                {{ data.name }}
-                                            </nuxt-link>
-                                        </li>
-                                        <!-- {{categoryData}} -->
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 <!-- Breadcumb Sections -->
 
-                <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader v-if="loading" style="text-align: center;" />
-                </div>  
                 <section class="breadcumb-section">
                     <div class="container">
                         <div class="row">
@@ -73,7 +52,7 @@
                                         <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
                                                 class="fa-solid fa-trash"></i></a>
                                         <!-- Share  -->
-                                        <nuxt-link href="#" class="listing-fav fz12" style="left: 20px;"><i
+                                        <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12" style="left: 20px;"><i
                                                 class="fa-solid fa-share"></i></nuxt-link>
                                         <!-- Edit  -->
                                         <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`" class="listing-fav fz12 "
@@ -128,7 +107,6 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
-
 const router = useRouter();
 const categoryData = ref([]);
 const loading = ref(false);
@@ -142,6 +120,28 @@ definePageMeta({
 const errors = ref({});
 const gigData = ref([]);
 
+
+const shareUrl = (slug) => {
+  const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
+  const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
+
+  navigator.clipboard.writeText(fullUrl)
+    .then(() => {
+
+        Swal.fire(
+                    'Copied!',
+                    'Your gig URL has been copied.',
+                    'success'
+                );
+
+
+
+      //alert('URL copied to clipboard!');
+    })
+    .catch(err => {
+      console.error('Failed to copy URL: ', err);
+    });
+};
 
 const deleteGig = async (id) => {
     // Show confirmation dialog
@@ -206,7 +206,7 @@ const gigList = async () => {
 };
 
 onMounted(() => {
-    getCatList();
+   // getCatList();
     gigList();
    
 

@@ -85,8 +85,12 @@
                         class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
                         class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist"><i class="fa fa-list"></i>&nbsp;My
-                      Gig</nuxt-link></li>
+
+                        <li v-if="isLoggedIn && userStore.role_id == 2">
+  <nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist">
+    <i class="fa fa-list"></i>&nbsp;My Gig
+  </nuxt-link>
+</li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
                         class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
@@ -243,6 +247,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+
 #mega-menu .menu .menu-title {
   color: var(--headings-color);
   font-family: var(--title-font-family);
@@ -294,7 +299,7 @@ header.nav-homepage-style {
 
 #mega-menu .menu li a {
   border-left: 2px solid transparent;
-  padding: 5px 20px;
+  padding: 0px 20px;
   display: flex;
   position: relative;
 }
