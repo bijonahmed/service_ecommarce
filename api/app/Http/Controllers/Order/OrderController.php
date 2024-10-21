@@ -68,7 +68,7 @@ class OrderController extends Controller
         $data['order_status'] = 5;
         Order::where('orderId', $request->oId)->update($data);
 
-        $this->updateStatus($this->userid, $request->oId);
+        $this->upStatus($this->userid, $request->oId);
 
         $sellerchk = Order::where('orderId', $request->oId)->first();
         $sellerId  = !empty($sellerchk) ? $sellerchk->sellerId : "";
@@ -86,10 +86,19 @@ class OrderController extends Controller
         return response()->json(['message' => 'Order complete and review successfully.']);
     }
 
-    public function updateStatus($userid, $oId)
+    public function updateStatus(Request $request)
     {
-        // $data['order_status'] = $request->status;
-        // Order::where('orderId', $request->oId)->update($data);
+        $data['order_status'] = $request->status;
+        Order::where('orderId', $request->oId)->update($data);
+        return response()->json(['message' => 'Order complete successfully.']);
+    }
+
+
+
+    public function upStatus($userid, $oId)
+    {
+        $data['order_status'] = 5; //5$request->status;
+        Order::where('orderId', $oId)->update($data);
         $userId   = $userid;
         $userrow  = User::find($userId);
 
@@ -185,7 +194,6 @@ class OrderController extends Controller
         //  $data['finalResponse'] = $finalResults;
         return response()->json(['message' => 'Order complete successfully.']);
     }
-
     public function updateDeliveryGig(Request $request)
     {
 
@@ -462,9 +470,11 @@ class OrderController extends Controller
             ->get();
 
         $earning = 0;
+        $row             = DB::table('tbl_setting')->where('id', 1)->first();
+       
+        //echo $percentage; 
         foreach ($data as $v) {
-            $row             = DB::table('tbl_setting')->where('id', 1)->first();
-            $percentage      = $row->forSellerCommission; // Convert to float
+            $percentage      = $v->company_commission; // Convert to float
             $selectedPrice   = $v->selected_price; // Convert to float
             $perResult       = ($percentage / 100) * $selectedPrice; // Calculate result amount
             $originalPrice   = $v->selected_price; // Ensure selected_packages is also a float
@@ -472,6 +482,8 @@ class OrderController extends Controller
             $result          =  $originalPrice - $perResult; // This will work without error
             $earning += $result;
         }
+
+      //  dd($earning);
         $rdata['earning']  = $earning;
         return response()->json($rdata, 200);
     }
@@ -901,7 +913,7 @@ class OrderController extends Controller
         $delivery_day           = $request->delivery_day;
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
-
+        $setting   = Setting::where('id',1)->first();
         // Create an array with the necessary fields
         $orderData = [
             'gig_id'              => $gig_id,
@@ -921,6 +933,9 @@ class OrderController extends Controller
             'delivery_day_convert_date' => Carbon::now()->addDays($delivery_day),
             'orderId'             => $randomNum,
             'order_status'        => 1, // Order Placed
+            'company_commission'  => !empty($setting->forSellerCommission) ? $setting->forSellerCommission : 0, // Order Placed
+
+
         ];
 
         $order    =  Order::create($orderData);

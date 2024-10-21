@@ -46,12 +46,14 @@ Route::group([
 Route::group([
     'prefix' => 'post'
 ], function () {
-
+    Route::delete('notifidelete/{id}', [PostController::class, 'notifidelete']);
+    Route::post('notificaitonsave', [PostController::class, 'notificationsend']);
     Route::post('save', [PostController::class, 'save']);
     Route::post('userRequestPost', [PostController::class, 'userRequestPost']);
     Route::post('update', [PostController::class, 'update']);
     Route::get('postrow/{id}', [PostController::class, 'postrow']);
     Route::get('allPost', [PostController::class, 'allPostList']);
+    Route::get('allNotificationMsg', [PostController::class, 'allNotification']);
     Route::get('allPosts', [PostController::class, 'allPosts']);
     Route::get('postCategoryData', [PostController::class, 'postCategoryData']);
 });

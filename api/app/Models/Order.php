@@ -28,6 +28,7 @@ class Order extends Model
         'delivery_day_convert_date',
         'selected_packages',
         'selected_price',
+        'company_commission',
         'order_status',
     ];
 }

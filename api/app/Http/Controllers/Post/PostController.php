@@ -18,6 +18,7 @@ use App\Models\Product;
 use App\Models\ProductAdditionalImg;
 use App\Models\ProductVarrient;
 use App\Models\AttributeValues;
+use App\Models\NotificationMsg;
 use App\Models\Post;
 use Illuminate\Support\Str;
 use App\Rules\MatchOldPassword;
@@ -40,7 +41,7 @@ class PostController extends Controller
 
     public function update(Request $request)
     {
-       // dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'status'           => 'required',
         ]);
@@ -49,7 +50,7 @@ class PostController extends Controller
         }
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
         $data = array(
-           
+
             'description_full'           => !empty($request->description_full) ? $request->description_full : "",
             'status'                     => !empty($request->status) ? $request->status : "",
             'entry_by'                   => $this->userid
@@ -77,14 +78,12 @@ class PostController extends Controller
         return response()->json($resdata);
     }
 
-
-
     public function userRequestPost(Request $request)
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
             'description_full'     => 'required',
-         //  'files.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Example mime types and max size
+            //  'files.*' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Example mime types and max size
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -113,11 +112,71 @@ class PostController extends Controller
         $resdata['post_id'] = Post::insertGetId($data);
         return response()->json($resdata);
     }
+
+    public function notifidelete($id)
+    {
+        try {
+            // Find the post by ID
+            $post = NotificationMsg::findOrFail($id);
+            // Delete the post
+            $post->delete();
+
+            // Return a success response
+            return response()->json([
+                'success' => true,
+                'message' => 'Post deleted successfully!'
+            ], 200);
+        } catch (ModelNotFoundException $e) {
+            // Return an error response if the post is not found
+            return response()->json([
+                'success' => false,
+                'message' => 'Post not found!'
+            ], 404);
+        } catch (Exception $e) {
+            // Return an error response if something goes wrong
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while deleting the post!'
+            ], 500);
+        }
+    }
+
+    public function notificationsend(Request $request)
+    {
+
+        //dd($request->all());
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required',
+            'selectedtype'     => 'required',
+            'description_full' => 'required',
+            'selectedStatus'   => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors with a 422 status code
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = array(
+            'name'                       => $request->name,
+            'type'                       => $request->selectedtype,
+            'messages'                   => !empty($request->description_full) ? $request->description_full : "",
+            'status'                     => !empty($request->selectedStatus) ? $request->selectedStatus : "",
+        );
+
+        NotificationMsg::create($data);
+
+        // Save notification logic here...
+
+        return response()->json(['message' => 'Notification saved successfully']);
+    }
+
     public function save(Request $request)
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-          //  'name'           => 'required',
+            //  'name'           => 'required',
             //  'categoryId'     => 'required',
         ]);
         if ($validator->fails()) {
@@ -148,24 +207,71 @@ class PostController extends Controller
         return response()->json($resdata);
     }
 
+    public function allPosts()
+    {
 
-
-    public function allPosts(){
-
-        $query = Post::orderBy('id', 'desc')->where('status',1)->select('posts.*')->get();
-        $arryData=[];
+        $query = Post::orderBy('id', 'desc')->where('status', 1)->select('posts.*')->get();
+        $arryData = [];
         foreach ($query as $v) {
             $arryData[] = [
                 'id'                         => $v->id,
                 'postByname'                 => $v->name,
                 'description_full'           => strip_tags($v->description_full),
                 'thumnail_img'               => url($v->thumnail_img),
-                'createdAt'               => date("Y-m-d",strtotime($v->created_at)),
+                'createdAt'               => date("Y-m-d", strtotime($v->created_at)),
             ];
         }
-       
-        return response()->json($arryData);
 
+        return response()->json($arryData);
+    }
+
+    public function allNotification(Request $request)
+    {
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        // Get search query from the request
+        $searchQuery       = $request->searchQuery;
+        $selectedFilter    = $request->selectedFilter;
+        // dd($selectedFilter);
+        $query = NotificationMsg::orderBy('id', 'desc');
+
+        if ($searchQuery !== null) {
+            $query->where('notification.name', 'like', '%' . $searchQuery . '%');
+        }
+
+        if ($selectedFilter !== null) {
+            $query->where('notification.status', $selectedFilter);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            if ($item->type == 2) {
+                $type = "Seller";
+            }
+
+            if ($item->type == 3) {
+                $type = "Buyer";
+            }
+
+            return [
+                'id'            => $item->id,
+                'name'          => substr($item->name, 0, 250),
+                'messages'      => $item->messages,
+                'type'          => $type,
+                'status'        => $item->status,
+            ];
+        });
+
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
     }
     public function allPostList(Request $request)
     {
@@ -204,13 +310,13 @@ class PostController extends Controller
     public function postrow($id)
     {
         $data = Post::where('posts.id', $id)->first();
-        $entryby = User::where('id',$data->entry_by)->first();
+        $entryby = User::where('id', $data->entry_by)->first();
 
         $responseData['data']                   = $data;
         $responseData['description_full']       = strip_tags($data->description_full);
         $responseData['entryBy']                = $entryby->name;
         $responseData['images']                 = !empty($data->thumnail_img) ? url($data->thumnail_img) : "";
-        $responseData['createdAt']              = date("Y-m-d",strtotime($data->created_at));
+        $responseData['createdAt']              = date("Y-m-d", strtotime($data->created_at));
         // dd($responseData);
         return response()->json($responseData);
     }
