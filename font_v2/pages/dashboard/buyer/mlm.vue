@@ -59,49 +59,39 @@
                 </div>
 
                 <div class="container mt-5">
-                    <h4 class="mb-4">Referral Commission</h4>
-                    Amount : ${{ sumAmount }}
-                    <table class="table table-striped table-bordered">
-                        <thead class="table-dark">
-                            <tr>
-                                <th scope="col">Order ID</th>
-                                <th scope="col">Received From</th>
-                                <th scope="col">Commission Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Example rows -->
-                            <tr v-for="com in comissionData" :key="com.id">
-                                <td>{{ com.orderId }}</td>
-                                <td>{{ com.commission_recv_frm_name }}
-                                    <!-- <br/>ID:{{com.commission_recev_frm}} -->
-                                </td>
-                                <td>${{ com.amount }}</td>
-                            </tr>
 
-                        </tbody>
-                    </table>
+                    <h4 class="mb-4">Referral Commission</h4>
+                    <p>Total Users: {{ uniqueUserCount }}<br /> Amount : ${{ totalAmount }}</p>
+                    <!-- Displaying the count -->
+
+                    <!-- <h4 class="mb-4">Total Users 0522,
+                        Total Profiel ${{ sumAmount }}</h4> -->
                 </div>
 
 
 
-                <div class="container d-none">
-                    <button @click="fetchUserLevels">Call</button>
+                <div class="container">
+                <button @click="fetchUserLevels" class="d-none">Call</button>  
                     <div class="container mt-5">
-                        <h2>User Levels</h2>
-                        <table class="table table-bordered">
+                        <table class="table table-striped">
                             <thead>
                                 <tr>
+                                    <th>#</th>
+                                    <th>Register Date</th>
                                     <th>Name</th>
-                                    <th>Level</th>
-                                    <th>Amount</th>
+                                    <th>Commission</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="user in levelData" :key="user.id">
+                                <!-- Loop through all users across levels -->
+                                <tr v-for="(user, index) in allUsers" :key="user.id">
+                                    <td>{{ index + 1 }}</td> <!-- Serial number starts from 1 -->
+                                    <td>{{ user.created_at }}</td>
                                     <td>{{ user.name }}</td>
-                                    <td>{{ user.level }}</td>
-                                    <td>{{ user.amount }}</td>
+                                    <td>${{ user.amount }}</td> <!-- Placeholder for commission -->
+                                </tr>
+                                <tr v-if="allUsers.length === 0">
+                                    <td colspan="4" class="text-center">No users found</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -154,6 +144,23 @@ const getRefferalCommission = async () => {
 
 
 
+const allUsers = ref([]);
+
+
+// Define a computed property for unique users
+const uniqueUsers = computed(() => {
+    const uniqueIds = new Set();
+    return allUsers.value.filter(user => {
+        if (uniqueIds.has(user.id)) {
+            return false; // Skip if ID is already in the Set
+        }
+        uniqueIds.add(user.id);
+        return true; // Include this user
+    });
+});
+
+// Define a computed property for the count of unique users
+const uniqueUserCount = computed(() => uniqueUsers.value.length);
 
 
 const fetchUserLevels = async () => {
@@ -163,9 +170,12 @@ const fetchUserLevels = async () => {
         const response = await axios.get("/user/checkLevelHistorys", {
             params: { email },
         });
-        levelData.value = response.data.finalResponse;
+
+        for (const level in response.data) {
+            allUsers.value.push(...response.data[level]);
+        }
     } catch (err) {
-        console.log(err)
+        console.log(err);
     } finally {
         loading.value = false;
     }
@@ -183,8 +193,12 @@ const getCatList = async () => {
         loading.value = false;
     }
 };
-
+// Computed property to calculate the total amount
+const totalAmount = computed(() => {
+  return allUsers.value.reduce((sum, user) => sum + (user.amount || 0), 0);
+});
 onMounted(() => {
+    fetchUserLevels();
     getRefferalCommission();
     getCatList();
 
@@ -195,6 +209,10 @@ onMounted(() => {
 <style scoped>
 .table {
     margin-top: 20px;
+}
+
+.level-section {
+    margin-bottom: 20px;
 }
 
 .preview-image {

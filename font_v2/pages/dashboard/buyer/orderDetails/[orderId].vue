@@ -100,6 +100,49 @@
                   </div>
                 </div>
 
+
+                <!-- review_modal -->
+
+                <div class="modal fade" id="review_modal" data-bs-backdrop="static" data-bs-keyboard="false"
+                  tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="review_modalBackdropLabel">Order Review</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <!-- Rating field -->
+                        <div class="mb-3">
+                          <label for="rating" class="form-label">Rating</label>
+                          <select class="form-select" id="rating" v-model="rating">
+                            <option selected disabled>Choose a rating</option>
+                            <option value="1">1 Star</option>
+                            <option value="2">2 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="5">5 Stars</option>
+                          </select>
+                        </div>
+
+                        <!-- Review field -->
+                        <div class="mb-3">
+                          <label for="review" class="form-label">Your Review</label>
+                          <textarea class="form-control" id="review" rows="4" placeholder="Write your review here..."
+                            v-model="review"></textarea>
+                            <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span>
+                        </div>
+
+                        <!-- Submit button -->
+                        <button type="submit" class="btn btn-primary text-white w-100" @click="reviewOrder">Submit
+                          Review</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+
                 <table class="table table-striped table-hover mt-3">
                   <tbody>
                     <tr>
@@ -362,7 +405,9 @@ const buyerName = ref('');
 const imgdata = ref([]);
 const chatMessages = ref([]);
 const messages = ref('');
-
+//
+const rating = ref(5);
+const review = ref('');
 
 
 const slug = route.params.orderId; // Capture the slug parameter from the URL
@@ -388,9 +433,64 @@ const getFileName = (fileUrl) => {
   return fileUrl.split('/').pop(); // Extracts the file name from the URL
 }
 
+const reviewOrder = () => {
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `Rating`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, do it!'
+  }).then((result) => {
+    // If the user clicks "Yes"
+    if (result.isConfirmed) {
+      // Make an Axios GET request to the server with the new status
+      axios.get(`/order/updateReview`, {
+        params: {
+          rating: rating.value,
+          oId: oId.value,
+          review: review.value,
+        } // Pass the status as a parameter
+      })
+        .then(response => {
+          window.location.href = '/dashboard/buyer/welcome';
+          //router.push('/dashboard/buyer/welcome');
+          // Handle success response
+          Swal.fire(
+            'Updated!',
+            `The order review has been updated.`,
+            'success'
+          );
+        })
+        .catch(error => {
+
+          if (error.response && error.response.status === 422) {
+            errors.value = error.response.data.errors;
+          } else {
+            // Handle other types of errors here
+            console.error("An error occurred:", error);
+          }
+          // Handle error response
+          Swal.fire(
+            'Error!',
+            'There was a problem updating the order.',
+            'error'
+          );
+          console.error('There was an error!', error);
+        });
+    }
+  });
+
+}
+
 const orderAction = (status) => {
 
-
+  if (status == 5) {
+    $('#review_modal').modal('show');
+    return false;
+  }
   Swal.fire({
     title: 'Are you sure?',
     text: `You are about to mark this order as ${status}.`,
@@ -406,8 +506,7 @@ const orderAction = (status) => {
       axios.get(`/order/updateStatus`, {
         params: {
           status: status,
-          oId: oId.value
-
+          oId: oId.value,
         } // Pass the status as a parameter
       })
         .then(response => {
@@ -431,8 +530,6 @@ const orderAction = (status) => {
         });
     }
   });
-
-
 
 }
 

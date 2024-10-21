@@ -29,6 +29,7 @@ use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
 use App\Models\WithdrawMethod;
 use App\Models\LevelCommission;
+use App\Models\NotificationMsg;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
@@ -42,14 +43,16 @@ class UserController extends Controller
     protected $frontend_url;
     protected $userid;
     protected $email;
+    protected $role_id;
     public function __construct(Request $request)
     {
         $this->middleware('auth:api');
         $id = auth('api')->user();
         if (!empty($id)) {
             $user = User::find($id->id);
-            $this->userid = $user->id;
-            $this->email = $user->email;
+            $this->userid  = $user->id;
+            $this->email   = $user->email;
+            $this->role_id = $user->role_id;
         }
     }
 
@@ -65,10 +68,16 @@ class UserController extends Controller
         return response()->json($data);
     }
 
+    public function getMessagesNotification()
+    {
+        // echo $this->role_id;
+        // exit; 
+        $notificationMSg = NotificationMsg::where('type', $this->role_id)->where('status', 1)->get();
+        return response()->json($notificationMSg);
+    }
 
     public function checkDepositBalance()
     {
-
 
         $odController  = new OrderController();
         $response      = $odController->referralCommission();
@@ -110,10 +119,7 @@ class UserController extends Controller
         try {
             // Calculate the deposit amount
 
-
-
             $result = abs($depositAmt - $orderAmount);
-
 
             $data['depositAmount']      = $result;
             $data['show_depositAmount'] = number_format($result, 2);
@@ -140,7 +146,6 @@ class UserController extends Controller
         ];
         return response()->json($response);
     }
-
 
     public function getNotifications(Request $request)
     {
@@ -179,7 +184,6 @@ class UserController extends Controller
 
     public function getmlmlists()
     {
-
 
         $filterData = User::where('join_id', $this->userid)->where('status', 1)->get();
         $rdata = [];
@@ -332,7 +336,6 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-
     public function allemployeeType(Request $request)
     {
         try {
@@ -359,7 +362,6 @@ class UserController extends Controller
         return md5($uniqueNumber);
     }
 
-
     public function saveWithdrawal(Request $request)
     {
 
@@ -377,7 +379,6 @@ class UserController extends Controller
             return response()->json(['error' => 'User not found'], 404);
         }
 
-
         $userid        = $this->userid;
         $depositAmount = Order::where('sellerId', $userid)->select('selected_price')->where('order_status', 5)->sum('selected_price');
         $setting       = Setting::find(1);
@@ -390,7 +391,6 @@ class UserController extends Controller
             return response()->json(['errors' => ['error_usdt' => ['You have no sufficiant USDT balance']]], 422);
         }
 
-
         $uniqueID = 'W.' . $this->generateUnique4DigitNumber();
         $data = array(
             'withdrawID'     => $uniqueID,
@@ -402,7 +402,6 @@ class UserController extends Controller
             'user_id'        => $this->userid
         );
         $last_Id = Withdraw::insertGetId($data);
-
 
         return response()->json(['data' => 'Successfully send your request.'], 200);
     }
@@ -482,8 +481,7 @@ class UserController extends Controller
     }
     public function updateUser(Request $request)
     {
-    //dd($request->all());
-         
+        //dd($request->all());
         $user = User::find($this->userid);
         if ($request->email === $user->email) {
             // $unqie=uniqid();
@@ -492,14 +490,9 @@ class UserController extends Controller
             $email = $request->email;
         }
 
-       // $data['f_name']          = $request->fname;
-      //  $data['l_name']          = $request->lname;
-        $data['name']            = $request->fname.' '.$request->lname;
+        $data['name']            = $request->fname . ' ' . $request->lname;
         $data['phone_number']    = $request->phone_number;
         $data['email']           = $request->email;
-       // $data['whtsapp']         = $request->whtsapp;
-    //    $data['nationality_id']  = $request->nationality_id;
-
 
         if (!empty($request->file('file'))) {
             $files = $request->file('file');
@@ -520,7 +513,6 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-
     public function allrolelist()
     {
         $data = User::getRoleList();
@@ -530,7 +522,6 @@ class UserController extends Controller
         ];
         return response()->json($data, 200);
     }
-
 
     public function getTime()
     {
@@ -542,9 +533,6 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-
-
-
     public function getwithdrawalMethod()
     {
 
@@ -555,7 +543,6 @@ class UserController extends Controller
         ];
         return response()->json($response, 200);
     }
-
 
     public function addWalletAddress(Request $request)
     {
@@ -588,8 +575,6 @@ class UserController extends Controller
         ];
         return response()->json($response);
     }
-
-
 
     public function saveDepartment(Request $request)
     {
@@ -788,7 +773,6 @@ class UserController extends Controller
             return response()->json(['message' => 'Failed Please try again later.'], 500);
         }
     }
-
 
     public function getWaypaymentConfirm(Request $request)
     {
@@ -1242,7 +1226,6 @@ class UserController extends Controller
     }
     // MLM Query 
 
-
     public function checkmlmHistorys(Request $request)
     {
 
@@ -1271,48 +1254,93 @@ class UserController extends Controller
         $chkUser  = User::where('email', $email)->first();
         $userId   = $chkUser->id;
 
-        // Execute the recursive query
-        $results = DB::select("
-        WITH RECURSIVE LevelCount AS (
-        SELECT id, join_id, name, 0 AS level -- Start at 0 for the target user
-        FROM users
-        WHERE id = '$userId' AND role_id = 3
-        UNION ALL
-        SELECT u.id, u.join_id, u.name, lc.level + 1
-        FROM users u
-        INNER JOIN LevelCount lc ON u.id = lc.join_id
-        WHERE lc.level < 5
-    )
-    SELECT id, name, level AS level
-    FROM LevelCount
-    WHERE id <> '$userId'
-    ORDER BY level
-");
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level2_ids       = $checkL2->pluck('id')->toArray();
 
-        // Initialize an array to hold the final results
-        $finalResults = [];
 
-        // Add id, name, and amount in the foreach loop
-        foreach ($results as $result) {
-            $finalResults[] = [
-                'id' => $result->id,
-                'name' => $result->name,
-                'level' => $result->level,
-                'amount' => $this->calculateAmount($result->level), // Calculate the amount based on the level or any other logic
-            ];
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level3_ids       = $checkL3->pluck('id')->toArray();
+
+        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level4_ids       = $checkL4->pluck('id')->toArray();
+
+        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level5_ids       = $checkL5->pluck('id')->toArray();
+
+
+        $data['level_1']  = $checkL1;
+        $data['level_2']  = $checkL2;
+        $data['level_3']  = $checkL3;
+        $data['level_4']  = $checkL4;
+        $data['level_5']  = $checkL5;
+
+
+        $levels = [
+            'level_1' => $checkL1,
+            'level_2' => $checkL2,
+            'level_3' => $checkL3,
+            'level_4' => $checkL4,
+            'level_5' => $checkL5,
+        ];
+
+        $response = [];
+        //$amt = 0;
+        foreach ($levels as $level => $users) {
+            foreach ($users as $user) {
+                $chkOrder = Order::where('buyerId', $user->id)->select(
+                    'buyerId',
+                    'orderId',
+                    'l_one_buyer',
+                    'l_two_buyer',
+                    'l_three_buyer',
+                    'l_four_buyer',
+                    'l_five_buyer',
+                    'lev_1',
+                    'lev_2',
+                    'lev_3',
+                    'lev_4',
+                    'lev_5'
+                )->get();
+
+                $amt = 0;
+                // Iterate through each order
+                foreach ($chkOrder as $chkOrder) {
+                    // Check each level buyer against the logged-in user ID
+                    if ($chkOrder->l_one_buyer == $this->userid) {
+                        $amt += $chkOrder->lev_1; // Sum lev_1
+                    }
+                    if ($chkOrder->l_two_buyer == $this->userid) {
+                        $amt += $chkOrder->lev_2; // Sum lev_2
+                    }
+                    if ($chkOrder->l_three_buyer == $this->userid) {
+                        $amt += $chkOrder->lev_3; // Sum lev_3
+                    }
+                    if ($chkOrder->l_four_buyer == $this->userid) {
+                        $amt += $chkOrder->lev_4; // Sum lev_4
+                    }
+                    if ($chkOrder->l_five_buyer == $this->userid) {
+                        $amt += $chkOrder->lev_5; // Sum lev_5
+                    }
+                }
+
+                // Prepare the response array
+                $response[$level][] = [
+                    'id'         => $user->id,
+                    'name'       => $user->name,
+                    'email'      => $user->email,
+                    'join_id'    => $user->join_id,
+                    'amount'     => $amt,
+                    'created_at' => date("Y-M-d", strtotime($user->created_at))
+                ];
+            }
         }
-
-        $data['finalResponse'] = $finalResults;
-
-        // dd($data['finalResponse']);
-        return response()->json($data);
+        // dd($response);
+        return response()->json($response);
     }
 
-    private function calculateAmount($level)
-    {
-        // Example logic for calculating the amount based on level
-        return $level * 100; // Replace this logic as needed
-    }
 
     public function checkLevelHistory()
     {
@@ -1383,9 +1411,6 @@ class UserController extends Controller
         $data['total_referal_warnings'] = $team_1 + $team_2 + $team_3;
         return response()->json($data);
     }
-
-
-
 
     public function AllUsersList(Request $request)
     {
@@ -1464,14 +1489,10 @@ class UserController extends Controller
         ], 200);
     }
 
-
-
     public function findUserDetails(Request $request)
     {
 
         $userid = $request->id;
-
-
 
         $data = Order::where('sellerId', $userid)
             ->join('gig', 'orders.gig_id', '=', 'gig.id') // Join the gigs table
@@ -1491,7 +1512,6 @@ class UserController extends Controller
             $earning += $result;
         }
         //$rdata['earning']  = $earning;
-
 
         $item   = User::join('rule', 'users.role_id', '=', 'rule.id')
             ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename')
@@ -1528,7 +1548,6 @@ class UserController extends Controller
             ];
         }
         //01915
-
 
         $telegram       = !empty($item->telegram) ? $item->telegram : "None";
         $phone          = !empty($item->phone_number) ? $item->phone_number : "";
@@ -1597,7 +1616,6 @@ class UserController extends Controller
         // dd($data);
         return response()->json($data);
     }
-
 
     public function getComissionReport($userId)
     {

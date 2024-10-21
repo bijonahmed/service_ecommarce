@@ -18,6 +18,7 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Deposits\DepositController;
+use App\Http\Controllers\Deposits\DropUserController;
 use App\Http\Controllers\Post\PostController;
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +40,7 @@ Route::group([
     Route::get('/getMessages', [ChatController::class, 'getMessages']);
     Route::get('/getSelectedMessages', [ChatController::class, 'getSelectedMessages']);
     Route::get('/getChatUsers', [ChatController::class, 'getChatUsers']);
+    Route::get('/getChatUsersTo', [ChatController::class, 'getChatUsersTo']);
 });
 
 Route::group([
@@ -106,6 +108,7 @@ Route::group([
     'middleware' => 'api',
     'prefix' => 'user'
 ], function () {
+    Route::get('getMessagesNoti', [UserController::class, 'getMessagesNotification']);
     Route::post('updateUser', [UserController::class, 'updateUser']);
     Route::get('allrolelist', [UserController::class, 'allrolelist']);
     Route::get('dashboardCounting', [UserController::class, 'dashboardCounting']);
@@ -188,7 +191,7 @@ Route::group([
     Route::post('updateDepositRequest', [DepositController::class, 'updateDepositRequest']);
     Route::post('updateWithDrawRequest', [DepositController::class, 'updateWithDrawRequest']);
     Route::post('addWithDrawMethod', [DepositController::class, 'addWithDrawMethod']);
-    // Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
+    Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
 });
 
 Route::group([
@@ -254,6 +257,7 @@ Route::group([
 ], function () {
     Route::get('referralCommission', [OrderController::class, 'referralCommission']);
     Route::get('updateStatus', [OrderController::class, 'updateStatus']);
+    Route::get('updateReview', [OrderController::class, 'updateReviews']);
     Route::get('cancel-order-buyer/{orderId}', [OrderController::class, 'cancelOrderBuyer']);
     Route::post('updateDeliveryGig', [OrderController::class, 'updateDeliveryGig']);
     Route::get('checkOrder', [OrderController::class, 'checkOrder']);
@@ -274,6 +278,7 @@ Route::group([
 
 Route::group(['prefix' => 'unauthenticate'], function () {
 
+    Route::get('checkGetList', [UnauthenticatedController::class, 'checkGetList']);
     Route::get('getPublic', [UnauthenticatedController::class, 'getPublic']);
     Route::get('getExperience', [UnauthenticatedController::class, 'getExperience']);
     Route::get('geteducation', [UnauthenticatedController::class, 'geteducation']);

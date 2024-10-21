@@ -10,6 +10,7 @@
                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
                   class="fa fa-home" aria-hidden="true"></i>&nbsp;Dashboard</button>
             </li>
+
             <!-- <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" id="pills-profile-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-profile" type="button" role="tab" aria-controls="pills-profile"
@@ -93,6 +94,18 @@
                 </div>
               </section>
 
+
+              <!-- Success Alert -->
+              <div v-if="msgData.length > 0">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span v-for="data in msgData" :key="data.id" class="text-justify">
+                    <strong>{{ data.name }}</strong> {{ data.messages }}<br/>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </span>
+                </div>
+              </div>
+
+
               <!-- Service Details -->
               <section class="pt10 pb90 pb30-md">
                 <div class="container">
@@ -152,9 +165,9 @@
                       </div>
                     </div>
 
-            <div class="col-lg-8">
+                    <div class="col-lg-8">
 
-                    <div class="custom-tab-container">
+                      <div class="custom-tab-container">
                         <!-- Custom Nav Tabs -->
                         <ul class="custom-nav-tabs nav nav-tabs" id="orderTabs" role="tablist">
                           <li class="custom-tab-item nav-item" role="presentation" @click="getOrderStatus(1)">
@@ -600,6 +613,7 @@ const formatDate = (date) => {
 
 const getmlmList = async () => {
   try {
+
     const response = await axios.get('/user/getmlmlists');
     console.log("===" + response.data.data);
     mlmData.value = response.data.data;
@@ -626,6 +640,7 @@ const inprogressData = ref([]);
 const cancelData = ref([]);
 const deliveryData = ref([]);
 const completeData = ref([]);
+const msgData = ref([]);
 const placeOrdersCount = ref(0);
 const inprogressOrdersCount = ref(0);
 const deliveryOrdersCount = ref(0);
@@ -647,6 +662,17 @@ const getOrderCounting = async () => {
     console.log(error);
   }
 };
+
+
+const getMessages = async () => {
+  try {
+    const response = await axios.get(`/user/getMessagesNoti`);
+    msgData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 
 
 const getOrderStatus = async (orderStatusId = 1) => {
@@ -683,6 +709,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 };
 
 onMounted(() => {
+  getMessages();
   getOrderCounting();
   getOrderStatus();
   getmlmList();

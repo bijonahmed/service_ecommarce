@@ -73,9 +73,8 @@
                                                     <th class="text-left">User Info</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Status</th>
-                                                    <th class="text-center">UIC</th>
                                                     <th class="text-center">USDT($)</th>
-                                                    <th class="text-center">Tras. Fee ($)</th>
+                                                    <!-- <th class="text-center">Tras. Fee ($)</th> -->
                                                     <!-- <th class="text-center">Payable Amount ($)</th> -->
                                                     <th class="text-center">Action</th>
                                                 </tr>
@@ -92,10 +91,8 @@
                                                     <span class="badge rounded-pill bg-success w-100" v-if="pro.sts == 1">{{ pro.status }}</span>
                                                     <span class="badge rounded-pill bg-danger w-100" v-if="pro.sts == 2">{{ pro.status }}</span>
                                                     </td>
-
-                                                    <td class="text-center">{{ pro.uic_amount }}</td>
-                                                    <td class="text-center">{{ pro.usd_amount }}</td>
-                                                    <td class="text-center">{{ pro.transection_fee }}%</td>
+                                                    <td class="text-center">{{ pro.withdrawal_amount }}</td>
+                                                    <!-- <td class="text-center">{{ pro.transection_fee }}%</td> -->
                                                     <!-- <td class="text-center">{{ pro.payable_amount }}</td> -->
                                                   
                                                     <td>
@@ -115,9 +112,8 @@
                                                     <th class="text-left">User Info</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Status</th>
-                                                    <th class="text-center">UIC</th>
                                                     <th class="text-center">USDT($)</th>
-                                                    <th class="text-center">Tras. Fee ($)</th>
+                                                    <!-- <th class="text-center">Tras. Fee ($)</th> -->
                                                     <!-- <th class="text-center">Payable Amount ($)</th> -->
                                                     <th class="text-center">Action</th>
                                                 </tr>

@@ -10,10 +10,12 @@ use App\Models\Gig;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Setting;
 use App\Models\Withdraw;
 use App\Models\Categorys;
 use App\Models\MyMessage;
 use App\Models\OrderStatus;
+use App\Models\SellerReview;
 use Illuminate\Http\Request;
 use App\Models\ordersProduct;
 use App\Models\LevelCommission;
@@ -51,41 +53,72 @@ class OrderController extends Controller
         ]);
     }
 
-    public function updateStatus(Request $request)
+    public function updateReviews(Request $request)
     {
-        $data['order_status'] = $request->status;
+
+        $validator = Validator::make($request->all(), [
+            'oId'           => 'required',
+            'review'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // dd($request->all());
+        $data['order_status'] = 5;
         Order::where('orderId', $request->oId)->update($data);
-        $userId   = $this->userid;
+
+        $this->updateStatus($this->userid, $request->oId);
+
+        $sellerchk = Order::where('orderId', $request->oId)->first();
+        $sellerId  = !empty($sellerchk) ? $sellerchk->sellerId : "";
+
+        $data['orderId']    = $request->oId;
+        $data['review']     = $request->review;
+        $data['rating']     = $request->rating;
+        $data['seller_id']  = $sellerId;
+        $data['buyer_id']   = $this->userid;
+        SellerReview::create($data);
+
+
+
+        //seller_review
+        return response()->json(['message' => 'Order complete and review successfully.']);
+    }
+
+    public function updateStatus($userid, $oId)
+    {
+        // $data['order_status'] = $request->status;
+        // Order::where('orderId', $request->oId)->update($data);
+        $userId   = $userid;
         $userrow  = User::find($userId);
 
-        if ($request->status == 5) {
+        $lev1Sum = Order::where('buyerId', $userId)
+            ->where('orderId', $oId)
+            ->where('order_status', 5)
+            ->sum('lev_1');
 
-            $lev1Sum = Order::where('buyerId', $userId)
-                ->where('orderId', $request->oId)
-                ->where('order_status', 5)
-                ->sum('lev_1');
+        $lev2Sum = Order::where('buyerId', $userId)
+            ->where('orderId', $oId)
+            ->where('order_status', 5)
+            ->sum('lev_2');
 
-            $lev2Sum = Order::where('buyerId', $userId)
-                ->where('orderId', $request->oId)
-                ->where('order_status', 5)
-                ->sum('lev_2');
+        $lev3Sum = Order::where('buyerId', $userId)
+            ->where('orderId', $oId)
+            ->where('order_status', 5)
+            ->sum('lev_3');
 
-            $lev3Sum = Order::where('buyerId', $userId)
-                ->where('orderId', $request->oId)
-                ->where('order_status', 5)
-                ->sum('lev_3');
+        $lev4Sum = Order::where('buyerId', $userId)
+            ->where('orderId', $oId)
+            ->where('order_status', 5)
+            ->sum('lev_4');
 
-            $lev4Sum = Order::where('buyerId', $userId)
-                ->where('orderId', $request->oId)
-                ->where('order_status', 5)
-                ->sum('lev_4');
+        $lev5Sum = Order::where('buyerId', $userId)
+            ->where('orderId', $oId)
+            ->where('order_status', 5)
+            ->sum('lev_5');
 
-            $lev5Sum = Order::where('buyerId', $userId)
-                ->where('orderId', $request->oId)
-                ->where('order_status', 5)
-                ->sum('lev_5');
-
-            $results = DB::select("
+        $results = DB::select("
             WITH RECURSIVE LevelCount AS (
             SELECT id, join_id, name, 0 AS level -- Start at 0 for the target user
             FROM users
@@ -98,59 +131,59 @@ class OrderController extends Controller
             SELECT id, name, level AS level
             FROM LevelCount
             WHERE id <> '$userId'
-            ORDER BY level
-    ");
+            ORDER BY level ");
 
-            // Initialize an array to hold the final results
-            $finalResults = [];
-            foreach ($results as $result) {
-                switch ($result->level) {
-                    case 1:
-                        $comAmount = $lev1Sum;
-                        break;
-                    case 2:
-                        $comAmount = $lev2Sum;
-                        break;
-                    case 3:
-                        $comAmount = $lev3Sum;
-                        break;
-                    case 4:
-                        $comAmount = $lev4Sum;
-                        break;
-                    case 5:
-                        $comAmount = $lev5Sum;
-                        break;
-                }
+        // Initialize an array to hold the final results
+        $finalResults = [];
+        foreach ($results as $result) {
 
-                $finalResults[] = [
-                    'buyerId'                 => $result->id,
-                    'name'                    => $result->name,
-                    'level'                   => $result->level,
-                    'amount'                  => $comAmount,
-                    'commission_recev_frm'    => $userId,
-                    'orderId'                 => $request->oId, // oId == orderId
-                    'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
-                ];
-
-
-                LevelCommission::insert([
-                    'buyerId'                 => $result->id,
-                    'buyer_name'              => $result->name,
-                    'level'                   => $result->level,
-                    'amount'                  => $comAmount,
-                    'commission_recev_frm'    => $userId,
-                    'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
-                    'orderId'                 => $request->oId, // oId == orderId
-                    'created_at'              => now(),
-                    'updated_at'              => now(),
-                ]);
+            if ($result->level == 1) {
+                $comAmount = $lev1Sum;
             }
 
-            //  $data['finalResponse'] = $finalResults;
-            return response()->json(['message' => 'Order complete successfully.']);
+            if ($result->level == 2) {
+                $comAmount = $lev2Sum;
+            }
+
+            if ($result->level == 3) {
+                $comAmount = $lev3Sum;
+            }
+
+            if ($result->level == 4) {
+                $comAmount = $lev4Sum;
+            }
+
+            if ($result->level == 4) {
+                $comAmount = $lev5Sum;
+            }
+
+
+            $finalResults[] = [
+                'buyerId'                 => $result->id,
+                'name'                    => $result->name,
+                'level'                   => $result->level,
+                'amount'                  => $comAmount,
+                'commission_recev_frm'    => $userId,
+                'orderId'                 => $oId, // oId == orderId
+                'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
+            ];
+
+
+            LevelCommission::insert([
+                'buyerId'                 => $result->id,
+                'buyer_name'              => $result->name,
+                'level'                   => $result->level,
+                'amount'                  => $comAmount,
+                'commission_recev_frm'    => $userId,
+                'commission_recv_frm_name' => !empty($userrow) ? $userrow->name : "",
+                'orderId'                 => $oId, // oId == orderId
+                'created_at'              => now(),
+                'updated_at'              => now(),
+            ]);
         }
 
-        return response()->json("update successfully", 200);
+        //  $data['finalResponse'] = $finalResults;
+        return response()->json(['message' => 'Order complete successfully.']);
     }
 
     public function updateDeliveryGig(Request $request)
@@ -840,12 +873,13 @@ class OrderController extends Controller
         }
 
         $chkSeller = Gig::where('id', $request->gig_id)->select('user_id')->first();
+        $setting   = Setting::where('id', 1)->first();
 
-        $lev1_comm = 5;
-        $lev2_comm = 4;
-        $lev3_comm = 3;
-        $lev4_comm = 2;
-        $lev5_comm = 1;
+        $lev1_comm = !empty($setting->level_1_bonus) ? $setting->level_1_bonus : 0;;
+        $lev2_comm = !empty($setting->level_2_bonus) ? $setting->level_2_bonus : 0;;
+        $lev3_comm = !empty($setting->level_3_bonus) ? $setting->level_3_bonus : 0;;
+        $lev4_comm = !empty($setting->level_4_bonus) ? $setting->level_4_bonus : 0;;
+        $lev5_comm = !empty($setting->level_5_bonus) ? $setting->level_5_bonus : 0;
 
         $serviceFee     = $request->service_fee;
         $lev1CommAmount = ($lev1_comm / 100) * $serviceFee;
@@ -889,7 +923,54 @@ class OrderController extends Controller
             'order_status'        => 1, // Order Placed
         ];
 
-        Order::create($orderData);
+        $order    =  Order::create($orderData);
+        $orderId  = $order->id;
+        $userId   = $this->userid;
+
+        $results = DB::select("
+        WITH RECURSIVE LevelCount AS (
+        SELECT id, join_id, name, 0 AS level -- Start at 0 for the target user
+        FROM users
+        WHERE id = '$userId' AND role_id = 3
+        UNION ALL
+        SELECT u.id, u.join_id, u.name, lc.level + 1
+        FROM users u
+        INNER JOIN LevelCount lc ON u.id = lc.join_id
+        WHERE lc.level < 5 )
+        SELECT id, name, level AS level
+        FROM LevelCount
+        WHERE id <> '$userId'
+        ORDER BY level
+    ");
+
+        $udata = [];
+        // Iterate over the results
+        foreach ($results as $result) {
+            if ($result->level == 1) {
+                $udata['l_one_buyer'] = $result->id;
+            }
+
+            if ($result->level == 2) {
+                $udata['l_two_buyer'] = $result->id;
+            }
+
+            if ($result->level == 3) {
+                $udata['l_three_buyer'] = $result->id;
+            }
+
+            if ($result->level == 4) {
+                $udata['l_four_buyer'] = $result->id;
+            }
+
+            if ($result->level == 5) {
+                $udata['l_five_buyer'] = $result->id;
+            }
+        }
+
+        // Update the order with the new buyer data
+        Order::where('id', $orderId)->update($udata);
+
+
         return response()->json("Your order successfully done!", 200);
     }
 }

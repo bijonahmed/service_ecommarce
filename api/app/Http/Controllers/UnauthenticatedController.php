@@ -7,23 +7,24 @@ use Auth;
 use File;
 use Helper;
 use Validator;
-use App\Models\User;
-use App\Models\Categorys;
-use App\Models\GigImagesHistory;
-
-use function Ramsey\Uuid\v1;
-use Illuminate\Http\Request;
-use App\Models\AttributeValues;
-use App\Models\Category;
-use App\Models\Country;
-use Illuminate\Support\Facades\Validator as FacadesValidator;
 use App\Models\Gig;
+use App\Models\User;
 use App\Models\Skills;
-use App\Models\Certificate;
+
+use App\Models\Country;
+use App\Models\Category;
+use App\Models\Categorys;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Profession;
+use App\Models\Certificate;
+use App\Models\SellerReview;
+use function Ramsey\Uuid\v1;
+use Illuminate\Http\Request;
+use App\Models\AttributeValues;
+use App\Models\GigImagesHistory;
 use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
 
 class UnauthenticatedController extends Controller
 {
@@ -34,6 +35,32 @@ class UnauthenticatedController extends Controller
     {
         $categories = Categorys::with('children.children.children.children.children')->where('status', 1)->get();
         return response()->json($categories);
+    }
+
+
+    public function checkGetList(Request $request)
+    {
+        //dd($request->all());
+        $chk        = Gig::where('gig_slug', $request->gig_slug)->first();
+        $seller_id  = !empty($chk->user_id) ? $chk->user_id : "";
+        $result     = SellerReview::where('seller_id', $seller_id)
+                     ->select('seller_review.*','users.name','users.image')
+                     ->join('users', 'seller_review.buyer_id', '=', 'users.id')->get();
+
+        $reviewList = [];
+        foreach ($result as $v) {
+            $reviewList[] = [
+                'id'                => $v->id,
+                'user_id'           => $v->user_id,
+                'name'              => $v->name,
+                'rating'            => $v->rating,
+                'rev'               => $v->review,
+                'created_at'        => date("d-M-Y", strtotime($v->created_at)),
+                'image'             => !empty($v->image) ? url($v->image) : "",
+            ];
+        }
+        return response()->json($reviewList);
+
     }
 
     public function getPublic(Request $request)

@@ -127,26 +127,28 @@
                         <div class="mbp_pagination_comments">
                           <div class="row">
 
-                            <div class="col-md-12">
+                            <div class="col-md-12" v-for="(review, index) in reviewlist" :key="index">
                               <div
                                 class="mbp_first position-relative d-flex align-items-center justify-content-start mb30-sm">
-                                <img src="/images/blog/comments-2.png" class="mr-3" alt="comments-2.png">
+                                <img :src="review.image || '/images/blog/comments-2.png'" class="mr-3"
+                                  style="height:40px;width:40px;" :alt="review.altText || 'Reviewer Image'">
                                 <div class="ml20">
-                                  <h6 class="mt-0 mb-0">Bessie Cooper</h6>
-                                  <div><span class="fz14">12 March 2024</span></div>
+                                  <h6 class="mt-0 mb-0">{{ review.name }}</h6>
+                                  <div><span class="fz14">{{ review.created_at }}</span></div>
                                 </div>
                               </div>
-                              <p class="text mt20 mb20">There are many variations of passages of Lorem Ipsum available,
-                              </p>
 
-                            </div>
-
-                            <div class="col-md-12 d-none">
-                              <div class="position-relative bdrb1 pb50">
-                                <a href="#" class="ud-btn btn-light-thm">See More<i
-                                    class="fal fa-arrow-right-long"></i></a>
+                              <div class="d-flex m-2">
+                                <!-- Loop through the rating dynamically -->
+                                <i v-for="star in 5" :key="star"
+                                  :class="star <= review.rating ? 'fas fa-star review-color' : 'far fa-star review-color ms-2'"></i>
                               </div>
+
+                              <p class="text mt20 mb20">{{ review.rev }}</p>
                             </div>
+                            <!--For Review -->
+
+
                           </div>
                         </div>
                       </div>
@@ -617,7 +619,7 @@ const SelectedPrice = ref('');
 const deliveryday = ref('');
 
 const message = ref('');
-
+const reviewlist = ref('');
 const formatPrice = (price) => {
   if (isNaN(price)) return '0.00'; // Handle non-numeric input
   return Number(price).toFixed(2); // Convert to number and format to 2 decimal places
@@ -675,7 +677,7 @@ const contactSend = async () => {
 const submitFrm = () => {
 
   const formData = new FormData();
-  const subtotal  = serviceFee.value + SelectedPrice.value;
+  const subtotal = serviceFee.value + SelectedPrice.value;
   formData.append("gig_id", gig_id.value);
   formData.append("service_fee", serviceFee.value);
   formData.append("sub_total", subtotal);
@@ -880,6 +882,20 @@ const getCatList = async () => {
   }
 };
 
+const getReviewList = async () => {
+  try {
+    const response = await axios.get('/unauthenticate/checkGetList', {
+      params: {
+        gig_slug: route.params.slug,
+      }
+    });
+    reviewlist.value = response.data;
+
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const isActive = (slug) => {
   return slug === route.params.slug; // Compare slug with the current route's slug
 };
@@ -900,6 +916,7 @@ const defaultParticularData = async () => {
 };
 
 onMounted(() => {
+  getReviewList();
   defaultParticularData();
   createCaptcha();
   checkrow();

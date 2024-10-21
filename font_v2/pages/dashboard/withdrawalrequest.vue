@@ -35,10 +35,7 @@
         <div class="container">
           <div class="card border-top border-0 border-4 border-info">
             <div class="card-body">
-
-
               <p class="text-black">Your Earning Amount is : ${{ earning }}</p>
-
               <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
                   <a class="nav-link active" id="withdrawal-tab" data-bs-toggle="tab" href="#withdrawal" role="tab"
@@ -46,7 +43,9 @@
                 </li>
 
               </ul>
-
+              <div class="loading-indicator" v-if="loading" style="text-align: center;">
+          <Loader />
+        </div>
               <!-- Tab content -->
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="withdrawal" role="tabpanel" aria-labelledby="withdrawal-tab">
@@ -87,6 +86,7 @@
 
                     </div>
                     <div class="col-md-8">
+                    
                       <table class="table table-striped">
                         <thead>
                           <tr>
@@ -94,6 +94,7 @@
                             <th scope="col"><center>Request Amount</center></th>
                             <th scope="col">Wallet Address</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Reason</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -102,9 +103,10 @@
                             <td><center>${{ withdrawal.withdrawal_amount }}</center></td>
                             <td>{{ withdrawal.wallet_address }}</td>
                             <td v-html="withdrawal.wStatus"></td>
+                            <td>{{ withdrawal.remarks }}</td>
                           </tr>
                           <tr v-if="withDrawaldata.length === 0">
-                            <td colspan="4" class="text-center">No withdrawal data available.</td>
+                            <td colspan="5" class="text-center">No withdrawal data available.</td>
                           </tr>
                         </tbody>
                       </table>

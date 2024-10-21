@@ -75,6 +75,16 @@
                                         }}</span>
                                 </div>
                             </div>
+
+
+                            <div class="col-md-12 mb-3">
+                                    <label for="phone" class="form-label">Introduce Yourself</label>
+                                    <textarea cols="30" rows="6" placeholder="Description"
+                                        v-model="introduce_yourself"></textarea>
+                                    <span class="text-danger" v-if="errors.introduce_yourself">{{
+                                        errors.introduce_yourself[0]
+                                        }}</span>
+                                </div>
                             <div class="row d-none">
                                 <div class="col-md-12 mb-3">
                                     <label for="skills" class="form-label">Skills</label>
@@ -99,7 +109,7 @@
                     </div>
                     <div class="modal-footer">
                         <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                        <button type="button" class="btn btn-primary" @click="submitProfileUpdate">Save Changes</button>
+                        <button type="button" class="btn btn-primary text-white" @click="submitProfileUpdate">Save Changes</button>
                     </div>
                 </div>
             </div>
@@ -200,6 +210,7 @@ const submitProfileUpdate = async () => {
         formData.append('email', email.value);
         formData.append('country_1', country_1.value);
         formData.append('phone_number', phone.value);
+        formData.append('introduce_yourself', introduce_yourself.value);
         //formData.append('skills', skills.value.join(',')); // Join skills with a comma
         const response = await axios.post('/auth/updateprofileFrontend', formData);
         // Handle success response

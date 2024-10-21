@@ -32,15 +32,52 @@ class ChatController extends Controller
     }
 
 
+
+    public function getChatUsersTo()
+    {
+
+
+        // $data = MyMessage::select('messages.*', 'users.slug', 'users.image AS profile_picture', 'users.name AS usersname')
+        // ->leftJoin('users', 'users.id', '=', 'messages.to_id')
+        // ->where('messages.to_id', $this->userid)
+        // ->groupBy('messages.sender_id')
+        // ->orderBy('created_at', 'desc')
+        // ->get();    
+
+
+        $data = MyMessage::where('messages.to_id', $this->userid)
+                ->groupBy('messages.sender_id')
+                ->orderBy('created_at', 'desc')
+                ->get();
+      //  dd($data);
+
+        $chatusers = [];
+        foreach ($data as $v) {
+            $userrecords = User::where('id',$v->user_id)->first();
+            $chatusers[] = [
+                'id'             => $v->id,
+                'user_id'        => $userrecords->id,
+                'user_name'      => $userrecords->name,
+                'slug'           => $v->slug,
+                'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
+            ];
+        }
+        // Return messages as a JSON response
+        return response()->json($chatusers);
+    }
+
     public function getChatUsers()
     {
         //  dd($rdata);
+
         $data = MyMessage::select('messages.*', 'users.slug', 'users.image AS profile_picture', 'users.name AS usersname')
             ->leftJoin('users', 'users.id', '=', 'messages.to_id')
             ->where('messages.user_id', $this->userid)
             ->groupBy('messages.to_id')
             ->orderBy('created_at', 'desc')
             ->get();
+
+        //dd($data);
 
         $chatusers = [];
         foreach ($data as $v) {
@@ -79,8 +116,8 @@ class ChatController extends Controller
     public function sendMessages(Request $request)
     {
 
-    
-    //dd($request->all());
+
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
             'senderId'        => 'required', // Set this to the ID of the logged-in buyer
             'recipientId'     => 'required', // The ID of the recipient (seller)
@@ -93,7 +130,7 @@ class ChatController extends Controller
             ], 422);
         }
 
-        $imagePaths="";
+        $imagePaths = "";
         if (!empty($request->file('files'))) {
             $files = $request->file('files');
             $fileName = Str::random(20);

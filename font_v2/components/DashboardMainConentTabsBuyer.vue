@@ -97,6 +97,14 @@
                   </div>
                 </div>
               </section>
+              <div v-if="msgData.length > 0">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  <span v-for="data in msgData" :key="data.id" class="text-justify">
+                    <strong>{{ data.name }}</strong> {{ data.messages }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </span>
+                </div>
+              </div>
 
               <!-- Service Details -->
               <section class="pt10 pb90">
@@ -118,7 +126,7 @@
                       <div class="service-about">
                         <h4>Description</h4>
                         <p class="text mb30 text-justify" style="text-align: justify;">{{ introduce_yourself }}</p>
- 
+
 
                       </div>
                     </div>
@@ -402,7 +410,15 @@ definePageMeta({
 });
 
 const profileModal = ref(null);
-
+const msgData = ref([]);
+const getMessages = async () => {
+  try {
+    const response = await axios.get(`/user/getMessagesNoti`);
+    msgData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
 const chkUserrow = async () => {
   try {
     const response = await axios.post(`/auth/me`);
@@ -572,6 +588,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 
 
 onMounted(() => {
+  getMessages();
   getBalance();
   getOrderCounting();
   getOrderStatus();

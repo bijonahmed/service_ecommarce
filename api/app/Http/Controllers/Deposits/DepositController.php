@@ -573,6 +573,7 @@ class DepositController extends Controller
                 'status'         => $v->status,
                 'withdrawal_amount'  => $v->withdrawal_amount,
                 'wallet_address'     => $v->wallet_address,
+                'remarks'            => $v->remarks,
                 'created_at'     => date("d-m-Y", strtotime($v->created_at)),
             ];
         }
@@ -649,7 +650,7 @@ class DepositController extends Controller
                 'user_info_phone'   => !empty($userrow->phone_number) ?  $userrow->phone_number : "N/A",
                 'created_at'        => date("Y-m-d H:i:s", strtotime($item->created_at)),
                 'usd_amount'        => $item->usd_amount,
-                'uic_amount'        => $item->uic_amount,
+                'withdrawal_amount' => $item->withdrawal_amount,
                 'payable_amount'    => $item->payable_amount,
                 'transection_fee'   => $item->transection_fee,
                 'withdrawal_method_id' => $item->withdrawal_method_id,

@@ -16,28 +16,49 @@
                 <div id="mega-menu" ref="menu">
                   <div class="text-center"><a class="btn-mega fw500" href="#"><span
                         class="pr5 fz15 vam flaticon-menu"></span><span>Categories</span></a></div>
+
+
+
+                         <!-- Dynamic Main Categories -->
+          <li v-for="(category, index) in categories" :key="index" class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" :href="`#`" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              {{ category.name }}
+            </a>
+            <ul class="dropdown-menu">
+              <!-- Dynamic Subcategories -->
+              <li v-for="(subCategory, subIndex) in category.children" :key="subIndex" class="dropdown-submenu">
+                <nuxt-link class="dropdown-item" :to="`/category/${subCategory.slug}`">{{ subCategory.name }}</nuxt-link>
+                <!-- Dynamic Sub-Subcategories -->
+                <ul class="dropdown-menu">
+                  <li v-for="(subSubCategory, subSubIndex) in subCategory.children" :key="subSubIndex">
+                    <nuxt-link class="dropdown-item" :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name }}</nuxt-link>
+                  </li>
+                </ul>
+              </li>
+            </ul>
+          </li>
                   <ul class="menu ps-0">
                     <li v-for="category in categoryData.slice(0, 15)" :key="category.id">
                       <nuxt-link :to="`/category/${category.slug}`" class="dropdown">
                         <!-- <span class="menu-icn flaticon-developer"></span> -->
                         <span class="menu-title">{{ category.name }}</span>
                       </nuxt-link>
-                      <div class="drop-menu">
+                      <div class="drop-menu" :key="category.id">
                         <div v-for="(subCategoryGroup, index) in groupedSubCategories(category.children)" :key="index"
                           class="row mb-1">
                           <div v-for="subCategory in subCategoryGroup" :key="subCategory.id" class="col-6">
-                            <div class="h6 cat-title"> <nuxt-link :to="`/category/${subCategory.slug}`">{{
-                              subCategory.name }}</nuxt-link></div>
-                            <ul class="ps-0">
-                              <li v-for="subSubCategory in subCategory.children" :key="subSubCategory.id">
-                                <a href="#"><nuxt-link :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name
-                                    }}</nuxt-link></a>
-                              </li>
-
-                            </ul>
+                            <div class="h6 cat-title">
+                              <nuxt-link :to="`/category/${subCategory.slug}`">{{ subCategory.name }}</nuxt-link>
+                            </div>
+                            <!-- <ul class="ps-0">
+        <li v-for="subSubCategory in subCategory.children" :key="subSubCategory.id">
+          <nuxt-link :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name }}</nuxt-link>
+        </li>
+      </ul> -->
                           </div>
                         </div>
                       </div>
+
                     </li>
                     <li><nuxt-link to="/all-category">All Categoryes</nuxt-link></li>
                   </ul>
@@ -64,7 +85,8 @@
 
               <nuxt-link class="login-info mr15-xl mr30" to="/sign-in" v-if="!isLoggedIn"><i class="fa fa-sign-in"></i>
                 Sign in</nuxt-link>
-              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2 me-2" v-if="!isLoggedIn" to="/sign-up">Sign
+              <nuxt-link class="ud-btn btn-white add-joining bdrs50 text-thm2 me-2" v-if="!isLoggedIn"
+                to="/sign-up">Sign
                 up</nuxt-link>
 
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
@@ -74,10 +96,14 @@
 
                 </li>
               </ul>
+              <!-- <span class="badge bg-danger">01</span> -->
+            
+      
+            
               <div class="dropdown ms-2" v-if="isLoggedIn">
                 <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img :src="imagePreview || '/blank_user.jpg'" style="height: 30px;width: 30px;" alt=""
-                    class="img-fluid rounded-circle bordered">
+                    class="img-fluid rounded-circle bordered"><span class="text-white">&nbsp;{{name}}</span> 
                 </a>
 
                 <ul class="dropdown-menu bordered-0">
@@ -86,11 +112,11 @@
                   <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
                         class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
 
-                        <li v-if="isLoggedIn && userStore.role_id == 2">
-  <nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist">
-    <i class="fa fa-list"></i>&nbsp;My Gig
-  </nuxt-link>
-</li>
+                  <li v-if="isLoggedIn && userStore.role_id == 2">
+                    <nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist">
+                      <i class="fa fa-list"></i>&nbsp;My Gig
+                    </nuxt-link>
+                  </li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
                         class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
@@ -132,7 +158,7 @@ const loading = ref(false);
 const router = useRouter();
 const name = ref();
 const imagePreview = ref();
-
+const email = ref();
 
 
 const getUserRow = async () => {
@@ -140,6 +166,7 @@ const getUserRow = async () => {
     const response = await axios.post("/auth/me");
     console.log("Response data:", response.data.name); // Log the response data
     name.value = response.data.name;
+    email.value = response.data.email;
     imagePreview.value = response.data.profileLogo;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -247,7 +274,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-
 #mega-menu .menu .menu-title {
   color: var(--headings-color);
   font-family: var(--title-font-family);
@@ -300,7 +326,7 @@ header.nav-homepage-style {
 #mega-menu .menu li a {
   border-left: 2px solid transparent;
   padding: 0px 20px;
-  display: flex;
+  display: list-item;
   position: relative;
 }
 
