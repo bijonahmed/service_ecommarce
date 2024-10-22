@@ -1256,21 +1256,23 @@ class UserController extends Controller
         $chkUser  = User::where('email', $email)->first();
         $userId   = $chkUser->id;
 
-        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level1_ids       = $checkL1->pluck('id')->toArray();
         // Fetch level 2 users based on level 1 IDs
-        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level2_ids       = $checkL2->pluck('id')->toArray();
 
 
-        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level3_ids       = $checkL3->pluck('id')->toArray();
 
-        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level4_ids       = $checkL4->pluck('id')->toArray();
 
-        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level5_ids       = $checkL5->pluck('id')->toArray();
+
+
 
 
         $data['level_1']  = $checkL1;
@@ -1354,20 +1356,20 @@ class UserController extends Controller
         $chkUser  = User::where('email', $email)->first();
         $userId   = $chkUser->id;
 
-        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level1_ids       = $checkL1->pluck('id')->toArray();
         // Fetch level 2 users based on level 1 IDs
-        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level2_ids       = $checkL2->pluck('id')->toArray();
 
 
-        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level3_ids       = $checkL3->pluck('id')->toArray();
 
-        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level4_ids       = $checkL4->pluck('id')->toArray();
 
-        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level5_ids       = $checkL5->pluck('id')->toArray();
 
 

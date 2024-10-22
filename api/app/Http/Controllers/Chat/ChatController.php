@@ -46,14 +46,14 @@ class ChatController extends Controller
 
 
         $data = MyMessage::where('messages.to_id', $this->userid)
-                ->groupBy('messages.sender_id')
-                ->orderBy('created_at', 'desc')
-                ->get();
-      //  dd($data);
+            ->groupBy('messages.sender_id')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        //  dd($data);
 
         $chatusers = [];
         foreach ($data as $v) {
-            $userrecords = User::where('id',$v->user_id)->first();
+            $userrecords = User::where('id', $v->user_id)->first();
             $chatusers[] = [
                 'id'             => $v->id,
                 'user_id'        => $userrecords->id,
@@ -182,21 +182,30 @@ class ChatController extends Controller
 
         // Prepare the response data
         $data = [];
+
         foreach ($messages as $message) {
-            $user = User::find($this->userid); // Fetch sender's details
-            $to_user = User::find($message->to_id);
-            $sender_user = User::find($this->userid);
+            // Fetch sender's details
+            $sender = User::find($message->sender_id);
+            // Fetch recipient's details
+            $recipient = User::find($message->to_id);
+
+            // Prepare the message data with sender and recipient details
             $data[] = [
                 'id'          => $message->id,
-                'user_id'     => $message->sender_id,
-                'name'        => $user ? $user->name : "Unknown",
-                'message'     => $message->message,
-                'sender_id'   => $this->userid, //$message->sender_id,
-                'files'             => !empty($message->files) ? url($message->files) : "",
-                'created_at'        => $message->created_at->format('Y-m-d H:i:s'),
-                'sender_profile_picture'      => !empty($sender_user->image) ? url($sender_user->image) : "", //!empty($user->image) ? url($user->image) : "===", 
-                'recipient_profile_picture'   => !empty($to_user->image) ? url($to_user->image) : "",
-                'sender_name' => $user ? $user->name : "Unknown"
+                'user_id'     => $message->sender_id, // Sender ID
+                'message'     => $message->message, // Message content
+                'files'       => !empty($message->message_files) ? url($message->message_files) : "", // File attachment (if any)
+                'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
+
+                // Sender details
+                'sender_id'               => $message->sender_id,
+                'sender_name'             => $sender ? $sender->name : "Unknown",
+                'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
+
+                // Recipient details
+                'recipient_id'            => $message->to_id,
+                'recipient_name'          => $recipient ? $recipient->name : "Unknown",
+                'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
             ];
         }
 

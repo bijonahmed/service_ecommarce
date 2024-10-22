@@ -19,24 +19,27 @@
 
 
 
-                         <!-- Dynamic Main Categories -->
-          <li v-for="(category, index) in categories" :key="index" class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" :href="`#`" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              {{ category.name }}
-            </a>
-            <ul class="dropdown-menu">
-              <!-- Dynamic Subcategories -->
-              <li v-for="(subCategory, subIndex) in category.children" :key="subIndex" class="dropdown-submenu">
-                <nuxt-link class="dropdown-item" :to="`/category/${subCategory.slug}`">{{ subCategory.name }}</nuxt-link>
-                <!-- Dynamic Sub-Subcategories -->
-                <ul class="dropdown-menu">
-                  <li v-for="(subSubCategory, subSubIndex) in subCategory.children" :key="subSubIndex">
-                    <nuxt-link class="dropdown-item" :to="`/category/${subSubCategory.slug}`">{{ subSubCategory.name }}</nuxt-link>
+                  <!-- Dynamic Main Categories -->
+                  <li v-for="(category, index) in categories" :key="index" class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" :href="`#`" role="button" data-bs-toggle="dropdown"
+                      aria-expanded="false">
+                      {{ category.name }}
+                    </a>
+                    <ul class="dropdown-menu">
+                      <!-- Dynamic Subcategories -->
+                      <li v-for="(subCategory, subIndex) in category.children" :key="subIndex" class="dropdown-submenu">
+                        <nuxt-link class="dropdown-item" :to="`/category/${subCategory.slug}`">{{ subCategory.name
+                          }}</nuxt-link>
+                        <!-- Dynamic Sub-Subcategories -->
+                        <ul class="dropdown-menu">
+                          <li v-for="(subSubCategory, subSubIndex) in subCategory.children" :key="subSubIndex">
+                            <nuxt-link class="dropdown-item" :to="`/category/${subSubCategory.slug}`">{{
+                              subSubCategory.name }}</nuxt-link>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
                   </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
                   <ul class="menu ps-0">
                     <li v-for="category in categoryData.slice(0, 15)" :key="category.id">
                       <nuxt-link :to="`/category/${category.slug}`" class="dropdown">
@@ -97,34 +100,53 @@
                 </li>
               </ul>
               <!-- <span class="badge bg-danger">01</span> -->
-            
-      
-            
+
+
+
               <div class="dropdown ms-2" v-if="isLoggedIn">
                 <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img :src="imagePreview || '/blank_user.jpg'" style="height: 30px;width: 30px;" alt=""
-                    class="img-fluid rounded-circle bordered"><span class="text-white">&nbsp;{{name}}</span> 
+                    class="img-fluid rounded-circle bordered"><span class="text-white">&nbsp;{{ name }}</span>
                 </a>
 
                 <ul class="dropdown-menu bordered-0">
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/myprofile"><i
-                        class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
-                        class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
+
+                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                      to="/dashboard/buyer/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                      to="/dashboard/buyer/welcome"><i class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                      to="/dashboard/buyer/chatbox"><i class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
+
+                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                      to="/dashboard/buyer/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
+
+                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                      to="/dashboard/buyer/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
+
+
+
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/welcome"><i class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
 
                   <li v-if="isLoggedIn && userStore.role_id == 2">
                     <nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist">
                       <i class="fa fa-list"></i>&nbsp;My Gig
                     </nuxt-link>
                   </li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
-                        class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
-                        class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/earning"><i
-                        class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
-                        class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
+
+
+
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/chatbox"><i class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/earning"><i class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
+                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                      to="/dashboard/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
 
 
 

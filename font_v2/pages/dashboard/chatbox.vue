@@ -64,9 +64,9 @@
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
-                      <img
+                      <!-- <img
                         :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
-                        alt="Profile Picture" class="profile-picture" />
+                        alt="Profile Picture" class="profile-picture" /> -->
 
                       <div class="message-content">
                         <strong class="sender-name">{{ message.sender_name }}</strong>

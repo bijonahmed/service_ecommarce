@@ -76,12 +76,12 @@
                   Chat History <span v-if="user_name">[{{ user_name }}]</span>
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
-                  <div class="" v-if="chatMessages.length">
+                  <div class="" ref="chatContainer" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
-                      <img
+                      <!-- <img
                         :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
-                        class="profile-picture" />
+                        alt="Profile Picture" class="profile-picture" /> -->
 
                       <div class="message-content">
                         <strong class="sender-name">{{ message.sender_name }}</strong>
@@ -120,18 +120,17 @@
                   </form>
                 </div>
               </div>
-
+              </div>
             </div>
           </div>
+          <!-- END ChatBox -->
+          <div />
         </div>
-        <!-- END ChatBox -->
-        <div />
       </div>
-    </div>
 
-    <!-- Modal Template -->
+      <!-- Modal Template -->
 
-    <Footer />
+      <Footer />
   </body>
 </template>
 
@@ -347,36 +346,6 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-.chat-user-list {
-  list-style-type: none;
-  /* Remove default list styling */
-  padding: 0;
-  /* Remove default padding */
-}
-
-.chat-user-item {
-  cursor: pointer;
-  /* Change cursor to pointer */
-  padding: 10px;
-  /* Add some padding */
-  display: flex;
-  /* Align items */
-  align-items: center;
-  /* Center items vertically */
-}
-
-.chat-user-item:hover {
-  background-color: #f0f0f0;
-  /* Light gray background on hover */
-}
-
-.selected {
-  background-color: #007bff;
-  /* Blue background for selected item */
-  color: white;
-  /* White text for selected item */
-}
-
 .message_container {
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
@@ -451,7 +420,7 @@ onBeforeUnmount(() => {
 
 .chat-user-item:hover {
   background-color: #075e54;
-  color: white;
+   
 }
 
 
@@ -571,10 +540,7 @@ onBeforeUnmount(() => {
   padding: 10px;
 }
 
-.input-group {
-  display: flex;
-  align-items: center;
-}
+
 
 textarea {
   border: 1px solid #ccc;

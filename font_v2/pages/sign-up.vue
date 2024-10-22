@@ -8,23 +8,177 @@
         <MobileMenu />
         <div class="body_content">
           <!-- Our LogIn Area -->
-          <form @submit.prevent="register()">
-            <section class="our-register">
-              <div class="container">
-                <div class="row">
-                  <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
-                    <div class="main-title text-center">
-                      <h2 class="title text-white">Register</h2>
-                    </div>
+
+          <section class="our-register">
+            <div class="container">
+              <div class="row">
+                <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
+                  <div class="main-title text-center">
+                    <h2 class="title text-white">Register</h2>
                   </div>
                 </div>
-                <center>
-                  <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
-                  </div>
-                </center>
+              </div>
+              <center>
+                <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                  <Loader />
+                </div>
+              </center>
 
-                <div class="row wow fadeInRight" data-wow-delay="300ms">
+              <div class="row wow fadeInRight" data-wow-delay="300ms">
+                <div class="col-xl-6 mx-auto">
+                  <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
+                    <div class="mb30">
+                      <h4>Let's create your account!</h4>
+                      <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
+                          In!</nuxt-link></p>
+                    </div>
+                    <!-- Bootstrap Tabs -->
+                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="buyer-tab" data-bs-toggle="tab" data-bs-target="#buyer"
+                          type="button" role="tab" aria-controls="buyer" aria-selected="true">
+                          Buyer
+                        </button>
+                      </li>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="seller-tab" data-bs-toggle="tab" data-bs-target="#seller"
+                          type="button" role="tab" aria-controls="seller" aria-selected="false">
+                          Seller
+                        </button>
+                      </li>
+                    </ul>
+
+                    <!-- Tab content -->
+                    <div class="tab-content" id="myTabContent">
+                      <!-- Buyer Tab -->
+                      <div class="tab-pane fade show active" id="buyer" role="tabpanel" aria-labelledby="buyer-tab">
+                        <form @submit.prevent="registerForBuyer()">
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Name</label>
+                            <input type="text" class="form-control" placeholder="Your Name" v-model="name"
+                              @blur="validateName">
+                            <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                          </div>
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Country</label>
+                            <select class="form-control" v-model="country_1">
+                              <option value="" disabled>Select your country</option>
+                              <option v-for="country in countryData" :key="country.id" :value="country.id">{{
+                                country.countryname }}</option>
+                            </select>
+                            <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                          </div>
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Invite Code</label>
+                            <input type="text" class="form-control" placeholder="Invite Code" v-model="inviteCode">
+                            <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
+                          </div>
+
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Email</label>
+                            <input type="email" class="form-control" placeholder="example@gmail.com" v-model="email">
+                            <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
+                          </div>
+
+                          <!-- Password Fields (Common for both) -->
+                          <div class="mb15">
+                            <label class="form-label fw500 dark-color">Password</label>
+                            <input type="password" class="form-control" placeholder="*******" v-model="password">
+                            <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                          </div>
+
+                          <div class="mb15">
+                            <label class="form-label fw500 dark-color">Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                            <span class="text-danger" v-if="errors.password_confirmation">{{
+                              errors.password_confirmation[0]
+                            }}</span>
+                          </div>
+
+                          <br />
+                          <div class="d-grid mb20">
+                            <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
+                              v-if="!hasInvalidChars && !isEmailFormat">Create Account <i
+                                class="fal fa-arrow-right-long"></i></button>
+                          </div>
+
+                        </form>
+                        <!-- Additional Buyer Fields -->
+                      </div>
+
+                      <!-- Seller Tab -->
+                      <div class="tab-pane fade" id="seller" role="tabpanel" aria-labelledby="seller-tab">
+
+                        <form @submit.prevent="registerForSeller()">
+
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Name</label>
+                            <input type="text" class="form-control" placeholder="Your Name" v-model="name"
+                              @blur="validateName">
+
+                            
+                            <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                          </div>
+
+
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Country</label>
+                            <select class="form-control" v-model="country_1">
+                              <option value="" disabled>Select your country</option>
+                              <option v-for="country in countryData" :key="country.id" :value="country.id">{{
+                                country.countryname }}</option>
+                            </select>
+                            <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                          </div>
+
+
+                          <div class="mb2">
+                            <label class="form-label fw500 dark-color">Email</label>
+                            <input type="email" class="form-control" placeholder="example@gmail.com" v-model="email">
+                            <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
+                          </div>
+
+
+
+                          <div class="mb15">
+                            <label class="form-label fw500 dark-color">Password</label>
+                            <input type="password" class="form-control" placeholder="*******" v-model="password">
+                            <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
+                          </div>
+
+                          <div class="mb15">
+                            <label class="form-label fw500 dark-color">Confirm Password</label>
+                            <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                            <span class="text-danger" v-if="errors.password_confirmation">{{
+                              errors.password_confirmation[0]
+                            }}</span>
+                          </div>
+
+
+
+
+                          <br />
+                          <div class="d-grid mb20">
+                            <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
+                              v-if="!hasInvalidChars && !isEmailFormat">Create Account <i
+                                class="fal fa-arrow-right-long"></i></button>
+                          </div>
+
+                        </form>
+                        <!-- Additional Seller Fields -->
+                      </div>
+                    </div>
+
+
+                    <!-- Create Account Button -->
+
+                  </div>
+                </div>
+              </div>
+
+
+
+              <!-- <div class="row wow fadeInRight" data-wow-delay="300ms">
                   <div class="col-xl-6 mx-auto">
                     <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
                       <div class="mb30">
@@ -70,7 +224,7 @@
 
                       <div class="mb2">
                         <label class="form-label fw500 dark-color">Invite Code</label>
-                        <input type="text" class="form-control" placeholder="157878888.." v-model="inviteCode">
+                        <input type="text" class="form-control" placeholder="Invite Code" v-model="inviteCode">
                         <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
                       </div>
 
@@ -94,11 +248,11 @@
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
+                </div> -->
+            </div>
 
-            </section>
-          </form>
+          </section>
+
           <!-- Our Footer -->
           <Footer />
         </div>
@@ -127,19 +281,15 @@ let country_1 = ref("")
 let inviteCode = ref(null);
 let password = ref(null);
 let confirmPassword = ref(null);
-let userType = ref('');
+let buyerType = ref('3');
+let sellerType = ref('2');
 let countryData = ref('');
 let slug_error = ref('');
 let nameError = ref('');
 const errorMessage = ref();
 
 
-const userTypes = ref([
-  { value: '2', text: 'Seller' },
-  { value: '3', text: 'Buyer' }
-]);
-
-
+ 
 // Computed property to check if name is in email format
 const isEmailFormat = computed(() => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -213,19 +363,17 @@ async function sendCode() {
   }
 }
 
-const register = async () => {
-  loading.value = true; // Start loading
+const registerForSeller = async () => {
+
   errors.value = {}; // Clear previous errors
   slug_error.value = ""; // Reset slug error
-
   try {
-    // Call the register function from userStore with the provided parameters
     await userStore.register(
       name.value,
       email.value,
       country_1.value,
       inviteCode.value,
-      userType.value,
+      sellerType.value,
       password.value,
       confirmPassword.value
     );
@@ -234,53 +382,97 @@ const register = async () => {
       icon: "success",
       title: "Your account has been successfully created.",
       showConfirmButton: false,
-      timer: 3000,
+      timer: 3000
     });
     router.push('/sign-in');
+
   } catch (error) {
+    // Error handling
+    console.error("Error during registration: ", error);
 
-    if (error.response) {
-      if (error.response && error.response.status === 422) {
-        errors.value = error.response.data.errors;
-      }
-      if (error.response.data.slug_error) {
-        slug_error.value = error.response.data.slug_error; // Assign slug error if exists
-      }
-      // Optional: Handle 400 error and log additional information
-      if (error.response.status === 400) {
-        //console.log("=== Validation error:", error.response.data); // Log the error for debugging
-        slug_error.value = error.response.data;
-      }
+    // Check if error response and its data are available
+    if (error.response && error.response.data) {
+      // Show error notification
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error occurred. Please check your input.",
+        showConfirmButton: false,
+        timer: 3000
+      });
+      errors.value = error.response.data.errors || {};
+      console.log("Backend error: ", error.response.data.error);
     } else {
-      console.error("An unexpected error occurred:", error); // Log unexpected errors
+      // If no error response, show generic error
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "An unexpected error occurred. Please try again.",
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      console.error("Unexpected error: ", error);
     }
+  }
 
 
+}
 
+const registerForBuyer = async () => {
+  //loading.value = true; // Start loading
+  errors.value = {}; // Clear previous errors
+  slug_error.value = ""; // Reset slug error
+  try {
+    await userStore.register(
+      name.value,
+      email.value,
+      country_1.value,
+      inviteCode.value,
+      buyerType.value,
+      password.value,
+      confirmPassword.value
+    );
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "Your account has been successfully created.",
+      showConfirmButton: false,
+      timer: 3000
+    });
+    router.push('/sign-in');
 
-    // if (error.response) {
-    //   if (error.response.data.errors) {
-    //     for (const key in error.response.data.errors) {
-    //       errors.value[key] = error.response.data.errors[key].join(', '); // Join array messages into a single string
-    //     }
-    //   }
-    //   if (error.response.data.slug_error) {
-    //     slug_error.value = error.response.data.slug_error; // Assign slug error if exists
-    //   }
-    //   // Optional: Handle 400 error and log additional information
-    //   if (error.response.status === 400) {
-    //     //console.log("=== Validation error:", error.response.data); // Log the error for debugging
-    //     slug_error.value = error.response.data;
-    //   }
-    // } else {
-    //   console.error("An unexpected error occurred:", error); // Log unexpected errors
-    // }
-  } finally {
-    loading.value = false; // Hide loader
+  } catch (error) {
+    // Error handling
+    console.error("Error during registration: ", error);
+
+    // Check if error response and its data are available
+    if (error.response && error.response.data) {
+      // Show error notification
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Error occurred. Please check your input.",
+        showConfirmButton: false,
+        timer: 3000
+      });
+      errors.value = error.response.data.errors || {};
+      console.log("Backend error: ", error.response.data.error);
+    } else {
+      // If no error response, show generic error
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "An unexpected error occurred. Please try again.",
+        showConfirmButton: false,
+        timer: 3000
+      });
+
+      console.error("Unexpected error: ", error);
+    }
   }
 };
-
-
+ 
 </script>
 <style scoped>
 .error {
