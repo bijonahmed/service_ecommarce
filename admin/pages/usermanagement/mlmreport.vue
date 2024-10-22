@@ -1,5 +1,5 @@
 <template>
-    <title>Affiliate Report</title>
+    <title>MLM Report</title>
     <div>
         <div class="content-wrapper">
             <section class="content-header" style="margin-bottom: -25px;">
@@ -52,32 +52,34 @@
                                     <Loader />
                                 </div>
                             </div>
+                            <h4 class="mb-4">Referral Commission</h4>
+                            <p>Total Users: {{ uniqueUserCount }}<br /> Amount : ${{ totalAmount }}</p>
 
-
-                            <table class="table table-bordered table-striped">
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th class="w-10">SL NO</th>
-                                        <th>OrderID</th>
-                                        <th>Upline</th>
-                                        <th>Level</th>
-                                        <th class="w-20">Received From</th>
-                                        <th class="text-center">Commission</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(user, index) in storeData" :key="user.id"
-                                        :style="{ backgroundColor: getOrderGroupColor(user.orderId) }">
-                                        <td>{{ index + 1 }}</td>
-                                        <td>{{ user.orderId }}</td>
-                                        <td>{{ user.buyer_name }}</td>
-                                        <td>{{ user.level }}</td>
-                                        <td>{{ user.commission_recv_frm_name }}</td>
-                                        <td class="text-center">{{ user.amount }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <p v-if="totalCommission">Total Users: ${{ totalCommission }}</p>
+                            <div class="container mt-5">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Register Date</th>
+                                    <th>Name</th>
+                                    <th>Commission</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loop through all users across levels -->
+                                <tr v-for="(user, index) in allUsers" :key="user.id">
+                                    <td>{{ index + 1 }}</td> <!-- Serial number starts from 1 -->
+                                    <td>{{ user.created_at }}</td>
+                                    <td>{{ user.name }}</td>
+                                    <td>${{ user.amount }}</td> <!-- Placeholder for commission -->
+                                </tr>
+                                <tr v-if="allUsers.length === 0">
+                                    <td colspan="4" class="text-center">No users found</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                            <!-- <p v-if="totalCommission">Total Users: ${{ totalCommission }}</p> -->
                         </div>
                         <!-- /.card-body -->
                     </div>
@@ -105,6 +107,8 @@ const error = ref([]);
 const storeData = ref([]);
 
 
+const allUsers = ref([]);
+
 // List of colors to cycle through for different groups
 const colors = [
     '#f2f2f2', '#d1e7dd', '#f8d7da', '#cfe2ff', '#fefefe',
@@ -118,7 +122,20 @@ const colors = [
     '#ff0033', '#ccff33', '#ffcc33', '#33ff66', '#9933ff',
     '#3399ff', '#33ccff', '#ff6633', '#33ffcc', '#66cc99'
 ];
+// Define a computed property for unique users
+const uniqueUsers = computed(() => {
+    const uniqueIds = new Set();
+    return allUsers.value.filter(user => {
+        if (uniqueIds.has(user.id)) {
+            return false; // Skip if ID is already in the Set
+        }
+        uniqueIds.add(user.id);
+        return true; // Include this user
+    });
+});
 
+// Define a computed property for the count of unique users
+const uniqueUserCount = computed(() => uniqueUsers.value.length);
 // Function to return a color based on the orderId group
 const getOrderGroupColor = (orderId) => {
     const uniqueOrderIds = Array.from(new Set(storeData.value.map(user => user.orderId)));
@@ -128,32 +145,37 @@ const getOrderGroupColor = (orderId) => {
 
 
 // Function to assign searchQuery value to u_details_email
+
 const fetchUserLevels = async () => {
-
     loading.value = true;
-    error.value = null;
-
+  
+    const email = searchQuery.value
     try {
-        const response = await axios.get("/user/checkmlmHistorys", {
-            params: {
-                txtsearch: searchQuery.value,
-            }
+        const response = await axios.get("/user/checkLevelHistorysAdmin", {
+            params: { email },
         });
-        storeData.value = response.data.data;
+ // Clear the array before pushing new data
+ allUsers.value = [];
+        for (const level in response.data) {
+            allUsers.value.push(...response.data[level]);
+        }
+      
     } catch (err) {
-        error.value = err.response
-            ? err.response.data.error
-            : "An error occurred while fetching user data.";
+        console.log(err);
     } finally {
         loading.value = false;
     }
 };
 
 // Computed property to calculate the total commission
-const totalCommission = computed(() => {
-    return storeData.value.reduce((sum, user) => sum + parseFloat(user.amount), 0).toFixed(2);
+ 
+// Computed property to calculate the total amount
+const totalAmount = computed(() => {
+  return allUsers.value.reduce((sum, user) => sum + (user.amount || 0), 0);
 });
-
+onMounted(() => {
+    fetchUserLevels();
+});
 </script>
 
 

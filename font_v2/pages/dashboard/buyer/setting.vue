@@ -58,68 +58,18 @@
             <div class="card-body">
 
 
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+              <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                  <a class="nav-link active" id="withdrawal-tab" data-bs-toggle="tab" href="#withdrawal" role="tab"
-                    aria-controls="withdrawal" aria-selected="true">Withdrawal Method</a>
-                </li>
-                <li class="nav-item" role="presentation">
-                  <a class="nav-link" id="change-password-tab" data-bs-toggle="tab" href="#change-password" role="tab"
-                    aria-controls="change-password" aria-selected="false">Change Password</a>
+                  <a class="nav-link active" id="change-password-tab" data-bs-toggle="tab" href="#change-password"
+                    role="tab" aria-controls="change-password" aria-selected="false">Change Password</a>
                 </li>
               </ul>
 
               <!-- Tab content -->
               <div class="tab-content" id="myTabContent">
-                <div class="tab-pane fade show active" id="withdrawal" role="tabpanel" aria-labelledby="withdrawal-tab">
 
-                  <div class="row">
-                    <div class="col-md-8">
-                      <form class="mt-3" @submit.prevent="submitWithdrawalAdd()">
-                        <div class="mb-3">
-                          <label for="withdrawalMethod" class="form-label">Select Withdrawal Method</label>
-                          <select class="form-select" id="name" v-model="insertdatawithdrwal.name">
-                            <option value="">Choose...</option>
-                            <option value="USDT TRC-20">USDT TRC-20</option>
-                          </select>
-                          <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
-                        </div>
-                        <div class="mb-3">
-                          <label for="accountDetails" class="form-label">Wallet Address</label>
-                          <input type="text" class="form-control" id="accountDetails"
-                            placeholder="Enter your wallet address" v-model="insertdatawithdrwal.account_number">
-                          <span class="text-danger" v-if="errors.account_number">{{ errors.account_number[0] }}</span>
-                        </div>
-                        <button type="submit" class="btn btn-primary text-white">Save Withdrawal Method</button>
-                      </form>
-                    </div>
-                    <div class="col-md-4">
-                      <table class="table table-striped">
-                        <thead>
-                          <tr>
-                            <th scope="col">Name</th>
-                            <th scope="col">Wallet Address</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr v-for="(withdrawal, index) in withDrawaldata" :key="index">
-                            <td>{{ withdrawal.name }}</td>
-                            <td>{{ withdrawal.account_number }}</td>
-                          </tr>
-                          <tr v-if="withDrawaldata.length === 0">
-                            <td colspan="2" class="text-center">No withdrawal data available.</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-
-                  </div>
-
-
-
-
-                </div>
-                <div class="tab-pane fade" id="change-password" role="tabpanel" aria-labelledby="change-password-tab">
+                <div class="tab-pane fade active show" id="change-password" role="tabpanel"
+                  aria-labelledby="change-password-tab">
                   <div class="border p-4 rounded">
                     <center>
                       <div v-for="(errorArray, idx) in notifmsg" :key="idx">

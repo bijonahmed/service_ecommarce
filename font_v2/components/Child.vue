@@ -62,7 +62,7 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">500</div>
+                                                            <div class="timer">1</div>
                                                         </li>
                                                         <li><span>K</span></li>
                                                     </ul>
@@ -73,7 +73,7 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">15600</div>
+                                                            <div class="timer">10</div>
                                                         </li>
                                                         <li><span>K</span></li>
                                                     </ul>
@@ -84,7 +84,7 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">1000</div>
+                                                            <div class="timer">2</div>
                                                         </li>
                                                         <li><span>K</span></li>
                                                     </ul>
@@ -95,7 +95,7 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex">
                                                         <li>
-                                                            <div class="timer">2000</div>
+                                                            <div class="timer">4</div>
                                                         </li>
                                                         <li><span>K</span></li>
                                                     </ul>

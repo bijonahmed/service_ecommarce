@@ -68,7 +68,7 @@
                 }">
                     [{{ order_status }}]
                   </span></h2>
-
+                <h3 v-if="ordsts == 3">Cancel Reasion: {{ cancel_resion }}</h3>
                 <!-- {{ordsts}} -->
 
                 <div align="right" v-if="ordsts !== '5'"><button class="btn btn-sm btn-primary text-white"
@@ -86,8 +86,8 @@
                       <div class="modal-body">
                         <center>
                           <div class="button-group">
-                            <button type="button" class="btn btn-cancel btn-custom"
-                              @click="orderAction(3)">Cancel</button>
+                            <!-- <button type="button" class="btn btn-cancel btn-custom"
+                              @click="orderAction(3)">Cancel</button> -->
                             <button type="button" class="btn btn-delivered btn-custom"
                               @click="orderAction(4)">Delivered</button>
                             <button type="button" class="btn btn-complete btn-custom"
@@ -130,7 +130,7 @@
                           <label for="review" class="form-label">Your Review</label>
                           <textarea class="form-control" id="review" rows="4" placeholder="Write your review here..."
                             v-model="review"></textarea>
-                            <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span>
+                          <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span>
                         </div>
 
                         <!-- Submit button -->
@@ -373,6 +373,7 @@ const oId = ref('');
 const id = ref('');
 
 const name = ref('');
+const cancel_resion = ref('');
 const categoryName = ref('');
 const chatContainer = ref(null); // Reference for the chat container
 const subCategoryName = ref('');
@@ -645,6 +646,7 @@ const checkrow = async () => {
     oId.value = response.data.data.orderId;
     id.value = response.data.data.id;
     name.value = response.data.data.name;
+    cancel_resion.value = response.data.data.cancel_resion;
     categoryName.value = response.data.data.categoryName;
     subCategoryName.value = response.data.data.subCategoryName;
     inSubCategoryName.value = response.data.data.inSubCategoryName;
@@ -654,6 +656,7 @@ const checkrow = async () => {
     gig_description.value = response.data.data.gig_description;
     order_rules.value = response.data.data.order_rules;
     delivery_day.value = response.data.data.delivery_day;
+
     //Basic 
     basic_price.value = response.data.data.basic_price;
     basic_description.value = response.data.data.basic_description;

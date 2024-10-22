@@ -6,8 +6,8 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-       
-       
+
+
         <section class="breadcumb-section">
           <div class="container">
             <div class="row">
@@ -44,8 +44,8 @@
 
               </ul>
               <div class="loading-indicator" v-if="loading" style="text-align: center;">
-          <Loader />
-        </div>
+                <Loader />
+              </div>
               <!-- Tab content -->
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="withdrawal" role="tabpanel" aria-labelledby="withdrawal-tab">
@@ -71,7 +71,7 @@
                         <div class="mb-3">
                           <label for="accountDetails" class="form-label">Amount</label>
                           <input type="text" class="form-control" id="accountDetails"
-                            placeholder="Enter your wallet address" v-model="withdrawal_amount" @input="filterInput"
+                            placeholder="0" v-model="withdrawal_amount" @input="filterInput"
                             @keyup="validationAmount">
                           <span class="text-danger" v-if="errors.withdrawal_amount">{{
                             errors.withdrawal_amount[0] }}</span>
@@ -86,12 +86,14 @@
 
                     </div>
                     <div class="col-md-8">
-                    
+
                       <table class="table table-striped">
                         <thead>
                           <tr>
                             <th scope="col">Request Date</th>
-                            <th scope="col"><center>Request Amount</center></th>
+                            <th scope="col">
+                              <center>Request Amount</center>
+                            </th>
                             <th scope="col">Wallet Address</th>
                             <th scope="col">Status</th>
                             <th scope="col">Reason</th>
@@ -100,7 +102,9 @@
                         <tbody>
                           <tr v-for="(withdrawal, index) in withData" :key="index">
                             <td>{{ withdrawal.created_at }}</td>
-                            <td><center>${{ withdrawal.withdrawal_amount }}</center></td>
+                            <td>
+                              <center>${{ withdrawal.withdrawal_amount }}</center>
+                            </td>
                             <td>{{ withdrawal.wallet_address }}</td>
                             <td v-html="withdrawal.wStatus"></td>
                             <td>{{ withdrawal.remarks }}</td>
@@ -264,7 +268,7 @@ const withdrawList = async () => {
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
   withdrawList();
- // getCatList();
+  // getCatList();
   getWithdrawalMethod();
   freelancerEarning();
 });

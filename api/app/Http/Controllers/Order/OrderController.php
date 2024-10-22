@@ -14,6 +14,7 @@ use App\Models\Setting;
 use App\Models\Withdraw;
 use App\Models\Categorys;
 use App\Models\MyMessage;
+use App\Models\BuyerReview;
 use App\Models\OrderStatus;
 use App\Models\SellerReview;
 use Illuminate\Http\Request;
@@ -53,6 +54,35 @@ class OrderController extends Controller
         ]);
     }
 
+    public function updateReviewSeller(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'oId'           => 'required',
+            'review'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        // dd($request->all());
+        $data['seller_review_sts'] = 1;
+        Order::where('orderId', $request->oId)->update($data);
+
+        $this->upStatus($this->userid, $request->oId);
+
+        $sellerchk = Order::where('orderId', $request->oId)->first();
+        $sellerId  = !empty($sellerchk) ? $sellerchk->sellerId : "";
+        $buyerId   = !empty($sellerchk) ? $sellerchk->buyerId : "";
+
+        $odata['orderId']    = $request->oId;
+        $odata['review']     = $request->review;
+        $odata['rating']     = $request->rating;
+        $odata['seller_id']  = $sellerId;
+        $odata['buyer_id']   = $buyerId;
+        BuyerReview::create($odata);
+    }
+
     public function updateReviews(Request $request)
     {
 
@@ -85,6 +115,8 @@ class OrderController extends Controller
         //seller_review
         return response()->json(['message' => 'Order complete and review successfully.']);
     }
+
+
 
     public function updateStatus(Request $request)
     {
@@ -242,7 +274,7 @@ class OrderController extends Controller
 
         $order   = Order::where('orders.orderId', $orderId)
             ->join('gig', 'orders.gig_id', '=', 'gig.id')  // Join orders with gigs table
-            ->select('gig.id', 'orders.sellerId', 'orders.buyerId', 'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description', 'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 'gig.types', 'orders.selected_packages', 'orders.selected_price', 'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
+            ->select('gig.id', 'orders.sellerId', 'orders.buyerId', 'orders.cancel_resion', 'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description', 'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 'gig.types', 'orders.selected_packages', 'orders.selected_price', 'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
             ->first();
 
         $imgHistory = GigImagesHistory::where('gig_id', $order->id)->get();
@@ -261,6 +293,7 @@ class OrderController extends Controller
 
         $data['orderId']            = $order->orderId;
         $data['name']               = $order->gig_name;
+        $data['cancel_resion']      = $order->cancel_resion;
         $data['categoryName']       = $findCategory->name ? $findCategory->name : "";
         $data['subCategoryName']    = !empty($findSubCategory->name) ? $findCategory->name : "";
         $data['inSubCategoryName']  = !empty($findinSubCategory->name) ? $findCategory->name : "";
@@ -471,7 +504,7 @@ class OrderController extends Controller
 
         $earning = 0;
         $row             = DB::table('tbl_setting')->where('id', 1)->first();
-       
+
         //echo $percentage; 
         foreach ($data as $v) {
             $percentage      = $v->company_commission; // Convert to float
@@ -483,7 +516,7 @@ class OrderController extends Controller
             $earning += $result;
         }
 
-      //  dd($earning);
+        //  dd($earning);
         $rdata['earning']  = $earning;
         return response()->json($rdata, 200);
     }
@@ -548,8 +581,11 @@ class OrderController extends Controller
             ->orderby('orders.id', 'desc')
             ->get();
 
+
         $orders = [];
         foreach ($data as $v) {
+
+            $chkUser = User::where('id', $v->buyerId)->select('slug')->first();
 
             $convDay = $v->delivery_day_convert_date;
             $currentDateTime = Carbon::now();
@@ -578,6 +614,10 @@ class OrderController extends Controller
                 'orderId'           => $v->orderId,
                 'gig_slug'          => $v->gig_slug,
                 'user_id'           => $v->user_id,
+                'sellerId'          => $v->sellerId,
+                'cancel_resion'     => $v->cancel_resion,
+                'userSlug'          => !empty($chkUser->slug) ? $chkUser->slug : "",
+                'seller_review_sts' => $v->seller_review_sts,
                 'gig_name'          => substr($v->gig_name, 0, 30) . '...',
                 'created_at'        => $v->created_at,
                 'ddcovertDate'      => $v->delivery_day_convert_date,
@@ -615,13 +655,20 @@ class OrderController extends Controller
         return response()->json($ordata, 200);
     }
 
-    public function cancelOrderBuyer($orderId)
+    public function cancelOrderBuyer(Request $request)
     {
 
-        $orderId = $orderId;
-        $status_id = 3;
-        $data['order_status'] = $status_id;
-        Order::where('orderId', $orderId)->update($data);
+        $validator = Validator::make($request->all(), [
+            'cancel_resion'        => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data['order_status']  = 3;
+        $data['cancel_resion'] = $request->cancel_resion;
+        Order::where('orderId', $request->orderId)->update($data);
+
         return response()->json("update successfully", 200);
     }
 
@@ -666,6 +713,7 @@ class OrderController extends Controller
                 'orderId'           => $v->orderId,
                 'gig_slug'          => $v->gig_slug,
                 'user_id'           => $v->user_id,
+                'cancel_resion'     => $v->cancel_resion,
                 'gig_name'          => substr($v->gig_name, 0, 30) . '...',
                 'created_at'        => $v->created_at,
                 'ddcovertDate'      => $v->delivery_day_convert_date,
@@ -913,7 +961,7 @@ class OrderController extends Controller
         $delivery_day           = $request->delivery_day;
 
         $randomNum = $this->userid . $this->generateUniqueRandomNumber() . "-" . date("y");
-        $setting   = Setting::where('id',1)->first();
+        $setting   = Setting::where('id', 1)->first();
         // Create an array with the necessary fields
         $orderData = [
             'gig_id'              => $gig_id,

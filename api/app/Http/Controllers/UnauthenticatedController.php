@@ -17,6 +17,7 @@ use App\Models\Categorys;
 use App\Models\Education;
 use App\Models\Experience;
 use App\Models\Profession;
+use App\Models\BuyerReview;
 use App\Models\Certificate;
 use App\Models\SellerReview;
 use function Ramsey\Uuid\v1;
@@ -44,8 +45,8 @@ class UnauthenticatedController extends Controller
         $chk        = Gig::where('gig_slug', $request->gig_slug)->first();
         $seller_id  = !empty($chk->user_id) ? $chk->user_id : "";
         $result     = SellerReview::where('seller_id', $seller_id)
-                     ->select('seller_review.*','users.name','users.image')
-                     ->join('users', 'seller_review.buyer_id', '=', 'users.id')->get();
+            ->select('seller_review.*', 'users.name', 'users.image')
+            ->join('users', 'seller_review.buyer_id', '=', 'users.id')->get();
 
         $reviewList = [];
         foreach ($result as $v) {
@@ -60,7 +61,6 @@ class UnauthenticatedController extends Controller
             ];
         }
         return response()->json($reviewList);
-
     }
 
     public function getPublic(Request $request)
@@ -104,8 +104,35 @@ class UnauthenticatedController extends Controller
         $row                =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
         $chkCountry         =   Country::where('id', $row->country_1)->first();
 
+        $review             = BuyerReview::where('buyer_id', $row->id)->get();
+
+
+        $result     = BuyerReview::where('buyer_id', $row->id)
+            ->select('buyer_review.*', 'users.name', 'users.image','users.slug')
+            ->join('users', 'buyer_review.seller_id', '=', 'users.id')->get();
+
+        $reviewList = [];
+        foreach ($result as $v) {
+            $reviewList[] = [
+                'id'                => $v->id,
+                'user_id'           => $v->user_id,
+                'name'              => $v->name,
+                'slug'              => $v->slug,
+                'rating'            => $v->rating,
+                'rev'               => $v->review,
+                'created_at'        => date("d-M-Y", strtotime($v->created_at)),
+                'image'             => !empty($v->image) ? url($v->image) : "",
+            ];
+        }
+        //return response()->json($reviewList);
+
+
+
+
+
         $response = [
             'gigList'             => $gigList,
+            'review'             => $reviewList,
             'name'                => $row->name,
             'email'               => $row->email,
             'joindate'            => date("d-M-Y", strtotime($row->created_at)),

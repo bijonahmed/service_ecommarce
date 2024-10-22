@@ -99,7 +99,7 @@
               <div v-if="msgData.length > 0">
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                   <span v-for="data in msgData" :key="data.id" class="text-justify">
-                    <strong>{{ data.name }}</strong> {{ data.messages }}<br/>
+                    <strong>{{ data.name }}</strong> {{ data.messages }}<br />
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </span>
                 </div>
@@ -289,7 +289,6 @@
                           </div>
                           <div class="tab-pane fade" id="cancel" role="tabpanel" aria-labelledby="cancel-tab">
                             <!-- <p>Custom Content for Cancel.</p> -->
-
                             <div class="table-responsive">
                               <table class="table table-bordered table-hover">
                                 <thead class="thead-dark">
@@ -308,9 +307,7 @@
                                     <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
                                       order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="text-danger text-center">
-                                      Canceled
-                                    </td>
+                                    <td class="text-danger text-center">Canceled <br/>[{{ order.cancel_resion }}]</td>
                                   </tr>
 
                                 </tbody>
@@ -320,7 +317,6 @@
                           </div>
                           <div class="tab-pane fade" id="delivery" role="tabpanel" aria-labelledby="delivery-tab">
                             <!-- <p>Custom Content for Delivery.</p> -->
-
                             <div class="table-responsive">
                               <table class="table table-bordered table-hover">
                                 <thead class="thead-dark">
@@ -353,17 +349,14 @@
                           </div>
 
                           <div class="tab-pane fade" id="complete" role="tabpanel" aria-labelledby="complete-tab">
-                            <!-- <p>Custom Content for Delivery.</p> -->
-
+                            <!-- <p>Custom Content for Complete.</p> -->
                             <div class="table-responsive">
                               <table class="table table-bordered table-hover">
                                 <thead class="thead-dark">
                                   <tr>
                                     <th scope="col">Order ID</th>
                                     <th scope="col">Gig Title</th>
-                                    <th scope="col">
-                                      <center>Date</center>
-                                    </th>
+                                    <th scope="col" class="text-center">Date</th>
                                     <th scope="col">Action</th> <!-- Action Column -->
                                   </tr>
                                 </thead>
@@ -374,8 +367,31 @@
                                       order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
                                     <td>
-                                      <nuxt-link :to="`/dashboard/orderDetails/${order.orderId}`"
-                                        class="btn-sm btn btn-primary text-white">Details</nuxt-link>
+
+                                      <div role="group" aria-label="Order actions">
+                                        <nuxt-link :to="`/dashboard/orderDetails/${order.orderId}`"
+                                          class="btn-sm btn btn-primary text-white no-hover me-1">Details</nuxt-link>
+
+                                        <span v-if="order.seller_review_sts == '1'">
+
+                                          <nuxt-link to="#"
+                                            class="btn-sm btn disabled btn-danger text-white no-hover me-1">Review</nuxt-link>
+
+                                        </span>
+
+                                        <span v-else>
+                                          <nuxt-link to="#" @click="setReview(order)"
+                                            class="btn-sm btn btn-danger text-white no-hover me-1">Review</nuxt-link>
+
+                                        </span>
+                                        <nuxt-link :to="`/buyer?profile=${order.userSlug}`" target="_blank"
+                                          class="btn-sm btn btn-dark text-white no-hover">Buyer Profile</nuxt-link>
+                                      </div>
+
+
+
+
+
                                     </td>
                                   </tr>
 
@@ -395,6 +411,52 @@
               </section>
 
             </div>
+
+
+            <div class="modal fade" id="review_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+              aria-labelledby="staticBackdropLabel" aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="review_modalBackdropLabel">Buyer Review</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Rating field -->
+                    <div class="mb-3">
+                      <label for="rating" class="form-label">Rating</label>
+                      <select class="form-select" id="rating" v-model="rating">
+                        <option selected disabled>Choose a rating</option>
+                        <option value="1">1 Star</option>
+                        <option value="2">2 Stars</option>
+                        <option value="3">3 Stars</option>
+                        <option value="4">4 Stars</option>
+                        <option value="5">5 Stars</option>
+                      </select>
+                    </div>
+
+                    <!-- Review field -->
+                    <div class="mb-3">
+                      <label for="review" class="form-label">Your Review</label>
+                      <textarea class="form-control" id="review" rows="4" placeholder="Write your review here..."
+                        v-model="review"></textarea>
+                      <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span>
+                    </div>
+
+                    <!-- Submit button -->
+                    <button type="submit" class="btn btn-primary text-white w-100" @click="reviewOrder">Submit
+                      Review</button>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
 
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
           </div>
@@ -427,10 +489,75 @@ const earning = ref('');
 const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
+const errors = ref({});
+
 
 definePageMeta({
   middleware: "is-logged-out",
 });
+
+const sellerId = ref('');
+const orderId = ref('');
+
+const setReview = async (orders) => {
+  sellerId.value = orders.sellerId;
+  orderId.value = orders.orderId;
+  $('#review_modal').modal('show');
+}
+
+const reviewOrder = () => {
+
+  Swal.fire({
+    title: 'Are you sure?',
+    text: `Rating`,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, do it!'
+  }).then((result) => {
+    // If the user clicks "Yes"
+    if (result.isConfirmed) {
+      // Make an Axios GET request to the server with the new status
+      axios.get(`/order/updateReviewSeller`, {
+        params: {
+          rating: rating.value,
+          oId: orderId.value,
+          review: review.value,
+        } // Pass the status as a parameter
+      })
+        .then(response => {
+          window.location.href = '/dashboard/welcome';
+          //router.push('/dashboard/buyer/welcome');
+          // Handle success response
+          Swal.fire(
+            'Updated!',
+            `The order review has been updated.`,
+            'success'
+          );
+        })
+        .catch(error => {
+
+          if (error.response && error.response.status === 422) {
+            errors.value = error.response.data.errors;
+          } else {
+            // Handle other types of errors here
+            console.error("An error occurred:", error);
+          }
+          // Handle error response
+          Swal.fire(
+            'Error!',
+            'There was a problem updating the order.',
+            'error'
+          );
+          console.error('There was an error!', error);
+        });
+    }
+  });
+
+}
+
+
 
 const acceptMyOrders = async (orderId) => {
 
@@ -886,5 +1013,12 @@ onMounted(() => {
 .table-responsive {
   max-width: 100%;
   overflow-x: auto;
+}
+
+.no-hover:hover {
+  background-color: inherit !important;
+  /* Retain original background color */
+  color: inherit !important;
+  /* Retain original text color */
 }
 </style>

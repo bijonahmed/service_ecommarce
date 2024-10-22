@@ -280,9 +280,7 @@
                                     <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
                                       order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="text-danger text-center">
-                                      Canceled
-                                    </td>
+                                    <td class="text-danger text-center">Canceled <br/>[{{ order.cancel_resion }}]</td>
                                   </tr>
 
                                 </tbody>
@@ -368,6 +366,44 @@
 
             </div>
 
+
+
+            <!-- Modal -->
+            <!-- Modal -->
+            <div class="modal fade" id="myModal_cancel" tabindex="-1" aria-labelledby="myModal_cancelLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="myModal_cancelLabel">Cancel Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Cancel Order Form -->
+                    <form @submit.prevent="submitCancelOrder">
+                      <div class="mb-3">
+                        <label for="cancelReason" class="form-label">Reason for Cancellation</label>
+                        <textarea v-model="cancelReason" id="cancelReason" class="form-control" rows="4"
+                          placeholder="Please explain why you want to cancel the order"></textarea>
+                      </div>
+                      <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary text-white" @click="submitCancelOrder">Submit
+                      Cancellation</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+
+
+
+
+
             <!-- END -->
 
           </div>
@@ -404,6 +440,8 @@ const loading = ref(false);
 const route = useRoute();
 const orderData = ref('');
 const depositAmount = ref(0);
+const cancelReason = ref('');
+
 
 definePageMeta({
   middleware: "is-logged-out",
@@ -419,6 +457,60 @@ const getMessages = async () => {
     console.log(error);
   }
 };
+
+
+const submitCancelOrder = () => {
+  console.log("============orderId:" + canceOrderID.value);
+  console.log("============cancelReason:" + cancelReason.value);
+  // Show the confirmation alert before proceeding
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to cancel this order?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, cancel it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If user confirms, send the cancel request
+      axios.get('/order/cancel-order-buyer', {
+        params: {
+          orderId: canceOrderID.value,
+          cancel_resion: cancelReason.value
+        }
+      })
+      .then(response => {
+        // Handle the response (success or failure)
+        Swal.fire(
+          'Cancelled!',
+          'Your order has been cancelled.',
+          'success'
+        );
+      })
+      .catch(error => {
+        // Handle errors
+        Swal.fire(
+          'Error!',
+          'There was an issue cancelling your order. Please try again.',
+          'error'
+        );
+      });
+    }
+  });
+}
+
+const canceOrderID = ref("");
+const cancelOrders = (orderId) => {
+  canceOrderID.value = orderId;
+  $('#myModal_cancel').modal('show');
+
+}
+ 
+
+
+
 const chkUserrow = async () => {
   try {
     const response = await axios.post(`/auth/me`);
@@ -482,42 +574,9 @@ const getAllOrdersList = async () => {
   }
 };
 
-const cancelOrders = (orderId) => {
 
-  // Show the confirmation alert before proceeding
-  Swal.fire({
-    title: 'Are you sure?',
-    text: 'Do you want to cancel this order?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Yes, cancel it!',
-    cancelButtonText: 'No, keep it'
-  }).then((result) => {
-    if (result.isConfirmed) {
-      // If user confirms, send the cancel request
-      axios.get(`/order/cancel-order-buyer/${orderId}`)
-        .then(response => {
-          // Handle the response (success or failure)
-          Swal.fire(
-            'Cancelled!',
-            'Your order has been cancelled.',
-            'success'
-          );
-        })
-        .catch(error => {
-          // Handle errors
-          Swal.fire(
-            'Error!',
-            'There was an issue cancelling your order. Please try again.',
-            'error'
-          );
-        });
-    }
-  });
 
-}
+
 
 // Function to format the date
 const formatDate = (date) => {

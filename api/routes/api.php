@@ -121,6 +121,8 @@ Route::group([
     Route::get('allUsers', [UserController::class, 'AllUsersList']);
     Route::get('checkmlmHistorys', [UserController::class, 'checkmlmHistorys']);
     Route::get('checkLevelHistorys', [UserController::class, 'checkLevelHistorys']);
+    Route::get('checkLevelHistorysAdmin', [UserController::class, 'checkLevelHistorysAdmin']);
+
     Route::get('getmlmlists', [UserController::class, 'getmlmlists']);
     Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
     Route::get('getDeposit', [UserController::class, 'getDeposit']);
@@ -257,9 +259,12 @@ Route::group([
 Route::group([
     'prefix' => 'order'
 ], function () {
+
     Route::get('referralCommission', [OrderController::class, 'referralCommission']);
     Route::get('updateStatus', [OrderController::class, 'updateStatus']);
+    Route::get('cancel-order-buyer', [OrderController::class, 'cancelOrderBuyer']);
     Route::get('updateReview', [OrderController::class, 'updateReviews']);
+    Route::get('updateReviewSeller', [OrderController::class, 'updateReviewSeller']);
     Route::get('cancel-order-buyer/{orderId}', [OrderController::class, 'cancelOrderBuyer']);
     Route::post('updateDeliveryGig', [OrderController::class, 'updateDeliveryGig']);
     Route::get('checkOrder', [OrderController::class, 'checkOrder']);
@@ -282,6 +287,7 @@ Route::group(['prefix' => 'unauthenticate'], function () {
 
     Route::get('checkGetList', [UnauthenticatedController::class, 'checkGetList']);
     Route::get('getPublic', [UnauthenticatedController::class, 'getPublic']);
+
     Route::get('getExperience', [UnauthenticatedController::class, 'getExperience']);
     Route::get('geteducation', [UnauthenticatedController::class, 'geteducation']);
     Route::get('skillsData', [UnauthenticatedController::class, 'skillsData']);

@@ -65,17 +65,18 @@
                   <a class="nav-link active" id="withdrawal-tab" data-bs-toggle="tab" href="#withdrawal" role="tab"
                     aria-controls="withdrawal" aria-selected="true">Withdrawal Request</a>
                 </li>
-
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="wallet-tab" data-bs-toggle="tab" href="#wallet" role="tab"
+                    aria-controls="wallet" aria-selected="false">Add Wallet Address</a>
+                </li>
               </ul>
 
               <!-- Tab content -->
               <div class="tab-content" id="myTabContent">
+                <!-- Withdrawal Request Tab -->
                 <div class="tab-pane fade show active" id="withdrawal" role="tabpanel" aria-labelledby="withdrawal-tab">
-
                   <div class="row">
-
                     <div class="col-md-4">
-
                       <form class="mt-3" @submit.prevent="submitWithdrawalAdd()" id="formrest">
                         <div class="mb-3">
                           <label for="withdrawalSelect" class="form-label">Choose a withdrawal method:</label>
@@ -89,30 +90,27 @@
                           <span class="text-danger" v-if="errors.wallet_address">{{ errors.wallet_address[0] }}</span>
                         </div>
 
-
                         <div class="mb-3">
                           <label for="accountDetails" class="form-label">Amount</label>
                           <input type="text" class="form-control" id="accountDetails"
-                            placeholder="Enter your wallet address" v-model="withdrawal_amount" @input="filterInput"
+                            placeholder="0" v-model="withdrawal_amount" @input="filterInput"
                             @keyup="validationAmount">
-                          <span class="text-danger" v-if="errors.withdrawal_amount">{{
-                            errors.withdrawal_amount[0] }}</span>
+                          <span class="text-danger" v-if="errors.withdrawal_amount">{{ errors.withdrawal_amount[0]
+                            }}</span>
                           <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
                         </div>
                         <button type="submit" class="btn btn-primary text-white" :disabled="isButtonDisabled">Send
                           Request</button>
                       </form>
-
-
-
-
                     </div>
                     <div class="col-md-8">
                       <table class="table table-striped">
                         <thead>
                           <tr>
                             <th scope="col">Request Date</th>
-                            <th scope="col"><center>Request Amount</center></th>
+                            <th scope="col">
+                              <center>Request Amount</center>
+                            </th>
                             <th scope="col">Wallet Address</th>
                             <th scope="col">Status</th>
                           </tr>
@@ -120,7 +118,9 @@
                         <tbody>
                           <tr v-for="(withdrawal, index) in withData" :key="index">
                             <td>{{ withdrawal.created_at }}</td>
-                            <td><center>${{ withdrawal.withdrawal_amount }}</center></td>
+                            <td>
+                              <center>${{ withdrawal.withdrawal_amount }}</center>
+                            </td>
                             <td>{{ withdrawal.wallet_address }}</td>
                             <td v-html="withdrawal.wStatus"></td>
                           </tr>
@@ -130,11 +130,56 @@
                         </tbody>
                       </table>
                     </div>
+                  </div>
+                </div>
+
+                <!-- Add Wallet Address Tab -->
+                <div class="tab-pane fade" id="wallet" role="tabpanel" aria-labelledby="wallet-tab">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <form class="mt-3" @submit.prevent="submitWithdrawalAddress()">
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Select Withdrawal Method</label>
+                          <select class="form-select" id="name" v-model="insertdatawithdrwal.name">
+                            <option value="">Choose...</option>
+                            <option value="USDT TRC-20">USDT TRC-20</option>
+                          </select>
+                          <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                        </div>
+                        <div class="mb-3">
+                          <label for="accountDetails" class="form-label">Wallet Address</label>
+                          <input type="text" class="form-control" id="accountDetails"
+                            placeholder="Enter your wallet address" v-model="insertdatawithdrwal.account_number">
+                          <span class="text-danger" v-if="errors.account_number">{{ errors.account_number[0] }}</span>
+                        </div>
+                        <button type="submit" class="btn btn-primary text-white">Save Withdrawal Method</button>
+                      </form>
+                    </div>
+                    <div class="col-md-4">
+                      <table class="table table-striped">
+                        <thead>
+                          <tr>
+                            <th scope="col">Name</th>
+                            <th scope="col">Wallet Address</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr v-for="(withdrawal, index) in withDrawaldata" :key="index">
+                            <td>{{ withdrawal.name }}</td>
+                            <td>{{ withdrawal.account_number }}</td>
+                          </tr>
+                          <tr v-if="withDrawaldata.length === 0">
+                            <td colspan="2" class="text-center">No withdrawal data available.</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
 
                   </div>
 
                 </div>
               </div>
+
             </div>
           </div>
         </div>
@@ -179,7 +224,10 @@ const errors = ref({});
 const loading = ref(false)
 //Find Product Row
 
-
+const insertdatawithdrwal = reactive({
+  name: '',
+  account_number: '',
+});
 const submitWithdrawalAdd = () => {
 
 
@@ -215,6 +263,41 @@ const submitWithdrawalAdd = () => {
 
 
 }
+
+
+const submitWithdrawalAddress = () => {
+
+  const formData = new FormData();
+  formData.append('name', insertdatawithdrwal.name);
+  formData.append('account_number', insertdatawithdrwal.account_number);
+
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  };
+  axios.post('/user/addWalletAddress', formData, { headers })
+    .then((res) => {
+      document.getElementById('formrest').reset();
+
+      Swal.fire({
+        title: 'Added you wallet address!',
+        text: 'Thank you.',
+        icon: 'success',
+        confirmButtonText: 'OK'
+      });
+      router.push('/dashboard/buyer/welcome');
+    }).catch(error => {
+      if (error.response && error.response.status === 422) {
+        errors.value = error.response.data.errors;
+      } else {
+        // Handle other types of errors here
+        console.error('An error occurred:', error);
+      }
+    });
+
+
+}
+
+
 
 const getCatList = async () => {
   try {

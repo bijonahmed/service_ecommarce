@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 11, 2024 at 02:34 PM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.1.25
+-- Host: localhost:3306
+-- Generation Time: Oct 22, 2024 at 05:35 AM
+-- Server version: 10.11.9-MariaDB
+-- PHP Version: 8.3.11
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `db_service_management`
+-- Database: `isumax_db_isumax`
 --
 
 -- --------------------------------------------------------
@@ -181,469 +181,35 @@ CREATE TABLE `categorys` (
 --
 
 INSERT INTO `categorys` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `parent_id`, `commission`, `fixcommission`, `product_sell_qty`, `getAmount`, `sort_order`, `file`, `status`, `speacial_status`, `mobile_view_class`, `keyword`, `percentage_amt`, `created_at`, `updated_at`) VALUES
-(1, 'Web development & Tech', 'web-development-tech', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:11:04', '2024-09-17 07:18:03'),
-(3, 'Software & Mobiles Apps', 'software-mobiles-apps', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:13:11', '2024-09-17 07:17:14'),
-(4, 'Web Designing', 'web-designing', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:14:13', '2024-09-17 10:33:10'),
-(5, 'Sales / Marketing', 'sales-marketing', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:14:45', '2024-09-17 07:18:41'),
-(6, 'Content for industries', 'content-for-industries', NULL, 'null', 'null', 'null', 6, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:15:16', '2024-09-18 10:26:36'),
-(7, 'Photo & video Editing', 'photo-video-editing-animation', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:16:24', '2024-09-17 11:32:50'),
-(8, 'Business Services', 'business-services', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:17:12', '2024-09-17 07:19:12'),
-(9, 'Consulting', 'consulting', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:17:34', '2024-09-17 07:20:25'),
-(11, 'AI-Services', 'ai-services', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:19:44', '2024-09-17 07:20:58'),
-(12, 'Personal Growth.', 'personal-growth-', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:20:13', '2024-09-17 07:21:16'),
-(13, 'Courses', 'courses', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:20:57', '2024-09-19 14:20:51'),
-(14, 'Hire Me Now', 'hire-me-now', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 0, NULL, 'null', 'null', NULL, '2024-09-13 09:22:17', '2024-09-19 14:21:13'),
-(15, 'Business Logo/branding', 'business-logo-branding', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:39:08', '2024-09-13 09:39:08'),
-(16, 'Illustrative Visual/Art', 'illustrative-visual-art', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:40:06', '2024-09-13 09:40:06'),
-(17, 'Various Diverse', 'various-diverse', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:43:08', '2024-09-13 09:43:08'),
-(18, 'Game Play*Products', 'game-play-products', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:44:30', '2024-09-13 09:44:30'),
-(19, 'Graphic Design', 'graphic-design', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:45:59', '2024-09-17 07:22:02'),
-(20, 'Visual Design', 'visual-design', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:48:56', '2024-09-13 09:48:56'),
-(21, 'Graphic Arts', 'graphic-arts', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:50:04', '2024-09-13 09:50:04'),
-(22, 'web App design', 'web-app-design', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:50:39', '2024-09-13 09:50:39'),
-(23, 'Mobiles Apps Design', 'mobiles-apps-design', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:51:24', '2024-09-13 09:51:24'),
-(24, 'Website Development', 'website-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:52:11', '2024-09-13 09:52:11'),
-(25, 'Mainitaning Websites', 'mainitaning-websites', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:52:39', '2024-09-13 09:52:39'),
-(26, 'AI Development', 'ai-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:53:05', '2024-09-13 09:53:05'),
-(27, 'Chatbot Development', 'chatbot-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:53:47', '2024-09-13 09:53:47'),
-(28, 'Game Development', 'game-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:54:07', '2024-09-13 09:54:07'),
-(29, 'Mobile App Development', 'mobile-app-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:54:35', '2024-09-13 09:54:35'),
-(30, 'Cloud & Cybersecurity', 'cloud-cybersecurity', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:55:33', '2024-09-13 09:55:33'),
-(31, 'site Development', 'site-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:57:00', '2024-09-13 09:57:00'),
-(32, 'Search bar Optimization S.E.O', 'search-bar-optimization-s-e-o', NULL, 'null', 'null', 'null', 5, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 09:57:45', '2024-09-13 11:07:34'),
-(33, 'Social media', 'social-media', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:58:10', '2024-09-13 09:58:10'),
-(34, 'Methods & Techtics', 'methods-techtics', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:58:30', '2024-09-13 09:58:30'),
-(35, 'Analytics & Strategy', 'analytics-strategy', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:58:52', '2024-09-13 09:58:52'),
-(36, 'Channel Specific', 'channel-specific', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:59:13', '2024-09-13 09:59:13'),
-(37, 'Industry & Purpose-Specific', 'industry-purpose-specific', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 09:59:46', '2024-09-13 09:59:46'),
-(38, 'Miscellaneous', 'miscellaneous', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:00:29', '2024-09-13 10:00:29'),
-(39, 'Editing & Post-Production', 'editing-post-production', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:01:45', '2024-09-13 10:01:45'),
-(40, 'Social & Marketing Videos', 'social-marketing-videos', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:03:16', '2024-09-13 10:03:16'),
-(41, 'Animation', 'animation', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:03:59', '2024-09-13 10:03:59'),
-(42, 'Motion Graphics', 'motion-graphics', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:04:23', '2024-09-13 10:04:23'),
-(43, 'Filmed Video Production', 'filmed-video-production', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:04:46', '2024-09-13 10:04:46'),
-(44, 'Auido/Books', 'auido-books', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 10:04:57', '2024-09-17 07:22:21'),
-(45, 'Explainer Videos', 'explainer-videos', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:05:17', '2024-09-13 10:05:17'),
-(46, 'Product Videos', 'product-videos', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:06:08', '2024-09-13 10:06:08'),
-(47, 'AI Video', 'ai-video', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:06:59', '2024-09-13 10:06:59'),
-(48, 'Photography', 'photography', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:07:35', '2024-09-13 10:07:35'),
-(49, 'Content Writing', 'content-writing', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:10:38', '2024-09-13 10:10:38'),
-(50, 'Editing & Critique', 'editing-critique', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:11:02', '2024-09-13 10:11:02'),
-(51, 'Book & eBook Publishing', 'book-ebook-publishing', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:11:41', '2024-09-13 10:11:41'),
-(52, 'Career Writing', 'career-writing', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:13:36', '2024-09-13 10:13:36'),
-(53, 'Soical Media Post/images', 'soical-media-post-images', NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:14:03', '2024-09-13 10:14:03'),
-(54, 'Business & Marketing Copy', 'business-marketing-copy', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:15:31', '2024-09-13 10:15:31'),
-(55, 'Translation & Transcription', 'translation-transcription', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:17:06', '2024-09-13 10:17:06'),
-(56, 'Content for specific industries', 'content-for-specific-industries', NULL, 'null', 'null', 'null', 6, 0, NULL, NULL, NULL, 0, '', 0, NULL, 'null', 'null', NULL, '2024-09-13 10:17:47', '2024-09-18 10:18:24'),
-(57, 'Audio Engineering & Post Production', 'audio-engineering-post-production', NULL, NULL, NULL, NULL, 44, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:19:03', '2024-09-13 10:19:03'),
-(58, 'Streaming & Audio', 'streaming-audio', NULL, NULL, NULL, NULL, 44, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:19:25', '2024-09-13 10:19:25'),
-(59, 'Sound Design', 'sound-design', NULL, NULL, NULL, NULL, 44, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:21:02', '2024-09-13 10:21:02'),
-(60, 'Lessons & Transcriptions', 'lessons-transcriptions', NULL, NULL, NULL, NULL, 44, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:21:35', '2024-09-13 10:21:35'),
-(61, 'Voice Over & Narration', 'voice-over-narration', NULL, NULL, NULL, NULL, 44, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:22:05', '2024-09-13 10:22:05'),
-(62, 'Financial Services', 'financial-services', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:23:25', '2024-09-13 10:23:25'),
-(63, 'Legal Services', 'legal-services', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:23:46', '2024-09-13 10:23:46'),
-(64, 'Business Management', 'business-management', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:25:28', '2024-09-13 10:25:28'),
-(65, 'AI for Businesses', 'ai-for-businesses', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:26:10', '2024-09-13 10:26:10'),
-(66, 'E-Commerce Management', 'e-commerce-management', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:26:29', '2024-09-13 10:26:29'),
-(67, 'Data & Business Intelligence', 'data-business-intelligence', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:27:07', '2024-09-13 10:27:07'),
-(68, 'Sales & Customer Care', 'sales-customer-care', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:27:31', '2024-09-13 10:27:31'),
-(69, 'General/Administrative', 'general-administrative', NULL, NULL, NULL, NULL, 8, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:29:21', '2024-09-13 10:29:21'),
-(70, 'Business Consultants', 'business-consultants', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:32:14', '2024-09-13 10:32:14'),
-(71, 'Marketing Strategy', 'marketing-strategy', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:33:25', '2024-09-13 10:33:25'),
-(72, 'Data Consulting', 'data-consulting', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:34:22', '2024-09-13 10:34:22'),
-(73, 'Coaching / Advisory', 'coaching-advisory', NULL, 'null', 'null', 'null', 0, 5, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-13 10:35:48', '2024-09-17 07:22:58'),
-(74, 'Coaching / Advice', 'coaching-advice', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:36:52', '2024-09-13 10:36:52'),
-(75, 'Tech Consulting', 'tech-consulting', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:37:18', '2024-09-13 10:37:18'),
-(76, 'Mentorship', 'mentorship', NULL, NULL, NULL, NULL, 9, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:38:50', '2024-09-13 10:38:50'),
-(77, 'AI- Development', 'ai--development', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:40:24', '2024-09-13 10:40:24'),
-(78, 'Data', 'data', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:40:56', '2024-09-13 10:40:56'),
-(79, 'AI Artists', 'ai-artists', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:41:20', '2024-09-13 10:41:20'),
-(80, 'AI- for Businesses', 'ai--for-businesses', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:42:02', '2024-09-13 10:42:02'),
-(81, 'AI - Video', 'ai---video', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:42:39', '2024-09-13 10:42:39'),
-(82, 'AI- Audio', 'ai--audio', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:43:06', '2024-09-13 10:43:06'),
-(83, 'AI- Content', 'ai--content', NULL, NULL, NULL, NULL, 11, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:43:30', '2024-09-13 10:43:30'),
-(84, 'Self Improvement', 'self-improvement', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:44:03', '2024-09-13 10:44:03'),
-(85, 'Fashion & Style', 'fashion-style', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:44:26', '2024-09-13 10:44:26'),
-(86, 'Wellness & Fitness', 'wellness-fitness', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:45:00', '2024-09-13 10:45:00'),
-(87, 'Gaming', 'gaming', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:45:21', '2024-09-13 10:45:21'),
-(88, 'Leisure & Hobbies', 'leisure-hobbies', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 10:49:25', '2024-09-13 10:49:25'),
-(90, 'Social / Marketing Video', 'social-marketing-video', NULL, 'null', 'null', 'null', 7, 0, NULL, NULL, NULL, 0, '', 0, NULL, 'null', 'null', NULL, '2024-09-13 10:52:08', '2024-09-18 08:35:02'),
-(91, '1. Social & Communication', '1-social-communication', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:02:27', '2024-09-13 11:02:27'),
-(92, '2. Entertainment', '2-entertainment', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:02:54', '2024-09-13 11:02:54'),
-(93, 'Productivity', 'productivity', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:04:51', '2024-09-13 11:04:51'),
-(94, 'Health & Fitness', 'health-fitness', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:05:16', '2024-09-13 11:05:16'),
-(95, 'Finance', 'finance', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:05:45', '2024-09-13 11:05:45'),
-(96, 'Education & Learning', 'education-learning', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:06:07', '2024-09-13 11:06:07'),
-(97, 'Shopping & E-commerce', 'shopping-e-commerce', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:06:33', '2024-09-13 11:06:33'),
-(98, 'Travel & Local', 'travel-local', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:07:01', '2024-09-13 11:07:01'),
-(99, 'News & Magazines', 'news-magazines', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:07:34', '2024-09-13 11:07:34'),
-(100, 'Photography & Video', 'photography-video', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:07:56', '2024-09-13 11:07:56'),
-(101, 'Lifestyle', 'lifestyle', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:08:21', '2024-09-13 11:08:21'),
-(102, 'Utilities', 'utilities', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:08:51', '2024-09-13 11:08:51'),
-(103, 'Tools & Productivity', 'tools-productivity', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-13 11:09:53', '2024-09-13 11:09:53'),
-(104, 'Branding and Logo Design', 'branding-and-logo-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:35:19', '2024-09-17 10:35:19'),
-(105, 'Artwork and Illustrations', 'artwork-and-illustrations', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:38:00', '2024-09-17 10:38:00'),
-(106, 'Web and Mobile App Design', 'web-and-mobile-app-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:39:29', '2024-09-17 10:39:29'),
-(107, 'Products & Gaming', 'products-gaming', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:40:26', '2024-09-17 10:40:26'),
-(108, 'Print Media Design', 'print-media-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:41:33', '2024-09-17 10:41:33'),
-(109, 'Visual Concept Design', 'visual-concept-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:42:54', '2024-09-17 10:42:54'),
-(110, 'Brand Marketing Design', 'brand-marketing-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:44:07', '2024-09-17 10:44:07'),
-(111, 'Cover and Packaging Design', 'cover-and-packaging-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:45:15', '2024-09-17 10:45:15'),
-(112, 'Structural and Architectural Design', 'structural-and-architectural-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:48:25', '2024-09-17 10:48:25'),
-(113, 'Fashion and Product Lines', 'fashion-and-product-lines', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:49:09', '2024-09-17 10:49:09'),
-(114, '3D Art and Design', '3d-art-and-design', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:50:30', '2024-09-17 10:50:30'),
-(115, 'Custom Logo Design', 'custom-logo-design', NULL, NULL, NULL, NULL, 104, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:54:54', '2024-09-17 10:54:54'),
-(116, 'Style and Branding Guides', 'style-and-branding-guides', NULL, NULL, NULL, NULL, 104, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:55:38', '2024-09-17 10:55:38'),
-(117, 'Business Card Printing and Stationery', 'business-card-printing-and-stationery', NULL, NULL, NULL, NULL, 104, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:56:19', '2024-09-17 10:56:19'),
-(118, 'Font and Typography Services', 'font-and-typography-services', NULL, NULL, NULL, NULL, 104, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 10:57:12', '2024-09-17 10:57:12'),
-(119, 'Blockchain and Digital Currency', 'blockchain-and-digital-currency', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 11:14:58', '2024-09-17 11:14:58'),
-(120, 'Advanced Data Science and ML', 'advanced-data-science-and-ml', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 11:18:32', '2024-09-17 11:18:32'),
-(121, 'Business Web Solutions', 'business-web-solutions', '', 'null', 'null', 'null', 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 50, '2024-09-17 11:43:00', '2024-10-04 10:47:13'),
-(122, 'E-Commerce Site Design', 'e-commerce-site-design', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 11:43:33', '2024-09-17 11:43:33'),
-(123, 'Custom Landing Pages', 'custom-landing-pages', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 11:44:13', '2024-09-17 11:44:13'),
-(124, 'Dropshipping Online Stores', 'dropshipping-online-stores', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 11:44:42', '2024-09-17 11:44:42'),
-(125, 'Custom Website Adjustments', 'custom-website-adjustments', NULL, NULL, NULL, NULL, 25, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:03:59', '2024-09-17 12:03:59'),
-(126, 'Code Debugging', 'code-debugging', NULL, NULL, NULL, NULL, 25, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:06:19', '2024-09-17 12:06:19'),
-(127, 'Site Backup and Transfer', 'site-backup-and-transfer', NULL, NULL, NULL, NULL, 25, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:06:40', '2024-09-17 12:06:40'),
-(128, 'Site Performance Optimization', 'site-performance-optimization', NULL, NULL, NULL, NULL, 25, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:07:02', '2024-09-17 12:07:02'),
-(129, 'AI Conversational Agent', 'ai-conversational-agent', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:10:05', '2024-09-17 12:10:05'),
-(130, 'AI Application Development', 'ai-application-development', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:10:39', '2024-09-17 12:10:39'),
-(131, 'AI Integration Solutions', 'ai-integration-solutions', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:11:08', '2024-09-17 12:11:08'),
-(132, 'Smart AI Agents', 'smart-ai-agents', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:11:27', '2024-09-17 12:11:27'),
-(133, 'AI Performance Tuning', 'ai-performance-tuning', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:19:35', '2024-09-17 12:19:35'),
-(134, 'OpenAI GPT Services Store', 'openai-gpt-services-store', NULL, NULL, NULL, NULL, 26, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-17 12:19:58', '2024-09-17 12:19:58'),
-(135, 'Discord Chat Service', 'discord-chat-service', NULL, NULL, NULL, NULL, 27, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:03:12', '2024-09-18 08:03:12'),
-(136, 'Telegram Chat Platform', 'telegram-chat-platform', NULL, NULL, NULL, NULL, 27, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:03:24', '2024-09-18 08:03:24'),
-(137, 'TikTok Short-Video App', 'tiktok-short-video-app', NULL, NULL, NULL, NULL, 27, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:03:33', '2024-09-18 08:03:33'),
-(138, 'Facebook Chat Service', 'facebook-chat-service', NULL, NULL, NULL, NULL, 27, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:03:42', '2024-09-18 08:03:42'),
-(139, 'Player Experience and Feedback', 'player-experience-and-feedback', NULL, NULL, NULL, NULL, 28, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:03:58', '2024-09-18 08:03:58'),
-(140, 'Games for PC', 'games-for-pc', NULL, NULL, NULL, NULL, 28, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:06', '2024-09-18 08:04:06'),
-(141, 'Smartphone Games', 'smartphone-games', NULL, NULL, NULL, NULL, 28, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:13', '2024-09-18 08:04:13'),
-(142, 'Cross-Device Development', 'cross-device-development', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:27', '2024-09-18 08:04:27'),
-(143, 'Android Mobile App Creation', 'android-mobile-app-creation', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:34', '2024-09-18 08:04:34'),
-(144, 'iOS Mobile App Creation', 'ios-mobile-app-creation', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:40', '2024-09-18 08:04:40'),
-(145, 'Web-Based App Development', 'web-based-app-development', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:49', '2024-09-18 08:04:49'),
-(146, 'Mobile App Management', 'mobile-app-management', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:04:56', '2024-09-18 08:04:56'),
-(147, 'VR and AR Solutions', 'vr-and-ar-solutions', NULL, NULL, NULL, NULL, 29, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:05:04', '2024-09-18 08:05:04'),
-(148, 'Cloud Services', 'cloud-services', NULL, NULL, NULL, NULL, 30, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:05:18', '2024-09-18 08:05:18'),
-(149, 'DevOps Solutions', 'devops-solutions', NULL, NULL, NULL, NULL, 30, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:05:27', '2024-09-18 08:05:27'),
-(150, 'Cybersecurity Services', 'cybersecurity-services', NULL, NULL, NULL, NULL, 30, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:05:34', '2024-09-18 08:05:34'),
-(151, 'ML Solutions', 'ml-solutions', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:06:04', '2024-09-18 08:06:04'),
-(152, 'Computer-Based Vision', 'computer-based-vision', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:06:12', '2024-09-18 08:06:12'),
-(153, 'Language Processing Technology', 'language-processing-technology', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:06:33', '2024-09-18 08:06:33'),
-(154, 'Deep Learning Models', 'deep-learning-models', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:06:42', '2024-09-18 08:06:42'),
-(155, 'Web App Solutions', 'web-app-solutions', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:13:33', '2024-09-18 08:13:33'),
-(156, 'PC Applications', 'pc-applications', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:13:46', '2024-09-18 08:13:46'),
-(157, 'API Solutions and Integration', 'api-solutions-and-integration', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:13:53', '2024-09-18 08:13:53'),
-(158, 'Database Systems', 'database-systems', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:14:11', '2024-09-18 08:14:11'),
-(159, 'Script Development', 'script-development', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:14:20', '2024-09-18 08:14:20'),
-(160, 'Browser Modules', 'browser-modules', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:14:28', '2024-09-18 08:14:28'),
-(161, 'Quality Control and Review', 'quality-control-and-review', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:14:44', '2024-09-18 08:14:44'),
-(162, 'User Experience Testing', 'user-experience-testing', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:14:56', '2024-09-18 08:14:56'),
-(163, 'Business, Financial, and Legal Content', 'business-financial-and-legal-content', NULL, 'null', 'null', 'null', 56, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 08:15:07', '2024-09-18 10:09:54'),
-(164, 'Digital Currencies and Tokens', 'digital-currencies-and-tokens', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:15:15', '2024-09-18 08:15:15'),
-(165, 'Exchange Systems', 'exchange-systems', NULL, NULL, NULL, NULL, 31, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:15:22', '2024-09-18 08:15:22'),
-(166, 'Boost Your Search Ranking(SEO)', 'boost-your-search-ranking-seo-', NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:25:22', '2024-09-18 08:25:22'),
-(167, 'Search Ad Campaigns (SEM)', 'search-ad-campaigns-sem-', NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:25:31', '2024-09-18 08:25:31'),
-(168, 'Local Search Success', 'local-search-success', NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:25:39', '2024-09-18 08:25:39'),
-(169, 'E-Commerce SEO', 'e-commerce-seo', NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:25:46', '2024-09-18 08:25:46'),
-(170, 'Video SEO', 'video-seo', NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:25:52', '2024-09-18 08:25:52'),
-(171, 'Social Media Promotion', 'social-media-promotion', NULL, NULL, NULL, NULL, 33, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:26:10', '2024-09-18 08:26:10'),
-(172, 'Paid Social Campaigns', 'paid-social-campaigns', NULL, NULL, NULL, NULL, 33, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:26:17', '2024-09-18 08:26:17'),
-(173, 'Commerce via Social Media', 'commerce-via-social-media', NULL, NULL, NULL, NULL, 33, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:26:28', '2024-09-18 08:26:28'),
-(174, 'Marketing with Influencers', 'marketing-with-influencers', NULL, NULL, NULL, NULL, 33, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:26:34', '2024-09-18 08:26:34'),
-(175, 'Community Management', 'community-management', NULL, NULL, NULL, NULL, 33, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:26:44', '2024-09-18 08:26:44'),
-(176, 'Marketing Through Videos', 'marketing-through-videos', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:03', '2024-09-18 08:27:03'),
-(177, 'E-Commerce Advertising', 'e-commerce-advertising', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:10', '2024-09-18 08:27:10'),
-(178, 'Email-Based Promotion', 'email-based-promotion', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:16', '2024-09-18 08:27:16'),
-(179, 'Email Automations', 'email-automations', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:23', '2024-09-18 08:27:23'),
-(180, 'Guest Writing Opportunities', 'guest-writing-opportunities', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:32', '2024-09-18 08:27:32'),
-(181, 'Affiliate Marketing', 'affiliate-marketing', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:40', '2024-09-18 08:27:40'),
-(182, 'On-Screen Advertising', 'on-screen-advertising', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:50', '2024-09-18 08:27:50'),
-(183, 'Media Relations', 'media-relations', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:27:57', '2024-09-18 08:27:57'),
-(184, 'SMS Marketing', 'sms-marketing', NULL, NULL, NULL, NULL, 34, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:28:12', '2024-09-18 08:28:12'),
-(185, 'Marketing Plans and Tactics', 'marketing-plans-and-tactics', NULL, NULL, NULL, NULL, 35, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:28:28', '2024-09-18 08:28:28'),
-(186, 'Marketing Ideas and Concepts', 'marketing-ideas-and-concepts', NULL, NULL, NULL, NULL, 35, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:28:36', '2024-09-18 08:28:36'),
-(187, 'Marketing Guidance', 'marketing-guidance', NULL, NULL, NULL, NULL, 35, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:28:47', '2024-09-18 08:28:47'),
-(188, 'Web Data Insights', 'web-data-insights', NULL, NULL, NULL, NULL, 35, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:00', '2024-09-18 08:29:00'),
-(189, 'Conversion Optimization', 'conversion-optimization', NULL, NULL, NULL, NULL, 35, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:08', '2024-09-18 08:29:08'),
-(190, 'Shop on TikTok', 'shop-on-tiktok', NULL, NULL, NULL, NULL, 36, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:28', '2024-09-18 08:29:28'),
-(191, 'Facebook Ad Strategies', 'facebook-ad-strategies', NULL, NULL, NULL, NULL, 36, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:35', '2024-09-18 08:29:35'),
-(192, 'Marketing on Instagram', 'marketing-on-instagram', NULL, NULL, NULL, NULL, 36, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:42', '2024-09-18 08:29:42'),
-(193, 'Google Paid Search', 'google-paid-search', NULL, NULL, NULL, NULL, 36, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:49', '2024-09-18 08:29:49'),
-(194, 'Shopify Advertising', 'shopify-advertising', NULL, NULL, NULL, NULL, 36, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:29:57', '2024-09-18 08:29:57'),
-(195, 'Music Publicity', 'music-publicity', NULL, NULL, NULL, NULL, 37, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:30:14', '2024-09-18 08:30:14'),
-(196, 'Podcast Advertising', 'podcast-advertising', NULL, NULL, NULL, NULL, 37, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:30:22', '2024-09-18 08:30:22'),
-(197, 'Book and eBook Advertising', 'book-and-ebook-advertising', NULL, NULL, NULL, NULL, 37, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:30:30', '2024-09-18 08:30:30'),
-(198, 'Mobile App Publicity', 'mobile-app-publicity', NULL, NULL, NULL, NULL, 37, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:30:38', '2024-09-18 08:30:38'),
-(199, 'Crowdfunding', 'crowdfunding', NULL, NULL, NULL, NULL, 38, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:30:54', '2024-09-18 08:30:54'),
-(200, 'Other', 'other', NULL, NULL, NULL, NULL, 38, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:31:01', '2024-09-18 08:31:01'),
-(201, 'Editing Video Content', 'editing-video-content', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:32:22', '2024-09-18 08:32:22'),
-(202, 'Visual Effects', 'visual-effects', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:32:31', '2024-09-18 08:32:31'),
-(203, 'Video Artworks', 'video-artworks', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:33:14', '2024-09-18 08:33:14'),
-(204, 'Video Intros and Outros', 'video-intros-and-outros', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:33:23', '2024-09-18 08:33:23'),
-(205, 'Editing Video Templates', 'editing-video-templates', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:33:32', '2024-09-18 08:33:32'),
-(206, 'Adding Subtitles and Captions', 'adding-subtitles-and-captions', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:33:39', '2024-09-18 08:33:39'),
-(207, 'Search for a Permanent Video Editor', 'search-for-a-permanent-video-editor', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:33:45', '2024-09-18 08:33:45'),
-(208, 'Video Ads and Promotional Commercials', 'video-ads-and-promotional-commercials', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:35:52', '2024-09-18 08:35:52'),
-(209, 'Social Media Content Videos', 'social-media-content-videos', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:36:19', '2024-09-18 08:36:19'),
-(210, 'User-Generated Content (UGC) Videos', 'user-generated-content-ugc-videos', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:36:27', '2024-09-18 08:36:27'),
-(211, 'Music Video Production', 'music-video-production', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:36:33', '2024-09-18 08:36:33'),
-(212, 'Slideshow and Presentation Videos', 'slideshow-and-presentation-videos', NULL, NULL, NULL, NULL, 40, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:36:40', '2024-09-18 08:36:40'),
-(213, 'Character-Based Animation', 'character-based-animation', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:36:58', '2024-09-18 08:36:58'),
-(214, 'Animated GIF Creations', 'animated-gif-creations', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:06', '2024-09-18 08:37:06'),
-(215, 'Children\'s Animation', 'children-s-animation', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:13', '2024-09-18 08:37:13'),
-(216, 'Streamer-Specific Animation', 'streamer-specific-animation', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:20', '2024-09-18 08:37:20'),
-(217, 'Rigging & Character Setup', 'rigging-character-setup', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:27', '2024-09-18 08:37:27'),
-(218, 'NFT-Related Animations', 'nft-related-animations', NULL, NULL, NULL, NULL, 41, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:35', '2024-09-18 08:37:35'),
-(219, 'Logo Motion Animation', 'logo-motion-animation', NULL, NULL, NULL, NULL, 42, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:37:52', '2024-09-18 08:37:52'),
-(220, 'Lottie and Web Animations', 'lottie-and-web-animations', NULL, NULL, NULL, NULL, 42, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:38:13', '2024-09-18 08:38:13'),
-(221, 'Text-Based Animations', 'text-based-animations', NULL, NULL, NULL, NULL, 42, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:38:21', '2024-09-18 08:38:21'),
-(222, 'Videography Services', 'videography-services', NULL, NULL, NULL, NULL, 43, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:38:36', '2024-09-18 08:38:36'),
-(223, 'Filmed Video Content Creation', 'filmed-video-content-creation', NULL, NULL, NULL, NULL, 43, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:38:43', '2024-09-18 08:38:43'),
-(224, 'Animated Explainer Videos', 'animated-explainer-videos', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:00', '2024-09-18 08:39:00'),
-(225, 'Live-Action Explainer Videos', 'live-action-explainer-videos', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:10', '2024-09-18 08:39:10'),
-(226, 'Spokesperson-Led Videos', 'spokesperson-led-videos', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:17', '2024-09-18 08:39:17'),
-(227, 'Screencast Video Productions', 'screencast-video-productions', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:24', '2024-09-18 08:39:24'),
-(228, 'Educational Video Productions', 'educational-video-productions', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:30', '2024-09-18 08:39:30'),
-(229, 'Crowdfunding Campaign Videos', 'crowdfunding-campaign-videos', NULL, NULL, NULL, NULL, 45, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:37', '2024-09-18 08:39:37'),
-(230, '3D Animation for Products', '3d-animation-for-products', NULL, NULL, NULL, NULL, 46, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:39:53', '2024-09-18 08:39:53'),
-(231, 'E-Commerce Video Productions', 'e-commerce-video-productions', NULL, NULL, NULL, NULL, 46, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:40:03', '2024-09-18 08:40:03'),
-(232, 'Corporate Video Solutions', 'corporate-video-solutions', NULL, NULL, NULL, NULL, 46, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:40:10', '2024-09-18 08:40:10'),
-(233, 'App & Website Preview Video', 'app-website-preview-video', NULL, NULL, NULL, NULL, 46, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:40:18', '2024-09-18 08:40:18'),
-(234, 'AI-Driven Video Art', 'ai-driven-video-art', NULL, NULL, NULL, NULL, 47, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:40:29', '2024-09-18 08:40:29'),
-(235, 'AI Music Video Creations', 'ai-music-video-creations', NULL, NULL, NULL, NULL, 47, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:44:44', '2024-09-18 08:44:44'),
-(236, 'AI Spokesperson Videos', 'ai-spokesperson-videos', NULL, NULL, NULL, NULL, 47, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:44:52', '2024-09-18 08:44:52'),
-(237, 'Product Photography Services', 'product-photography-services', NULL, NULL, NULL, NULL, 48, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:48:41', '2024-09-18 08:48:41'),
-(238, 'Portrait Photography', 'portrait-photography', NULL, NULL, NULL, NULL, 48, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:49:11', '2024-09-18 08:49:11'),
-(239, 'Lifestyle & Fashion Photography', 'lifestyle-fashion-photography', NULL, NULL, NULL, NULL, 48, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:49:19', '2024-09-18 08:49:19'),
-(240, 'Local Photography Services', 'local-photography-services', NULL, NULL, NULL, NULL, 48, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:49:27', '2024-09-18 08:49:27'),
-(241, 'Article & Blog Writing', 'article-blog-writing', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:50:17', '2024-09-18 08:50:17'),
-(242, 'Content Planning and Strategy', 'content-planning-and-strategy', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:51:09', '2024-09-18 08:51:09'),
-(243, 'Website Copywriting', 'website-copywriting', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:51:40', '2024-09-18 08:51:40'),
-(244, 'Creative Storytelling', 'creative-storytelling', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:09', '2024-09-18 08:52:09'),
-(245, 'Podcast Script Creation', 'podcast-script-creation', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:17', '2024-09-18 08:52:17'),
-(246, 'Speech Script Writing', 'speech-script-writing', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:25', '2024-09-18 08:52:25'),
-(247, 'Research & Summary Services', 'research-summary-services', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:32', '2024-09-18 08:52:32'),
-(248, 'Hire a Professional Writer', 'hire-a-professional-writer', NULL, NULL, NULL, NULL, 49, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:42', '2024-09-18 08:52:42'),
-(249, 'Proofreading & Revisions', 'proofreading-revisions', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:52:58', '2024-09-18 08:52:58'),
-(250, 'AI-Assisted Content Editing', 'ai-assisted-content-editing', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:05', '2024-09-18 08:53:05'),
-(251, 'Writing Consultation', 'writing-consultation', NULL, NULL, NULL, NULL, 50, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:13', '2024-09-18 08:53:13'),
-(252, 'Book and eBook Writing', 'book-and-ebook-writing', NULL, NULL, NULL, NULL, 51, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:28', '2024-09-18 08:53:28'),
-(253, 'Book Editing Services', 'book-editing-services', NULL, NULL, NULL, NULL, 51, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:37', '2024-09-18 08:53:37'),
-(254, 'Beta Reading & Feedback', 'beta-reading-feedback', NULL, NULL, NULL, NULL, 51, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:43', '2024-09-18 08:53:43'),
-(255, 'Self-Publishing Assistance', 'self-publishing-assistance', NULL, NULL, NULL, NULL, 51, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:53:51', '2024-09-18 08:53:51'),
-(256, 'Resume and CV Writing', 'resume-and-cv-writing', NULL, NULL, NULL, NULL, 52, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:54:04', '2024-09-18 08:54:04'),
-(257, 'Cover Letter Writing', 'cover-letter-writing', NULL, NULL, NULL, NULL, 52, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:54:26', '2024-09-18 08:54:26'),
-(258, 'LinkedIn Profile Optimization', 'linkedin-profile-optimization', NULL, NULL, NULL, NULL, 52, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:54:34', '2024-09-18 08:54:34'),
-(259, 'Job Description Writing', 'job-description-writing', NULL, NULL, NULL, NULL, 52, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 08:54:41', '2024-09-18 08:54:41'),
-(260, 'Branding & Tone Development', 'branding-tone-development', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:11:14', '2024-09-18 09:11:14'),
-(261, 'Brand Name & Slogan Creation', 'brand-name-slogan-creation', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:11:30', '2024-09-18 09:11:30'),
-(262, 'Case Study Writing', 'case-study-writing', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:11:37', '2024-09-18 09:11:37'),
-(263, 'White Paper Creation', 'white-paper-creation', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:11:44', '2024-09-18 09:11:44'),
-(264, 'Product Copywriting', 'product-copywriting', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:11:52', '2024-09-18 09:11:52'),
-(265, 'Ad Campaign Copywriting', 'ad-campaign-copywriting', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:07', '2024-09-18 09:12:07'),
-(266, 'Sales Page Copywriting', 'sales-page-copywriting', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:14', '2024-09-18 09:12:14'),
-(267, 'Email Marketing Content', 'email-marketing-content', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:21', '2024-09-18 09:12:21'),
-(268, 'Social Media Content Writing', 'social-media-content-writing', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:30', '2024-09-18 09:12:30'),
-(269, 'Press Release Writing', 'press-release-writing', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:38', '2024-09-18 09:12:38'),
-(270, 'UX and UI Copywriting', 'ux-and-ui-copywriting', NULL, NULL, NULL, NULL, 54, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:12:46', '2024-09-18 09:12:46');
-INSERT INTO `categorys` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `parent_id`, `commission`, `fixcommission`, `product_sell_qty`, `getAmount`, `sort_order`, `file`, `status`, `speacial_status`, `mobile_view_class`, `keyword`, `percentage_amt`, `created_at`, `updated_at`) VALUES
-(271, 'Language Translation Services', 'language-translation-services', NULL, NULL, NULL, NULL, 55, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:13:01', '2024-09-18 09:13:01'),
-(272, 'Localization for Global Markets', 'localization-for-global-markets', NULL, NULL, NULL, NULL, 55, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:13:09', '2024-09-18 09:13:09'),
-(273, 'Audio & Video Transcription', 'audio-video-transcription', NULL, NULL, NULL, NULL, 55, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:13:16', '2024-09-18 09:13:16'),
-(274, 'Interpretation Services', 'interpretation-services', NULL, NULL, NULL, NULL, 55, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 09:13:23', '2024-09-18 09:13:23'),
-(275, 'Production & Writing', 'production-writing', NULL, 'null', 'null', 'null', 44, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 10:32:16', '2024-09-18 10:42:12'),
-(276, 'Audio Producers', 'audio-producers', NULL, 'null', 'null', 'null', 275, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 10:33:54', '2024-09-18 10:42:57'),
-(277, 'Audio Composition Services', 'audio-composition-services', NULL, 'null', 'null', 'null', 275, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 10:34:04', '2024-09-18 10:43:22'),
-(278, 'Vocalists & Singers', 'vocalists-singers', NULL, NULL, NULL, NULL, 275, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:34:14', '2024-09-18 10:34:14'),
-(279, 'Session Instrumentalists', 'session-instrumentalists', NULL, NULL, NULL, NULL, 275, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:34:22', '2024-09-18 10:34:22'),
-(280, 'Audio writing Services', 'audio-writing-services', NULL, 'null', 'null', 'null', 275, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 10:34:29', '2024-09-18 10:44:12'),
-(281, 'Jingles & Intro Tracks', 'jingles-intro-tracks', NULL, NULL, NULL, NULL, 275, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:34:37', '2024-09-18 10:34:37'),
-(282, 'Custom Audio Creation', 'custom-audio-creation', NULL, 'null', 'null', 'null', 275, 0, NULL, NULL, NULL, 0, '', 1, NULL, 'null', 'null', NULL, '2024-09-18 10:34:44', '2024-09-18 10:44:31'),
-(283, 'Mixing and Mastering', 'mixing-and-mastering', NULL, NULL, NULL, NULL, 57, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:35:05', '2024-09-18 10:35:05'),
-(284, 'Audio Editing Services', 'audio-editing-services', NULL, NULL, NULL, NULL, 57, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:35:12', '2024-09-18 10:35:12'),
-(285, 'Vocal Pitch Correction', 'vocal-pitch-correction', NULL, NULL, NULL, NULL, 57, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:35:20', '2024-09-18 10:35:20'),
-(286, '24-Hour Voiceover Services', '24-hour-voiceover-services', NULL, NULL, NULL, NULL, 61, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:35:36', '2024-09-18 10:35:36'),
-(287, 'Female Voiceover Artists', 'female-voiceover-artists', NULL, NULL, NULL, NULL, 61, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:35:44', '2024-09-18 10:35:44'),
-(288, 'Male Voiceover Artists', 'male-voiceover-artists', NULL, NULL, NULL, NULL, 61, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:36:06', '2024-09-18 10:36:06'),
-(289, 'French Language Voiceover', 'french-language-voiceover', NULL, NULL, NULL, NULL, 61, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:36:15', '2024-09-18 10:36:15'),
-(290, 'German Language Voiceover', 'german-language-voiceover', NULL, NULL, NULL, NULL, 61, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:36:21', '2024-09-18 10:36:21'),
-(291, 'Podcast Creation & Production', 'podcast-creation-production', NULL, NULL, NULL, NULL, 58, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:37:00', '2024-09-18 10:37:00'),
-(292, 'Audiobook Production Services', 'audiobook-production-services', NULL, NULL, NULL, NULL, 58, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:37:11', '2024-09-18 10:37:11'),
-(293, 'Audio Ad Creation', 'audio-ad-creation', NULL, NULL, NULL, NULL, 58, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:37:18', '2024-09-18 10:37:18'),
-(294, 'AI Voice & Synthesis', 'ai-voice-synthesis', NULL, NULL, NULL, NULL, 58, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:37:25', '2024-09-18 10:37:25'),
-(295, 'Custom Sound Design', 'custom-sound-design', NULL, NULL, NULL, NULL, 59, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:48:49', '2024-09-18 10:48:49'),
-(296, 'Meditation & Relaxation Music', 'meditation-relaxation-music', NULL, NULL, NULL, NULL, 59, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:48:57', '2024-09-18 10:48:57'),
-(297, 'Audio Logos & Sonic Branding', 'audio-logos-sonic-branding', NULL, NULL, NULL, NULL, 59, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:49:09', '2024-09-18 10:49:09'),
-(298, 'Custom Audio Samples & Patches', 'custom-audio-samples-patches', NULL, NULL, NULL, NULL, 59, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:49:17', '2024-09-18 10:49:17'),
-(299, 'Audio Plugin Development', 'audio-plugin-development', NULL, NULL, NULL, NULL, 59, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:49:25', '2024-09-18 10:49:25'),
-(300, 'Online Audio Lessons', 'online-audio-lessons', NULL, NULL, NULL, NULL, 60, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:50:04', '2024-09-18 10:50:04'),
-(301, 'Audio Transcription Services', 'audio-transcription-services', NULL, NULL, NULL, NULL, 60, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:50:16', '2024-09-18 10:50:16'),
-(302, 'Music & Audio Consulting', 'music-audio-consulting', NULL, NULL, NULL, NULL, 60, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:50:24', '2024-09-18 10:50:24'),
-(303, 'Accounting Services', 'accounting-services', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:06', '2024-09-18 10:51:06'),
-(304, 'Tax Consulting', 'tax-consulting', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:18', '2024-09-18 10:51:18'),
-(305, 'Financial Planning & Analysis', 'financial-planning-analysis', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:24', '2024-09-18 10:51:24'),
-(306, 'Corporate Finance', 'corporate-finance', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:32', '2024-09-18 10:51:32'),
-(307, 'Personal Finance', 'personal-finance', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:40', '2024-09-18 10:51:40'),
-(308, 'Fundraising', 'fundraising', NULL, NULL, NULL, NULL, 62, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:51:50', '2024-09-18 10:51:50'),
-(309, 'Applications & Registrations', 'applications-registrations', NULL, NULL, NULL, NULL, 63, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:05', '2024-09-18 10:52:05'),
-(310, 'Legal Documents & Contracts', 'legal-documents-contracts', NULL, NULL, NULL, NULL, 63, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:13', '2024-09-18 10:52:13'),
-(311, 'Legal Review', 'legal-review', NULL, NULL, NULL, NULL, 63, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:22', '2024-09-18 10:52:22'),
-(312, 'Legal Research', 'legal-research', NULL, NULL, NULL, NULL, 63, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:30', '2024-09-18 10:52:30'),
-(313, 'Business Registration', 'business-registration', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:44', '2024-09-18 10:52:44'),
-(314, 'Business Plans', 'business-plans', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:51', '2024-09-18 10:52:51'),
-(315, 'Business Consulting', 'business-consulting', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:52:58', '2024-09-18 10:52:58'),
-(316, 'Sustainability Consulting', 'sustainability-consulting', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:08', '2024-09-18 10:53:08'),
-(317, 'HR Consulting', 'hr-consulting', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:16', '2024-09-18 10:53:16'),
-(318, 'Market Research', 'market-research', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:23', '2024-09-18 10:53:23'),
-(319, 'Presentations', 'presentations', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:29', '2024-09-18 10:53:29'),
-(320, 'Supply Chain Management', 'supply-chain-management', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:36', '2024-09-18 10:53:36'),
-(321, 'Project Management', 'project-management', NULL, NULL, NULL, NULL, 64, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:53:44', '2024-09-18 10:53:44'),
-(322, 'AI Strategy', 'ai-strategy', NULL, NULL, NULL, NULL, 65, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:54:20', '2024-09-18 10:54:20'),
-(323, 'AI Lessons', 'ai-lessons', NULL, NULL, NULL, NULL, 65, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:54:27', '2024-09-18 10:54:27'),
-(324, 'Product Research', 'product-research', NULL, NULL, NULL, NULL, 66, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:54:46', '2024-09-18 10:54:46'),
-(325, 'Store Management', 'store-management', NULL, NULL, NULL, NULL, 66, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:54:53', '2024-09-18 10:54:53'),
-(326, 'Amazon Experts', 'amazon-experts', NULL, NULL, NULL, NULL, 66, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:55:00', '2024-09-18 10:55:00'),
-(327, 'Shopify Experts', 'shopify-experts', NULL, NULL, NULL, NULL, 66, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:55:07', '2024-09-18 10:55:07'),
-(328, 'Etsy Experts', 'etsy-experts', NULL, NULL, NULL, NULL, 66, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:55:16', '2024-09-18 10:55:16'),
-(329, 'Data Visualization', 'data-visualization', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:55:28', '2024-09-18 10:55:28'),
-(330, 'Data Analytics', 'data-analytics', NULL, NULL, NULL, NULL, 67, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 10:55:36', '2024-09-18 10:55:36'),
-(331, 'Sales', 'sales', NULL, NULL, NULL, NULL, 68, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:00:19', '2024-09-18 11:00:19'),
-(332, 'Lead Generation', 'lead-generation', NULL, NULL, NULL, NULL, 68, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:00:28', '2024-09-18 11:00:28'),
-(333, 'Call Center & Calling', 'call-center-calling', NULL, NULL, NULL, NULL, 68, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:00:37', '2024-09-18 11:00:37'),
-(334, 'Customer Care', 'customer-care', NULL, NULL, NULL, NULL, 68, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:00:45', '2024-09-18 11:00:45'),
-(335, 'Virtual Assistant', 'virtual-assistant', NULL, NULL, NULL, NULL, 69, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:01:00', '2024-09-18 11:01:00'),
-(336, 'Online Investigations', 'online-investigations', NULL, NULL, NULL, NULL, 69, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:01:14', '2024-09-18 11:01:14'),
-(337, 'Fact Checking', 'fact-checking', NULL, NULL, NULL, NULL, 69, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:01:21', '2024-09-18 11:01:21'),
-(338, 'Legal Consulting', 'legal-consulting', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:02:27', '2024-09-18 11:02:27'),
-(339, 'Writing & Translation', 'writing-translation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:27:36', '2024-09-18 11:27:36'),
-(341, 'Editing and Critique', 'editing-and-critique', NULL, NULL, NULL, NULL, 339, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:34:51', '2024-09-18 11:34:51'),
-(342, 'Book and eBook Publishing', 'book-and-ebook-publishing', NULL, NULL, NULL, NULL, 339, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:35:25', '2024-09-18 11:35:25'),
-(344, 'Business and Marketing Copy', 'business-and-marketing-copy', NULL, NULL, NULL, NULL, 339, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:36:38', '2024-09-18 11:36:38'),
-(345, 'Translation and  Transcription', 'translation-and-transcription', NULL, NULL, NULL, NULL, 339, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:37:04', '2024-09-18 11:37:04'),
-(346, 'Industry Specific Contentnew', 'industry-specific-contentnew', NULL, NULL, NULL, NULL, 339, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:37:23', '2024-09-18 11:37:23'),
-(347, 'Business advisory', 'business-advisory', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:40:50', '2024-09-18 11:40:50'),
-(348, 'Human resources consulting', 'human-resources-consulting', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:41:02', '2024-09-18 11:41:02'),
-(349, 'Artificial intelligence consulting', 'artificial-intelligence-consulting', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:41:09', '2024-09-18 11:41:09'),
-(350, 'Business strategy development', 'business-strategy-development', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:41:18', '2024-09-18 11:41:18'),
-(351, 'Online retail consulting', 'online-retail-consulting', NULL, NULL, NULL, NULL, 70, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:41:26', '2024-09-18 11:41:26'),
-(352, 'Content Strategy', 'content-strategy', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:01', '2024-09-18 11:42:01'),
-(353, 'Social Media Strategy', 'social-media-strategy', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:11', '2024-09-18 11:42:11'),
-(354, 'Influencers Strategy', 'influencers-strategy', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:20', '2024-09-18 11:42:20'),
-(355, 'Video Marketing Consulting', 'video-marketing-consulting', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:28', '2024-09-18 11:42:28'),
-(356, 'SEM Strategy', 'sem-strategy', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:37', '2024-09-18 11:42:37'),
-(357, 'PR Strategy', 'pr-strategy', NULL, NULL, NULL, NULL, 71, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:42:45', '2024-09-18 11:42:45'),
-(359, 'Databases Consulting', 'databases-consulting', NULL, NULL, NULL, NULL, 72, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:43:08', '2024-09-18 11:43:08'),
-(361, 'Career Counseling', 'career-counseling', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:43:30', '2024-09-18 11:43:30'),
-(362, 'Life Coaching', 'life-coaching', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:43:38', '2024-09-18 11:43:38'),
-(363, 'Game Coaching', 'game-coaching', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:43:46', '2024-09-18 11:43:46'),
-(364, 'Styling & Beauty Advice', 'styling-beauty-advice', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:43:53', '2024-09-18 11:43:53'),
-(365, 'Travel Advice', 'travel-advice', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:44:03', '2024-09-18 11:44:03'),
-(366, 'Nutrition Coachingnew', 'nutrition-coachingnew', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:44:10', '2024-09-18 11:44:10'),
-(367, 'Mindfulness Coaching new', 'mindfulness-coaching-new', NULL, NULL, NULL, NULL, 73, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:44:27', '2024-09-18 11:44:27'),
-(368, 'Website Consulting', 'website-consulting', NULL, NULL, NULL, NULL, 75, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:44:47', '2024-09-18 11:44:47'),
-(369, 'Mobile App Consulting', 'mobile-app-consulting', NULL, NULL, NULL, NULL, 75, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:44:55', '2024-09-18 11:44:55'),
-(370, 'Game Development Consulting', 'game-development-consulting', NULL, NULL, NULL, NULL, 75, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:03', '2024-09-18 11:45:03'),
-(371, 'Software Development Consulting', 'software-development-consulting', NULL, NULL, NULL, NULL, 75, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:10', '2024-09-18 11:45:10'),
-(372, 'Cybersecurity Consulting', 'cybersecurity-consulting', NULL, NULL, NULL, NULL, 75, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:30', '2024-09-18 11:45:30'),
-(373, 'Marketing Mentorship', 'marketing-mentorship', NULL, NULL, NULL, NULL, 76, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:44', '2024-09-18 11:45:44'),
-(374, 'Design Mentorship', 'design-mentorship', NULL, NULL, NULL, NULL, 76, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:51', '2024-09-18 11:45:51'),
-(375, 'Writing Mentorship', 'writing-mentorship', NULL, NULL, NULL, NULL, 76, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:45:59', '2024-09-18 11:45:59'),
-(376, 'Video Mentorship', 'video-mentorship', NULL, NULL, NULL, NULL, 76, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:46:08', '2024-09-18 11:46:08'),
-(377, 'Audio Mentorship', 'audio-mentorship', NULL, NULL, NULL, NULL, 76, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:46:32', '2024-09-18 11:46:32'),
-(378, 'AI Applications', 'ai-applications', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:47:03', '2024-09-18 11:47:03'),
-(380, 'Custom Writing Prompts', 'custom-writing-prompts', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:52:42', '2024-09-18 11:52:42'),
-(381, 'AI Chatbot', 'ai-chatbot', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:52:50', '2024-09-18 11:52:50'),
-(382, 'AI Agents', 'ai-agents', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:52:58', '2024-09-18 11:52:58'),
-(383, 'AI Fine-Tuning', 'ai-fine-tuning', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:53:06', '2024-09-18 11:53:06'),
-(384, 'OpenAI GPT Storenew', 'openai-gpt-storenew', NULL, NULL, NULL, NULL, 77, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:53:15', '2024-09-18 11:53:15'),
-(385, 'Data Science & ML', 'data-science-ml', NULL, NULL, NULL, NULL, 78, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:53:37', '2024-09-18 11:53:37'),
-(388, 'Midjourney Artists', 'midjourney-artists', NULL, NULL, NULL, NULL, 79, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:54:14', '2024-09-18 11:54:14'),
-(389, 'DALL-E Artists', 'dall-e-artists', NULL, NULL, NULL, NULL, 79, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:54:23', '2024-09-18 11:54:23'),
-(391, 'Stable Diffusion Artists', 'stable-diffusion-artists', NULL, NULL, NULL, NULL, 79, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:56:18', '2024-09-18 11:56:18'),
-(392, 'All AI Art Services', 'all-ai-art-services', NULL, NULL, NULL, NULL, 79, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:56:29', '2024-09-18 11:56:29'),
-(393, 'AI Consulting', 'ai-consulting', NULL, NULL, NULL, NULL, 80, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:56:47', '2024-09-18 11:56:47'),
-(396, 'AI Music Videos', 'ai-music-videos', NULL, NULL, NULL, NULL, 81, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:57:23', '2024-09-18 11:57:23'),
-(397, 'AI Video Art', 'ai-video-art', NULL, NULL, NULL, NULL, 81, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:57:50', '2024-09-18 11:57:50'),
-(398, 'AI Spokespersons Videos', 'ai-spokespersons-videos', NULL, NULL, NULL, NULL, 81, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:58:03', '2024-09-18 11:58:03'),
-(399, 'Voice Synthesis & AI', 'voice-synthesis-ai', NULL, NULL, NULL, NULL, 82, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 11:58:30', '2024-09-18 11:58:30'),
-(400, 'Text to Speech', 'text-to-speech', NULL, NULL, NULL, NULL, 82, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:02:55', '2024-09-18 12:02:55'),
-(401, 'AI Content Editing', 'ai-content-editing', NULL, NULL, NULL, NULL, 83, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:03:09', '2024-09-18 12:03:09'),
-(403, 'Online Tutoring', 'online-tutoring', NULL, NULL, NULL, NULL, 84, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:04:03', '2024-09-18 12:04:03'),
-(404, 'Language Lessons', 'language-lessons', NULL, NULL, NULL, NULL, 84, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:04:24', '2024-09-18 12:04:24'),
-(413, 'Modeling & Acting', 'modeling-acting', NULL, NULL, NULL, NULL, 85, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:08:10', '2024-09-18 12:08:10'),
-(414, 'Styling & Beauty', 'styling-beauty', NULL, NULL, NULL, NULL, 85, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:08:24', '2024-09-18 12:08:24'),
-(416, 'Trend Forecasting new', 'trend-forecasting-new', NULL, NULL, NULL, NULL, 85, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:08:39', '2024-09-18 12:08:39'),
-(418, 'Fitness', 'fitness', NULL, NULL, NULL, NULL, 86, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:08:52', '2024-09-18 12:08:52'),
-(419, 'Nutrition', 'nutrition', NULL, NULL, NULL, NULL, 86, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:09:01', '2024-09-18 12:09:01'),
-(429, 'Game Matchmakingnew', 'game-matchmakingnew', NULL, NULL, NULL, NULL, 87, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:10:34', '2024-09-18 12:10:34'),
-(431, 'Ingame Creation', 'ingame-creation', NULL, NULL, NULL, NULL, 87, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:10:44', '2024-09-18 12:10:44'),
-(432, 'Gameplay Experience & Feedbacknew', 'gameplay-experience-feedbacknew', NULL, NULL, NULL, NULL, 87, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:10:55', '2024-09-18 12:10:55'),
-(435, 'Game Recordings & Guides', 'game-recordings-guides', NULL, NULL, NULL, NULL, 87, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:06', '2024-09-18 12:11:06'),
-(436, 'Astrology & Psychics', 'astrology-psychics', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:18', '2024-09-18 12:11:18'),
-(437, 'Arts & Crafts', 'arts-crafts', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:26', '2024-09-18 12:11:26'),
-(438, 'Cosplay Creationnew', 'cosplay-creationnew', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:32', '2024-09-18 12:11:32'),
-(440, 'Puzzle & Game Creation', 'puzzle-game-creation', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:42', '2024-09-18 12:11:42'),
-(441, 'Traveling', 'traveling', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:11:50', '2024-09-18 12:11:50'),
-(442, 'Collectibles', 'collectibles', NULL, NULL, NULL, NULL, 88, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:12:07', '2024-09-18 12:12:07'),
-(453, 'Illustration', 'illustration', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:18:41', '2024-09-18 12:18:41'),
-(455, 'AI Avatar Designnew', 'ai-avatar-designnew', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:18:58', '2024-09-18 12:18:58'),
-(456, 'Children\'s Book Illustration', 'children-s-book-illustration', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:06', '2024-09-18 12:19:06'),
-(457, 'Portraits & Caricatures', 'portraits-caricatures', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:18', '2024-09-18 12:19:18'),
-(458, 'Cartoons & Comics', 'cartoons-comics', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:25', '2024-09-18 12:19:25'),
-(460, 'Pattern Design', 'pattern-design', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:34', '2024-09-18 12:19:34'),
-(462, 'Tattoo Design', 'tattoo-design', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:43', '2024-09-18 12:19:43'),
-(463, 'Storyboards', 'storyboards', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:50', '2024-09-18 12:19:50'),
-(464, 'NFT Art', 'nft-art', NULL, NULL, NULL, NULL, 105, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:19:56', '2024-09-18 12:19:56'),
-(467, 'Website Design', 'website-design', NULL, NULL, NULL, NULL, 106, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:20:16', '2024-09-18 12:20:16'),
-(468, 'App Design', 'app-design', NULL, NULL, NULL, NULL, 106, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:20:27', '2024-09-18 12:20:27'),
-(470, 'UX Design', 'ux-design', NULL, NULL, NULL, NULL, 106, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:20:35', '2024-09-18 12:20:35'),
-(471, 'Landing Page Design', 'landing-page-design', NULL, NULL, NULL, NULL, 106, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:20:42', '2024-09-18 12:20:42'),
-(472, 'Icon Design', 'icon-design', NULL, NULL, NULL, NULL, 106, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:20:49', '2024-09-18 12:20:49'),
-(474, 'Industrial & Product Design', 'industrial-product-design', NULL, NULL, NULL, NULL, 107, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:21:04', '2024-09-18 12:21:04'),
-(475, 'Character Modeling', 'character-modeling', NULL, NULL, NULL, NULL, 107, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:21:11', '2024-09-18 12:21:11'),
-(477, 'Game Art', 'game-art', NULL, NULL, NULL, NULL, 107, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:21:21', '2024-09-18 12:21:21'),
-(479, 'Graphics for Streamers', 'graphics-for-streamers', NULL, NULL, NULL, NULL, 107, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:21:37', '2024-09-18 12:21:37'),
-(480, 'Flyer Design', 'flyer-design', NULL, NULL, NULL, NULL, 108, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:21:54', '2024-09-18 12:21:54'),
-(482, 'Brochure Design', 'brochure-design', NULL, NULL, NULL, NULL, 108, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:01', '2024-09-18 12:22:01'),
-(483, 'Poster Design', 'poster-design', NULL, NULL, NULL, NULL, 108, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:08', '2024-09-18 12:22:08'),
-(485, 'Catalog Design', 'catalog-design', NULL, NULL, NULL, NULL, 108, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:20', '2024-09-18 12:22:20'),
-(486, 'Menu Design', 'menu-design', NULL, NULL, NULL, NULL, 108, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:28', '2024-09-18 12:22:28'),
-(487, 'Image Editing', 'image-editing', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:39', '2024-09-18 12:22:39'),
-(489, 'AI Image Editingnew', 'ai-image-editingnew', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:47', '2024-09-18 12:22:47'),
-(490, 'Presentation Design', 'presentation-design', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:22:54', '2024-09-18 12:22:54'),
-(491, 'Background Removal', 'background-removal', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:23:01', '2024-09-18 12:23:01'),
-(493, 'Infographic Design', 'infographic-design', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:23:13', '2024-09-18 12:23:13'),
-(495, 'Vector Tracing', 'vector-tracing', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:23:24', '2024-09-18 12:23:24'),
-(496, 'Resume Design', 'resume-design', NULL, NULL, NULL, NULL, 109, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:23:31', '2024-09-18 12:23:31'),
-(498, 'Social Media Design', 'social-media-design', NULL, NULL, NULL, NULL, 110, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:24:21', '2024-09-18 12:24:21'),
-(499, 'Social Posts & Banners', 'social-posts-banners', NULL, NULL, NULL, NULL, 110, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:24:30', '2024-09-18 12:24:30'),
-(500, 'Email Design', 'email-design', NULL, NULL, NULL, NULL, 110, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:24:37', '2024-09-18 12:24:37'),
-(501, 'Web Banners', 'web-banners', NULL, NULL, NULL, NULL, 110, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:24:44', '2024-09-18 12:24:44'),
-(502, 'Signage Design', 'signage-design', NULL, NULL, NULL, NULL, 110, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:24:51', '2024-09-18 12:24:51'),
-(503, 'Packaging & Label Design', 'packaging-label-design', NULL, NULL, NULL, NULL, 111, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:25:14', '2024-09-18 12:25:14'),
-(504, 'Book Design', 'book-design', NULL, NULL, NULL, NULL, 111, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:25:23', '2024-09-18 12:25:23'),
-(505, 'Book Covers', 'book-covers', NULL, NULL, NULL, NULL, 111, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:25:32', '2024-09-18 12:25:32'),
-(506, 'Album Cover Design', 'album-cover-design', NULL, NULL, NULL, NULL, 111, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:25:39', '2024-09-18 12:25:39'),
-(507, 'Architecture & Interior Design', 'architecture-interior-design', NULL, NULL, NULL, NULL, 112, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:26:15', '2024-09-18 12:26:15'),
-(508, 'Landscape Design', 'landscape-design', NULL, NULL, NULL, NULL, 112, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:27:12', '2024-09-18 12:27:12'),
-(509, 'Building Engineering', 'building-engineering', NULL, NULL, NULL, NULL, 112, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:27:21', '2024-09-18 12:27:21'),
-(511, 'T-Shirts & Merchandise', 't-shirts-merchandise', NULL, NULL, NULL, NULL, 113, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:27:36', '2024-09-18 12:27:36'),
-(512, 'Fashion Design', 'fashion-design', NULL, NULL, NULL, NULL, 113, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:27:45', '2024-09-18 12:27:45'),
-(513, 'Jewelry Design', 'jewelry-design', NULL, NULL, NULL, NULL, 113, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:27:54', '2024-09-18 12:27:54'),
-(515, '3D Architecture', '3d-architecture', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:28:15', '2024-09-18 12:28:15'),
-(517, '3D Industrial Design', '3d-industrial-design', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:28:25', '2024-09-18 12:28:25'),
-(518, '3D Fashion & Garment', '3d-fashion-garment', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:28:32', '2024-09-18 12:28:32'),
-(520, '3D Printing Characters', '3d-printing-characters', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:28:49', '2024-09-18 12:28:49'),
-(521, '3D Landscape', '3d-landscape', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:29:17', '2024-09-18 12:29:17'),
-(522, '3D Game Art', '3d-game-art', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:29:28', '2024-09-18 12:29:28'),
-(523, '3D Jewelry Design', '3d-jewelry-design', NULL, NULL, NULL, NULL, 114, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:29:39', '2024-09-18 12:29:39'),
-(525, 'Health & Medical Writing', 'health-medical-writing', NULL, NULL, NULL, NULL, 346, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:36:59', '2024-09-18 12:36:59'),
-(529, 'News and Political Writing', 'news-and-political-writing', NULL, NULL, NULL, NULL, 346, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:41:32', '2024-09-18 12:41:32'),
-(530, 'Marketing and Advertising Copy', 'marketing-and-advertising-copy', NULL, NULL, NULL, NULL, 346, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:41:52', '2024-09-18 12:41:52'),
-(531, 'Real Estate Writing', 'real-estate-writing', NULL, NULL, NULL, NULL, 346, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-18 12:42:10', '2024-09-18 12:42:10'),
-(532, 'Others apps/software', 'others-apps-software', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-09-19 14:24:00', '2024-09-19 14:24:00');
+(1, 'Programming & Tech', 'programming-tech', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:22', '2024-10-19 09:23:22'),
+(2, 'Graphics & Design', 'graphics-design', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:33', '2024-10-19 09:23:33'),
+(3, 'Digital Marketing', 'digital-marketing', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:43', '2024-10-19 09:23:43'),
+(4, 'Video & Animation', 'video-animation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:55', '2024-10-19 09:23:55'),
+(5, 'Writing & Translation', 'writing-translation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:05', '2024-10-19 09:24:05'),
+(6, 'Music & Audio', 'music-audio', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:17', '2024-10-19 09:24:17'),
+(7, 'Business Services', 'business-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:30', '2024-10-19 09:24:30'),
+(8, 'Consulting', 'consulting', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:39', '2024-10-19 09:24:39'),
+(9, 'AI Services', 'ai-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:49', '2024-10-19 09:24:49'),
+(10, 'Personal Growth', 'personal-growth', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:58', '2024-10-19 09:24:58'),
+(11, 'products /services', 'products-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:56:59', '2024-10-19 09:56:59'),
+(12, 'Website Development', 'website-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:57:26', '2024-10-19 09:57:26'),
+(13, 'courses', 'courses', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:57:58', '2024-10-19 09:57:58'),
+(14, 'Business Websites', 'business-websites', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:00:40', '2024-10-19 13:01:02'),
+(15, 'E-Commerce Development', 'e-commerce-development', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:01:29', '2024-10-19 10:01:29'),
+(16, 'Website Platforms', 'website-platforms', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:01:57', '2024-10-19 10:01:57'),
+(17, 'Website Maintenance', 'website-maintenance', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:21', '2024-10-19 10:02:21'),
+(18, 'AI Development', 'ai-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:36', '2024-10-19 10:02:36'),
+(19, 'Chatbot Development', 'chatbot-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:50', '2024-10-19 10:02:50'),
+(20, 'Game Development', 'game-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:11', '2024-10-19 10:03:11'),
+(21, 'Mobile App Development', 'mobile-app-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:25', '2024-10-19 10:03:25'),
+(22, 'Cloud & Cybersecurity', 'cloud-cybersecurity', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:39', '2024-10-19 10:03:39'),
+(23, 'Data Science & ML', 'data-science-ml', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:54', '2024-10-19 10:03:54'),
+(24, 'Software Development', 'software-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:04:06', '2024-10-19 10:04:06'),
+(25, 'Dropshipping Websites', 'dropshipping-websites', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:04:42', '2024-10-19 10:04:42'),
+(26, 'Landing Pages', 'landing-pages', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:05:11', '2024-10-19 13:16:28'),
+(28, 'Logo & Brand Identity', 'logo-brand-identity', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:30', '2024-10-19 10:05:30'),
+(29, 'Build a Complete Website', 'build-a-complete-website', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:41', '2024-10-19 10:05:41'),
+(30, 'Art & Illustration', 'art-illustration', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:44', '2024-10-19 10:05:44');
 
 -- --------------------------------------------------------
 
@@ -744,7 +310,7 @@ CREATE TABLE `country` (
   `countryname` varchar(200) NOT NULL,
   `code` char(2) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `country`
@@ -1135,23 +701,14 @@ CREATE TABLE `deposit` (
 --
 
 INSERT INTO `deposit` (`id`, `depositID`, `user_id`, `deposit_amount`, `receivable_amount`, `payment_method`, `frm_wallet_address`, `to_crypto_wallet_address`, `trxId`, `depscription`, `wallet_address`, `status`, `approved_by`, `created_at`, `updated_at`) VALUES
-(1, 'DEPOSIT.70c767c26cb3143bad5e660504fd6a76', 37, 2400.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo1', 'DEPOSIT.70c767c26cb3143bad5e660504fd6a76', NULL, 1, NULL, '2024-07-14 04:52:20', '2024-07-14 04:52:20'),
-(2, 'DEPOSIT.97e62d270e5e358a21b15119a6147b2f', 37, 151.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.97e62d270e5e358a21b15119a6147b2f', NULL, 0, NULL, '2024-07-14 04:52:44', '2024-07-14 04:52:44'),
-(3, 'DEPOSIT.c4fa7aecedac73641320d24d5bf3bf38', 8, 801.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.c4fa7aecedac73641320d24d5bf3bf38', NULL, 0, NULL, '2024-07-14 04:52:55', '2024-07-14 04:52:55'),
-(4, 'DEPOSIT.de58bfe3d33dada41a9398c30e21eeed', 37, 901.00, 33.00, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.de58bfe3d33dada41a9398c30e21eeed', NULL, 2, 1, '2024-07-14 04:53:09', '2024-07-14 11:58:35'),
-(5, 'DEPOSIT.0b3f44d9054402de39441e165a4bdfe0', 8, 23.00, 20.00, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'ALSDJFLSAWOIESLDKFL', 'DEPOSIT.0b3f44d9054402de39441e165a4bdfe0', NULL, 1, 1, '2024-07-14 04:53:34', '2024-07-14 10:13:54'),
-(6, 'DEPOSIT.182e6c2d3d78eef40e5dac7da77a748f', 8, 21.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TRX(TRC20)', 'DEPOSIT.182e6c2d3d78eef40e5dac7da77a748f', NULL, 0, NULL, '2024-07-14 11:58:58', '2024-07-14 11:58:58'),
-(7, 'DEPOSIT.bc5fcb0018cecacba559dc512740091b', 8, 501.00, 501.00, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.bc5fcb0018cecacba559dc512740091b', NULL, 1, NULL, '2024-07-15 18:02:33', '2024-07-15 18:02:33'),
-(8, 'DEPOSIT.0cc6928e741d75e7a92396317522069e', 9, 10001.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.0cc6928e741d75e7a92396317522069e', NULL, 1, NULL, '2024-07-16 04:18:09', '2024-07-16 04:18:09'),
-(9, 'DEPOSIT.0c9cefe1e8ae67b9e0420e6a2f276876', 17, 501.00, NULL, 'TRX(TRC20)', 'TKpRQQeykiNPuTjy5vw8do1QK3G64U6VxR', 'TKpRQQeykiNPuTjy5vw8do1QK3G64U6VxR', 'TKpRQQeykiNPuTjy5vw8do1QK3G64U6VxR', 'DEPOSIT.0c9cefe1e8ae67b9e0420e6a2f276876', NULL, 1, NULL, '2024-07-16 23:44:37', '2024-07-16 23:44:37'),
-(13, 'DEPOSIT.741a0099c9ac04c7bfc822caf7c7459f', 9, 1000.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.741a0099c9ac04c7bfc822caf7c7459f', NULL, 0, NULL, '2024-07-31 16:19:02', '2024-07-31 16:19:02'),
-(14, 'DEPOSIT.24ec8468b67314c2013d215b77034476', 9, 200.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', 'DEPOSIT.24ec8468b67314c2013d215b77034476', NULL, 0, NULL, '2024-08-02 17:57:31', '2024-08-02 17:57:31'),
-(21, 'DEP000021', 37, 900.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVK', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-04 11:20:47', '2024-10-01 11:20:47'),
-(22, 'DEP000022', 37, 890.00, NULL, 'TRX(TRC20)', 'TJ1GEtjoXfy8kRmJvQ44ekEj8DeAVKMDqo', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-04 11:21:12', '2024-10-01 11:21:12'),
-(25, 'DEP000025', 2, 50000.00, 50000.00, 'TRX(TRC20)', 'asdfsdfsdfsdfsdf', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-05 01:29:44', '2024-10-05 01:29:44'),
-(26, 'DEP000026', 19, 5000.00, NULL, 'TRX(TRC20)', '0xA1b2C3d4E5F6g7H8i9J0kL1M2nO3P4Q5rS6t7U8V', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-10 07:33:39', '2024-10-10 07:33:39'),
-(27, 'DEP000027', 19, 4560.00, NULL, 'TRX(TRC20)', '0xA1b2C3d4E5F6g7H8i9J0kL1M2nO3P4Q5rS6t7U882', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-10 07:35:07', '2024-10-10 07:35:07'),
-(31, 'DEP000031', 20, 2000.00, 2000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-10 09:36:47', '2024-10-10 09:36:47');
+(1, 'DEP000001', 3, 50000.00, 50000.00, 'TRX(TRC20)', 'easypaisa', NULL, NULL, NULL, NULL, 1, 1, '2024-10-08 11:23:17', '2024-10-08 11:25:43'),
+(2, 'DEP000002', 8, 5000.00, 5000.00, 'TRX(TRC20)', 'retyguhijko,l.;/\'', NULL, NULL, NULL, NULL, 1, 1, '2024-10-08 13:32:34', '2024-10-08 13:34:27'),
+(3, 'DEP000003', 8, 10.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-12 08:35:35', '2024-10-12 08:35:35'),
+(4, 'DEP000004', 10, 40000.00, 40000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, 4, '2024-10-14 10:06:23', '2024-10-14 10:08:58'),
+(5, 'DEP000005', 12, 500.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-15 16:12:47', '2024-10-15 16:12:47'),
+(6, 'DEP000006', 8, 100.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-15 16:55:41', '2024-10-15 16:55:41'),
+(7, 'DEP000007', 13, 5000.00, 5000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-21 11:47:08', '2024-10-21 11:47:08'),
+(8, 'DEP000008', 5, 40000.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-21 12:54:21', '2024-10-21 12:54:21');
 
 -- --------------------------------------------------------
 
@@ -1272,10 +829,11 @@ CREATE TABLE `gig` (
 --
 
 INSERT INTO `gig` (`id`, `user_id`, `category_id`, `subcategory_id`, `insubcategory_Id`, `name`, `gig_slug`, `thumbnail_images`, `types`, `language_name`, `language_type`, `gig_description`, `price`, `delivery_day`, `basic_price`, `basic_description`, `basic_delivery_days`, `source_file`, `standard_price`, `stn_descrition`, `stn_delivery_days`, `order_rules`, `stn_source_file`, `premium_price`, `premium_description`, `premium_delivery_days`, `premium_source_file`, `status`, `created_at`, `updated_at`) VALUES
-(1, 2, 1, 24, NULL, 'I will fix your php and laravel website', 'i-will-fix-your-php-and-laravel-website', '/backend/gig/O2gl0aZC4EmKUHOaLySj.jpg', '1', NULL, NULL, '<span style=\"color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;\">will fix minimal issues such that should take no more than an hour.</span>', 15.00, 3, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', NULL, NULL, NULL, 'Yes', 1, '2024-10-07 06:23:01', '2024-10-07 06:23:01'),
-(2, 2, 1, 24, NULL, 'I will develop fully custom PHP CRM for your business', 'i-will-develop-fully-custom-php-crm-for-your-business', '/backend/gig/M5h9YAoEvNHlzdREvpWZ.jpg', '1', NULL, NULL, '<h3 class=\"\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; color: rgb(64, 65, 69); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: 700; font-size: 28px; line-height: 36.4px; -webkit-box-pack: justify; display: flex; justify-content: space-between; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\"><b class=\"title\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-size: 16px; line-height: 24px; display: block;\">Basic CRM. CONTACT FOR CUSTOM CRM</b><div class=\"price-wrapper\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; -webkit-box-orient: vertical; -webkit-box-direction: normal; display: flex; flex-direction: column; -webkit-box-align: end; align-items: flex-end;\" bis_skin_checked=\"1\"><span class=\"price\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-size: 20px; font-weight: 400; line-height: 24px; white-space: nowrap;\">$80</span></div></h3><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\">Includes: Signup page, Empty Dashboard showing welcome msg. CONTACT FOR CUSTOM CRM REQUIREMENTS</p>', 80.00, 5, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', NULL, NULL, NULL, 'Yes', 1, '2024-10-07 06:29:07', '2024-10-07 06:29:07'),
-(3, 2, 1, 24, NULL, 'I will expert developer to fix wordpress, shopify, js, PHP, HTML, CSS issues', 'i-will-expert-developer-to-fix-wordpress-shopify-js-php-html-css-issues', '/backend/gig/IOEpxh3djLtdBVu5fdUR.jpg', '2', NULL, NULL, '<p class=\"_1axk4v3k zle7n01ey zle7n01cg zle7n07 zle7n02\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-weight: var(--_1epigd36i); line-height: var(--_1epigd389); font-size: 16px; color: var(--_1axk4v30); font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; --_1axk4v30: var(--_1epigd31l);\">Code of Dreams</p><div class=\"zle7n016h zle7n00 zle7n0103 zle7n01hv zle7n01b2\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; box-sizing: var(--_1epigd36f); gap: var(--_1epigd34a); flex-direction: var(--_1epigd35b); -webkit-box-orient: vertical; -webkit-box-direction: normal; display: var(--_1epigd35v); overflow: var(--_1epigd36w); color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\" bis_skin_checked=\"1\"><span class=\"_1axk4v3k zle7n01ey zle7n01cg zle7n06 zle7n02\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-family: var(--_1epigd33y); font-weight: var(--_1epigd36h); line-height: var(--_1epigd389); font-size: var(--_1epigd37r); color: var(--_1axk4v30); --_1axk4v30: var(--_1epigd31l);\">Hello there! 🚀 As an accomplished web developer, I\'m thrilled to offer you my versatile skills and expertise to bring your digital visions to life. With a solid 7 years of hands-on experience in the realm of web development, I have honed my craft in the art of JavaScript, CSS, HTML, and PHP. My journey has been marked by continuous learning, innovation, and a genuine passion for coding that drives me to deliver outstanding results. I hold a Master\'s degree in Computer Science, a testament to my commitment to advancing my knowledge in the realm of technology and its applications. Thank you</span></div>', NULL, NULL, 25.00, 'Bronze Package I will fix PHP, jQuery, JavaScript, Shopify, mysql, html, css, bootstrap bug in 24 hours', 1, NULL, 400.00, 'Gold Package Build 7 pages Web Application with Reports Or Client Website', 4, 'I\'m thrilled to offer you my versatile skills and expertise to bring your digital visions to life. With a solid 7 years of hands-on experience in the realm of web development, I have honed my craft in the art of JavaScript, CSS, HTML, and PHP. My journey has been marked by continuous learning, innovation, and a genuine passion for coding that drives me to deliver outstanding results. I hold a Master\'s degree in Computer Science, a testament to my commitment to advancing my knowledge in the realm of technology and its applications. Thank you', 'Yes', 700.00, 'Gold Package Build 7 pages Web Application with Reports Or Client Website', 7, 'Yes', 1, '2024-10-07 06:31:02', '2024-10-07 06:31:02'),
-(4, 2, 1, 24, NULL, 'I will update PHP, fix error ,upgrade, website ,script to PHP 7, 8', 'i-will-update-php-fix-error-upgrade-website-script-to-php-7-8', '/backend/gig/ewirs4zhz1E6to8xF4mx.jpg', '1', NULL, NULL, '<p>I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...</p>', 1500.00, 56, 0.00, 'null', 0, 'null', 0.00, 'null', 0, 'I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developerI am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer and have work experience of more than 12+ years. I am Experienced in WordPress, codeignitor, laravel and core PHP. In the due process I have dealt many small scale and large sca...I am a web developer....', 'Yes', 0.00, 'null', 0, 'Yes', 1, '2024-10-07 06:51:50', '2024-10-07 08:49:57');
+(1, 6, 1, 2, NULL, 'i will custumize all of your site in 5 minut', 'i-will-custumize-all-of-your-site-in-5-minut', '/backend/gig/5TcjdJjCBPwiRnkYeBvT.jpg', '2', NULL, NULL, 'i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;', NULL, NULL, 10.00, 'i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all', 3, NULL, 20.00, NULL, 5, NULL, 'Yes', 30.00, 'i will custumize all of your site in 5 minut', 7, 'Yes', 1, '2024-10-17 11:17:41', '2024-10-17 11:17:41'),
+(2, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website', '/backend/gig/isqMD1kpG6WbtGRhXvrx.jpg', '2', NULL, NULL, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh', NULL, NULL, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, NULL, 400.00, NULL, 4, NULL, 'Yes', 67899.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
+(3, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website-1', '/backend/gig/6mhTTMqvVOrX6sEenhYh.jpg', '2', NULL, NULL, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh', NULL, NULL, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, NULL, 400.00, NULL, 4, NULL, 'Yes', 67899.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
+(4, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website-2', '/backend/gig/eKfHBmR1jQsLY6o0D6QX.jpg', '2', NULL, NULL, '<p>i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh</p>', 0.00, 0, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, 'null', 400.00, 'null', 4, 'null', 'Yes', 600.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:40', '2024-10-19 13:41:59'),
+(5, 2, 1, 12, NULL, 'I will create a minimalist logo design for your business', 'i-will-create-a-minimalist-logo-design-for-your-business', '/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', '1', NULL, NULL, '<p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\">My strategy is to combine my skill and ever-thriving creativity with your design needs and inputs. Having worked for an advertising agency in India for 17 long years, I am accustomed to grasping the needs of my clients and delivering amazing logo designs in no time.&nbsp;</p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\">My services come with an assurance of great responsiveness, availability, on-time delivery, and most importantly,<span>&nbsp;</span><strong style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\">QUALITY</strong>.</p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\"><br style=\"color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\"><br></p>', 100.00, 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', NULL, NULL, NULL, 'Yes', 1, '2024-10-21 12:31:27', '2024-10-21 12:31:27');
 
 -- --------------------------------------------------------
 
@@ -1296,16 +854,13 @@ CREATE TABLE `gig_images_history` (
 --
 
 INSERT INTO `gig_images_history` (`id`, `gig_id`, `image_path`, `created_at`, `updated_at`) VALUES
-(1, 1, '/backend/gig/O2gl0aZC4EmKUHOaLySj.jpg', '2024-10-07 06:23:01', '2024-10-07 06:23:01'),
-(2, 1, '/backend/gig/M6xE3zhZxX156dEfPF6o.jpg', '2024-10-07 06:23:01', '2024-10-07 06:23:01'),
-(3, 1, '/backend/gig/kPslihTmnWLpF2Hc5qbG.jpg', '2024-10-07 06:23:01', '2024-10-07 06:23:01'),
-(4, 2, '/backend/gig/M5h9YAoEvNHlzdREvpWZ.jpg', '2024-10-07 06:29:07', '2024-10-07 06:29:07'),
-(5, 2, '/backend/gig/gVlXEFWaL2YFOdH88lvm.jpg', '2024-10-07 06:29:07', '2024-10-07 06:29:07'),
-(6, 2, '/backend/gig/akqFSAgonoHPjgCQltu3.jpg', '2024-10-07 06:29:07', '2024-10-07 06:29:07'),
-(8, 3, '/backend/gig/mjEPhQs06Jd78PPxsTC1.jpg', '2024-10-07 06:31:02', '2024-10-07 06:31:02'),
-(10, 3, '/backend/gig/cnkc0nCD0CkgWcOyytPe.jpg', '2024-10-07 06:31:02', '2024-10-07 06:31:02'),
-(11, 4, '/backend/gig/ewirs4zhz1E6to8xF4mx.jpg', '2024-10-07 06:51:50', '2024-10-07 06:51:50'),
-(12, 4, '/backend/gig/1tz4Pit4sXHZ2vjuGtj3.jpg', '2024-10-07 06:51:50', '2024-10-07 06:51:50');
+(1, 1, '/backend/gig/5TcjdJjCBPwiRnkYeBvT.jpg', '2024-10-17 11:17:41', '2024-10-17 11:17:41'),
+(2, 2, '/backend/gig/isqMD1kpG6WbtGRhXvrx.jpg', '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
+(3, 3, '/backend/gig/6mhTTMqvVOrX6sEenhYh.jpg', '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
+(4, 4, '/backend/gig/eKfHBmR1jQsLY6o0D6QX.jpg', '2024-10-19 07:41:40', '2024-10-19 07:41:40'),
+(5, 5, '/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27'),
+(6, 5, '/backend/gig/Fywh33qWisax7J2x04nw.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27'),
+(7, 5, '/backend/gig/B7dN8DerG0Np4JOCzX8I.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27');
 
 -- --------------------------------------------------------
 
@@ -1325,22 +880,6 @@ CREATE TABLE `level_commission` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `level_commission`
---
-
-INSERT INTO `level_commission` (`id`, `orderId`, `buyerId`, `buyer_name`, `level`, `amount`, `commission_recev_frm`, `commission_recv_frm_name`, `created_at`, `updated_at`) VALUES
-(1, '2012170-24', 27, 'Test40', 1, 0.10, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
-(2, '2012170-24', 26, 'test30', 2, 0.08, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
-(3, '2012170-24', 25, 'test21', 3, 0.06, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
-(4, '2012170-24', 24, 'test20', 4, 0.04, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
-(5, '2012170-24', 23, 'Test3', 5, 0.02, 28, 'test50', '2024-10-11 03:07:30', '2024-10-11 03:07:30'),
-(6, '2011038-24', 27, 'Test40', 1, 0.10, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
-(7, '2011038-24', 26, 'test30', 2, 0.08, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
-(8, '2011038-24', 25, 'test21', 3, 0.06, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
-(9, '2011038-24', 24, 'test20', 4, 0.04, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22'),
-(10, '2011038-24', 23, 'Test3', 5, 0.02, 28, 'test50', '2024-10-11 03:08:22', '2024-10-11 03:08:22');
 
 -- --------------------------------------------------------
 
@@ -1374,106 +913,6 @@ CREATE TABLE `messages` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`id`, `user_id`, `to_id`, `sender_id`, `message`, `files`, `created_at`, `updated_at`) VALUES
-(1, 37, 2, 37, 'Most often, when $(\'#myModal\').modal(\'show\'); doesn\'t work, it\'s caused by having included jQuery twice. Including jQuery 2 times makes modals not to work.Most often, when $(\'#myModal\').modal(\'show\'); doesn\'t work, it\'s caused by having included jQuery twice. Including jQuery 2 times makes modals not to work.', NULL, '2024-10-01 22:23:21', '2024-10-01 22:23:21'),
-(2, 37, 2, 37, 'If you use links\'s onclick function to call a modal by jQuery, the \"href\" can\'t be null.', NULL, '2024-10-01 22:24:10', '2024-10-01 22:24:10'),
-(3, 37, 2, 37, 'gggg', NULL, '2024-10-01 22:48:08', '2024-10-01 22:48:08'),
-(4, 2, 37, 2, 'hello bijon', NULL, '2024-10-01 22:48:16', '2024-10-01 22:48:16'),
-(5, 37, 2, 37, 'I will design modern websites in figma or adobe xd', NULL, '2024-10-01 22:49:26', '2024-10-01 22:49:26'),
-(10, 37, 2, 37, 'sdfsdfsdf', NULL, '2024-10-02 06:09:25', '2024-10-02 06:09:25'),
-(11, 37, 2, 37, 'sdfsdfsdf6666666666', NULL, '2024-10-02 06:11:18', '2024-10-02 06:11:18'),
-(12, 2, 37, 2, 'dfgdfgdfgdfg', NULL, '2024-10-02 06:16:04', '2024-10-02 06:16:04'),
-(13, 37, 2, 37, 'hhhhhhhhhhhhh', NULL, '2024-10-02 06:16:11', '2024-10-02 06:16:11'),
-(14, 37, 2, 37, 'sdfsdfsdf', NULL, '2024-10-02 06:21:37', '2024-10-02 06:21:37'),
-(15, 37, 2, 37, 'sdfsdf', NULL, '2024-10-02 06:22:23', '2024-10-02 06:22:23'),
-(16, 2, 37, 2, 'sdfsdf', '/backend/files/1727850425.jpg', '2024-10-02 06:27:05', '2024-10-02 06:27:05'),
-(17, 37, 2, 37, 'File upload', '/backend/files/1727850587.jpg', '2024-10-02 06:29:47', '2024-10-02 06:29:47'),
-(18, 37, 2, 37, 'tfgdgggggggggggg', '/backend/files/1727850693.jpg', '2024-10-02 06:31:33', '2024-10-02 06:31:33'),
-(19, 37, 2, 37, 'sdfsdfsdf', '/backend/files/1727852999.zip', '2024-10-02 07:09:59', '2024-10-02 07:09:59'),
-(21, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 09:53:45', '2024-10-02 09:53:45'),
-(22, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 09:56:47', '2024-10-02 09:56:47'),
-(23, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 09:59:14', '2024-10-02 09:59:14'),
-(24, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 10:02:01', '2024-10-02 10:02:01'),
-(25, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 10:04:22', '2024-10-02 10:04:22'),
-(26, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 10:04:30', '2024-10-02 10:04:30'),
-(27, 37, 2, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 10:07:26', '2024-10-02 10:07:26'),
-(29, 37, 15, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-02 10:31:54', '2024-10-02 10:31:54'),
-(30, 37, 2, 37, 'fddfdfdf', NULL, '2024-10-02 11:18:41', '2024-10-02 11:18:41'),
-(31, 37, 15, 37, 'sssss', NULL, '2024-10-02 11:21:07', '2024-10-02 11:21:07'),
-(32, 37, 15, 37, 'Okay sir', NULL, '2024-10-02 11:21:14', '2024-10-02 11:21:14'),
-(33, 37, 15, 37, 'Bijon Let me know', NULL, '2024-10-02 11:21:27', '2024-10-02 11:21:27'),
-(34, 2, 37, 2, 'Sir send my my task', NULL, '2024-10-01 22:48:16', '2024-10-01 22:48:16'),
-(35, 37, 2, 37, 'sss', '/backend/files/1727868911.jpg', '2024-10-02 11:35:11', '2024-10-02 11:35:11'),
-(36, 37, 15, 37, 'dfgdfgdfg', NULL, '2024-10-02 11:49:20', '2024-10-02 11:49:20'),
-(37, 37, 15, 37, 'ssdsdsssssssssss', NULL, '2024-10-02 11:49:27', '2024-10-02 11:49:27'),
-(38, 37, 15, 37, 'dfdfdd', NULL, '2024-10-02 11:49:31', '2024-10-02 11:49:31'),
-(39, 37, 15, 37, 'dfgdfgdfgdfg', NULL, '2024-10-02 11:49:39', '2024-10-02 11:49:39'),
-(40, 37, 2, 37, 'dfgdfgdfgdfg', '/backend/files/1727870037.jpg', '2024-10-02 11:53:57', '2024-10-02 11:53:57'),
-(41, 37, 2, 37, 'ZIP', '/backend/files/1727871011.zip', '2024-10-02 12:10:11', '2024-10-02 12:10:11'),
-(42, 2, 37, 2, 'Yes boss', NULL, '2024-10-03 02:45:45', '2024-10-03 02:45:45'),
-(43, 2, 37, 2, 'ssss', NULL, '2024-10-03 02:46:18', '2024-10-03 02:46:18'),
-(44, 2, 37, 2, 'Bijon How are you', NULL, '2024-10-03 02:49:36', '2024-10-03 02:49:36'),
-(45, 37, 2, 37, 'Yes sir I\"m good', NULL, '2024-10-03 02:49:53', '2024-10-03 02:49:53'),
-(46, 2, 37, 2, 'I\"m Bijon', NULL, '2024-10-03 02:55:41', '2024-10-03 02:55:41'),
-(47, 2, 37, 2, 'Hollow mr. ripon how are you', NULL, '2024-10-03 02:55:54', '2024-10-03 02:55:54'),
-(48, 2, 37, 2, 'hgh', NULL, '2024-10-03 02:57:21', '2024-10-03 02:57:21'),
-(49, 2, 37, 2, 'good', NULL, '2024-10-03 02:57:27', '2024-10-03 02:57:27'),
-(50, 2, 37, 2, 'sdddddddddddddd', NULL, '2024-10-03 02:59:59', '2024-10-03 02:59:59'),
-(51, 2, 37, 2, 'ssss', NULL, '2024-10-03 03:07:22', '2024-10-03 03:07:22'),
-(52, 2, 37, 2, 'sssss', NULL, '2024-10-03 03:07:27', '2024-10-03 03:07:27'),
-(53, 2, 37, 2, '1111111111111111111111100000000000', NULL, '2024-10-03 03:07:37', '2024-10-03 03:07:37'),
-(54, 2, 37, 2, 'gggggggg', NULL, '2024-10-03 03:10:50', '2024-10-03 03:10:50'),
-(55, 2, 37, 2, 'ssdfsdfsdf', NULL, '2024-10-03 03:16:42', '2024-10-03 03:16:42'),
-(56, 2, 37, 2, 'dddd', NULL, '2024-10-03 03:16:51', '2024-10-03 03:16:51'),
-(57, 2, 37, 2, 'Jan', NULL, '2024-10-03 03:17:00', '2024-10-03 03:17:00'),
-(58, 2, 37, 2, 'Rana How are you', NULL, '2024-10-03 03:17:06', '2024-10-03 03:17:06'),
-(59, 2, 37, 2, 'Yes adsfasdfsdafsdf', NULL, '2024-10-03 03:17:42', '2024-10-03 03:17:42'),
-(60, 2, 37, 2, 'ddddddddddddd', '/backend/files/1727925469.jpg', '2024-10-03 03:17:49', '2024-10-03 03:17:49'),
-(61, 2, 37, 2, 'Files', NULL, '2024-10-03 03:18:33', '2024-10-03 03:18:33'),
-(62, 2, 37, 2, 'Files', '/backend/files/1727925528.zip', '2024-10-03 03:18:48', '2024-10-03 03:18:48'),
-(63, 2, 37, 2, 'vvff', NULL, '2024-10-03 03:30:17', '2024-10-03 03:30:17'),
-(64, 2, 37, 2, 'gggg', NULL, '2024-10-03 03:30:38', '2024-10-03 03:30:38'),
-(65, 2, 37, 2, 'tumi ki sei ager motoi valos', NULL, '2024-10-03 04:10:13', '2024-10-03 04:10:13'),
-(66, 2, 37, 2, 'asdf', NULL, '2024-10-03 04:19:07', '2024-10-03 04:19:07'),
-(67, 2, 37, 2, 'jons123', NULL, '2024-10-03 04:19:20', '2024-10-03 04:19:20'),
-(68, 2, 37, 2, 'vfvffffgggg', NULL, '2024-10-03 04:26:48', '2024-10-03 04:26:48'),
-(69, 2, 37, 2, 'hhhhhhhhhhhhhhhhhhhhhhhhh', NULL, '2024-10-03 04:26:59', '2024-10-03 04:26:59'),
-(70, 2, 37, 2, 'sdfsdfsdsdf', NULL, '2024-10-03 04:28:43', '2024-10-03 04:28:43'),
-(71, 2, 37, 2, 'bbbbb', NULL, '2024-10-03 04:28:50', '2024-10-03 04:28:50'),
-(72, 2, 37, 2, 'jobs', NULL, '2024-10-03 04:33:17', '2024-10-03 04:33:17'),
-(73, 2, 37, 2, 'fdffff', NULL, '2024-10-03 04:34:42', '2024-10-03 04:34:42'),
-(74, 2, 37, 2, 'jobs', NULL, '2024-10-03 04:34:57', '2024-10-03 04:34:57'),
-(75, 37, 2, 37, 'Real Messages', NULL, '2024-10-03 04:35:10', '2024-10-03 04:35:10'),
-(76, 2, 37, 2, 'jobsssssss', '/backend/files/1727930567.jpg', '2024-10-03 04:42:47', '2024-10-03 04:42:47'),
-(77, 37, 2, 37, 'Hello Mir.', NULL, '2024-10-03 04:44:13', '2024-10-03 04:44:13'),
-(78, 2, 37, 2, 'Yes', NULL, '2024-10-03 04:44:22', '2024-10-03 04:44:22'),
-(79, 37, 2, 37, 'come to me', NULL, '2024-10-03 04:44:34', '2024-10-03 04:44:34'),
-(80, 2, 37, 2, 'Okay', NULL, '2024-10-03 04:44:48', '2024-10-03 04:44:48'),
-(81, 37, 20, 37, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-03 04:50:56', '2024-10-03 04:50:56'),
-(82, 37, 20, 37, 'Hi Julia I\'m Mr. Bijon Ahmed', NULL, '2024-10-03 04:51:25', '2024-10-03 04:51:25'),
-(83, 37, 2, 37, 'Okay', NULL, '2024-10-03 04:57:53', '2024-10-03 04:57:53'),
-(84, 37, 15, 37, 'asdfsdfsdf', NULL, '2024-10-03 04:58:07', '2024-10-03 04:58:07'),
-(85, 19, 2, 19, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-05 01:31:30', '2024-10-05 01:31:30'),
-(86, 19, 2, 19, 'HI', NULL, '2024-10-05 01:31:45', '2024-10-05 01:31:45'),
-(87, 19, 2, 19, 'are you there', NULL, '2024-10-05 01:32:00', '2024-10-05 01:32:00'),
-(88, 2, 19, 2, 'Congratulations successfully your order delivered', NULL, '2024-10-08 06:38:19', '2024-10-08 06:38:19'),
-(89, 2, 19, 2, 'Congratulations successfully your order delivered', '/backend/files/1728369987.zip', '2024-10-08 06:46:27', '2024-10-08 06:46:27'),
-(90, 19, 2, 19, 'Congratulations successfully yoCongratulations successfully yo', '[]', '2024-10-10 05:20:00', '2024-10-10 05:20:00'),
-(91, 19, 2, 19, 'asdfasdasdasd', '[]', '2024-10-10 05:20:18', '2024-10-10 05:20:18'),
-(92, 19, 2, 19, 'sdfsdfsdf', '/backend/files/WBB20a3PEwVbvOqNndi9.jpg', '2024-10-10 05:37:59', '2024-10-10 05:37:59'),
-(93, 19, 2, 19, 'Note:\r\nBootstrap provides button groups to group a series of buttons together on a single line. Here’s how you can create a simple button group using Bootstrap:', '', '2024-10-10 05:38:43', '2024-10-10 05:38:43'),
-(94, 19, 2, 19, 'Test', '', '2024-10-10 05:39:31', '2024-10-10 05:39:31'),
-(95, 19, 2, 19, 'TTT', '/backend/files/TzTFvhkNFgp0NFfqSYpb.jpg', '2024-10-10 05:39:39', '2024-10-10 05:39:39'),
-(96, 19, 2, 19, 'Okay sir', '', '2024-10-10 05:44:15', '2024-10-10 05:44:15'),
-(97, 19, 2, 19, 'I\'ll check tomorrow', '', '2024-10-10 05:44:25', '2024-10-10 05:44:25'),
-(98, 19, 2, 19, '123', '/backend/files/VrttK6BI9EuxJwaybSeq.jpg', '2024-10-10 05:46:40', '2024-10-10 05:46:40'),
-(99, 19, 2, 19, 'সংকটকালীন সময়ে জনসাধারণের পাশে থাকতে না পেরে দুঃখ প্রকাশ সাকিবের', '', '2024-10-10 05:46:54', '2024-10-10 05:46:54'),
-(100, 19, 2, 19, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', '', '2024-10-10 07:11:03', '2024-10-10 07:11:03');
-
 -- --------------------------------------------------------
 
 --
@@ -1505,6 +944,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 CREATE TABLE `notification` (
   `id` int(11) NOT NULL,
   `name` mediumtext DEFAULT NULL,
+  `type` int(11) DEFAULT NULL COMMENT '2=Seller,3=buyer',
+  `messages` text DEFAULT NULL,
+  `status` int(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -1513,12 +955,11 @@ CREATE TABLE `notification` (
 -- Dumping data for table `notification`
 --
 
-INSERT INTO `notification` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(3, 'Cancelled Orde', '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
-(4, 'Great Speed Notify ', '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
-(5, 'Test Notification', '2024-06-27 16:10:04', '2024-06-27 16:10:04'),
-(6, 'Web development', '2024-06-27 16:10:13', '2024-06-27 16:10:13'),
-(7, 'Data Science', '2024-06-27 16:10:21', '2024-06-27 16:10:21');
+INSERT INTO `notification` (`id`, `name`, `type`, `messages`, `status`, `created_at`, `updated_at`) VALUES
+(3, 'Cancelled Orde', 2, 'You can easily add more buttons and methods to display other notifications as needed.', 1, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
+(4, 'Great Speed Notify ', 3, 'Feel free to modify the messages or add more scenarios based on your experiences!', 1, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
+(9, 'Cancelled Orde', 2, 'You can easily add more buttons and methods to display other notifications as needed.', 0, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
+(14, 'messages', 2, 'messagesmessagesmessages', 1, '2024-10-21 05:14:37', '2024-10-21 05:14:37');
 
 -- --------------------------------------------------------
 
@@ -1538,25 +979,33 @@ CREATE TABLE `orders` (
   `service_fee` decimal(10,2) DEFAULT NULL,
   `sub_total` decimal(10,2) DEFAULT NULL,
   `delivery_day` int(11) DEFAULT NULL,
-  `delivery_day_convert_date` datetime DEFAULT NULL,
   `order_status` varchar(255) DEFAULT NULL COMMENT '1=Order Placed, 2=In Progess, 3=Cancel, 4=Delivery, 5=Complete',
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp(),
+  `company_commission` int(11) DEFAULT NULL,
+  `l_one_buyer` int(11) DEFAULT NULL,
   `lev_1` decimal(10,2) DEFAULT NULL,
+  `l_two_buyer` int(11) DEFAULT NULL,
   `lev_2` decimal(10,2) DEFAULT NULL,
+  `l_three_buyer` int(11) DEFAULT NULL,
   `lev_3` decimal(10,2) DEFAULT NULL,
+  `l_four_buyer` int(11) DEFAULT NULL,
   `lev_4` decimal(10,2) DEFAULT NULL,
+  `l_five_buyer` int(11) DEFAULT NULL,
   `lev_5` decimal(10,2) DEFAULT NULL,
-  `return_status` text NOT NULL
+  `seller_review_sts` int(11) DEFAULT 0,
+  `return_status` text NOT NULL,
+  `cancel_resion` text DEFAULT NULL,
+  `updated_at` datetime DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `delivery_day_convert_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `orders`
 --
 
-INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `selected_packages`, `selected_price`, `tips`, `service_fee`, `sub_total`, `delivery_day`, `delivery_day_convert_date`, `order_status`, `created_at`, `updated_at`, `lev_1`, `lev_2`, `lev_3`, `lev_4`, `lev_5`, `return_status`) VALUES
-(1, '2012170-24', 4, 28, 2, 'Single', '1500', 0, 2.00, 1502.00, 56, '2024-12-05 12:31:22', '5', '2024-10-10 06:31:22', '2024-10-11 09:07:30', 0.10, 0.08, 0.06, 0.04, 0.02, ''),
-(2, '2011038-24', 3, 28, 2, 'Standart', '400', 0, 2.00, 402.00, 4, '2024-10-15 02:49:01', '5', '2024-10-10 20:49:01', '2024-10-11 09:08:22', 0.10, 0.08, 0.06, 0.04, 0.02, '');
+INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `selected_packages`, `selected_price`, `tips`, `service_fee`, `sub_total`, `delivery_day`, `order_status`, `company_commission`, `l_one_buyer`, `lev_1`, `l_two_buyer`, `lev_2`, `l_three_buyer`, `lev_3`, `l_four_buyer`, `lev_4`, `l_five_buyer`, `lev_5`, `seller_review_sts`, `return_status`, `cancel_resion`, `updated_at`, `created_at`, `delivery_day_convert_date`) VALUES
+(1, '392777-24', 5, 3, 2, 'Single', '100', 0, 2.00, 102.00, 15, '5', NULL, NULL, 0.06, NULL, 0.04, NULL, 0.02, NULL, 0.02, NULL, 0.04, 0, '', NULL, '2024-10-21 12:52:30', '2024-10-21 12:43:03', '2024-11-05 12:43:03'),
+(2, '390875-24', 5, 3, 2, 'Single', '100', 0, 2.00, 102.00, 15, '5', NULL, NULL, 0.06, NULL, 0.04, NULL, 0.02, NULL, 0.02, NULL, 0.04, 0, '', NULL, '2024-10-21 12:58:04', '2024-10-21 12:57:16', '2024-11-05 12:57:16');
 
 -- --------------------------------------------------------
 
@@ -1581,19 +1030,6 @@ CREATE TABLE `orders_product` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `orders_product`
---
-
-INSERT INTO `orders_product` (`id`, `order_id`, `product_id`, `price`, `discount`, `discount_status`, `vat`, `vat_status`, `last_price`, `qty`, `color`, `size`, `created_at`, `updated_at`) VALUES
-(1, '177624-24', 217, 110.00000, 9.00000, 1, 0, 0, 100.10000, 1, 'Black', 'XL', '2024-04-01 19:54:14', '2024-04-01 19:54:14'),
-(2, '177624-24', 211, 6899.00000, 85.00000, 1, 0, 0, 1034.85000, 1, 'Green', 'XL', '2024-04-01 19:54:14', '2024-04-01 19:54:14'),
-(3, '119588-24', 211, 6899.00000, 85.00000, 1, 0, 0, 1034.85000, 1, 'Green', 'L', '2024-04-02 13:20:01', '2024-04-02 13:20:01'),
-(4, '119250-24', 217, 98.00000, 9.00000, 1, 0, 0, 89.18000, 1, 'Black', 'M', '2024-04-04 14:16:57', '2024-04-04 14:16:57'),
-(5, '210153-24', 12, 510.50000, 10.00000, 1, 5, 2, 481.95000, 1, '', '', '2024-09-10 20:46:20', '2024-09-10 20:46:20'),
-(6, '210153-24', 211, 6899.00000, 85.00000, 1, 0, 0, 1034.85000, 1, 'Green', 'L', '2024-09-10 20:46:20', '2024-09-10 20:46:20'),
-(7, '210153-24', 14, 510.50000, 10.00000, 1, 5, 2, 481.95000, 1, '', '', '2024-09-10 20:46:20', '2024-09-10 20:46:20');
-
 -- --------------------------------------------------------
 
 --
@@ -1611,19 +1047,6 @@ CREATE TABLE `order_history` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `order_history`
---
-
-INSERT INTO `order_history` (`id`, `order_id`, `product_id`, `seller_id`, `quantity`, `price`, `total`, `created_at`, `updated_at`) VALUES
-(1, 1, 217, 1, 1, 110, 110.00, '2024-04-01 19:54:14', '2024-04-01 19:54:14'),
-(2, 1, 211, 1, 1, 6899, 7009.00, '2024-04-01 19:54:14', '2024-04-01 19:54:14'),
-(3, 3, 211, 1, 1, 6899, 6899.00, '2024-04-02 13:20:01', '2024-04-02 13:20:01'),
-(4, NULL, 217, 1, 1, 98, 98.00, '2024-04-04 14:16:57', '2024-04-04 14:16:57'),
-(5, 4, 12, 4, 1, 510.5, 510.50, '2024-09-11 02:46:20', '2024-09-10 20:46:20'),
-(6, 4, 211, 1, 1, 6899, 7409.50, '2024-09-11 02:46:20', '2024-09-10 20:46:20'),
-(7, 4, 14, NULL, 1, 510.5, 7920.00, '2024-09-11 02:46:20', '2024-09-10 20:46:20');
 
 -- --------------------------------------------------------
 
@@ -3010,6 +2433,31 @@ CREATE TABLE `seller_ads` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `seller_review`
+--
+
+CREATE TABLE `seller_review` (
+  `id` bigint(20) NOT NULL,
+  `orderId` varchar(255) NOT NULL,
+  `review` text NOT NULL,
+  `rating` tinyint(3) UNSIGNED NOT NULL,
+  `seller_id` bigint(20) NOT NULL,
+  `buyer_id` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- Dumping data for table `seller_review`
+--
+
+INSERT INTO `seller_review` (`id`, `orderId`, `review`, `rating`, `seller_id`, `buyer_id`, `created_at`, `updated_at`) VALUES
+(1, '392777-24', 'Your ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour Review', 3, 2, 3, '2024-10-21 12:52:30', '2024-10-21 12:52:30'),
+(2, '390875-24', '.l..', 5, 2, 3, '2024-10-21 12:58:04', '2024-10-21 12:58:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `send_message`
 --
 
@@ -3074,14 +2522,7 @@ INSERT INTO `skills` (`id`, `user_id`, `name`, `created_at`, `updated_at`) VALUE
 (15, 2, 'TypeScript', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
 (19, 37, 'HTML', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
 (20, 37, 'JS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
-(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
-(22, 19, 'HTML', '2024-10-09 20:38:51', '2024-10-09 20:38:51'),
-(23, 19, 'CSS', '2024-10-09 20:38:51', '2024-10-09 20:38:51'),
-(24, 19, 'JS', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
-(25, 19, 'SDFSD', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
-(26, 19, 'SDF', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
-(27, 19, 'SFD', '2024-10-09 20:38:52', '2024-10-09 20:38:52'),
-(28, 19, 'SF', '2024-10-09 20:38:52', '2024-10-09 20:38:52');
+(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52');
 
 -- --------------------------------------------------------
 
@@ -3138,13 +2579,24 @@ INSERT INTO `tasks` (`id`, `title`, `description`, `project_id`, `emp_id`, `type
 CREATE TABLE `tbl_setting` (
   `id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
-  `forSellerCommission` int(11) DEFAULT NULL COMMENT 'company_commission',
+  `forSellerCommission` int(11) DEFAULT NULL,
+  `forBuyerCommission` int(11) DEFAULT NULL,
+  `deposit_service_charge` int(11) DEFAULT NULL COMMENT '%',
+  `convert_php_amt` float DEFAULT NULL,
+  `withdraw_service_charge` int(11) DEFAULT NULL COMMENT '%',
+  `withdraw_minimum_amount` int(11) DEFAULT NULL,
+  `minimum_trade_amount` int(11) DEFAULT NULL,
+  `minimum_deposit_amount` int(11) DEFAULT NULL,
   `level_1_bonus` int(11) DEFAULT NULL,
   `level_2_bonus` int(11) DEFAULT NULL,
   `level_3_bonus` int(11) DEFAULT NULL,
   `level_4_bonus` int(11) DEFAULT NULL,
   `level_5_bonus` int(11) DEFAULT NULL,
-  `service_fee` int(11) DEFAULT NULL COMMENT 'service fee',
+  `trade_fee` int(11) DEFAULT NULL COMMENT '%',
+  `first_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `second_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `third_up_lin_com` int(11) DEFAULT NULL COMMENT '%',
+  `trade_percent` int(11) DEFAULT NULL COMMENT '%',
   `tel` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `address` text NOT NULL,
@@ -3182,6 +2634,7 @@ CREATE TABLE `tbl_setting` (
   `maximum_deposit_amount` int(11) DEFAULT NULL,
   `daily_max_withdraw_request` int(11) DEFAULT NULL,
   `withdrawal_free_amount` int(11) DEFAULT NULL,
+  `service_fee` int(11) DEFAULT NULL,
   `withdrawal_free_on_percentage` int(11) DEFAULT NULL,
   `minimum_withdrawal` int(11) DEFAULT NULL,
   `maximum_withdrawal` int(11) DEFAULT NULL,
@@ -3189,14 +2642,14 @@ CREATE TABLE `tbl_setting` (
   `maximum_transfer_amount_to_other_user` int(11) DEFAULT NULL,
   `transfer_fee_fixed_amount` int(11) DEFAULT NULL,
   `traansfer_fee_on_percentage` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `tbl_setting`
 --
 
-INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `level_4_bonus`, `level_5_bonus`, `service_fee`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `whatsApp`, `website`, `telegram`, `register_bonus`, `setting_id`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `withdrawal_free_on_percentage`, `minimum_withdrawal`, `maximum_withdrawal`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`) VALUES
-(1, 'ISUMAX', 5, 5, 4, 3, 2, 1, 2, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 5, 1, '0', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `forBuyerCommission`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `level_4_bonus`, `level_5_bonus`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `whatsApp`, `website`, `telegram`, `register_bonus`, `setting_id`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `service_fee`, `withdrawal_free_on_percentage`, `minimum_withdrawal`, `maximum_withdrawal`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`) VALUES
+(1, 'TRADING', 20, 10, 0, 64, 6, 10, 5, 10, 3, 2, 1, 1, 2, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 5, 1, '5200', 3333, 4544, 45, 2, 4, 34, 333, 22, 22, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -3271,31 +2724,11 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `slug`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `business_return_email`, `landmark_2`, `landmark_1`, `introduce_yourself`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
 (1, 1, NULL, NULL, NULL, 75, 2, 'BIjon1', 'admin', '', '', 'dev1@mail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', '01915728982', '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, 'dev1@mail.com', NULL, '$2a$12$mfR8IIUFgQAWxN52iXB./ezTrEsA3IsXBg8Ts2bKygT4HmQhLKU/y', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, '', ''),
-(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon Ahmede', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/6yN2idCPul2OCoD9ORpM.jpeg', '019999999', '', '', '23', 'Bangladesh', '', NULL, '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\n<br />\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
-(3, 2, NULL, '1727692410', 0, 20, 0, 'ahmed', 'ahmed', NULL, NULL, 'user1@gmail.com', NULL, '03425556466', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'user1@gmail.com', NULL, '$2y$10$AyWKzUO4Ml.P1f.mnuREBuqJLx/UPMAGZ3tTVg.FSxJdqq.JPKLea', NULL, NULL, '2024-09-30 10:33:30', '2024-09-30 10:33:30', 1, 1, NULL, NULL, NULL),
-(4, 2, NULL, '1727701401', 0, NULL, 3, 'Amir Naseem-1', 'amir-naseem-1', NULL, NULL, 'amirnaseem6362@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amir6453', NULL, '$2y$10$LkrQbobmAkH1TG4xTzwLdemF8Z0vnvcGdu8nkkCU6JqpTfaOQAM9S', NULL, NULL, '2024-09-30 13:03:22', '2024-09-30 13:03:22', 1, 0, NULL, NULL, NULL),
-(5, 2, NULL, '1727726602', 0, NULL, 3, 'Amir Naseem', 'amir-naseem', NULL, NULL, 'amirnaseem2647@gmail.com', NULL, '03440761564', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Amnailar@2647', NULL, '$2y$10$P8WEPiIAgqGN4yiC3AnFguJ.wtp0/B/9sjMR79IBVDeUxMrvr3NeG', NULL, NULL, '2024-09-30 20:03:22', '2024-09-30 20:03:22', 1, 1, NULL, NULL, NULL),
-(6, 2, NULL, '1727868749', 0, NULL, 0, 'Amir Naseem', 'ameerah', NULL, NULL, 'ameerah2647@gmail.com', '/backend/files/tCZolpk5HOWZJiq4gVqr.jpeg', '03440761564', NULL, NULL, '173', NULL, NULL, NULL, 'null', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, 'Abc', NULL, NULL, NULL, 'Amnailar@2647', NULL, '$2y$10$MTycrP7y9SvGyk0cn6nUUOxzu8ID31ZdA4pkHyZLIb6IGrsPE4ZD6', NULL, NULL, '2024-10-02 11:32:29', '2024-10-02 11:32:29', 1, 1, NULL, NULL, NULL),
-(7, 2, NULL, '1727941284', 0, 30, 3, 'Amir 2', 'amir-2', NULL, NULL, 'amir2@gmail.com', NULL, '0310916754', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'amir2@gmail.com', NULL, '$2y$10$PJ.DFmtOzWOoDalyiuP.F.yhNGG0.bsSGLypar1y1IE7.oe7FHvhy', NULL, NULL, '2024-10-03 07:41:24', '2024-10-03 07:41:24', 1, 1, NULL, NULL, NULL),
-(8, 2, NULL, '1727941614', 0, 5, 0, 'amir3', 'amir3', NULL, NULL, 'amir3@gmail.com', NULL, '03440761564', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '8', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'amir3@gmail.com', NULL, '$2y$10$s8itLoZlS4VGgs5fPblKxOFTmUKIdM6q9G1tBBD/4UlEIsB/Qz7Ya', NULL, NULL, '2024-10-03 07:46:54', '2024-10-03 07:46:54', 1, 1, NULL, NULL, NULL),
-(9, 2, NULL, '1727941752', 0, NULL, 8, 'amir4', 'amir4', NULL, NULL, 'amir4@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'amir4@gmail.com', NULL, '$2y$10$BN5oyA2IP2RCEaT/LbdCh.Jc5ZEqG/PXGtkpRcrTkD7ccYqrwO4Ii', NULL, NULL, '2024-10-03 07:49:12', '2024-10-03 07:49:12', 1, 0, NULL, NULL, NULL),
-(10, 2, NULL, '1727943289', 0, NULL, 3, 'amir5', 'amir5', NULL, NULL, 'amir5@gmail.com', '/backend/files/dJEyDXhHFlQ4BGNhKt1u.jpeg', '923440761564', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'amir5@gmail.com', NULL, '$2y$10$Or/UZMXPavYrtf1rESS5jurTfEjZL5KlE.b7ouo2v/wXwKjv8V82u', NULL, NULL, '2024-10-03 08:14:50', '2024-10-03 08:14:50', 1, 1, NULL, NULL, NULL),
-(11, 2, NULL, '1727952110', 0, NULL, 7, 'Ayesha1', 'ayesha1', NULL, NULL, 'Ayesha1@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha1@gmail.com', NULL, '$2y$10$3.dNJTWky89xXU9xg4Hsou6ixdCB6BeUKXN7YZjPEi0jcJJEDXi9S', NULL, NULL, '2024-10-03 10:41:50', '2024-10-03 10:41:50', 1, 0, NULL, NULL, NULL),
-(12, 2, NULL, '1727952216', 0, NULL, 7, 'Ayesha2', 'ayesha2', NULL, NULL, 'Ayesha2@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha2@gmail.com', NULL, '$2y$10$4xvx4YvtL5/gz1FIzsiKguawp5o8GLvBHLjUApEAuJgVbBPqGy/GO', NULL, NULL, '2024-10-03 10:43:36', '2024-10-03 10:43:36', 1, 0, NULL, NULL, NULL),
-(13, 2, NULL, '1727952287', 0, NULL, 7, 'Ayesha3', 'ayesha3', NULL, NULL, 'Ayesha3@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha3@gmail.com', NULL, '$2y$10$DFGgckIBi4x7d7jMEwJ/qOrVS1aSREhnbu94R5Zces5.IGF.jaTUy', NULL, NULL, '2024-10-03 10:44:47', '2024-10-03 10:44:47', 1, 0, NULL, NULL, NULL),
-(14, 2, NULL, '1727952359', 0, NULL, 7, 'Ayesha4', 'ayesha4', NULL, NULL, 'Ayesha4@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha4@gmail.com', NULL, '$2y$10$/ohHl3gFGPSb4.QeZjCOleNR8ffqrJ8FZO9kSCJCuneKY25zuytjC', NULL, NULL, '2024-10-03 10:45:59', '2024-10-03 10:45:59', 1, 0, NULL, NULL, NULL),
-(15, 2, NULL, '1727952406', 0, NULL, 7, 'Ayesha5', 'ayesha5', NULL, NULL, 'Ayesha5@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$MGWSo6FbhVlJdtitVqNz5e1bdzVKCQ9SdQXVTRl1cCTp/isKLI6x6', NULL, NULL, '2024-10-03 10:46:46', '2024-10-03 10:46:46', 1, 0, NULL, NULL, NULL),
-(16, 2, NULL, '1727952460', 0, NULL, 7, 'Ayesha6', 'ayesha6', NULL, NULL, 'Ayesha6@gmail.com', NULL, NULL, NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$iK3L7Rqt20XjkbRSSaIVU.sN6NnfTsu447KsGGS5Mwvx1H5a6GERW', NULL, NULL, '2024-10-03 10:47:40', '2024-10-03 10:47:40', 1, 0, NULL, NULL, NULL),
-(19, 3, NULL, '1727952460', 0, NULL, 1, 'Ayesha6333', 'ayesh333a6', NULL, NULL, 'Ayesh2a6@gmail.com', '/backend/files/KPeloUqk0AYIJwjqooxv.png', '655455', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, 'A buyer is an individual or entity that acquires goods or services in exchange for money or other forms of payment. Buyers play a crucial role in the marketplace, driving demand for products and influencing supply chains. They make purchasing decisions based on various factors, such as price, quality, brand reputation, and personal or business needs. Buyers can range from everyday consumers purchasing for personal use to large corporations procuring goods in bulk for operational purposes. Their preferences and behavior often shape market trends, making them key players in the economy.', NULL, NULL, NULL, 'Ayesha5@gmail.com', NULL, '$2y$10$iK3L7Rqt20XjkbRSSaIVU.sN6NnfTsu447KsGGS5Mwvx1H5a6GERW', NULL, NULL, '2024-10-03 10:47:40', '2024-10-03 10:47:40', 1, 1, NULL, NULL, NULL),
-(20, 3, NULL, '1728530105', 3, 15, 19, 'TestBuyer', 'testbuyer', NULL, NULL, 'testbuyer@gmail.com', '/backend/files/gWPB9RnT1Cc4If7yIdKS.jpeg', '0569898999', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '345', NULL, NULL, NULL, NULL, NULL, 'A buyer is an individual or entity that acquires goods or services in exchange for money or other forms of payment. Buyers play a crucial role in the marketplace, driving demand for products and influencing supply chains. They make purchasing decisions based on various factors, such as price, quality, brand reputation, and personal or business needs. Buyers can range from everyday consumers purchasing for personal use to large corporations procuring goods in bulk for operational purposes. Their preferences and behavior often shape market trends, making them key players in the economy.', NULL, NULL, NULL, 'testbuyer@gmail.com', NULL, '$2y$10$XOv0ekbymskSaWeZ/l6GG.zJMWlorl0vYR1h4..ppWB6kXWZlJTRi', NULL, NULL, '2024-10-09 21:15:05', '2024-10-09 21:15:05', 1, 1, NULL, NULL, NULL),
-(21, 3, NULL, '1728613209', 3, 10, 20, 'Test1', 'test1', NULL, NULL, 'test1@mail.com', NULL, NULL, NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test1@mail.com', NULL, '$2y$10$v3jFyE6aSdc9y1qcCkPKmOZ9OSGlCYOhok9JRZIBGSD75laXMYJX6', NULL, NULL, '2024-10-10 20:20:10', '2024-10-10 20:20:10', 1, 0, NULL, NULL, NULL),
-(22, 3, NULL, '1728614286', 3, NULL, 21, 'Test2', 'test2', NULL, NULL, 'test2@mail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test2@mail.com', NULL, '$2y$10$iCL0Q4q1pjH1ZXtOpAgnPe.lxqrJKfmzQSKsn0mfbu3ObH0/xu4eu', NULL, NULL, '2024-10-10 20:38:06', '2024-10-10 20:38:06', 1, 0, NULL, NULL, NULL),
-(23, 3, NULL, '1728614307', 3, NULL, 22, 'Test3', 'test3', NULL, NULL, 'test3@mail.com', NULL, NULL, NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test3@mail.com', NULL, '$2y$10$5nHW9SEScSv4Gk/EK6fYGO1LAApPogieYaWyZHzZ.FqzE9RJEOarO', NULL, NULL, '2024-10-10 20:38:27', '2024-10-10 20:38:27', 1, 0, NULL, NULL, NULL),
-(24, 3, NULL, '1728614536', 3, NULL, 23, 'test20', 'test20', NULL, NULL, 'test20@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test20@gmail.com', NULL, '$2y$10$lBQAhrvEQDGb6dqu3gC3yuYwDP9tJbc1CKFkLltuxFyVsg8H1Tzu.', NULL, NULL, '2024-10-10 20:42:16', '2024-10-10 20:42:16', 1, 0, NULL, NULL, NULL),
-(25, 3, NULL, '1728614599', 3, 5, 24, 'test21', 'test21', NULL, NULL, 'test21@gmail.com', NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test21@gmail.com', NULL, '$2y$10$IsN434nP11eQWZcQUKdi6eGa2dEoUCM6YREEfvGH3bPDAED7edlwi', NULL, NULL, '2024-10-10 20:43:19', '2024-10-10 20:43:19', 1, 0, NULL, NULL, NULL),
-(26, 3, NULL, '1728614672', 3, 5, 25, 'test30', 'test30', NULL, NULL, 'test30@gmail.com', NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'test30@gmail.com', NULL, '$2y$10$nykaZnbDenyL.AbxKmw4/eGDdm1RP.7ZRlCPAq7B3ffGKj2ofi.li', NULL, NULL, '2024-10-10 20:44:32', '2024-10-10 20:44:32', 1, 0, NULL, NULL, NULL),
-(27, 3, NULL, '1728614771', 3, 5, 26, 'Test40', 'test40', NULL, NULL, 'test40@gmail.com', NULL, '0149157287982', NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'test40@gmail.com', NULL, '$2y$10$a4rGbh6mYyabmPgiDBooE.kG2wmtp1NPx2tJnEetJMW3/BefcQ2Y2', NULL, NULL, '2024-10-10 20:46:11', '2024-10-10 20:46:11', 1, 1, NULL, NULL, NULL),
-(28, 3, NULL, '1728614799', 3, NULL, 27, 'test50', 'test50', NULL, NULL, 'test50@gmail.com', NULL, '01915728982', NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'test50@gmail.com', NULL, '$2a$12$HXiG7vvs2de2UcGCC1ojTeTh1YHz1MteDNA7PZo163XQF8pEve.PK', NULL, NULL, '2024-10-10 20:46:39', '2024-10-10 20:46:39', 1, 1, NULL, NULL, NULL);
+(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/kyaoSq4OMyro3VS156tT.jpeg', '019999999', '', '', '23', 'Bangladesh', '', 'null', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
+(3, 3, NULL, '1729512518', 3, NULL, 0, 'Md. Gazi Giash Uddin Bijon', 'buyer', NULL, NULL, 'buyer@gmail.com', '/backend/files/nGWG9QNvD63e3D77kCeC.png', '01915728982', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'buyer@gmail.com', NULL, '$2y$10$s/k3X7FOFJgcva8kB4BK2OSoBqU2pxXcnpV7cwl/9Jn2TuysQ43m2', NULL, NULL, '2024-10-21 12:08:38', '2024-10-21 12:08:38', 1, 1, NULL, NULL, NULL),
+(4, 3, NULL, '1729515025', 3, 5, 0, 'buyer1', 'buyer1', NULL, NULL, 'buyer1@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'aertyhj', NULL, NULL, NULL, 'buyer1@gmail.com', NULL, '$2y$10$bvjBHuzgpv3nXjbBdnMdhedlbzi67ji5C52e4HyerzNb9nk63DAZu', NULL, NULL, '2024-10-21 12:50:25', '2024-10-21 12:50:25', 1, 1, NULL, NULL, NULL),
+(5, 3, NULL, '1729515121', 3, NULL, 4, 'buyer2', 'buyer2', NULL, NULL, 'buyer2@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, 'i am an graphics desginger', NULL, NULL, NULL, 'buyer2@gmail.com', NULL, '$2y$10$W1/DrVQVBPXAEXO.k2QhgOqxU5OmMnTOLPvmefXlXaUtu75HfwmWS', NULL, NULL, '2024-10-21 12:52:01', '2024-10-21 12:52:01', 1, 1, NULL, NULL, NULL),
+(6, 2, NULL, '1729515163', 2, NULL, 0, 'seller1', 'seller1', NULL, NULL, 'Seller1@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'a\\szdfghj', NULL, NULL, NULL, 'Seller1@gmail.com', NULL, '$2y$10$7dH3.HAbA0JQ4sd98ysLx.APiCuMSUYBu1Udh15ySjvAI.7EA4DVu', NULL, NULL, '2024-10-21 12:52:43', '2024-10-21 12:52:43', 1, 1, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -3352,9 +2785,8 @@ CREATE TABLE `withdraw` (
 --
 
 INSERT INTO `withdraw` (`id`, `withdrawID`, `depscription`, `payment_method`, `withdrawal_amount`, `user_id`, `receivable_amount`, `wallet_address`, `withdrawal_pin`, `remarks`, `approved_by`, `transection_fee`, `payable_amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'W.b7aa68fca7cb9d8801b6f092244b88a0', 'W.b7aa68fca7cb9d8801b6f092244b88a0', 'USDTTRC-20', '34', 2, NULL, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', NULL, NULL, NULL, 0, NULL, 0, '2024-10-09 05:50:19', '2024-10-09 05:50:19'),
-(2, 'W.3983e1512aa570c564fab522bdb3efa5', 'W.3983e1512aa570c564fab522bdb3efa5', 'USDTTRC-20', '45', 2, 45, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, 0, NULL, 1, '2024-10-09 05:50:45', '2024-10-09 05:50:45'),
-(3, 'W.b430bedaf544d495473ae9767afc7111', 'W.b430bedaf544d495473ae9767afc7111', 'USDTTRC-20', '40', 2, NULL, '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, 0, NULL, 0, '2024-10-09 06:15:47', '2024-10-09 06:15:47');
+(1, 'W.1f34004ebcb05f9acda6016d5cc52d5e', 'W.1f34004ebcb05f9acda6016d5cc52d5e', 'USDTTRC-20', '200', 6, NULL, '03440761564', NULL, 'due too un regesterd wallet adress', 4, 0, NULL, 2, '2024-10-19 13:49:56', '2024-10-19 14:20:27'),
+(2, 'W.5505712229fb1eb500efadddc0353264', 'W.5505712229fb1eb500efadddc0353264', 'USDTTRC-20', '200', 6, NULL, '03440761564', NULL, NULL, NULL, 0, NULL, 0, '2024-10-19 13:54:18', '2024-10-19 13:54:18');
 
 -- --------------------------------------------------------
 
@@ -3382,7 +2814,8 @@ INSERT INTO `withdrawal_method` (`id`, `user_id`, `name`, `account_number`, `cur
 (1, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', NULL, NULL, NULL, '2024-10-09 02:56:12', '2024-10-09 02:56:12'),
 (5, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, '2024-10-09 03:20:02', '2024-10-09 03:20:02'),
 (6, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy2', NULL, NULL, NULL, '2024-10-09 03:31:28', '2024-10-09 03:31:28'),
-(7, 19, 'USDT TRC-20', 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghi', NULL, NULL, NULL, '2024-10-10 07:40:36', '2024-10-10 07:40:36');
+(7, 8, 'USDT TRC-20', 'zdsxfcgbhjnmk', NULL, NULL, NULL, '2024-10-15 12:52:17', '2024-10-15 12:52:17'),
+(8, 6, 'USDT TRC-20', '03440761564', NULL, NULL, NULL, '2024-10-19 08:40:58', '2024-10-19 08:40:58');
 
 --
 -- Indexes for dumped tables
@@ -3615,6 +3048,12 @@ ALTER TABLE `seller_ads`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `seller_review`
+--
+ALTER TABLE `seller_review`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `send_message`
 --
 ALTER TABLE `send_message`
@@ -3704,7 +3143,7 @@ ALTER TABLE `buy_token`
 -- AUTO_INCREMENT for table `categorys`
 --
 ALTER TABLE `categorys`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=533;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `certificates`
@@ -3740,7 +3179,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `deposit`
 --
 ALTER TABLE `deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `education`
@@ -3752,7 +3191,7 @@ ALTER TABLE `education`
 -- AUTO_INCREMENT for table `experience`
 --
 ALTER TABLE `experience`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -3770,13 +3209,13 @@ ALTER TABLE `gig`
 -- AUTO_INCREMENT for table `gig_images_history`
 --
 ALTER TABLE `gig_images_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `level_commission`
 --
 ALTER TABLE `level_commission`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `manufacturers`
@@ -3788,7 +3227,7 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3800,7 +3239,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `orders`
@@ -3812,13 +3251,13 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT for table `orders_product`
 --
 ALTER TABLE `orders_product`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_history`
 --
 ALTER TABLE `order_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `order_status`
@@ -3887,6 +3326,12 @@ ALTER TABLE `seller_ads`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `seller_review`
+--
+ALTER TABLE `seller_review`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `send_message`
 --
 ALTER TABLE `send_message`
@@ -3896,7 +3341,7 @@ ALTER TABLE `send_message`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -3920,7 +3365,7 @@ ALTER TABLE `tbl_setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
@@ -3932,13 +3377,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `withdraw`
 --
 ALTER TABLE `withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `withdrawal_method`
 --
 ALTER TABLE `withdrawal_method`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

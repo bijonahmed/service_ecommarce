@@ -125,9 +125,6 @@ definePageMeta({
 
 const levelData = ref([]);
 
-
-
-
 const getRefferalCommission = async () => {
     loading.value = true;
     try {

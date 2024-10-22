@@ -551,7 +551,7 @@ class DepositController extends Controller
             ->orderBy('withdraw.id', 'desc')->get(); // Sorting by 'id' in descending order
         $tran = [];
 
-        
+
         foreach ($data as $v) {
 
             if ($v->status == 0) {

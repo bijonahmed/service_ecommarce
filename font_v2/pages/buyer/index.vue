@@ -88,6 +88,39 @@
                 <p class="text mb30 text-justify" style="text-align: justify;" v-html="introduce_yourself"></p>
 
 
+                <hr class="opacity-100 mb15">
+                <div class="product_single_content mb50">
+                  <div class="mbp_pagination_comments">
+                    <div class="row">
+                      <div class="col-md-12" v-for="(review, index) in reviewlist" :key="index">
+                        <div
+                          class="mbp_first position-relative d-flex align-items-center justify-content-start mb30-sm">
+                          <Nuxt-link :to="`/public?profile=${review.slug}`" target="_blank"><img
+                              :src="review.image || '/images/blog/comments-2.png'" class="mr-3"
+                              style="height:40px;width:40px;" :alt="review.altText || 'Reviewer Image'"></Nuxt-link>
+                          <div class="ml20">
+                            <Nuxt-link :to="`/public?profile=${review.slug}`" target="_blank">
+                              <h6 class="mt-0 mb-0">{{ review.name }}</h6>
+                            </Nuxt-link>
+                            <div><span class="fz14">{{ review.created_at }}</span></div>
+                          </div>
+                        </div>
+
+                        <div class="d-flex m-2">
+                          <!-- Loop through the rating dynamically -->
+                          <i v-for="star in 5" :key="star"
+                            :class="star <= review.rating ? 'fas fa-star review-color' : 'far fa-star review-color ms-2'"></i>
+                        </div>
+
+                        <p class="text mt20 mb20 text-justify"><span class="text-justify">{{ review.rev }}</span></p>
+                      </div>
+                      <!--For Review -->
+
+
+                    </div>
+                  </div>
+                </div>
+
                 <div class="col-lg-9">
                   <span v-if="skillsdata && skillsdata.length > 0">
                     <h4 class="widget-title">My Skills</h4>
@@ -180,6 +213,7 @@ const gigList = ref([]);
 const euddata = ref([]);
 const expdata = ref([]);
 const certificatedata = ref([]);
+const reviewlist = ref([]);
 const skillsdata = ref('');
 const name = ref('');
 const joindate = ref('');
@@ -275,6 +309,7 @@ const chkUserrow = async () => {
     profName.value = response.data.profName;
     introduce_yourself.value = response.data.introduce_yourself
     profileLogo.value = response.data.image;
+    reviewlist.value = response.data.review;
 
   } catch (error) {
     console.error("Error fetching user data:", error);

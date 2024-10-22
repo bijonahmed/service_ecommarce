@@ -1246,6 +1246,106 @@ class UserController extends Controller
             ]);
         }
     }
+
+
+    public function checkLevelHistorysAdmin(Request $request)
+    {
+        //dd($request->all());
+
+        $email    = $request->email; //$request->email;
+        $chkUser  = User::where('email', $email)->first();
+        $userId   = $chkUser->id;
+
+        $checkL1          = User::where('join_id', $userId)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level1_ids       = $checkL1->pluck('id')->toArray();
+        // Fetch level 2 users based on level 1 IDs
+        $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level2_ids       = $checkL2->pluck('id')->toArray();
+
+
+        $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level3_ids       = $checkL3->pluck('id')->toArray();
+
+        $checkL4          = User::whereIn('join_id', $level3_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level4_ids       = $checkL4->pluck('id')->toArray();
+
+        $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->get();
+        $level5_ids       = $checkL5->pluck('id')->toArray();
+
+
+        $data['level_1']  = $checkL1;
+        $data['level_2']  = $checkL2;
+        $data['level_3']  = $checkL3;
+        $data['level_4']  = $checkL4;
+        $data['level_5']  = $checkL5;
+
+
+        $levels = [
+            'level_1' => $checkL1,
+            'level_2' => $checkL2,
+            'level_3' => $checkL3,
+            'level_4' => $checkL4,
+            'level_5' => $checkL5,
+        ];
+
+        $response = [];
+        //$amt = 0;
+        foreach ($levels as $level => $users) {
+            foreach ($users as $user) {
+                $chkOrder = Order::where('buyerId', $user->id)->select(
+                    'buyerId',
+                    'orderId',
+                    'l_one_buyer',
+                    'l_two_buyer',
+                    'l_three_buyer',
+                    'l_four_buyer',
+                    'l_five_buyer',
+                    'lev_1',
+                    'lev_2',
+                    'lev_3',
+                    'lev_4',
+                    'lev_5'
+                )->get();
+
+                $amt = 0;
+                // Iterate through each order
+                foreach ($chkOrder as $chkOrder) {
+                    // Check each level buyer against the logged-in user ID
+                    if ($chkOrder->l_one_buyer == $userId) {
+                        $amt += $chkOrder->lev_1; // Sum lev_1
+                    }
+                    if ($chkOrder->l_two_buyer == $userId) {
+                        $amt += $chkOrder->lev_2; // Sum lev_2
+                    }
+                    if ($chkOrder->l_three_buyer == $userId) {
+                        $amt += $chkOrder->lev_3; // Sum lev_3
+                    }
+                    if ($chkOrder->l_four_buyer == $userId) {
+                        $amt += $chkOrder->lev_4; // Sum lev_4
+                    }
+                    if ($chkOrder->l_five_buyer == $userId) {
+                        $amt += $chkOrder->lev_5; // Sum lev_5
+                    }
+                }
+
+                // Prepare the response array
+                $response[$level][] = [
+                    'id'         => $user->id,
+                    'name'       => $user->name,
+                    'email'      => $user->email,
+                    'join_id'    => $user->join_id,
+                    'amount'     => $amt,
+                    'created_at' => date("Y-M-d", strtotime($user->created_at))
+                ];
+            }
+        }
+        // dd($response);
+        return response()->json($response);
+    }
+
+
+
+
     public function checkLevelHistorys(Request $request)
     {
         ///dd($request->all());

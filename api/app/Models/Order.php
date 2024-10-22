@@ -28,6 +28,8 @@ class Order extends Model
         'delivery_day_convert_date',
         'selected_packages',
         'selected_price',
+        'cancel_resion',
+        'seller_review_sts',
         'company_commission',
         'order_status',
     ];
