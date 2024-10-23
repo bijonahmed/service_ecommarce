@@ -1247,7 +1247,6 @@ class UserController extends Controller
         }
     }
 
-
     public function checkLevelHistorysAdmin(Request $request)
     {
         //dd($request->all());
@@ -1262,7 +1261,6 @@ class UserController extends Controller
         $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level2_ids       = $checkL2->pluck('id')->toArray();
 
-
         $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level3_ids       = $checkL3->pluck('id')->toArray();
 
@@ -1272,15 +1270,11 @@ class UserController extends Controller
         $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level5_ids       = $checkL5->pluck('id')->toArray();
 
-
-
-
         $data['level_1']  = $checkL1;
         $data['level_2']  = $checkL2;
         $data['level_3']  = $checkL3;
         $data['level_4']  = $checkL4;
         $data['level_5']  = $checkL5;
-
 
         $levels = [
             'level_1' => $checkL1,
@@ -1345,9 +1339,6 @@ class UserController extends Controller
         return response()->json($response);
     }
 
-
-
-
     public function checkLevelHistorys(Request $request)
     {
         ///dd($request->all());
@@ -1362,7 +1353,6 @@ class UserController extends Controller
         $checkL2          = User::whereIn('join_id', $level1_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level2_ids       = $checkL2->pluck('id')->toArray();
 
-
         $checkL3          = User::whereIn('join_id', $level2_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level3_ids       = $checkL3->pluck('id')->toArray();
 
@@ -1372,13 +1362,11 @@ class UserController extends Controller
         $checkL5          = User::whereIn('join_id', $level4_ids)->select('id', 'name', 'email', 'created_at', 'join_id')->where('role_id', 3)->get();
         $level5_ids       = $checkL5->pluck('id')->toArray();
 
-
         $data['level_1']  = $checkL1;
         $data['level_2']  = $checkL2;
         $data['level_3']  = $checkL3;
         $data['level_4']  = $checkL4;
         $data['level_5']  = $checkL5;
-
 
         $levels = [
             'level_1' => $checkL1,
@@ -1434,7 +1422,7 @@ class UserController extends Controller
                     'name'       => $user->name,
                     'email'      => $user->email,
                     'join_id'    => $user->join_id,
-                    'amount'     => $amt,
+                    'amount'     => number_format($amt, 2),
                     'created_at' => date("Y-M-d", strtotime($user->created_at))
                 ];
             }
@@ -1442,7 +1430,6 @@ class UserController extends Controller
         // dd($response);
         return response()->json($response);
     }
-
 
     public function checkLevelHistory()
     {

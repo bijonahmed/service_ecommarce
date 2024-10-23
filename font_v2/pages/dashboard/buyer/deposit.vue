@@ -142,7 +142,7 @@ const handleSubmit = async () => {
         return;
     }
 
-   // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
+    // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
     try {
         const response = await axios.post('/user/getWaypaymentConfirm', {
             paymentMethod: selectedPayment.value,

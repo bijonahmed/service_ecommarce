@@ -112,6 +112,23 @@
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
                       <h3> Available Balance: ${{ depositAmount }}</h3>
+                     
+                   
+                      <center><span>Messages List</span></center>
+                      <div v-if="chatUsers.length">
+                        <ul class="list-group">
+                          <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                            class="list-group-item chat-user-item">
+                            <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
+                              style="width: 40px; height: 40px;" />
+                            <a :href="`/dashboard/buyer/chatbox/${user.user_id}`"
+                              class="text-decoration-none text-dark">
+                              {{ user.user_name }}
+                            </a>
+                            <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count }}</span> <!-- Unread count -->
+                          </li>
+                        </ul>
+                      </div>
                       <hr />
                       <ShareProfileLinkBuyer />
 
@@ -280,7 +297,7 @@
                                     <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
                                       order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="text-danger text-center">Canceled <br/>[{{ order.cancel_resion }}]</td>
+                                    <td class="text-danger text-center">Canceled <br />[{{ order.cancel_resion }}]</td>
                                   </tr>
 
                                 </tbody>
@@ -426,6 +443,7 @@ import axios from 'axios';
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
 const euddata = ref([]);
+const chatUsers = ref([]);
 const expdata = ref([]);
 const certificatedata = ref([]);
 const router = useRouter();
@@ -459,6 +477,24 @@ const getMessages = async () => {
 };
 
 
+const selectUser = (users) => {
+  const userId = users.user_id; // Get user_id from reactive data
+  const currentUrl = window.location.origin; // Get current origin (e.g., http://example.com)
+  const fullUrl = `${currentUrl}/dashboard/buyer/chatbox/${userId}`; // Construct the full URL
+  window.location.href = fullUrl;
+}
+
+
+const getChatusersList = async () => {
+  try {
+    const response = await axios.get(`/chat/getChatUsers`);
+    chatUsers.value = response.data;
+  } catch (error) {
+    // Handle error
+  }
+};
+
+
 const submitCancelOrder = () => {
   console.log("============orderId:" + canceOrderID.value);
   console.log("============cancelReason:" + cancelReason.value);
@@ -481,22 +517,22 @@ const submitCancelOrder = () => {
           cancel_resion: cancelReason.value
         }
       })
-      .then(response => {
-        // Handle the response (success or failure)
-        Swal.fire(
-          'Cancelled!',
-          'Your order has been cancelled.',
-          'success'
-        );
-      })
-      .catch(error => {
-        // Handle errors
-        Swal.fire(
-          'Error!',
-          'There was an issue cancelling your order. Please try again.',
-          'error'
-        );
-      });
+        .then(response => {
+          // Handle the response (success or failure)
+          Swal.fire(
+            'Cancelled!',
+            'Your order has been cancelled.',
+            'success'
+          );
+        })
+        .catch(error => {
+          // Handle errors
+          Swal.fire(
+            'Error!',
+            'There was an issue cancelling your order. Please try again.',
+            'error'
+          );
+        });
     }
   });
 }
@@ -507,7 +543,7 @@ const cancelOrders = (orderId) => {
   $('#myModal_cancel').modal('show');
 
 }
- 
+
 
 
 
@@ -647,6 +683,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 
 
 onMounted(() => {
+  getChatusersList();
   getMessages();
   getBalance();
   getOrderCounting();
@@ -659,6 +696,25 @@ onBeforeUnmount(() => {
 });
 </script>
 <style scoped>
+.chat-user-item {
+  cursor: pointer;
+  /* Change cursor to pointer */
+  transition: background-color 0.3s;
+  /* Smooth background transition */
+}
+
+.chat-user-item:hover {
+  background-color: #f8f9fa;
+  /* Light gray on hover */
+}
+
+.chat-user-item.selected {
+  background-color: #e0e0e0;
+  /* Background for selected user */
+  font-weight: bold;
+  /* Bold text for selected user */
+}
+
 .order-list {
   display: flex;
   flex-wrap: wrap;
@@ -674,7 +730,9 @@ onBeforeUnmount(() => {
   transition: transform 0.3s, box-shadow 0.3s;
   background-color: #ffffff;
 }
-
+.chat-user-item {
+  cursor: pointer;
+}
 .card:hover {
   transform: translateY(-5px);
   /* Lift the card on hover */

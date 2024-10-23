@@ -112,7 +112,24 @@
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
                       <h3> My Total Earning: ${{ earning }}</h3>
+                      <center><span>Messages List</span></center>
+                      <div v-if="chatUsers.length">
+                        <ul class="list-group">
+                          <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                            class="list-group-item chat-user-item">
+                            <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
+                              style="width: 40px; height: 40px;" />
+                            <a :href="`/dashboard/chatbox/${user.user_id}`"
+                              class="text-decoration-none text-dark">
+                              {{ user.user_name }}
+                            </a>
+                            <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count
+                              }}</span> <!-- Unread count -->
+                          </li>
+                        </ul>
+                      </div>
                       <hr />
+
                       <ShareProfileLink />
                       <hr>
                       <h4 class="widget-title">My Skills</h4>
@@ -307,7 +324,7 @@
                                     <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
                                       order.selected_price }}</nuxt-link></td>
                                     <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="text-danger text-center">Canceled <br/>[{{ order.cancel_resion }}]</td>
+                                    <td class="text-danger text-center">Canceled <br />[{{ order.cancel_resion }}]</td>
                                   </tr>
 
                                 </tbody>
@@ -490,7 +507,7 @@ const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
 const errors = ref({});
-
+const chatUsers = ref([]);
 
 definePageMeta({
   middleware: "is-logged-out",
@@ -655,6 +672,17 @@ const rejectOrders = async (orderId) => {
         confirmButtonText: 'OK',
       });
     }
+  }
+};
+
+
+
+const getChatusersList = async () => {
+  try {
+    const response = await axios.get(`/chat/getChatUsersTo`);
+    chatUsers.value = response.data;
+  } catch (error) {
+    // Handle error
   }
 };
 
@@ -836,6 +864,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 };
 
 onMounted(() => {
+  getChatusersList();
   getMessages();
   getOrderCounting();
   getOrderStatus();

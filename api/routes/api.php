@@ -34,6 +34,7 @@ use App\Http\Controllers\Post\PostController;
 Route::group([
     'prefix' => 'chat'
 ], function () {
+    Route::get('/userrowCheck', [ChatController::class, 'userrowCheck']);
     Route::post('messages', [ChatController::class, 'message']);
     Route::post('sendMessages', [ChatController::class, 'sendMessages']);
     Route::get('sendChatRequest', [ChatController::class, 'sendChatRequest']);

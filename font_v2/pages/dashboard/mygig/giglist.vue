@@ -52,8 +52,8 @@
                                         <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
                                                 class="fa-solid fa-trash"></i></a>
                                         <!-- Share  -->
-                                        <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12" style="left: 20px;"><i
-                                                class="fa-solid fa-share"></i></nuxt-link>
+                                        <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12"
+                                            style="left: 20px;"><i class="fa-solid fa-share"></i></nuxt-link>
                                         <!-- Edit  -->
                                         <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`" class="listing-fav fz12 "
                                             style="top: 65px;"><i class="fa-solid fa-pen"></i></nuxt-link>
@@ -122,25 +122,25 @@ const gigData = ref([]);
 
 
 const shareUrl = (slug) => {
-  const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
-  const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
+    const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
+    const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
 
-  navigator.clipboard.writeText(fullUrl)
-    .then(() => {
+    navigator.clipboard.writeText(fullUrl)
+        .then(() => {
 
-        Swal.fire(
-                    'Copied!',
-                    'Your gig URL has been copied.',
-                    'success'
-                );
+            Swal.fire(
+                'Copied!',
+                'Your gig URL has been copied.',
+                'success'
+            );
 
 
 
-      //alert('URL copied to clipboard!');
-    })
-    .catch(err => {
-      console.error('Failed to copy URL: ', err);
-    });
+            //alert('URL copied to clipboard!');
+        })
+        .catch(err => {
+            console.error('Failed to copy URL: ', err);
+        });
 };
 
 const deleteGig = async (id) => {
@@ -206,9 +206,9 @@ const gigList = async () => {
 };
 
 onMounted(() => {
-   // getCatList();
+    // getCatList();
     gigList();
-   
+
 
 });
 

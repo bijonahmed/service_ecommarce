@@ -6,24 +6,7 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -35,7 +18,7 @@
               <div class="col-sm-8 col-lg-10">
                 <div class="breadcumb-style1 mb10-xs">
                   <div class="breadcumb-list">
-                    <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
+                    <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
                     <a href="#">Messages</a>
                   </div>
                 </div>
@@ -43,7 +26,8 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link></div>
+
+                    <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
                   </div>
 
                 </div>
@@ -56,6 +40,7 @@
         <div class="dashboard__content content">
           <div class="row">
             <div class="col-lg-3">
+              <!-- <button @click="getChatusersList">Test</button> -->
               <div class="message_container">
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
@@ -67,7 +52,6 @@
                     </li>
                   </ul>
                 </div>
-
               </div>
             </div>
             <div class="col-sm-9">
@@ -120,17 +104,18 @@
                   </form>
                 </div>
               </div>
-              </div>
+
             </div>
           </div>
-          <!-- END ChatBox -->
-          <div />
         </div>
+        <!-- END ChatBox -->
+        <div />
       </div>
+    </div>
 
-      <!-- Modal Template -->
+    <!-- Modal Template -->
 
-      <Footer />
+    <Footer />
   </body>
 </template>
 
@@ -159,7 +144,6 @@ const chatContainer = ref(null); // Reference for the chat container
 const isUserAtBottom = ref(true); // Track if the user is at the bottom
 const senderId = ref(''); // Set this to the ID of the logged-in buyer
 const recipientId = ref(''); // The ID of the recipient (seller)
-const selectedUserId = ref(null);
 // Send a new message
 const selUser = ref(null); // Property to store the selected user
 // Method to select a user
@@ -200,8 +184,6 @@ async function sendMessage() {
       },
     });
     console.log(response);
-
-    // Handle the response
     fetchChatHistory(); // Refresh the chat history after sending the message
     messageContent.value = ''; // Clear the message input
     uploadedFile.value = null; // Clear the file input
@@ -257,7 +239,7 @@ const handleScroll = () => {
   }
 };
 
-
+const selectedUserId = ref(null);
 async function selectUser(users) {
   console.log("====" + users.user_id);
   recipientId.value = users.user_id;
@@ -297,28 +279,48 @@ const getCatList = async () => {
 
 const getChatusersList = async () => {
   try {
-    const response = await axios.get(`/chat/getChatUsers`);
+    const response = await axios.get(`/chat/getChatUsersTo`);
     chatUsers.value = response.data;
   } catch (error) {
     // Handle error
   }
 };
-
-
-const getParticularData = async () => {
+const chkUserrow = async () => {
   try {
+    loading.value = true;
     const response = await axios.post(`/auth/me`);
     senderId.value = response.data.user_id;
+
   } catch (error) {
-    // Handle error
+    console.error("Error fetching user data:", error);
+  } finally {
+    loading.value = false;
+
   }
 };
 
-
-
+const defaultLoadingUser = async () => {
+  const buyerId = route.params.buyerId; // Get sellerId from the route
+  loading.value = true;
+  try {
+    const response = await axios.get('/chat/userrowCheck', {
+      params: {
+        sellerId: buyerId, // The ID of the buyer (logged-in user)
+      }
+    });
+    //console.log('Response data:', response.data); // Debugging log
+    selectUser(response.data); // Call the function to select the user
+  } catch (error) {
+    console.error('Error fetching user data:', error); // Log the error
+    // Optionally, you can show an error message to the user here
+  } finally {
+    loading.value = false; // Set loader to false
+  }
+};
 let intervalId;
 onMounted(() => {
-  getParticularData();
+  defaultLoadingUser(); 
+  chkUserrow();
   fetchChatHistory(); // Fetch chat history immediately
   intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
   // Attach scroll event listener to track user scrolling
@@ -328,7 +330,7 @@ onMounted(() => {
   }
   getChatusersList();
   fetchChatHistory();
-  getCatList();
+  //getCatList();
 
 });
 
@@ -343,6 +345,7 @@ onBeforeUnmount(() => {
 });
 
 </script>
+
 
 
 <style scoped>
@@ -420,7 +423,7 @@ onBeforeUnmount(() => {
 
 .chat-user-item:hover {
   background-color: #075e54;
-   
+
 }
 
 

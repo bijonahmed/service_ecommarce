@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Events\Message;
 use Illuminate\Support\Str;
+use DB;
 
 
 class ChatController extends Controller
@@ -54,12 +55,14 @@ class ChatController extends Controller
         $chatusers = [];
         foreach ($data as $v) {
             $userrecords = User::where('id', $v->user_id)->first();
+            $rowcont     =  MyMessage::where('sender_id', $v->sender_id)->where('is_read', 0)->count();
             $chatusers[] = [
                 'id'             => $v->id,
                 'user_id'        => $userrecords->id,
                 'user_name'      => $userrecords->name,
                 'slug'           => $v->slug,
                 'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
+                'unread_count'   => $rowcont, // This will reflect the count of unread messages
             ];
         }
         // Return messages as a JSON response
@@ -69,24 +72,33 @@ class ChatController extends Controller
     public function getChatUsers()
     {
         //  dd($rdata);
-
-        $data = MyMessage::select('messages.*', 'users.slug', 'users.image AS profile_picture', 'users.name AS usersname')
+        $data = MyMessage::select(
+            'messages.to_id AS user_id', // Using to_id to represent the recipient
+            'users.slug',
+            'users.image AS profile_picture',
+            'users.name AS usersname'
+        )
             ->leftJoin('users', 'users.id', '=', 'messages.to_id')
             ->where('messages.user_id', $this->userid)
-            ->groupBy('messages.to_id')
-            ->orderBy('created_at', 'desc')
+            ->groupBy('messages.to_id', 'users.slug', 'users.image', 'users.name') // Group by the fields being selected
+            ->orderBy('user_id', 'desc') // Optionally order by unread count
             ->get();
 
-        //dd($data);
+        // dd($data); // Uncomment this for debugging to check results
 
         $chatusers = [];
         foreach ($data as $v) {
+
+            $rowcont =  MyMessage::where('user_id', $v->user_id)->where('is_read', 0)->count();
+
+
             $chatusers[] = [
-                'id'             => $v->id,
-                'user_id'        => $v->to_id,
+                'id'             => $v->user_id, // Ensure this matches your user ID field
+                'user_id'        => $v->user_id,
                 'user_name'      => $v->usersname,
                 'slug'           => $v->slug,
                 'profilePicture' => !empty($v->profile_picture) ? url($v->profile_picture) : "",
+                'unread_count'   => $rowcont, // This will reflect the count of unread messages
             ];
         }
         // Return messages as a JSON response
@@ -97,17 +109,19 @@ class ChatController extends Controller
     {
         //dd($request->all());
         $checkSellerSlug = User::where('slug', $request->sellerSlug)->first();
-        $gigrow          = Gig::where('gig_slug', $request->gig_slug)->first();
+        $gigrow          = Gig::where('gig_slug', $request->gigSlug)->first();
         $gigName         = !empty($gigrow->name) ? $gigrow->name : "";
+
+        //echo $gigName; 
         $selectedPackages = $request->SelectedPackages;
         $SelectedPrice   = $request->SelectedPrice;
 
         $rdata['user_id']        = $this->userid;
         $rdata['to_id']          = $checkSellerSlug->id;
         $rdata['sender_id']      = $this->userid;
-        $rdata['message']        = "Congratulations on your new gig: \"$gigName\"! 🎉. We wish you great success!"; //$request->message;
+        $rdata['message']        = "Thank you, and I look forward to your response. \n: This message relates to: \"<b>$gigName</b>\"! 🎉. We wish you great success!"; //$request->message;
         $rdata['files']          = '';
-        //  dd($rdata);
+        //   dd($rdata);
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);
@@ -121,7 +135,7 @@ class ChatController extends Controller
         $validator = Validator::make($request->all(), [
             'senderId'        => 'required', // Set this to the ID of the logged-in buyer
             'recipientId'     => 'required', // The ID of the recipient (seller)
-            'message'         => 'required|string|max:255', // Validate message content
+            // 'message'         => 'required', // Validate message content
         ]);
 
         if ($validator->fails()) {
@@ -178,23 +192,20 @@ class ChatController extends Controller
                 $query->where('sender_id', $recipientId)
                     ->where('to_id', $buyerId);
             })
+            // Adjust this to 'orderBy('id', 'desc')' for descending order
             ->get();
 
         // Prepare the response data
         $data = [];
 
         foreach ($messages as $message) {
-            // Fetch sender's details
             $sender = User::find($message->sender_id);
-            // Fetch recipient's details
             $recipient = User::find($message->to_id);
-
-            // Prepare the message data with sender and recipient details
             $data[] = [
                 'id'          => $message->id,
                 'user_id'     => $message->sender_id, // Sender ID
                 'message'     => $message->message, // Message content
-                'files'       => !empty($message->message_files) ? url($message->message_files) : "", // File attachment (if any)
+                'files'       => !empty($message->files) ? url($message->files) : "", // File attachment (if any)
                 'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
 
                 // Sender details
@@ -208,6 +219,31 @@ class ChatController extends Controller
                 'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
             ];
         }
+        // Return messages as a JSON response
+        return response()->json($data);
+    }
+
+
+    public function userrowCheck(Request $request)
+    {
+
+        //dd($request->all());
+        $userId   = $request->sellerId;
+        $row = MyMessage::select('messages.*', 'users.slug', 'users.id as user_id', 'users.image AS profile_picture', 'users.name AS usersname')
+            ->leftJoin('users', 'users.id', '=', 'messages.to_id')
+            ->where('messages.to_id', $userId)
+            ->orderBy('created_at', 'desc')
+            ->first();
+        $udata['is_read'] = 1;
+        MyMessage::where('user_id', $userId)->update($udata);
+
+        $data = [ // Use '=' to assign the array
+            'id'             => $row->sender_id,  //selected user
+            'user_id'        => $row->user_id,
+            'user_name'      => $row->usersname,
+            'slug'           => $row->slug,
+            'profilePicture' => !empty($row->profile_picture) ? url($row->profile_picture) : "",
+        ];
 
         // Return messages as a JSON response
         return response()->json($data);

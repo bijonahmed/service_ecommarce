@@ -428,7 +428,7 @@
 
               <p>Your message has been sent to the seller! If you want to chat more, click the button below:</p>
               <center>
-                <a href="/dashboard/buyer/chatbox" class="btn btn-primary text-white">Continue Chat</a>
+                <a href="#" class="btn btn-primary text-white" @click="continueChat">Continue Chat</a>
               </center>
 
             </div>
@@ -616,8 +616,9 @@ const captchaValid = ref(false);
 const SelectedPackages = ref('');
 const SelectedPrice = ref('');
 //for insert
+const user_id = ref('');
 const deliveryday = ref('');
-
+const sellerSlug = ref('');
 const message = ref('');
 const reviewlist = ref('');
 const formatPrice = (price) => {
@@ -658,12 +659,14 @@ const contactSend = async () => {
   try {
     // $('#payment_modal').modal('hide');
     const sellerSlug = responseData.value.sellerSlug;
+    const gigSlug    = route.params.slug; 
     console.log("Fetching data for sellerSlug:", sellerSlug);
     const response = await axios.get(`/chat/sendChatRequest`, {
       params: {
         sellerSlug: sellerSlug,
         SelectedPackages: SelectedPackages.value,
         SelectedPrice: SelectedPrice.value,
+        gigSlug: gigSlug,
 
       },
     });
@@ -750,6 +753,8 @@ const setPrice = async (packages, price, delivery_day) => {
 
 }
 
+
+
 function createCaptcha() {
   const canvas = document.getElementById("CapCode");
   const context = canvas.getContext("2d");
@@ -783,6 +788,7 @@ function validateCaptcha() {
     captchaValid.value = true;
   }
 }
+
 
 async function login() {
 
@@ -845,6 +851,14 @@ const roleMsg = () => {
   });
 }
 
+const continueChat = () => {
+  const userId = user_id.value; // Get user_id from reactive data
+  const currentUrl = window.location.origin; // Get current origin (e.g., http://example.com)
+  const fullUrl = `${currentUrl}/dashboard/buyer/chatbox/${userId}`; // Construct the full URL
+  window.location.href = fullUrl;
+  // router.push(`/dashboard/buyer/chatbox/${sellerId}`);
+}
+
 const checkrow = async () => {
   try {
     loading.value = true;
@@ -855,6 +869,8 @@ const checkrow = async () => {
     });
 
     responseData.value = response.data.data;
+    sellerSlug.value = response.data.data.sellerSlug;
+    user_id.value = response.data.data.user_id;
     gig_id.value = response.data.gig_id;
     carouselItems.value = response.data.galleryImgs;
 
