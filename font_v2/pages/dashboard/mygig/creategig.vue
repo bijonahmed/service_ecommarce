@@ -6,7 +6,24 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-      
+        <section class="categories_list_section overflow-hidden">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="listings_category_nav_list_menu">
+                  <ul class="mb0 d-flex ps-0">
+                    <li v-for="data in categoryData" :key="data.id">
+                      <nuxt-link :to="`/category/${data.slug}`">
+                        {{ data.name }}
+                      </nuxt-link>
+                    </li>
+                    <!-- {{categoryData}} -->
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
         <!-- Breadcumb Sections -->
 
         <!-- <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -110,7 +127,7 @@
                       <div class="col-sm-4 single_pack">
                         <div class="">
                           <label class="heading-color ff-heading fw500 mb10">Regular Price</label>
-                          <input type="text" class="form-control" placeholder="$15" v-model="price"
+                          <input type="text" class="form-control" placeholder="$00.00" v-model="price"
                             @input="validateInput" min="0">
                           <span class="text-danger" v-if="priceError">{{ priceError }}</span>
                           <span class="text-danger" v-if="errors.price">{{ errors.price[0] }}</span>
@@ -119,34 +136,12 @@
                       <div class="col-sm-4 single_pack">
                         <div class="">
                           <label class="heading-color ff-heading fw500 mb10">Delivery Days</label>
-                          <input type="text" class="form-control" placeholder="3" v-model="delivery_day"
+                          <input type="text" class="form-control" placeholder="0" v-model="delivery_day"
                             @input="validateInput" min="0">
                           <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
                         </div>
                       </div>
-
-
-
-                      <div class="col-md-12">
-                        <div class="mb10">
-                          <label class="heading-color ff-heading fw500 mb10">Gig Description</label>
-                          <RichTextEditor />
-                          <span class="text-danger" v-if="errors.gig_description">{{ errors.gig_description[0] }}</span>
-                        </div>
-                      </div>
-
-
-                      <div class="col-md-12">
-                        <div class="mb10">
-                          <label class="heading-color ff-heading fw500 mb10">Order Rules</label>
-                          <textarea class="form-control" rows="15" v-model="order_rules"
-                            style="height: 200px;"></textarea>
-                          <span class="text-danger" v-if="errors.order_rules">{{ errors.order_rules[0] }}</span>
-                        </div>
-                      </div>
-
-
-                    </div>
+                      
 
                     <div class="row multiple_pack">
                       <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
@@ -226,7 +221,31 @@
                       </div>
                     </div>
 
-                    <div class="row">
+
+
+                      <div class="col-md-12">
+                        <div class="mb10">
+                          <label class="heading-color ff-heading fw500 mb10">Gig Description</label>
+                          <RichTextEditor />
+                          <span class="text-danger" v-if="errors.gig_description">{{ errors.gig_description[0] }}</span>
+                        </div>
+                      </div>
+
+
+                      <div class="col-md-12">
+                        <div class="mb10">
+                          <label class="heading-color ff-heading fw500 mb10">Order Rules</label>
+                          <textarea class="form-control" rows="15" v-model="order_rules"
+                            style="height: 200px;"></textarea>
+                          <span class="text-danger" v-if="errors.order_rules">{{ errors.order_rules[0] }}</span>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                    <div class="row d-flex">
+                      
                       <!-- Thumbnail Image Upload -->
                       <div class="col-sm-6">
                         <label class="heading-color ff-heading fw500 mb10">Thumbnail Image</label>
@@ -382,7 +401,7 @@ const name = ref('');
 const category_id = ref('');
 const subcategory_id = ref('');
 const insubcategory_Id = ref('');
-const type = ref('');
+const type = ref('1');
 const language_name = ref('');
 const language_type = ref('');
 const price = ref('');
@@ -824,7 +843,7 @@ const chkUserrow = async () => {
   }
 };
 onMounted(() => {
-  //getCatList();
+  getCatList();
   chkUserrow();
   getCategoryAll();
   $(".multiple_pack").hide();

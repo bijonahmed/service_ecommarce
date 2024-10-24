@@ -37,8 +37,21 @@
 
                       <div class="mb15">
                         <label for="password" class="form-label fw600 dark-color">Password</label>
-                        <input type="password" id="password" class="form-control" placeholder="*******"
-                          v-model="password">
+                        <div class="position-relative">
+    <input 
+      :id="passwordId" 
+      class="form-control" 
+      placeholder="*******" 
+      :type="isPasswordVisible ? 'text' : 'password'" 
+      v-model="password"
+    />
+    <i 
+      class="fa-solid position-absolute" 
+      :class="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'" 
+      style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);" 
+      @click="togglePassword"
+    ></i>
+  </div>
                         <span class="text-danger">{{ errors.password }}</span>
                       </div>
 
@@ -117,15 +130,22 @@ const captchaError = ref("");
 const captchaValid = ref(false);
 
 
+const isPasswordVisible = ref(false);
+const passwordId = 'password';
 
-const togglePassword = (id) => {
-  const inputField = document.querySelector(id);
-  if (inputField.type === "password") {
-    inputField.type = "text";
-  } else {
-    inputField.type = "password";
-  }
+const togglePassword = () => {
+  isPasswordVisible.value = !isPasswordVisible.value;
 };
+
+
+// const togglePassword = (id) => {
+//   const inputField = document.querySelector(id);
+//   if (inputField.type === "password") {
+//     inputField.type = "text";
+//   } else {
+//     inputField.type = "password";
+//   }
+// };
 
 function createCaptcha() {
   const canvas = document.getElementById("CapCode");
@@ -181,8 +201,9 @@ async function login() {
     }
 
     const userrole = window.localStorage.getItem("userrole");
-    //console.log("userrole" + userrole);
+    console.log("userrole" + userrole);
     const role_id = userStore.role_id; // Assuming userStore contains role_id after login
+
     console.log("RoleID" + role_id);
     if (role_id === 2) {
       router.push("/dashboard/welcome");

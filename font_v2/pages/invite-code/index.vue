@@ -14,7 +14,7 @@
                 <div class="row">
                   <div class="col-lg-6 m-auto wow fadeInUp" data-wow-delay="300ms">
                     <div class="main-title text-center">
-                      <h2 class="title text-white">Buyer Register</h2>
+                      <h2 class="title text-white">Register</h2>
                     </div>
                   </div>
                 </div>
@@ -57,10 +57,20 @@
                         <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                       </div>
 
+                      <div class="mb2">
+                        <label class="form-label fw500 dark-color">Type</label>
+                        <select class="form-control" v-model="userType">
+                          <option value="" disabled selected>Select your type</option>
+                          <option v-for="type in userTypes" :key="type.value" :value="type.value">
+                            {{ type.text }}
+                          </option>
+                        </select>
+                        <span class="text-danger" v-if="errors.userType">{{ errors.userType[0] }}</span>
+                      </div>
 
                       <div class="mb2">
                         <label class="form-label fw500 dark-color">Invite Code</label>
-                        <input type="text" class="form-control" placeholder="157878888.." v-model="inviteCode">
+                        <input type="text" class="form-control" placeholder="157878888.." v-model="inviteCode" readonly>
                         <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
                       </div>
 
@@ -116,10 +126,14 @@ let country_1 = ref("")
 let inviteCode = ref(null);
 let password = ref(null);
 let confirmPassword = ref(null);
-let userType = ref('3');
+let userType = ref('');
 let countryData = ref('');
 
 
+const userTypes = ref([
+  { value: '2', text: 'Seller' },
+  { value: '3', text: 'Buyer' }
+]);
 //getAllcountrys
 const checkEmail = async () => {
   try {
@@ -197,7 +211,7 @@ const validateName = () => {
   }
 };
 const register = async () => {
-  //loading.value = true;
+  loading.value = true;
   try {
     await userStore.register(
       name.value,
@@ -207,7 +221,8 @@ const register = async () => {
       userType.value,
       password.value,
       confirmPassword.value
-    );
+    )
+
     Swal.fire({
       position: "top-end",
       icon: "success",
@@ -215,38 +230,16 @@ const register = async () => {
       showConfirmButton: false,
       timer: 3000
     });
-    router.push('/sign-in');
 
+
+    router.push('/sign-in')
   } catch (error) {
-    // Error handling
-    console.error("Error during registration: ", error);
+    //console.log(error)
+    errors.value = error.response.data.errors
+  } finally {
+    loading.value = false; // Hide loader
 
-    // Check if error response and its data are available
-    if (error.response && error.response.data) {
-      // Show error notification
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Error occurred. Please check your input.",
-        showConfirmButton: false,
-        timer: 3000
-      });
-      errors.value = error.response.data.errors || {};
-      console.log("Backend error: ", error.response.data.error);
-    } else {
-      // If no error response, show generic error
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "An unexpected error occurred. Please try again.",
-        showConfirmButton: false,
-        timer: 3000
-      });
-
-      console.error("Unexpected error: ", error);
-    }
   }
-
 
 }
 let queryParams = {};

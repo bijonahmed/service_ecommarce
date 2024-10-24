@@ -1,5 +1,5 @@
 <template>
-  <header class="header-nav nav-homepage-style stricky main-menu border-0">
+  <header class="header-nav nav-homepage-style stricky main-menu border-0" style="max-height: 80px;">
     <nav class="posr">
       <div class="container posr">
         <div class="row align-items-center justify-content-between navbar-scrolltofixed">
@@ -13,9 +13,12 @@
               </div>
 
               <div class="home1_style at-home2">
-                <div id="mega-menu" ref="menu">
-                  <div class="text-center"><a class="btn-mega fw500" href="#"><span
-                        class="pr5 fz15 vam flaticon-menu"></span><span>Categories</span></a></div>
+                <div id="mega-menu" class="d-none" ref="menu">
+                  <div class="text-center">
+                    <a class="btn-mega fw500" href="#">
+                      <span class="pr5 fz15 vam flaticon-menu"></span>
+                      <span>Categories</span></a>
+                  </div>
 
 
 
@@ -69,11 +72,13 @@
               </div>
               <!-- Responsive Menu Structure-->
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
-                <li v-if="isLoggedIn">
-                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="userStore.role_id == 2"><i
-                      class="fa fa-home"></i>My Dashboard</nuxt-link>
-                  <nuxt-link class="list-item pe-0" to="/dashboard/buyer/welcome" v-if="userStore.role_id == 3"><i
-                      class="fa fa-home"></i>My Dashboard</nuxt-link>
+                <li v-if="isLoggedIn" class="d-none">
+                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="userStore.role_id == 2">
+                    <!-- <i class="fa fa-home"></i> -->
+                    Dashboard</nuxt-link>
+                  <nuxt-link class="list-item pe-0" to="/dashboard/buyer/welcome" v-if="userStore.role_id == 3">
+                    <!-- <i class="fa fa-home"></i> -->
+                    Dashboard</nuxt-link>
 
                 </li>
               </ul>
@@ -93,9 +98,16 @@
                 up</nuxt-link>
 
               <ul id="respMenu" class="ace-responsive-menu" data-menu-style="horizontal">
+                <!-- <li v-if="isLoggedIn" class="me-2">
+                  <nuxt-link class="list-item pe-0" to="/dashboard/chatbox" v-if="isLoggedIn"><i
+                      class="fa fa-bell "></i></nuxt-link>
+                </li> -->
                 <li v-if="isLoggedIn" class="me-2">
-                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="isLoggedIn"><i
-                      class="fa fa-cart-shopping "></i></nuxt-link>
+                  <nuxt-link class="list-item pe-0" to="/dashboard/chatbox" v-if="isLoggedIn"><i
+                      class="fa fa-envelope "></i></nuxt-link>
+                </li>
+                <li v-if="isLoggedIn" class="me-2">
+                  <nuxt-link class="list-item pe-0" to="/dashboard/welcome" v-if="isLoggedIn">Orders</nuxt-link>
 
                 </li>
               </ul>
@@ -106,52 +118,31 @@
               <div class="dropdown ms-2" v-if="isLoggedIn">
                 <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   <img :src="imagePreview || '/blank_user.jpg'" style="height: 30px;width: 30px;" alt=""
-                    class="img-fluid rounded-circle bordered"><span class="text-white">&nbsp;{{ name }}</span>
+                    class="img-fluid rounded-circle bordered"><span class="text-white fw-bold">&nbsp;{{ name }}</span>
                 </a>
 
                 <ul class="dropdown-menu bordered-0">
-
-                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/welcome"><i class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/chatbox"><i class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
-
-                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-
-                  <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
-
-
-
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/welcome"><i class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/myprofile"><i
+                        class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
+                        class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
 
                   <li v-if="isLoggedIn && userStore.role_id == 2">
                     <nuxt-link class="dropdown-item" to="/dashboard/mygig/giglist">
                       <i class="fa fa-list"></i>&nbsp;My Gig
                     </nuxt-link>
                   </li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
+                        class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
+                        class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/earning"><i
+                        class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
+                  <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
+                        class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
 
-
-
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/chatbox"><i class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/earning"><i class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
-                  <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
-                      to="/dashboard/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
-
-
-
-                  <li><nuxt-link class="dropdown-item" to="#" @click="logout()"><i
-                        class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link></li>
+           <li><nuxt-link class="dropdown-item" to="#" @click="logout()"><i
+                        class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link></li> 
                 </ul>
               </div>
 
@@ -161,7 +152,6 @@
       </div>
     </nav>
     <div class="hiddenbar-body-ovelay"></div>
-
   </header>
 </template>
 
@@ -350,6 +340,7 @@ header.nav-homepage-style {
   padding: 0px 20px;
   display: list-item;
   position: relative;
+  line-height: 35px;
 }
 
 #mega-menu .drop-menu ul li {

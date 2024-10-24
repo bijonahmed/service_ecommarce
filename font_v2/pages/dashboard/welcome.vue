@@ -6,9 +6,6 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
-
-                <!-- Breadcumb Sections -->
-
                 <DashboardMainConentTabs />
                 <div />
             </div>

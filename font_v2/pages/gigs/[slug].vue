@@ -209,10 +209,10 @@
                         <div class="navtab-style1" v-if="responseData.types == 2">
                           <nav>
                             <div class="nav nav-tabs mb20" id="nav-tab2p" role="tablist">
-                              <button class="nav-link fw500" id="nav-item1p-tab" data-bs-toggle="tab"
+                              <button class="nav-link fw500 active" id="nav-item1p-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-item1p" type="button" role="tab" aria-controls="nav-item1p"
                                 aria-selected="true">Basic</button>
-                              <button class="nav-link active fw500" id="nav-item2p-tab" data-bs-toggle="tab"
+                              <button class="nav-link fw500" id="nav-item2p-tab" data-bs-toggle="tab"
                                 data-bs-target="#nav-item2p" type="button" role="tab" aria-controls="nav-item2p"
                                 aria-selected="false">Standart</button>
                               <button class="nav-link fw500" id="nav-item3-tab" data-bs-toggle="tab"
@@ -221,7 +221,7 @@
                             </div>
                           </nav>
                           <div class="tab-content" id="nav-tabContent">
-                            <div class="tab-pane fade" id="nav-item1p" role="tabpanel" aria-labelledby="nav-item1p-tab">
+                            <div class="tab-pane fade show active" id="nav-item1p" role="tabpanel" aria-labelledby="nav-item1p-tab">
                               <div class="price-content">
                                 <div class="price">${{ responseData.basic_price }}</div>
                                 <p class="text fz14 text-justify">{{ responseData.basic_description }}</p>
@@ -254,7 +254,7 @@
                                 </div>
                               </div>
                             </div>
-                            <div class="tab-pane fade show active" id="nav-item2p" role="tabpanel"
+                            <div class="tab-pane fade" id="nav-item2p" role="tabpanel"
                               aria-labelledby="nav-item2p-tab">
                               <div class="price-content">
                                 <div class="price">${{ responseData.standard_price }}</div>
@@ -857,6 +857,7 @@ const continueChat = () => {
   const fullUrl = `${currentUrl}/dashboard/buyer/chatbox/${userId}`; // Construct the full URL
   window.location.href = fullUrl;
   // router.push(`/dashboard/buyer/chatbox/${sellerId}`);
+
 }
 
 const checkrow = async () => {
@@ -921,7 +922,7 @@ const defaultParticularData = async () => {
     const response = await axios.post("/auth/me");
     //profileLogo.value = response.data.profileLogo;
 
-    if (response.data.profileLogo == '') {
+    if (response.data.profileLogo == '' && response.data.role_id == '2') {
       $('#validation_staticBackdrop').modal('show');
     }
     console.log("Profile Images: " + response.data.profileLogo);

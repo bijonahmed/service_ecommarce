@@ -1,5 +1,5 @@
 <template>
-  <title>Messages</title>
+  <title>Seller Send Messages</title>
 
   <body class="bgc-thm1">
     <div class="wrapper ovh">
@@ -57,12 +57,20 @@
           <div class="row">
             <div class="col-lg-3">
               <div class="message_container">
+
+                <div class="m-4 d-flex align-items-center justify-content-center">
+                  <input type="text" placeholder="Search" class="form-control search_form">
+                  <button type="button" class="btn btn-primary m-0 h-100 search_btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
                 <!-- ============={{recipientId}}=== -->
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
                     <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item"
                       :class="{ selected: selectedUserId === user.id }">
-                      <img :src="user.profilePicture || '/about-17.png'" alt="" class="profile-pic" />
+                      <img :src="user.profilePicture ? user.profilePicture : '/blank_user.jpg'" alt=""
+                        class="profile-pic" />
                       <span>{{ user.user_name }}</span>
                     </li>
                   </ul>
@@ -70,16 +78,17 @@
 
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-6">
               <div class="card">
-                <div class="card-header">
-                  <!-- Chat History -->
-                  Chat History <span v-if="user_name">[{{ user_name }}]</span>
+
+                <div class="card-header justify-content-between align-items-center d-flex p-2">
+                  <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
+                  <span style="font-size: 12px;">Last seen: {{ lastSeen }}</span>
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
                   <div class="loading-indicator" v-if="loading" style="text-align: center;">
                     <Loader />
-                </div>
+                  </div>
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
@@ -91,9 +100,10 @@
                         <!-- <strong class="sender-name">{{ message.sender_name }}</strong> -->
                         <p class="message-text">{{ message.message }}</p>
                         <div v-if="message.files" class="file-attachment">
-                          <p>Attached Files:</p>
+                          <!-- <p>Attached Files:</p> -->
                           <div v-if="isImage(message.files)">
-                            <img :src="message.files" alt="Attached Image" class="attached-image" />
+                            <img style="width: 100px;" :src="message.files" alt="Attached Image"
+                              class="attached-image" />
                           </div>
                           <div v-else>
                             <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
@@ -113,15 +123,76 @@
                   </div>
                 </div>
                 <div class="card-footer">
+
                   <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
                     <div class="input-group">
-                      <textarea class="form-control" id="message" placeholder="Type your message..." rows="3"
-                        v-model="messageContent"></textarea>
-                      <input type="file" class="form-control" id="fileInput" accept="image/*,application/pdf"
+                      <input class="form-control" id="message" placeholder="Type your message..."
+                        v-model="messageContent">
+                      <div class="p-2 px-3 bg-white d-flex align-items-center justify-content-center">
+                        <label for="fileInput" style="cursor: pointer;"
+                          class=" d-flex align-items-center justify-content-center"><i
+                            class="fas fa-paperclip"></i></label>
+                      </div>
+                      <input type="file" hidden class=" " id="fileInput" accept="image/*,application/pdf"
                         @change="handleFileUpload" />
-                      <button class="btn btn-primary text-white" type="submit">Send</button>
+                      <button class="btn btn-primary text-white send_button" type="submit"><i
+                          class="fas fa-paper-plane"></i></button>
                     </div>
                   </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3">
+              <!-- <button @click="getChatusersList">Test</button> -->
+              <div class="bg-white h-100 p-4">
+                <img :src="profilePicture || '/blank_user.jpg'" alt="" class="img-fluid rounded-circle bg-red"
+                  style="height: 80px;width: 80px;">
+                <h4 class="text-center mt-2 mb-0">{{ user_name }}</h4>
+                <p class="text-center">{{ professionName }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>From</p>
+                  <strong>{{ country }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Registered</p>
+                  <strong>{{ join_date }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Language</p>
+                  <strong>English</strong>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Completed orders</p>
+                  <p>{{ sellerOrder }}</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Average rating given</p>
+                  <p>{{sellerReview}}</p>
+                </div>
+                <div class=" d-none  justify-content-between align-items-center">
+                  <p>Average order price</p>
+                  <p>0</p>
+                </div>
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Tip Frequency</p>
+                  <p>0</p>
+                </div>
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Repeat order rate</p>
+                  <p>0</p>
+                </div>
+                <div class="d-none d-flex justify-content-between align-items-center">
+                  <p>Order completion rate</p>
+                  <p>90%</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Date of last order</p>
+                  <p>{{ lastOrderDate }}</p>
+                </div>
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Preferred service</p>
+                  <p>0</p>
                 </div>
               </div>
             </div>
@@ -152,7 +223,8 @@ const categoryData = ref([]);
 const loading = ref(false);
 const route = useRoute();
 const errors = ref({});
-const orderData = ref('');
+const profilePicture = ref('');
+const country = ref('');
 const gigName = ref('');
 const uploadedFile = ref(null);
 const chatMessages = ref([]);
@@ -164,10 +236,12 @@ const isUserAtBottom = ref(true);
 const senderId = ref(''); // Set this to the ID of the logged-in buyer
 const recipientId = ref(''); // The ID of the recipient (seller)
 const selectedUserId = ref(null);
-
-
-
-
+const professionName = ref(null);
+const lastSeen = ref("");
+const join_date = ref("");
+const sellerOrder = ref(0);
+const lastOrderDate = ref("");
+const sellerReview = ref("");
 const handleFileUpload = (event) => {
   uploadedFile.value = event.target.files[0];
 };
@@ -281,10 +355,33 @@ async function selectUser(users) {
   console.log("==selectedUserId==" + users.id);
   console.log("==user_name==" + users.user_name);
 
+  sellerReview.value = users.sellerReview;
+  lastOrderDate.value = users.lastOrderDate;
+  sellerOrder.value = users.sellerOrder;
+  join_date.value = users.join_date;
+  lastSeen.value = formatCurrentTime();
+  professionName.value = users.professionName;
+  country.value = users.country;
+  profilePicture.value = users.profilePicture;
   recipientId.value = users.user_id;
   selectedUserId.value = users.id;
   user_name.value = users.user_name;
   fetchChatHistory();
+}
+
+
+const formatCurrentTime = () => {
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
+
+  const currentDateTime = new Date();
+  return new Intl.DateTimeFormat('en-US', options).format(currentDateTime);
 }
 
 
@@ -310,6 +407,7 @@ const defaultLoadingUser = async () => {
 
 let intervalId;
 onMounted(() => {
+  lastSeen.value = formatCurrentTime();
   defaultLoadingUser();
   getParticularData();
   // fetchChatHistory();
@@ -390,7 +488,7 @@ onBeforeUnmount(() => {
 .dashboard__content {
   background-color: #f0f0f0;
   padding: 10px 10px 10px;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 
@@ -439,9 +537,10 @@ onBeforeUnmount(() => {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  height: 650px;
+  max-height: 650px;
   flex: 1;
   /* Takes the remaining height */
+
 }
 
 .card-header {
@@ -482,12 +581,11 @@ onBeforeUnmount(() => {
 }
 
 .message-content {
-  max-width: 75%;
-  padding: 10px;
+  max-width: 45%;
+  padding: 15px;
   border-radius: 10px;
   position: relative;
   text-align: left;
-  /* Align text to the left */
 }
 
 .sender-message .message-content {
@@ -554,8 +652,8 @@ input[type="file"]+label {
 }
 
 .btn {
-  border-radius: 20px;
-  margin-left: 10px;
+  /* border-radius: 20px;
+  margin-left: 10px; */
 }
 
 .right-sidebar {
@@ -592,5 +690,27 @@ input[type="file"]+label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.search_form {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: 0;
+  border: 1px solid #adadad;
+}
+
+.search_btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 15px;
+  color: #fff;
+  background: #1f4b3f;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.send_button {
+  background: #1f4b3f !important;
+  color: #fff;
 }
 </style>

@@ -119,7 +119,7 @@
                             class="list-group-item chat-user-item">
                             <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
                               style="width: 40px; height: 40px;" />
-                            <a :href="`/dashboard/chatbox/${user.user_id}`"
+                            <a :href="`/dashboard/buyer/chatbox/${user.user_id}`"
                               class="text-decoration-none text-dark">
                               {{ user.user_name }}
                             </a>

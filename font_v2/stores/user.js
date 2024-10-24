@@ -25,6 +25,7 @@ export const useUserStore = defineStore("user", {
           //console.log("response:" +  result.data.access_token);
           //return false;
           localStorage.setItem("token", result.data.access_token);
+          localStorage.setItem("userrole", result.data.user.role_id);
           this.$state.api_token = result.data.access_token;
           this.$state.role_id = result.data.user.role_id;
           this.$state.email = result.data.user.email;
