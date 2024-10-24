@@ -115,7 +115,7 @@
                       <center><span>Messages List</span></center>
                       <div v-if="chatUsers.length">
                         <ul class="list-group">
-                          <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                          <li v-for="user in chatUsers" :key="user.id" 
                             class="list-group-item chat-user-item">
                             <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
                               style="width: 40px; height: 40px;" />

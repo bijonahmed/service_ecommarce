@@ -72,8 +72,8 @@
                                                         <center>
                                                             <button type="button"><i class="fas fa-edit"
                                                                     @click="edit(item.id)"></i></button>
-                                                                    <button type="button"><i class="fas fa-search-plus"
-                                                                    @click="preview(item.id)"></i></button>
+                                                                    <!-- <button type="button"><i class="fas fa-search-plus"
+                                                                    @click="preview(item.id)"></i></button> -->
                                                              
                                                         </center>
                                                     </td>

@@ -176,8 +176,8 @@ class PostController extends Controller
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-            //  'name'           => 'required',
-            //  'categoryId'     => 'required',
+               'name'           => 'required',
+               'categoryId'     => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -185,6 +185,7 @@ class PostController extends Controller
         $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->input('name'))));
         $data = array(
             'name'                       => $request->name,
+            'categoryId'                 => $request->categoryId,
             'slug'                       => $slug,
             'description_full'           => !empty($request->description_full) ? $request->description_full : "",
             'status'                     => 1, //!empty($request->status) ? $request->status : "",

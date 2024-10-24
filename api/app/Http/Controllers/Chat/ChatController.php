@@ -111,17 +111,20 @@ class ChatController extends Controller
         $checkSellerSlug = User::where('slug', $request->sellerSlug)->first();
         $gigrow          = Gig::where('gig_slug', $request->gigSlug)->first();
         $gigName         = !empty($gigrow->name) ? $gigrow->name : "";
+        $gigImg          = !empty($gigrow->thumbnail_images) ? url($gigrow->thumbnail_images) : "";
 
         //echo $gigName; 
         $selectedPackages = $request->SelectedPackages;
         $SelectedPrice   = $request->SelectedPrice;
+        $message = "Thank you, and I look forward to your response.: 
+                    This message relates to: \"$gigName\"! We wish you great success!";
 
         $rdata['user_id']        = $this->userid;
         $rdata['to_id']          = $checkSellerSlug->id;
         $rdata['sender_id']      = $this->userid;
-        $rdata['message']        = "Thank you, and I look forward to your response. \n: This message relates to: \"<b>$gigName</b>\"! 🎉. We wish you great success!"; //$request->message;
-        $rdata['files']          = '';
-        //   dd($rdata);
+        $rdata['message']        = $message;
+        $rdata['files']          = $gigImg;
+       
         $message = MyMessage::insertGetId($rdata);
 
         return response()->json($message);

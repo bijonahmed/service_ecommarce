@@ -72,12 +72,34 @@
                         <hr />
 
 
+                        <div class="row mb-3">
+                          <label for="input-meta-description-1" class="col-sm-2 col-form-label required-label">Post
+                            Categories</label>
+                          <div class="col-sm-10">
+                            <div>
+                              <select id="category" class="form-control" v-model="insertdata.categoryId">
+                                <option value="">Select</option>
+                                <option value="1">Privacy & Policy</option>
+                                <option value="2">Terms of Service</option>
+                                <option value="3">About Isumax</option>
+                                <option value="4">Trust & Safety</option>
+                                <option value="5">Selling on isumax</option>
+                                <option value="6">Trust & Safety</option>
+                                <option value="7">Buying on isumax</option>
+                                <option value="7">Help & Support</option>
+
+                              </select>
+
+                              <span class="text-danger" v-if="errors.categoryId">{{ errors.categoryId[0] }}</span>
+
+                            </div>
+                          </div>
+                        </div>
 
 
 
 
-
-                        <div class="alert alert-info" bis_skin_checked="1">
+                        <!-- <div class="alert alert-info" bis_skin_checked="1">
                           <i class="fas fa-info-circle"></i>Thumbnail
                         </div>
                         <div class="row mb-3">
@@ -89,7 +111,7 @@
                             <span class="text-danger" v-if="errors.files">{{ errors.files[0] }}</span>
                             <img v-if="previewUrl" :src="previewUrl" alt="Preview" class="img-fluids" />
                           </div>
-                        </div>
+                        </div> -->
                         <div class="row mb-3 d-none">
                           <label for="input-meta-description-1" class="col-sm-2 col-form-label">Additional Image</label>
                           <div class="col-sm-10">
@@ -293,6 +315,7 @@ const saveData = () => {
   formData.append('id', insertdata.id);
   formData.append('files', file.value);
   formData.append('description_full', descriptionFull.value);
+   formData.append('categoryId', categoryId.value);
   formData.append('status', insertdata.status);
 
   
@@ -306,10 +329,7 @@ const saveData = () => {
       const product_id = res.data.product_id;
       // Redirect to product variant page
       router.push({
-          path: '/post/preview',
-          query: {
-              parameter: product_id
-          }
+          path: '/post/list',
       });
 
   }).catch(error => {
@@ -366,6 +386,7 @@ const productrow = () => {
       insertdata.name = response.data.data.name;
       insertdata.description_full = response.data.data.description_full
       insertdata.description_short = response.data.data.description_short
+      insertdata.categoryId = response.data.data.categoryId
       insertdata.status = response.data.data.status
 
       previewUrl.value = response.data.images;
@@ -407,7 +428,7 @@ const handleEditorChangeFull = (content) => {
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
   productrow();
-  allPostCategory();
+  //allPostCategory();
 
   $(summernoteEditorShort.value).summernote({
       callbacks: {

@@ -62,14 +62,22 @@
                           </div>
                         </div>
 
-                        <div class="row mb-3 d-none">
+                        <div class="row mb-3">
                           <label for="input-meta-description-1" class="col-sm-2 col-form-label required-label">Post
                             Categories</label>
                           <div class="col-sm-10">
                             <div>
                               <select id="category" class="form-control" v-model="insertdata.categoryId">
-                                <option v-for="option in postCat" :value="option.id" :key="option.id">{{ option.name }}
-                                </option>
+                                <option value="">Select</option>
+                                <option value="1">Privacy & Policy</option>
+                                <option value="2">Terms of Service</option>
+                                <option value="3">About Isumax</option>
+                                <option value="4">Trust & Safety</option>
+                                <option value="5">Selling on isumax</option>
+                                <option value="6">Trust & Safety</option>
+                                <option value="7">Buying on isumax</option>
+                                <option value="7">Help & Support</option>
+
                               </select>
 
                               <span class="text-danger" v-if="errors.categoryId">{{ errors.categoryId[0] }}</span>
@@ -104,7 +112,7 @@
                         </div>
                         <hr />
 
-                        <div class="alert alert-info" bis_skin_checked="1">
+                        <!-- <div class="alert alert-info" bis_skin_checked="1">
                           <i class="fas fa-info-circle"></i>Thumbnail
                         </div>
                         <div class="row mb-3">
@@ -114,11 +122,11 @@
                             <input type="file" value class="form-control" id="fileInput" accept="image/png,image/jpeg"
                               ref="files" @change="onFileSelected" />
                             <span class="text-danger" v-if="errors.files">{{
-                errors.files[0]
-              }}</span>
+                              errors.files[0]
+                              }}</span>
                             <img v-if="previewUrl" :src="previewUrl" alt="Preview" class="img-fluids" />
                           </div>
-                        </div>
+                        </div> -->
                         <div class="row mb-3 d-none">
                           <label for="input-meta-description-1" class="col-sm-2 col-form-label">Additional Image</label>
                           <div class="col-sm-10">
@@ -139,7 +147,7 @@
                           </div>
                         </div>
                         <button type="submit" class="btn btn-success px-5 w-100">
-                          <i class="bx bx-check-circle mr-1"></i> Save & Next
+                          <i class="bx bx-check-circle mr-1"></i> Save
                         </button>
 
                       </div>
@@ -179,7 +187,7 @@ const descriptionFull = ref('');
 const previewUrl = ref(null);
 const images = ref([]);
 const postCat = ref([]);
- 
+
 const file = ref(null);
 const files = ref(null);
 const errors = ref({});
@@ -263,11 +271,11 @@ const checkImageDimensionsThunbnail = (file) => {
     const img = new Image();
     img.src = e.target.result;
     img.onload = () => {
-     // if (img.width === 300 && img.height === 300) {
-     previewUrl.value = e.target.result;
-     //  } else {
-     //    alert('Image dimensions must be 300x300 pixels.');
-     // }
+      // if (img.width === 300 && img.height === 300) {
+      previewUrl.value = e.target.result;
+      //  } else {
+      //    alert('Image dimensions must be 300x300 pixels.');
+      // }
     };
   };
   reader.readAsDataURL(file);
@@ -320,10 +328,7 @@ const saveData = () => {
     const product_id = res.data.product_id;
     // Redirect to product variant page
     router.push({
-      path: '/post/preview',
-      query: {
-        parameter: product_id
-      }
+      path: '/post/list',
     });
 
   }).catch(error => {

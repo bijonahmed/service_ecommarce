@@ -71,7 +71,7 @@
 
 
                 <div class="container">
-                <button @click="fetchUserLevels" class="d-none">Call</button>  
+                    <button @click="fetchUserLevels" class="d-none">Call</button>
                     <div class="container mt-5">
                         <table class="table table-striped">
                             <thead>
@@ -192,8 +192,16 @@ const getCatList = async () => {
 };
 // Computed property to calculate the total amount
 const totalAmount = computed(() => {
-  return allUsers.value.reduce((sum, user) => sum + (user.amount || 0), 0);
+  const sum = allUsers.value.reduce((sum, user) => {
+    const userAmount = parseFloat(user.amount) || 0;
+    return sum + userAmount;
+  }, 0);
+
+  // Fix the precision to 2 decimal places if needed
+  return parseFloat(sum.toFixed(2));
 });
+
+
 onMounted(() => {
     fetchUserLevels();
     getRefferalCommission();
