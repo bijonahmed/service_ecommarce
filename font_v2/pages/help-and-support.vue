@@ -1,6 +1,6 @@
 <template>
     <div>
-        <title>Buying on  isumax </title>
+        <title>Help and Support</title>
 
         <body class="bgc-thm1">
             <div class="wrapper ovh">
@@ -19,7 +19,6 @@
                             <hr>
                             <div class="terms-content">
                                 <p class="text-justify" style="text-align: justify;" v-html="paragraph.description_full"></p>
-
                             </div>
                         </div>
                     </section>
@@ -38,8 +37,8 @@
 import axios from 'axios';
 const content = ref([]);
 const checkContent = async () => {
-    const post_id = 9;
-    const category_id = 7;
+    const post_id = 10;
+    const category_id = 8;
     try {
         const response = await axios.get('/unauthenticate/checkContent', {
             params: {

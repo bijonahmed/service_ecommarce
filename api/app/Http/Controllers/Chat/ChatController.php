@@ -42,13 +42,6 @@ class ChatController extends Controller
     {
 
 
-        // $data = MyMessage::select('messages.*', 'users.slug', 'users.image AS profile_picture', 'users.name AS usersname')
-        // ->leftJoin('users', 'users.id', '=', 'messages.to_id')
-        // ->where('messages.to_id', $this->userid)
-        // ->groupBy('messages.sender_id')
-        // ->orderBy('created_at', 'desc')
-        // ->get();    
-
 
         $data = MyMessage::where('messages.to_id', $this->userid)
             ->groupBy('messages.sender_id')
@@ -58,16 +51,19 @@ class ChatController extends Controller
 
         $chatusers = [];
         foreach ($data as $v) {
-            $userrecords = User::where('id', $v->user_id)->first();
-            $rowcont     =  MyMessage::where('sender_id', $v->sender_id)->where('is_read', 0)->count();
-            $chatusers[] = [
-                'id'             => $v->id,
-                'user_id'        => !empty($userrecords->id) ? $userrecords->id : "",
-                'user_name'      => !empty($userrecords->name) ? $userrecords->name : "",
-                'slug'           => $v->slug,
-                'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
-                'unread_count'   => $rowcont, // This will reflect the count of unread messages
-            ];
+            $userrecords = User::where('id', $v->user_id)->where('role_id', 3)->first();
+
+            if (!empty($userrecords)) {
+                $rowcont     =  MyMessage::where('sender_id', $v->sender_id)->where('is_read', 0)->count();
+                $chatusers[] = [
+                    'id'             => $v->id,
+                    'user_id'        => !empty($userrecords->id) ? $userrecords->id : "",
+                    'user_name'      => !empty($userrecords->name) ? $userrecords->name : "",
+                    'slug'           => $v->slug,
+                    'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
+                    'unread_count'   => $rowcont, // This will reflect the count of unread messages
+                ];
+            }
         }
         // Return messages as a JSON response
         return response()->json($chatusers);
@@ -87,6 +83,7 @@ class ChatController extends Controller
         )
             ->leftJoin('users', 'users.id', '=', 'messages.to_id')
             ->where('messages.user_id', $this->userid)
+            ->where('users.role_id', 2)
             ->groupBy('messages.to_id', 'users.slug', 'users.image', 'users.name') // Group by the fields being selected
             ->orderBy('user_id', 'desc') // Optionally order by unread count
             ->get();
@@ -95,6 +92,8 @@ class ChatController extends Controller
 
         $chatusers = [];
         foreach ($data as $v) {
+
+
             $rowcont            = MyMessage::where('user_id', $v->user_id)->where('is_read', 0)->count();
             $chkCountry         = Country::where('id', $v->country_1)->first();
             $chkProfession      = Profession::where('id', $v->profession_name)->first();
@@ -158,11 +157,12 @@ class ChatController extends Controller
     {
 
 
-        //dd($request->all());
+        // dd($request->all());
         $validator = Validator::make($request->all(), [
             'senderId'        => 'required', // Set this to the ID of the logged-in buyer
             'recipientId'     => 'required', // The ID of the recipient (seller)
-            // 'message'         => 'required', // Validate message content
+            //  'files'           => 'nullable|file|max:1024000', // Optional image, maximum size 1GB
+            //'message'         => 'required', // Validate message content
         ]);
 
         if ($validator->fails()) {
@@ -183,13 +183,49 @@ class ChatController extends Controller
             $file_url = $uploadPath . $path;
             $imagePaths = $file_url;
         }
-
-
-
-
         $rdata['user_id']        = $this->userid;
         $rdata['to_id']          = $request->recipientId;
         $rdata['sender_id']      = $this->userid;
+        $rdata['message']        = $request->message;
+        $rdata['files']          = $imagePaths;
+
+        $message = MyMessage::insertGetId($rdata);
+
+        return response()->json($message);
+    }
+
+
+    public function sendMessagesForSeller(Request $request)
+    {
+
+        //  dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'buyer'        => 'required', // Set this to the ID of the logged-in buyer
+            'seller'       => 'required', // The ID of the recipient (seller)
+            'message'         => 'required', // Validate message content
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        $imagePaths = "";
+        if (!empty($request->file('files'))) {
+            $files = $request->file('files');
+            $fileName = Str::random(20);
+            $ext = strtolower($files->getClientOriginalExtension());
+            $path = $fileName . '.' . $ext;
+            $uploadPath = '/backend/files/';
+            $upload_url = $uploadPath . $path;
+            $files->move(public_path('/backend/files/'), $upload_url);
+            $file_url = $uploadPath . $path;
+            $imagePaths = $file_url;
+        }
+        $rdata['user_id']        = $this->userid;
+        $rdata['to_id']          = $request->buyer;
+        $rdata['sender_id']      = $request->seller;
         $rdata['message']        = $request->message;
         $rdata['files']          = $imagePaths;
 
@@ -249,6 +285,121 @@ class ChatController extends Controller
         // Return messages as a JSON response
         return response()->json($data);
     }
+
+
+    public function getMessagesSeller(Request $request)
+    {
+
+        // Validate the incoming request
+        $request->validate([
+            'buyer' => 'required',
+            'seller' => 'required',
+        ]);
+
+        // Get IDs from the request
+        $buyerId = (int) $request->input('buyer'); // ID of the logged-in buyer
+        $recipientId = (int) $request->input('seller'); // ID of the recipient
+
+        // Fetch messages between the authenticated user and the recipient
+        $messages = MyMessage::where(function ($query) use ($buyerId, $recipientId) {
+            $query->where('sender_id', $buyerId)
+                ->where('to_id', $recipientId);
+        })
+            ->orWhere(function ($query) use ($buyerId, $recipientId) {
+                $query->where('sender_id', $recipientId)
+                    ->where('to_id', $buyerId);
+            })
+            // Adjust this to 'orderBy('id', 'desc')' for descending order
+            ->get();
+
+        // Prepare the response data
+        $data = [];
+
+        foreach ($messages as $message) {
+            $sender = User::find($message->sender_id);
+            $recipient = User::find($message->to_id);
+            $data[] = [
+                'id'          => $message->id,
+                'user_id'     => $message->sender_id, // Sender ID
+                'message'     => $message->message, // Message content
+                'files'       => !empty($message->files) ? url($message->files) : "", // File attachment (if any)
+                'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
+
+                // Sender details
+                'sender_id'               => $message->sender_id,
+                'sender_name'             => $sender ? $sender->name : "Unknown",
+                'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
+
+                // Recipient details
+                'recipient_id'            => $message->to_id,
+                'recipient_name'          => $recipient ? $recipient->name : "Unknown",
+                'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
+            ];
+        }
+        // Return messages as a JSON response
+        return response()->json($data);
+    }
+
+
+    public function userrowCheckSeller(Request $request)
+    {
+
+
+        $buyerId   = $request->buyerId;
+
+        $row = MyMessage::select('messages.*', 'users.slug', 'users.id as user_id', 'users.image AS profile_picture', 'users.name AS usersname', 'users.country_1', 'users.profession_name', 'users.created_at')
+            ->leftJoin('users', 'users.id', '=', 'messages.to_id')
+            ->where('messages.to_id', $buyerId)
+            //->where('messages.sender_id', $this->userid)
+            ->orderBy('messages.created_at', 'desc')
+            ->first();
+
+        //dd($row);
+
+        $buyerid = $request->buyerId;
+        $udata['is_read'] = 1;
+        MyMessage::where('user_id', $buyerid)->update($udata);
+
+        $sellerOrder        = $row && $row->user_id  ? Order::where('sellerId', $row->user_id)->where('order_status', 5)->count('order_status') : 0; // or '' if you prefer a blank //Count Seller Complete Orders
+        $lastOrderDate      = $row && $row->user_id ?  Order::where('sellerId', $row->user_id)->where('order_status', 5)->orderBy('id', 'desc')->first() : 0; //Count Seller Complete Orders
+        $lorder             = !empty($lastOrderDate) ? date("Y-m-d", strtotime($lastOrderDate->created_at)) : "No Order";
+        $ujoin              = $row && $row->user_id ? User::where('id', $row->user_id)->select('created_at')->first() : "";
+
+        $sellerReview       = $row && $row->user_id ? SellerReview::where('seller_id', $row->user_id)->sum('rating') : 0;
+        $orderSum           = $row && $row->user_id ? Order::where('sellerId', $row->user_id)->where('order_status', 5)->sum('order_status') : 0;
+        $avgReview          = !empty($sellerReview) ? $sellerReview / $orderSum : $orderSum;
+
+        $chkCountry         = $row && $row->country_1 ? Country::where('id', $row->country_1)->first() : "";
+        $chkProfession      = $row && $row->profession_name ? Profession::where('id', $row->profession_name)->first() : "";
+        $currentDateTime    = now();
+        $formattedDateTime  = $currentDateTime->format('M j, Y, g:i A');
+        $data = [ // Use '=' to assign the array
+            'id'             => $row && $row->user_id ? $row->sender_id : "",  //selected user
+            'user_id'        => $row && $row->user_id ? $this->userid : "",
+            'user_name'      => $row && $row->user_id ? $row->usersname : "",
+            'buyerId'        => $buyerId,
+            'sellerId'       => $this->userid,
+
+            'to_id'          => $row && $row->user_id ? $row->to_id : "",
+            'slug'           => $row && $row->user_id ? $row->slug : "",
+            'sellerOrder'    => $sellerOrder,
+            'join_date'      => $row && $row->user_id ? date("Y-m-d", strtotime($ujoin->created_at)) : "",
+            'lastOrderDate'  => !empty($lorder) ? $lorder : "No Order",
+            'country'        => !empty($chkCountry) ? $chkCountry->countryname : "",
+            'professionName' => !empty($chkProfession) ? $chkProfession->name : "",
+            'profilePicture' => !empty($row->profile_picture) ? url($row->profile_picture) : "",
+            'lastSeen'       => $formattedDateTime,
+            'join_date'      => $row && $row->user_id ? date("Y-m-d", strtotime($row->created_at)) : "",
+            'sellerReview'   => $avgReview,
+        ];
+        return response()->json($data);
+    }
+
+
+
+
+
+
 
 
     public function userrowCheck(Request $request)

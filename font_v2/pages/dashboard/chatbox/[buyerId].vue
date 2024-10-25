@@ -26,10 +26,8 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-
                     <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
                   </div>
-
                 </div>
               </div>
             </div>
@@ -42,48 +40,89 @@
             <div class="col-lg-3">
               <!-- <button @click="getChatusersList">Test</button> -->
               <div class="message_container">
-                <!-- ============={{recipientId}}=== -->
+                <!-- ============={{seller}}=== -->
+                <!-- <div class="w-100">
+                  <div class="input-group w-100">
+                    <div class="form-outline" data-mdb-input-init>
+                      <input type="search" id="form1" class="form-control " style="border-radius: 0;" />
+                    </div>
+                    <button type="button" class="btn btn-primary" style="border-radius: 0;" data-mdb-ripple-init>
+                      <i class="fas fa-search"></i>
+                    </button>
+                  </div>
+                </div> -->
+                <div class="m-4 d-flex align-items-center justify-content-center">
+                  <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch" @keyup="getSellerList">
+                  <button type="button" class="btn btn-primary m-0 h-100 search_btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+
+                <!-- Current Seller==== {{ seller }}
+                <hr>
+                Recvi: Buyer---- {{ buyer }} -->
+
                 <div v-if="chatUsers.length">
                   <ul class="chat-user-list">
-                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)" class="chat-user-item"
-                      :class="['chat-user-item', { selected: selectedUserId === user.id }]">
-                      <img :src="user.profilePicture" alt="Profile Picture" class="profile-pic" />
+                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                      class="chat-user-item chulist"
+                      :class="['chat-user-item', { selected: selectedUserId === user.id }]"
+                      :data-user-id="user.user_id">
+                      <img :src="user.profilePicture ? user.profilePicture : '/blank_user.jpg'" alt="Profile Picture"
+                        class="profile-pic" />
                       <span>{{ user.user_name }}</span>
+                      <!-- <span>{{ user.user_name }}-----{{ user.user_id }}</span> -->
                     </li>
                   </ul>
                 </div>
               </div>
             </div>
-            <div class="col-sm-9">
+            <div class="col-sm-6">
               <div class="card">
-                <div class="card-header">
-                  Chat History <span v-if="user_name">[{{ user_name }}]</span>
+                <div class="card-header justify-content-between align-items-center d-flex p-2">
+                  <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
+                  <span style="font-size: 12px;">Last seen: Oct 20, 2024, 9:52 AM</span>
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
+                    <!-- ============{{ chatMessages }} -->
                     <div class="message" v-for="message in chatMessages" :key="message.id"
-                      :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
+                      :class="{ 'sender-message': message.sender_id === buyer, 'recipient-message': message.sender_id !== buyer }">
+
                       <!-- <img
-                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
+                        :src="message.sender_id === buyer ? message.sender_profile_picture : 'boss_image.png'"
                         alt="Profile Picture" class="profile-picture" /> -->
 
                       <div class="message-content">
-                        <strong class="sender-name">{{ message.sender_name }}</strong>
+
+                        <!-- <strong class="sender-name">{{ message.sender_name }}</strong> -->
+
                         <p class="message-text">{{ message.message }}</p>
                         <div v-if="message.files" class="file-attachment">
-                          <p>Attached Files:</p>
                           <div v-if="isImage(message.files)">
-                            <img :src="message.files" alt="Attached Image" class="attached-image" />
+                            <img style="width: 100px;" :src="message.files" alt="Attached Image"
+                              class="attached-image" />
                           </div>
                           <div v-else>
-                            <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
-                              }}</a>
+                            <a :href="message.files" target="_blank" class="file-link">{{
+                              getFileName(message.files) }}</a>
                           </div>
                         </div>
-                        <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
+                        <span class="timestamp">
+                          {{ new Date(message.created_at).toLocaleString('en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                            hour: 'numeric',
+                            minute: 'numeric',
+                            hour12: true
+                          }) }}
+                        </span>
+
+                        <!-- <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit'
-                        }) }}</span>
+                        }) }}</span> -->
                       </div>
                     </div>
                   </div>
@@ -95,16 +134,83 @@
                 <div class="card-footer">
                   <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
                     <div class="input-group">
-                      <textarea class="form-control" id="message" placeholder="Type your message..." rows="3"
-                        v-model="messageContent"></textarea>
-                      <input type="file" class="form-control" id="fileInput" accept="image/*,application/pdf"
+                      <input class="form-control" id="message" placeholder="Type your message..."
+                        v-model="messageContent">
+                        
+                      <div class="p-2 px-3 bg-white d-flex align-items-center justify-content-center">
+                        <label for="fileInput" style="cursor: pointer;"
+                          class=" d-flex align-items-center justify-content-center"><i
+                            class="fas fa-paperclip"></i></label>
+                            
+                      </div>
+                    
+                      <input type="file" hidden class=" " id="fileInput" accept="image/*,application/pdf"
                         @change="handleFileUpload" />
-                      <button class="btn btn-primary text-white" type="submit">Send</button>
+                      <button class="btn btn-primary text-white send_button" type="submit"><i
+                          class="fas fa-paper-plane"></i></button>
+                          
                     </div>
+                    <small><span>&nbsp;Max File Size: 1GB</span></small>
                   </form>
                 </div>
               </div>
 
+            </div>
+
+            <div class="col-lg-3">
+              <!-- <button @click="getChatusersList">Test</button> -->
+              <div class="bg-white h-100 p-4">
+
+                <img :src="profilePicture || '/blank_user.jpg'" alt="" class="img-fluid rounded-circle bg-red"
+                  style="height: 80px;width: 80px;">
+                <h4 class="text-center mt-2 mb-0">{{ user_name }}</h4>
+                <p class="text-center">{{ professionName }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>From</p>
+                  <strong>{{ country }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Registered</p>
+                  <strong>{{ join_date }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Language</p>
+                  <strong>English</strong>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Completed orders</p>
+                  <p>{{ sellerOrder }}</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Average rating given</p>
+                  <p>{{ sellerReview }}</p>
+                </div>
+                <!-- <div class=" d-none  justify-content-between align-items-center">
+                  <p>Average order price</p>
+                  <p>0</p>
+                </div> -->
+                <!-- <div class="d-none justify-content-between align-items-center">
+                  <p>Tip Frequency</p>
+                  <p>0</p>
+                </div> -->
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Repeat order rate</p>
+                  <p>0</p>
+                </div>
+                <div class="d-none d-flex justify-content-between align-items-center">
+                  <p>Order completion rate</p>
+                  <p>90%</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Date of last order</p>
+                  <p>{{ lastOrderDate }}</p>
+                </div>
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Preferred service</p>
+                  <p>0</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -133,27 +239,27 @@ const categoryData = ref([]);
 const loading = ref(false);
 const route = useRoute();
 const errors = ref({});
-const orderData = ref('');
-const gigName = ref('');
+const profilePicture = ref('');
 const uploadedFile = ref(null);
 const chatMessages = ref([]);
 const chatUsers = ref([]);
 const messageContent = ref('');
+const country = ref('');
 const user_name = ref('');
-const chatContainer = ref(null); // Reference for the chat container
-const isUserAtBottom = ref(true); // Track if the user is at the bottom
-const senderId = ref(''); // Set this to the ID of the logged-in buyer
-const recipientId = ref(''); // The ID of the recipient (seller)
-// Send a new message
-const selUser = ref(null); // Property to store the selected user
-// Method to select a user
-const selectUserSelect = (user) => {
-  selUser.value = user.user_id; // Set the selected user
-  console.log('Selected user:', user); // Debugging purpose
-};
-// Method to handle file upload
+const chatContainer = ref(null);
+const isUserAtBottom = ref(true);
+const buyer = ref(''); // Set this to the ID of the logged-in buyer
+const seller = ref(''); // The ID of the recipient (seller)
+const professionName = ref(null);
+const lastSeen = ref("");
+const join_date = ref("");
+const sellerOrder = ref(0);
+const lastOrderDate = ref("");
+const sellerReview = ref("");
+const txtSearch = ref("");
+
 const handleFileUpload = (event) => {
-  uploadedFile.value = event.target.files[0]; // Store the first uploaded file
+  uploadedFile.value = event.target.files[0];
 };
 
 const isImage = (fileUrl) => {
@@ -161,51 +267,131 @@ const isImage = (fileUrl) => {
 }
 
 const getFileName = (fileUrl) => {
-  return fileUrl.split('/').pop(); // Extracts the file name from the URL
+  return fileUrl.split('/').pop();
 }
 
-// Method to send the message
+
 async function sendMessage() {
   try {
     const formData = new FormData();
-    formData.append("senderId", senderId.value);
-    formData.append("recipientId", recipientId.value);
+    
+    formData.append("buyer", buyer.value);
+    formData.append("seller", seller.value);
     formData.append("message", messageContent.value);
 
-    // Append the file if it exists
     if (uploadedFile.value) {
       formData.append("files", uploadedFile.value);
     }
 
-    // Send the message using axios
-    const response = await axios.post("/chat/sendMessages", formData, {
+    const response = await axios.post("/chat/sendMessagesForSeller", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
     console.log(response);
-    fetchChatHistory(); // Refresh the chat history after sending the message
-    messageContent.value = ''; // Clear the message input
-    uploadedFile.value = null; // Clear the file input
+    fetchChatHistory();
+    messageContent.value = '';
+    uploadedFile.value = null;
   } catch (error) {
     // Handle errors
     if (error.response && error.response.status === 422) {
-      errors.value = error.response.data.errors; // Validation errors
+      errors.value = error.response.data.errors;
     } else {
-      console.error("An error occurred:", error); // Other errors
+      console.error("An error occurred:", error);
     }
   }
 }
 
-// Automatically reload the chat history every 5 seconds
-const fetchChatHistory = async () => {
-  //loading.value = true; // Set loading to true
+
+
+const handleScroll = () => {
+  if (chatContainer.value) {
+    const { scrollTop, scrollHeight, clientHeight } = chatContainer.value;
+    isUserAtBottom.value = scrollTop + clientHeight >= scrollHeight - 10; // User is near the bottom
+  }
+};
+
+
+
+const formatCurrentTime = () => {
+  const options = {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
+
+  const currentDateTime = new Date();
+  return new Intl.DateTimeFormat('en-US', options).format(currentDateTime);
+}
+
+const getChatusersList = async () => {
   try {
-    // Fetch chat history from the server
-    const response = await axios.get('/chat/getMessages', {
+    const response = await axios.get(`/chat/getChatUsersTo`);
+    chatUsers.value = response.data;
+  } catch (error) {
+    // Handle error
+  }
+};
+
+
+const selectedUserId = ref(null);
+
+async function selectUser(users) {
+
+    sellerReview.value = users.sellerReview;
+    lastOrderDate.value = users.lastOrderDate;
+    sellerOrder.value = users.sellerOrder;
+    join_date.value = users.join_date;
+    lastSeen.value = formatCurrentTime();
+    professionName.value = users.professionName;
+    country.value = users.country;
+    profilePicture.value = users.profilePicture;
+
+    console.log("Selected SellerId: " + seller.value);
+    console.log("Selected BuyerId: " + buyer.value);
+
+    seller.value = seller.value;
+    buyer.value = buyer.value;
+
+    selectedUserId.value = users.id;
+    user_name.value = users.user_name;
+
+    // Call other functions, which might have async operations
+    await checkBuyerDetails(buyer.value);
+    await fetchChatHistory();
+}
+
+
+
+const checkBuyerDetails = async (buyerId) => {
+  try {
+    const response = await axios.get('/chat/userrowCheckSeller', {
       params: {
-        sender_id: senderId.value, // ID of the logged-in buyer
-        to_id: recipientId.value // ID of the recipient (seller)
+        buyerId: buyerId,
+      }
+    });
+    seller.value = response.data.sellerId;
+    buyer.value = response.data.buyerId;
+    selectUser(response.data);
+  } catch (error) {
+    console.error('Error fetching user data:', error);
+  }
+}
+
+const getSellerList = async () => {
+
+    console.log("=====" + txtSearch.value);
+
+}
+const fetchChatHistory = async () => {
+  try {
+    const response = await axios.get('/chat/getMessagesSeller', {
+      params: {
+        seller: seller.value,
+        buyer: buyer.value
       }
     });
 
@@ -214,9 +400,6 @@ const fetchChatHistory = async () => {
       sender_name: message.sender_name || 'Unknown' // Use sender_name directly
     }));
 
-    //messageContent.value = ''; // Clear the message input
-
-    // Scroll to the bottom if the user is at or near the bottom
     nextTick(() => {
       if (isUserAtBottom.value && chatContainer.value) {
         handleScroll();
@@ -231,114 +414,48 @@ const fetchChatHistory = async () => {
   }
 };
 
-// Track scroll position to determine if the user is at the bottom
-const handleScroll = () => {
-  if (chatContainer.value) {
-    const { scrollTop, scrollHeight, clientHeight } = chatContainer.value;
-    isUserAtBottom.value = scrollTop + clientHeight >= scrollHeight - 10; // User is near the bottom
-  }
-};
 
-const selectedUserId = ref(null);
-async function selectUser(users) {
-  console.log("====" + users.user_id);
-  recipientId.value = users.user_id;
-  selectedUserId.value = users.id;
-  user_name.value = users.user_name;
-  fetchChatHistory();
-}
-
-// Handle sending message on form submit
-function handleSendMessage() {
-  if (messageContent.value.trim() === '') return;
-  sendMessage();
-}
-
-const showDetails = (order) => {
-  fetchChatHistory()
-  console.log(order.gig_name);
-  gigName.value = order.gig_name;
-  $('#staticBackdrop').modal('show');
-
-}
-// Function to format the date
-const formatDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
-  return new Date(date).toLocaleDateString(undefined, options);
-};
-
-const getCatList = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/getFindCategorys`);
-    categoryData.value = response.data;
-  } catch (error) {
-    // Handle error
-  }
-};
-
-
-const getChatusersList = async () => {
-  try {
-    const response = await axios.get(`/chat/getChatUsersTo`);
-    chatUsers.value = response.data;
-  } catch (error) {
-    // Handle error
-  }
-};
 const chkUserrow = async () => {
-  try {
-    loading.value = true;
-    const response = await axios.post(`/auth/me`);
-    senderId.value = response.data.user_id;
-
-  } catch (error) {
-    console.error("Error fetching user data:", error);
-  } finally {
-    loading.value = false;
-
-  }
-};
-
-const defaultLoadingUser = async () => {
-  const buyerId = route.params.buyerId; // Get sellerId from the route
+  const buyerId = route.params.buyerId;
   loading.value = true;
   try {
-    const response = await axios.get('/chat/userrowCheck', {
+    const response = await axios.get('/chat/userrowCheckSeller', {
       params: {
-        sellerId: buyerId, // The ID of the buyer (logged-in user)
+        buyerId: buyerId,
       }
     });
-    //console.log('Response data:', response.data); // Debugging log
-    selectUser(response.data); // Call the function to select the user
+    seller.value = response.data.sellerId;
+    buyer.value = response.data.buyerId;
+    selectUser(response.data);
+
   } catch (error) {
-    console.error('Error fetching user data:', error); // Log the error
-    // Optionally, you can show an error message to the user here
+    console.error('Error fetching user data:', error);
   } finally {
-    loading.value = false; // Set loader to false
+    loading.value = false;
   }
 };
+
+
+
+
+
 let intervalId;
 onMounted(() => {
-  defaultLoadingUser(); 
   chkUserrow();
-  fetchChatHistory(); // Fetch chat history immediately
-  intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
-  // Attach scroll event listener to track user scrolling
+  fetchChatHistory();
+  intervalId = setInterval(fetchChatHistory, 5000);
   if (chatContainer.value) {
     chatContainer.value.addEventListener('scroll', handleScroll);
     handleScroll();
   }
   getChatusersList();
   fetchChatHistory();
-  //getCatList();
 
 });
 
 
-// Clear the interval when the component is unmounted
 onBeforeUnmount(() => {
-  clearInterval(intervalId); // Stop the interval when the component is destroyed
-
+  clearInterval(intervalId);
   if (chatContainer.value) {
     chatContainer.value.removeEventListener('scroll', handleScroll);
   }
@@ -403,7 +520,7 @@ onBeforeUnmount(() => {
 .dashboard__content {
   background-color: #f0f0f0;
   padding: 10px 10px 10px;
-  height: 100vh;
+  /* height: 100vh; */
 }
 
 
@@ -429,6 +546,7 @@ onBeforeUnmount(() => {
 
 .chat-user-item.selected {
   background-color: #075e54;
+  color: #fff;
 }
 
 
@@ -495,12 +613,11 @@ onBeforeUnmount(() => {
 }
 
 .message-content {
-  max-width: 75%;
-  padding: 10px;
+  max-width: 45%;
+  padding: 15px;
   border-radius: 10px;
   position: relative;
   text-align: left;
-  /* Align text to the left */
 }
 
 .sender-message .message-content {
@@ -567,8 +684,8 @@ input[type="file"]+label {
 }
 
 .btn {
-  border-radius: 20px;
-  margin-left: 10px;
+  /* border-radius: 20px; */
+  /* margin-left: 10px; */
 }
 
 .right-sidebar {
@@ -605,5 +722,27 @@ input[type="file"]+label {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.search_form {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  outline: 0;
+  border: 1px solid #adadad;
+}
+
+.search_btn {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  padding: 15px;
+  color: #fff;
+  background: #1f4b3f;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.send_button {
+  background: #1f4b3f !important;
+  color: #fff;
 }
 </style>

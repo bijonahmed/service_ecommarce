@@ -5,8 +5,8 @@
         <div class="col-md-7">
           <div
             class="d-block text-center text-md-start justify-content-center justify-content-md-start d-md-flex align-items-center mb-3 mb-md-0">
-            <a class="fz17 fw500 text-white mr15-md mr30" href="#">Terms of Service</a>
-            <a class="fz17 fw500 text-white mr15-md mr30" href="#">Privacy Policy</a>
+            <nuxt-link class="fz17 fw500 text-white mr15-md mr30" to="/terms-and-condition">Terms of Service</nuxt-link>
+            <nuxt-link class="fz17 fw500 text-white mr15-md mr30" to="/privacy-and-policy">Privacy Policy</nuxt-link>
             <!-- <a class="fz17 fw500 text-white" href="#">Site Map</a> -->
           </div>
         </div>
@@ -14,7 +14,9 @@
           <div class="social-widget text-center text-md-end">
             <div class="social-style1">
               <a class="text-white me-2 fw500 fz17" href="#">Follow us</a>
-              <a href="#"><i class="fab fa-facebook-f list-inline-item"></i></a>
+              <a :href="fblink" target="_blank" rel="noopener noreferrer">
+  <i class="fab fa-facebook-f list-inline-item"></i>
+</a>
               <!-- <a href="#"><i class="fab fa-twitter list-inline-item"></i></a>
               <a href="#"><i class="fab fa-instagram list-inline-item"></i></a>
               <a href="#"><i class="fab fa-linkedin-in list-inline-item"></i></a> -->
@@ -27,10 +29,10 @@
           <div class="link-style1 mb-4 mb-sm-5">
             <h5 class="text-white mb15">About</h5>
             <div class="link-list">
-              <a href="#">About us</a>
+              <nuxt-link to="/aboutus">About us</nuxt-link>
               <nuxt-link to="/privacy-and-policy">Privacy Policy</nuxt-link>
               <nuxt-link to="/terms-and-condition">Terms of Service</nuxt-link>
-              <a href="#">Investor Relations</a>
+            
             </div>
           </div>
         </div>
@@ -39,12 +41,12 @@
             <h5 class="text-white mb15">Categories</h5>
             <ul class="ps-0">
               <li><Nuxt-link  to="/category/programming-tech">Programming & Tech</Nuxt-link></li>
-              <li><Nuxt-link to="#">Graphics & Design</Nuxt-link></li>
-              <li><Nuxt-link to="#">Digital Marketing</Nuxt-link></li>
-              <li><Nuxt-link to="#">Video & Animation</Nuxt-link></li>
-              <li><Nuxt-link to="#">Writing & Translation</Nuxt-link></li>
-              <li><Nuxt-link to="#">E-Commerce Development</Nuxt-link></li>
-              <li><Nuxt-link to="#">Website Development</Nuxt-link></li>
+              <li><Nuxt-link to="/category/graphics-design">Graphics & Design</Nuxt-link></li>
+              <li><Nuxt-link to="/category/digital-marketing">Digital Marketing</Nuxt-link></li>
+              <li><Nuxt-link to="/category/video-animation">Video & Animation</Nuxt-link></li>
+              <li><Nuxt-link to="/category/writing-translation">Writing & Translation</Nuxt-link></li>
+              <li><Nuxt-link to="/category/e-commerce-development">E-Commerce Development</Nuxt-link></li>
+              <li><Nuxt-link to="/category/website-development">Website Development</Nuxt-link></li>
             </ul>
           </div>
         </div>
@@ -52,8 +54,8 @@
           <div class="link-style1 mb-4 mb-sm-5">
             <h5 class="text-white mb15">Support</h5>
             <ul class="ps-0">
-              <li><a href="#">Help & Support</a></li>
-              <li><a href="#">Trust & Safety</a></li>
+              <li><nuxt-link to="/help-and-support">Help & Support</nuxt-link></li>
+              <li><nuxt-link to="/trustand-safety">Trust & Safety</nuxt-link></li>
               <li><nuxt-link to="/selling-on-isumax">Selling on isumax</nuxt-link></li>
               <li><nuxt-link to="/buying-on-isumax">Buying on isumax</nuxt-link></li>
             </ul>
@@ -88,7 +90,7 @@
         <div class="col-md-6">
           <div class="text-center text-lg-start">
             <p class="copyright-text mb-0 text-white-light ff-heading">
-              © Freeio. 2023 CreativeLayers. All rights reserved.
+              {{ copyright }}
             </p>
           </div>
         </div>
@@ -154,8 +156,7 @@
                   class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
             <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
                   class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-            <li><nuxt-link class="dropdown-item" to="/dashboard/earning"><i
-                  class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
+            
             <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
                   class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
 
@@ -188,7 +189,8 @@ const router = useRouter();
 const name = ref();
 const imagePreview = ref();
 const email = ref();
-
+const copyright = ref();
+const fblink = ref();
 
 const getUserRow = async () => {
   try {
@@ -271,6 +273,22 @@ const fetchCatData = async () => {
 };
 
 
+const settingData = async () => {
+  try {
+    loading.value = true;
+    const response = await axios.get("/unauthenticate/getSettingData");
+    copyright.value = response.data.copyright;
+    fblink.value = response.data.fblink;
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+
 const navbarScrollfixed = () => {
   $('.navbar-scrolltofixed').scrollToFixed();
   var summaries = $('.summary');
@@ -295,6 +313,7 @@ const navbarScrollfixed = () => {
 
 
 onMounted(async () => {
+  settingData();
   fetchCatData();
   navbarScrollfixed();
   getUserRow();

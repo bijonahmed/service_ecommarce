@@ -136,8 +136,6 @@
                         class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
                         class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-                  <li><nuxt-link class="dropdown-item" to="/dashboard/earning"><i
-                        class="fa fa-dollar-sign"></i>&nbsp;Earning</nuxt-link></li>
                   <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
                         class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
 

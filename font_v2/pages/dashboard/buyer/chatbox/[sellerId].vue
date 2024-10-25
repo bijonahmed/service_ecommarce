@@ -124,20 +124,25 @@
                 </div>
                 <div class="card-footer">
 
-                  <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
+                  <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage">
                     <div class="input-group">
                       <input class="form-control" id="message" placeholder="Type your message..."
                         v-model="messageContent">
                       <div class="p-2 px-3 bg-white d-flex align-items-center justify-content-center">
                         <label for="fileInput" style="cursor: pointer;"
-                          class=" d-flex align-items-center justify-content-center"><i
-                            class="fas fa-paperclip"></i></label>
+                          class="d-flex align-items-center justify-content-center">
+                          <i class="fas fa-paperclip"></i>
+                        </label>
                       </div>
-                      <input type="file" hidden class=" " id="fileInput" accept="image/*,application/pdf"
-                        @change="handleFileUpload" />
-                      <button class="btn btn-primary text-white send_button" type="submit"><i
-                          class="fas fa-paper-plane"></i></button>
+                      <input type="file" hidden id="fileInput" accept="image/*,application/pdf"
+                        @change="handleFileUpload" data-toggle="tooltip" data-html="true"
+                        title="<em>Tooltip</em> <u>with</u> <b>HTML</b>" />
+                      <button class="btn btn-primary text-white send_button" type="submit">
+                        <i class="fas fa-paper-plane"></i>
+                      </button>
                     </div>
+                    <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+                    <small><span>&nbsp;Max File Size: 1GB</span></small>
                   </form>
                 </div>
               </div>
@@ -168,7 +173,7 @@
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <p>Average rating given</p>
-                  <p>{{sellerReview}}</p>
+                  <p>{{ sellerReview }}</p>
                 </div>
                 <div class=" d-none  justify-content-between align-items-center">
                   <p>Average order price</p>
@@ -254,35 +259,31 @@ const getFileName = (fileUrl) => {
   return fileUrl.split('/').pop();
 }
 
+
+
 // Method to send the message
 async function sendMessage() {
-  try {
-    const formData = new FormData();
-    formData.append("senderId", senderId.value);
-    formData.append("recipientId", recipientId.value);
-    formData.append("message", messageContent.value);
 
-    if (uploadedFile.value) {
-      formData.append("files", uploadedFile.value);
-    }
 
-    const response = await axios.post("/chat/sendMessages", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-    console.log(response);
-    fetchChatHistory();
-    messageContent.value = '';
-    uploadedFile.value = null;
-  } catch (error) {
+  const formData = new FormData();
+  formData.append("senderId", senderId.value);
+  formData.append("recipientId", recipientId.value);
+  formData.append("message", messageContent.value);
 
-    if (error.response && error.response.status === 422) {
-      errors.value = error.response.data.errors;
-    } else {
-      console.error("An error occurred:", error);
-    }
+  if (uploadedFile.value) {
+    formData.append("files", uploadedFile.value);
   }
+
+  const response = await axios.post("/chat/sendMessages", formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  console.log(response);
+  fetchChatHistory();
+  messageContent.value = '';
+  uploadedFile.value = null;
+
 }
 
 
@@ -410,14 +411,14 @@ onMounted(() => {
   lastSeen.value = formatCurrentTime();
   defaultLoadingUser();
   getParticularData();
-  // fetchChatHistory();
+  fetchChatHistory();
   intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
   if (chatContainer.value) {
     chatContainer.value.addEventListener('scroll', handleScroll);
     handleScroll();
   }
   getChatusersList();
-  // fetchChatHistory();
+  fetchChatHistory();
   getCatList();
 
 });

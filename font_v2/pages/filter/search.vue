@@ -99,7 +99,7 @@
 
 
                     <!-- Funfact -->
-                    <section class="pb0 pt60">
+                    <section class="pb0 pt60 d-none">
                         <div class="container maxw1600 bdrb1 pb60">
                             <div class="row">
                                 <div class="col-xl-11 mx-auto">

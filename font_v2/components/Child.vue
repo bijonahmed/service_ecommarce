@@ -126,8 +126,7 @@
 
                                     </div>
                                 </div>
-                                <img src="/images/about/happy-client.png" alt=""
-                                    class="bounce-x bdrs16 img-1 default-box-shadow4" />
+                                
                             </div>
                         </div>
                     </div>
@@ -155,11 +154,11 @@
                                 </div>
                                 <div class="details">
                                     <h4 class="title mt10 mb-3">Post a job</h4>
-                                    <p class="text">
+                                    <!-- <p class="text">
                                         It’s free and easy to post a job. Simply fill
                                         <br class="d-none d-xxl-block" />
                                         in a title, description.
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
@@ -170,11 +169,11 @@
                                 </div>
                                 <div class="details">
                                     <h4 class="title mt10 mb-3">Choose freelancers</h4>
-                                    <p class="text">
+                                    <!-- <p class="text">
                                         It’s free and easy to post a job. Simply fill
                                         <br class="d-none d-xxl-block" />
                                         in a title, description.
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
@@ -185,11 +184,11 @@
                                 </div>
                                 <div class="details">
                                     <h4 class="title mt10 mb-3">Pay safely</h4>
-                                    <p class="text">
+                                    <!-- <p class="text">
                                         It’s free and easy to post a job. Simply fill
                                         <br class="d-none d-xxl-block" />
                                         in a title, description.
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
@@ -200,11 +199,11 @@
                                 </div>
                                 <div class="details">
                                     <h4 class="title mt10 mb-3">We’re here to help</h4>
-                                    <p class="text">
+                                    <!-- <p class="text">
                                         It’s free and easy to post a job. Simply fill
                                         <br class="d-none d-xxl-block" />
                                         in a title, description.
-                                    </p>
+                                    </p> -->
                                 </div>
                             </div>
                         </div>
@@ -270,8 +269,13 @@
                                 get things done—from quick turnarounds to big
                                 transformations.
                             </p>
-                            <nuxt-link class="ud-btn btn-thm bdrs90 default-box-shadow2 mt15 mb30-sm"
-                                to="/support">Contact Us<i class="fal fa-arrow-right-long"></i></nuxt-link>
+                            <!-- <nuxt-link class="ud-btn btn-thm bdrs90 default-box-shadow2 mt15 mb30-sm"
+                                to="/support">Contact Us<i class="fal fa-arrow-right-long"></i></nuxt-link> -->
+
+                                <nuxt-link class="ud-btn btn-thm bdrs90 default-box-shadow2 mt15 mb30-sm"
+                                to="/help-and-support">Contact Us<i class="fal fa-arrow-right-long"></i></nuxt-link>
+
+
                         </div>
                         <div class="col-lg-5 col-xl-4 offset-xl-1 position-relative">
                             <div class="listbox-style1 px30 py-5 bdrs16 bgc-thm2 mt30-md position-relative">

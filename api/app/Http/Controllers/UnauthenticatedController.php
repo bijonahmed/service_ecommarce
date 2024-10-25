@@ -8,10 +8,12 @@ use File;
 use Helper;
 use Validator;
 use App\Models\Gig;
+use App\Models\Post;
 use App\Models\User;
-use App\Models\Skills;
 
+use App\Models\Skills;
 use App\Models\Country;
+use App\Models\Setting;
 use App\Models\Category;
 use App\Models\Categorys;
 use App\Models\Education;
@@ -38,6 +40,27 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
+
+    public function checkContent(Request $request)
+    {
+
+        //dd($request->all());
+        $post_id        = $request->post_id;
+        $category_id    = $request->category_id;
+        $records        = Post::where('id', $post_id)->where('categoryId', $category_id)->get();
+
+
+        $serviceList = [];
+        foreach ($records as $v) {
+            $serviceList[] = [
+                'name' => !empty($v->name) ? $v->name : "",
+                'description_full' => !empty($v->description_full) ? $v->description_full  : "",
+            ];
+        }
+
+
+        return response()->json($serviceList);
+    }
 
     public function checkGetList(Request $request)
     {
@@ -108,7 +131,7 @@ class UnauthenticatedController extends Controller
 
 
         $result     = BuyerReview::where('buyer_id', $row->id)
-            ->select('buyer_review.*', 'users.name', 'users.image','users.slug')
+            ->select('buyer_review.*', 'users.name', 'users.image', 'users.slug')
             ->join('users', 'buyer_review.seller_id', '=', 'users.id')->get();
 
         $reviewList = [];
@@ -440,6 +463,14 @@ class UnauthenticatedController extends Controller
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
+    }
+
+
+    public function getSettingData()
+    {
+
+        $data              = Setting::where('id', 1)->first();
+        return response()->json($data);
     }
 
     public function findCategorys(Request $request)

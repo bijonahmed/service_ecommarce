@@ -1,6 +1,6 @@
 <template>
     <div>
-        <title>Buying on  isumax </title>
+        <title>Trusat and Safety </title>
 
         <body class="bgc-thm1">
             <div class="wrapper ovh">
@@ -38,8 +38,8 @@
 import axios from 'axios';
 const content = ref([]);
 const checkContent = async () => {
-    const post_id = 9;
-    const category_id = 7;
+    const post_id = 5;
+    const category_id = 4;
     try {
         const response = await axios.get('/unauthenticate/checkContent', {
             params: {

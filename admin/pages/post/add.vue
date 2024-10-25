@@ -76,7 +76,7 @@
                                 <option value="5">Selling on isumax</option>
                                 <option value="6">Trust & Safety</option>
                                 <option value="7">Buying on isumax</option>
-                                <option value="7">Help & Support</option>
+                                <option value="8">Help & Support</option>
 
                               </select>
 
