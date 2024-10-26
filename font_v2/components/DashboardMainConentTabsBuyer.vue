@@ -73,7 +73,8 @@
 
                             </a>
                             <div class="ml20 ml0-xs">
-                              <h5 class="title mb-1">{{ name }} <b><u>Buyer Account</u></b></h5>
+                              <h5 class="title mb-1">{{ name }} <b><u>Buyer
+                                    Account</u></b></h5>
                               <p class="mb-0">{{ profName }}</p>
                               <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
@@ -112,8 +113,8 @@
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
                       <h3> Available Balance: ${{ depositAmount }}</h3>
-                     
-                   
+
+
                       <center><span>Messages List</span></center>
                       <div v-if="chatUsers.length">
                         <ul class="list-group">
@@ -125,7 +126,9 @@
                               class="text-decoration-none text-dark">
                               {{ user.user_name }}
                             </a>
-                            <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count }}</span> <!-- Unread count -->
+                            <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count
+                              }}</span>
+                            <!-- Unread count -->
                           </li>
                         </ul>
                       </div>
@@ -139,10 +142,11 @@
 
                       <hr class="opacity-100">
 
-                      <!-- ============{{ userResponseData.profile_status }}======== -->
+                      <!-- ============{{ userResponseData . profile_status }}======== -->
                       <div class="service-about">
                         <h4>Description</h4>
-                        <p class="text mb30 text-justify" style="text-align: justify;">{{ introduce_yourself }}</p>
+                        <p class="text mb30 text-justify" style="text-align: justify;">
+                          {{ introduce_yourself }}</p>
 
 
                       </div>
@@ -220,9 +224,12 @@
                                   <tbody>
                                     <tr v-for="(order, index) in orderData" :key="index">
                                       <td>#{{ order.orderId }}</td>
-                                      <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
-                                        order.selected_price }}</nuxt-link></td>
-                                      <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                      <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }}
+                                          Price:
+                                          ${{ order.selected_price }}</nuxt-link>
+                                      </td>
+                                      <td class="text-center">
+                                        {{ formatDate(order.created_at) }}</td>
                                       <!-- <td>
                                         <button class="btn btn-success btn-sm text-white me-2"
                                           @click="acceptMyOrders(order.orderId)">Accept</button>
@@ -250,14 +257,18 @@
                                     <th scope="col">
                                       <center>Reaming Time</center>
                                     </th>
-                                    <th scope="col">Action</th> <!-- Action Column -->
+                                    <th scope="col">Action</th>
+                                    <!-- Action Column -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="(order, index) in inprogressData" :key="index">
-                                    <td>#{{ order.orderId }}<br />{{ formatDate(order.created_at) }}</td>
-                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
-                                      order.selected_price }}</nuxt-link></td>
+                                    <td>#{{ order.orderId }}<br />{{ formatDate(order.created_at) }}
+                                    </td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }}
+                                        Price:
+                                        ${{ order.selected_price }}</nuxt-link>
+                                    </td>
                                     <td class="text-center" v-html="order.reamingitime"></td>
                                     <td>
 
@@ -288,16 +299,22 @@
                                     <th scope="col">
                                       <center>Date</center>
                                     </th>
-                                    <th scope="col">Status</th> <!-- Action Column -->
+                                    <th scope="col">Status</th>
+                                    <!-- Action Column -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="(order, index) in cancelData" :key="index">
                                     <td>#{{ order.orderId }}</td>
-                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
-                                      order.selected_price }}</nuxt-link></td>
-                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
-                                    <td class="text-danger text-center">Canceled <br />[{{ order.cancel_resion }}]</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }}
+                                        Price:
+                                        ${{ order.selected_price }}</nuxt-link>
+                                    </td>
+                                    <td class="text-center">
+                                      {{ formatDate(order.created_at) }}</td>
+                                    <td class="text-danger text-center">Canceled
+                                      <br />[{{ order.cancel_resion }}]
+                                    </td>
                                   </tr>
 
                                 </tbody>
@@ -317,15 +334,19 @@
                                     <th scope="col">
                                       <center>Date</center>
                                     </th>
-                                    <th scope="col">Action</th> <!-- Action Column -->
+                                    <th scope="col">Action</th>
+                                    <!-- Action Column -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="(order, index) in deliveryData" :key="index">
                                     <td>#{{ order.orderId }}</td>
-                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
-                                      order.selected_price }}</nuxt-link></td>
-                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }}
+                                        Price:
+                                        ${{ order.selected_price }}</nuxt-link>
+                                    </td>
+                                    <td class="text-center">
+                                      {{ formatDate(order.created_at) }}</td>
                                     <td>
                                       <nuxt-link :to="`/dashboard/buyer/orderDetails/${order.orderId}`"
                                         class="btn-sm btn btn-primary text-white">Details</nuxt-link>
@@ -351,15 +372,19 @@
                                     <th scope="col">
                                       <center>Date</center>
                                     </th>
-                                    <th scope="col">Action</th> <!-- Action Column -->
+                                    <th scope="col">Action</th>
+                                    <!-- Action Column -->
                                   </tr>
                                 </thead>
                                 <tbody>
                                   <tr v-for="(order, index) in completeData" :key="index">
                                     <td>#{{ order.orderId }}</td>
-                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }} Price: ${{
-                                      order.selected_price }}</nuxt-link></td>
-                                    <td class="text-center">{{ formatDate(order.created_at) }}</td>
+                                    <td><nuxt-link :to="`/gigs/${order.gig_slug}`">{{ order.gig_name }}
+                                        Price:
+                                        ${{ order.selected_price }}</nuxt-link>
+                                    </td>
+                                    <td class="text-center">
+                                      {{ formatDate(order.created_at) }}</td>
                                     <td>
                                       <nuxt-link :to="`/dashboard/buyer/orderDetails/${order.orderId}`"
                                         class="btn-sm btn btn-primary text-white">Details</nuxt-link>
@@ -375,7 +400,37 @@
                         </div>
                       </div>
 
+
+                      <!-- <center><button class="btn btn-primary" @click=getwhislistData>Test</button></center> -->
+
+                      <div class="row">
+                        <center>
+                          <p>Wish List</p>
+                        </center>
+                        <div class="col-sm-6 col-xl-4" v-for="gig in gigData" :key="gig.id">
+                          <div class="listing-style1">
+                            <div class="list-thumb">
+                              <!-- Delete -->
+                              <img class="w-100" :src="gig.thumbnail_images" alt="">
+                              <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
+                                  class="fa-solid fa-trash"></i></a>
+                              <!-- Share  -->
+                              <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12"
+                                style="left: 20px;"><i class="fa-solid fa-share"></i></nuxt-link>
+                              <!-- Edit  -->
+                            </div>
+
+
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
                     </div>
+
+
 
                   </div>
                 </div>
@@ -399,7 +454,8 @@
                     <!-- Cancel Order Form -->
                     <form @submit.prevent="submitCancelOrder">
                       <div class="mb-3">
-                        <label for="cancelReason" class="form-label">Reason for Cancellation</label>
+                        <label for="cancelReason" class="form-label">Reason for
+                          Cancellation</label>
                         <textarea v-model="cancelReason" id="cancelReason" class="form-control" rows="4"
                           placeholder="Please explain why you want to cancel the order"></textarea>
                       </div>
@@ -437,10 +493,14 @@
 </template>
 
 <script setup>
-import { useRoute } from 'vue-router';
+import {
+  useRoute
+} from 'vue-router';
 import axios from 'axios';
 
-import { useRouter } from 'vue-router';
+import {
+  useRouter
+} from 'vue-router';
 import Swal from "sweetalert2";
 const euddata = ref([]);
 const chatUsers = ref([]);
@@ -467,6 +527,19 @@ definePageMeta({
 
 const profileModal = ref(null);
 const msgData = ref([]);
+
+
+const gigData = ref([]);
+const getwhislistData = async () => {
+  try {
+    const response = await axios.get(`/gig/getwishListGig`);
+    gigData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 const getMessages = async () => {
   try {
     const response = await axios.get(`/user/getMessagesNoti`);
@@ -476,6 +549,47 @@ const getMessages = async () => {
   }
 };
 
+
+
+const deleteGig = async (id) => {
+    // Show confirmation dialog
+    const result = await Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+    });
+
+    // Check if the user confirmed
+    if (result.isConfirmed) {
+        try {
+            const response = await axios.get('/gig/deleteWishListGig', {
+                params: { id: id }
+            });
+
+            // Call gigList function after successful deletion
+            if (response.status === 200) {
+
+                Swal.fire(
+                    'Deleted!',
+                    'Your gig has been deleted.',
+                    'success'
+                );
+                getwhislistData();
+            }
+        } catch (error) {
+            console.log(error);
+            Swal.fire(
+                'Error!',
+                'There was an error deleting your gig.',
+                'error'
+            );
+        }
+    }
+};
 
 const selectUser = (users) => {
   const userId = users.user_id; // Get user_id from reactive data
@@ -493,7 +607,27 @@ const getChatusersList = async () => {
     // Handle error
   }
 };
+const shareUrl = (slug) => {
+  const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
+  const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
 
+  navigator.clipboard.writeText(fullUrl)
+    .then(() => {
+
+      Swal.fire(
+        'Copied!',
+        'Your gig URL has been copied.',
+        'success'
+      );
+
+
+
+      //alert('URL copied to clipboard!');
+    })
+    .catch(err => {
+      console.error('Failed to copy URL: ', err);
+    });
+};
 
 const submitCancelOrder = () => {
   console.log("============orderId:" + canceOrderID.value);
@@ -543,8 +677,6 @@ const cancelOrders = (orderId) => {
   $('#myModal_cancel').modal('show');
 
 }
-
-
 
 
 const chkUserrow = async () => {
@@ -616,7 +748,11 @@ const getAllOrdersList = async () => {
 
 // Function to format the date
 const formatDate = (date) => {
-  const options = { year: 'numeric', month: 'long', day: 'numeric' };
+  const options = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
   return new Date(date).toLocaleDateString(undefined, options);
 };
 
@@ -651,7 +787,9 @@ const getOrderCounting = async () => {
 const getOrderStatus = async (orderStatusId = 1) => {
   try {
     const response = await axios.get(`/order/getOrderPlaceForByer`, {
-      params: { orderStatusId } // Passing orderStatusId as a query parameter
+      params: {
+        orderStatusId
+      } // Passing orderStatusId as a query parameter
     });
 
     if (orderStatusId = 1) {
@@ -682,7 +820,9 @@ const getOrderStatus = async (orderStatusId = 1) => {
 };
 
 
+
 onMounted(() => {
+  getwhislistData();
   getChatusersList();
   getMessages();
   getBalance();
@@ -730,9 +870,11 @@ onBeforeUnmount(() => {
   transition: transform 0.3s, box-shadow 0.3s;
   background-color: #ffffff;
 }
+
 .chat-user-item {
   cursor: pointer;
 }
+
 .card:hover {
   transform: translateY(-5px);
   /* Lift the card on hover */

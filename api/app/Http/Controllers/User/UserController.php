@@ -21,6 +21,7 @@ use App\Models\SellerAds;
 use App\Models\Experience;
 use App\Models\Profession;
 use App\Models\Certificate;
+use App\Models\GigWishList;
 use App\Models\OrderStatus;
 use App\Models\PaymentCard;
 use Illuminate\Support\Str;
@@ -68,6 +69,15 @@ class UserController extends Controller
         return response()->json($data);
     }
 
+    public function myheartTouch(Request $request){
+
+        //dd($request->all());
+        $data['gig_id']  = !empty($request->gig_id) ? $request->gig_id : "";
+        $data['user_id'] = $this->userid;
+        GigWishList::create($data);
+        return response()->json($data);
+
+    }
     public function getMessagesNotification()
     {
         // echo $this->role_id;

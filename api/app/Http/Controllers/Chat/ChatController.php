@@ -325,15 +325,18 @@ class ChatController extends Controller
                 'files'       => !empty($message->files) ? url($message->files) : "", // File attachment (if any)
                 'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
 
-                // Sender details
-                'sender_id'               => $message->sender_id,
-                'sender_name'             => $sender ? $sender->name : "Unknown",
-                'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
+               
 
                 // Recipient details
                 'recipient_id'            => $message->to_id,
                 'recipient_name'          => $recipient ? $recipient->name : "Unknown",
                 'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
+
+
+                 // Sender details
+                 'sender_id'               => $message->sender_id,
+                 'sender_name'             => $sender ? $sender->name : "Unknown",
+                 'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
             ];
         }
         // Return messages as a JSON response

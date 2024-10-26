@@ -24,6 +24,7 @@ use App\Models\HomeAroductSliderCategory;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Gig;
 use App\Models\GigImagesHistory;
+use App\Models\GigWishList;
 use Intervention\Image\Facades\Image; // Import Intervention Image
 
 class GigController extends Controller
@@ -123,9 +124,10 @@ class GigController extends Controller
     }
 
 
-    public function updateGig(Request $request){
+    public function updateGig(Request $request)
+    {
 
-       // dd($request->all());
+        // dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'name'              => 'required|max:80',
@@ -249,11 +251,11 @@ class GigController extends Controller
         //For Premimum
         $data['premium_price']        = $request->premium_price;
         $data['premium_description']  = $request->premium_description;
-        $data['premium_delivery_days']= $request->premium_delivery_days;
+        $data['premium_delivery_days'] = $request->premium_delivery_days;
         $data['premium_source_file']  = $request->premium_source_file;
 
 
-        $gigid      = (int) $request->id; 
+        $gigid      = (int) $request->id;
         $gig        = Gig::find($gigid);
         $data       = $request->all();
         $gig->update($data);
@@ -270,7 +272,6 @@ class GigController extends Controller
             'message' => 'Gig update successfully',
             'data' => $gig
         ]);
-
     }
 
     public function createGig(Request $request)
@@ -409,13 +410,13 @@ class GigController extends Controller
         $gig = new Gig($data);
         $gig->save();
 
-        if(!empty($data['thumbnail_images'])){
+        if (!empty($data['thumbnail_images'])) {
             GigImagesHistory::create([
                 'gig_id' => $gig->id, // Associate the image with the newly created gig
                 'image_path' => $data['thumbnail_images']
             ]);
         }
-       
+
         foreach ($imageUrls as $imageUrl) {
             GigImagesHistory::create([
                 'gig_id' => $gig->id, // Associate the image with the newly created gig
@@ -445,6 +446,50 @@ class GigController extends Controller
         } else {
             return response()->json(['message' => 'Gig not found or you do not have permission to update this gig.'], 404);
         }
+    }
+
+    public function deleteWishListGig(Request $request)
+    {
+
+      //  dd($request->id);
+        $updated = GigWishList::where('user_id', $this->userid)
+        ->where('gig_id', $request->id)
+        ->delete();
+
+        if ($updated) {
+            return response()->json(['message' => 'Gig updated successfully.']);
+        } else {
+            return response()->json(['message' => 'Gig not found or you do not have permission to update this gig.'], 404);
+        }
+    }
+
+
+
+
+    public function getwishListGig()
+    {
+
+
+        $filterData = GigWishList::where('user_id', $this->userid)
+            ->get();;
+        $data = [];
+        foreach ($filterData as $v) {
+            $gigrow = Gig::where('id', $v->gig_id)->first();
+            $catrow = Categorys::where('id', $gigrow->category_id)->first();
+
+            $data[] = [
+                'id'                => $v->gig_id,
+                'user_id'           => $v->user_id,
+                'name'              => $gigrow->name,
+                'gig_slug'          => $gigrow->gig_slug,
+                'price'             => $gigrow->price,
+                'status'            => $gigrow->gig_status,
+                'category_name'     => $catrow->category_name,
+                'thumbnail_images'  => !empty($gigrow->thumbnail_images) ? url($gigrow->thumbnail_images) : "",
+
+            ];
+        }
+        return response()->json($data, 200);
     }
 
     public function getGigHistory()

@@ -27,6 +27,7 @@
 
 import Child from '~/components/Child.vue';
 const node = ref(null);
+
 // Simulate loading data
 // Function to load node data
 function loadNodeData() {

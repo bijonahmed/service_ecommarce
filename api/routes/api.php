@@ -118,7 +118,9 @@ Route::group(['prefix' => 'gig'], function () {
     Route::post('createGig', [GigController::class, 'createGig']);
     Route::post('updateGig', [GigController::class, 'updateGig']);
     Route::get('deleteGig', [GigController::class, 'deleteGig']);
+    Route::get('deleteWishListGig', [GigController::class, 'deleteWishListGig']);
     Route::get('getGigHistory', [GigController::class, 'getGigHistory']);
+    Route::get('getwishListGig', [GigController::class, 'getwishListGig']);
     Route::get('getgitrow', [GigController::class, 'getgitrow']);
 });
 
@@ -128,6 +130,7 @@ Route::group(
         'prefix' => 'user',
     ],
     function () {
+        Route::get('myheartTouch', [UserController::class, 'myheartTouch']);
         Route::get('getMessagesNoti', [UserController::class, 'getMessagesNotification']);
         Route::post('updateUser', [UserController::class, 'updateUser']);
         Route::get('allrolelist', [UserController::class, 'allrolelist']);

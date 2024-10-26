@@ -40,19 +40,10 @@
             <div class="col-lg-3">
               <!-- <button @click="getChatusersList">Test</button> -->
               <div class="message_container">
-                <!-- ============={{seller}}=== -->
-                <!-- <div class="w-100">
-                  <div class="input-group w-100">
-                    <div class="form-outline" data-mdb-input-init>
-                      <input type="search" id="form1" class="form-control " style="border-radius: 0;" />
-                    </div>
-                    <button type="button" class="btn btn-primary" style="border-radius: 0;" data-mdb-ripple-init>
-                      <i class="fas fa-search"></i>
-                    </button>
-                  </div>
-                </div> -->
+
                 <div class="m-4 d-flex align-items-center justify-content-center">
-                  <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch" @keyup="getSellerList">
+                  <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch"
+                    @keyup="getSellerList">
                   <button type="button" class="btn btn-primary m-0 h-100 search_btn">
                     <i class="fas fa-search"></i>
                   </button>
@@ -85,47 +76,34 @@
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
-                    <!-- ============{{ chatMessages }} -->
                     <div class="message" v-for="message in chatMessages" :key="message.id"
-                      :class="{ 'sender-message': message.sender_id === buyer, 'recipient-message': message.sender_id !== buyer }">
-
+                      :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
                       <!-- <img
-                        :src="message.sender_id === buyer ? message.sender_profile_picture : 'boss_image.png'"
+                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
                         alt="Profile Picture" class="profile-picture" /> -->
 
                       <div class="message-content">
-
                         <!-- <strong class="sender-name">{{ message.sender_name }}</strong> -->
-
                         <p class="message-text">{{ message.message }}</p>
                         <div v-if="message.files" class="file-attachment">
+                          <!-- <p>Attached Files:</p> -->
                           <div v-if="isImage(message.files)">
                             <img style="width: 100px;" :src="message.files" alt="Attached Image"
                               class="attached-image" />
                           </div>
                           <div v-else>
-                            <a :href="message.files" target="_blank" class="file-link">{{
-                              getFileName(message.files) }}</a>
+                            <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
+                              }}</a>
                           </div>
                         </div>
-                        <span class="timestamp">
-                          {{ new Date(message.created_at).toLocaleString('en-US', {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                            hour: 'numeric',
-                            minute: 'numeric',
-                            hour12: true
-                          }) }}
-                        </span>
-
-                        <!-- <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
+                        <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
                           hour: '2-digit',
                           minute: '2-digit'
-                        }) }}</span> -->
+                        }) }}</span>
                       </div>
                     </div>
                   </div>
+
 
                   <div class="no-messages" v-else>
                     <p>No messages yet.</p>
@@ -136,19 +114,19 @@
                     <div class="input-group">
                       <input class="form-control" id="message" placeholder="Type your message..."
                         v-model="messageContent">
-                        
+
                       <div class="p-2 px-3 bg-white d-flex align-items-center justify-content-center">
                         <label for="fileInput" style="cursor: pointer;"
                           class=" d-flex align-items-center justify-content-center"><i
                             class="fas fa-paperclip"></i></label>
-                            
+
                       </div>
-                    
+
                       <input type="file" hidden class=" " id="fileInput" accept="image/*,application/pdf"
                         @change="handleFileUpload" />
                       <button class="btn btn-primary text-white send_button" type="submit"><i
                           class="fas fa-paper-plane"></i></button>
-                          
+
                     </div>
                     <small><span>&nbsp;Max File Size: 1GB</span></small>
                   </form>
@@ -245,6 +223,7 @@ const chatMessages = ref([]);
 const chatUsers = ref([]);
 const messageContent = ref('');
 const country = ref('');
+const senderId = ref('');
 const user_name = ref('');
 const chatContainer = ref(null);
 const isUserAtBottom = ref(true);
@@ -274,7 +253,7 @@ const getFileName = (fileUrl) => {
 async function sendMessage() {
   try {
     const formData = new FormData();
-    
+
     formData.append("buyer", buyer.value);
     formData.append("seller", seller.value);
     formData.append("message", messageContent.value);
@@ -341,27 +320,27 @@ const selectedUserId = ref(null);
 
 async function selectUser(users) {
 
-    sellerReview.value = users.sellerReview;
-    lastOrderDate.value = users.lastOrderDate;
-    sellerOrder.value = users.sellerOrder;
-    join_date.value = users.join_date;
-    lastSeen.value = formatCurrentTime();
-    professionName.value = users.professionName;
-    country.value = users.country;
-    profilePicture.value = users.profilePicture;
+  sellerReview.value = users.sellerReview;
+  lastOrderDate.value = users.lastOrderDate;
+  sellerOrder.value = users.sellerOrder;
+  join_date.value = users.join_date;
+  lastSeen.value = formatCurrentTime();
+  professionName.value = users.professionName;
+  country.value = users.country;
+  profilePicture.value = users.profilePicture;
 
-    console.log("Selected SellerId: " + seller.value);
-    console.log("Selected BuyerId: " + buyer.value);
+  console.log("Selected SellerId: " + seller.value);
+  console.log("Selected BuyerId: " + buyer.value);
 
-    seller.value = seller.value;
-    buyer.value = buyer.value;
+  seller.value = seller.value;
+  buyer.value = buyer.value;
 
-    selectedUserId.value = users.id;
-    user_name.value = users.user_name;
+  selectedUserId.value = users.id;
+  user_name.value = users.user_name;
 
-    // Call other functions, which might have async operations
-    await checkBuyerDetails(buyer.value);
-    await fetchChatHistory();
+  // Call other functions, which might have async operations
+  await checkBuyerDetails(buyer.value);
+  await fetchChatHistory();
 }
 
 
@@ -383,7 +362,7 @@ const checkBuyerDetails = async (buyerId) => {
 
 const getSellerList = async () => {
 
-    console.log("=====" + txtSearch.value);
+  console.log("=====" + txtSearch.value);
 
 }
 const fetchChatHistory = async () => {
@@ -414,6 +393,14 @@ const fetchChatHistory = async () => {
   }
 };
 
+const getParticularData = async () => {
+  try {
+    const response = await axios.post(`/auth/me`);
+    senderId.value = response.data.user_id;
+  } catch (error) {
+    // Handle error
+  }
+};
 
 const chkUserrow = async () => {
   const buyerId = route.params.buyerId;
@@ -442,6 +429,7 @@ const chkUserrow = async () => {
 let intervalId;
 onMounted(() => {
   chkUserrow();
+  getParticularData();
   fetchChatHistory();
   intervalId = setInterval(fetchChatHistory, 5000);
   if (chatContainer.value) {
@@ -462,6 +450,7 @@ onBeforeUnmount(() => {
 });
 
 </script>
+
 
 
 
@@ -546,7 +535,6 @@ onBeforeUnmount(() => {
 
 .chat-user-item.selected {
   background-color: #075e54;
-  color: #fff;
 }
 
 
@@ -570,9 +558,10 @@ onBeforeUnmount(() => {
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  height: 650px;
+  max-height: 650px;
   flex: 1;
   /* Takes the remaining height */
+
 }
 
 .card-header {
@@ -684,8 +673,8 @@ input[type="file"]+label {
 }
 
 .btn {
-  /* border-radius: 20px; */
-  /* margin-left: 10px; */
+  /* border-radius: 20px;
+  margin-left: 10px; */
 }
 
 .right-sidebar {

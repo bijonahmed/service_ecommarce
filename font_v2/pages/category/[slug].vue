@@ -119,7 +119,7 @@
 
 
               <div class="row">
-                
+
                 <div class="col-sm-2 col-sm-3" v-for="data in responseData" :key="data.id">
                   <div class="listing-style1">
                     <div class="list-thumb">
@@ -127,7 +127,13 @@
                       <img class="w-100 gig_image"
                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
                         alt="Listing Image">
-                      <!-- <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a> -->
+
+                        <a href="#" class="listing-fav fz12" @click.prevent="myHeart(data)"><span
+                          class="far fa-heart"></span></a>
+
+                      <a href="#" v-if="!isLoggedIn" class="listing-fav fz12" @click="faJheart()"><span
+                          class="far fa-heart"></span></a>
+
                     </div>
                     <div class="list-content">
                       <p class="list-text body-color fz14 mb-1">{{ categoryName || '' }}</p>
@@ -146,7 +152,7 @@
                           <span class="fz14">{{ data.user_name || '' }}</span>
                         </a>
                         <div class="budget">
-                          
+
                           <p v-if="data.types == 1">
                             Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.price }}</span>
                           </p>
@@ -154,7 +160,7 @@
                           <p v-if="data.types == 2">
                             Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.basic_price }}</span>
                           </p>
-                           
+
                         </div>
                       </div>
                     </div>
@@ -175,6 +181,81 @@
           </section>
         </div>
 
+        <!-- Login Modal -->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Login</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form @submit.prevent="login()">
+                  <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                    <Loader />
+                  </div>
+                  <div class="row wow fadeInRight">
+
+                    <div class="log-reg-form search-modal form-style1 bgc-white p30-sm default-box-shadow1 bdrs12">
+                      <div class="mb30">
+                        <h4>We're glad to see you again!</h4>
+                        <p class="text">
+                          Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link>
+                        </p>
+                      </div>
+                      <center><span class="text-danger">{{ errors.account }}</span></center>
+                      <div class="mb20">
+                        <label for="email" class="form-label fw600 dark-color">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="example@gmail.com"
+                          v-model="email">
+                        <span class="text-danger">{{ errors.email }}</span>
+                      </div>
+
+                      <div class="mb15">
+                        <label for="password" class="form-label fw600 dark-color">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="*******"
+                          v-model="password">
+                        <span class="text-danger">{{ errors.password }}</span>
+                      </div>
+
+                      <div class="mb15">
+                        <label for="userCapInput" class="form-label fw600 dark-color">Captcha</label>
+                        <div class="CaptchaWrap">
+                          <div id="CaptchaImageCode" class="CaptchaTxtField">
+                            <canvas id="CapCode" class="capcode" width="100" height="50"></canvas>
+                          </div>
+                          <button type="button" @click="createCaptcha" class="ReloadBtn">
+                            <img src="/refresh.webp" alt="Refresh Captcha" />
+                          </button>
+                        </div>
+
+                        <input type="hidden" id="UserCaptchaCode" class="CaptchaTxtField form-control mt-2"
+                          placeholder="Enter Captcha - Case Sensitive" v-model="captchaInput" @input="validateCaptcha"
+                          required>
+                        <input type="text" id="userCapInput" class="CaptchaTxtField form-control mt-2"
+                          placeholder="Enter Captcha - Case Sensitive" v-model="userCapInput">
+
+                        <span id="WrongCaptchaError" class="error">{{ captchaError }}</span>
+                        <span class="text-danger">{{ errors.userCapInput }}</span>
+                      </div>
+
+                      <div class="d-grid mb20">
+                        <button class="ud-btn btn-thm default-box-shadow2" type="submit">Login</button>
+                      </div>
+                    </div>
+
+                  </div>
+                </form>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+
         <Footer />
       </div>
     </body>
@@ -188,8 +269,16 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
-const router = useRouter();
+import { useUserStore } from '~~/stores/user'
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const { isLoggedIn } = storeToRefs(userStore)
 
+const captchaInput = ref("");
+const userCapInput = ref("");
+const email = ref("");
+const password = ref("");
+const errors = ref({ email: "", password: "" }); // Initialize error messages
 const loading = ref(false);
 const route = useRoute();
 const slug = route.params.slug; // Capture the slug parameter from the URL
@@ -199,6 +288,8 @@ const responseData = ref([]);
 const currentPage = ref(1);
 const totalPages = ref(5);    // Total number of pages (update as needed)
 const isLoading = ref(false); // Loading state indicator
+
+
 // Assuming categoryData is provided as a prop or fetched from a store
 const props = defineProps({
   categoryData: {
@@ -212,6 +303,142 @@ const isActive = (slug) => {
   return slug === route.params.slug; // Compare slug with the current route's slug
 };
 
+
+const faJheart = async () => {
+  $('#staticBackdrop').modal('show'); // This should hide the modal
+
+}
+
+const myHeart = async (data) => {
+
+  try {
+    // Make the API call and wait for the response
+    const response = await axios.get(`/user/myheartTouch`, {
+      params: {
+        gig_id: data.id,
+      },
+    });
+
+    // Show success confirmation alert
+    await Swal.fire({
+      title: 'Success!',
+      text: 'Item added to your wishlist!',
+      icon: 'success',
+      confirmButtonText: 'Okay',
+    });
+  } catch (error) {
+    console.error(error);
+
+    // Show error alert
+    await Swal.fire({
+      title: 'Error!',
+      text: 'Something went wrong. Please try again.',
+      icon: 'error',
+      confirmButtonText: 'Okay',
+    });
+  }
+};
+
+
+
+
+
+function createCaptcha() {
+  const canvas = document.getElementById("CapCode");
+  const context = canvas.getContext("2d");
+  const captchaCode = generateCaptchaCode(6); // Change the length as needed
+
+  context.clearRect(0, 0, canvas.width, canvas.height);
+  context.font = "18px Arial";
+  context.fillText(captchaCode, 10, 50);
+
+  captchaInput.value = captchaCode;
+}
+
+function generateCaptchaCode(length) {
+  const characters = "0123456789";
+  let result = "";
+  for (let i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * characters.length));
+  }
+  return result;
+}
+
+function validateCaptcha() {
+  if (
+    captchaInput.value.toUpperCase() !==
+    document.getElementById("UserCaptchaCode").value.toUpperCase()
+  ) {
+    captchaError.value = "Incorrect CAPTCHA code";
+    captchaValid.value = false;
+  } else {
+    captchaError.value = "";
+    captchaValid.value = true;
+  }
+}
+
+
+async function login() {
+
+  try {
+
+    loading.value = true;
+    //loading.value = true;
+    await userStore.login(
+      email.value,
+      password.value,
+      captchaInput.value,
+      userCapInput.value
+    );
+
+    const token = window.localStorage.getItem("token");
+    if (token) {
+      axios.defaults.headers.common["Authorization"] =
+        "Bearer " + userStore.api_token;
+    }
+    const role_id = userStore.role_id; // Assuming userStore contains role_id after login
+    if (role_id === 3) {
+      $('#staticBackdrop').modal('hide'); // This should hide the modal
+      loading.value = false;
+      const redirectslug = route.params.slug;
+      location.reload();
+
+      //router.push("/category/" + redirectslug);
+    } else if (role_id === 1 || role_id === 2) {
+      roleMsg();
+      return;
+    }
+  } catch (error) {
+    loading.value = false;
+    // If the request fails, display the error messages
+    if (error.response && error.response.data.errors) {
+      const responseErrors = error.response.data.errors;
+      errors.value = {
+        email: responseErrors.email ? responseErrors.email[0] : "",
+        password: responseErrors.password ? responseErrors.password[0] : "",
+        userCapInput: responseErrors.userCapInput
+          ? responseErrors.userCapInput[0]
+          : "",
+        account: responseErrors.account ? responseErrors.account[0] : "",
+      };
+    } else {
+      console.error("An error occurred while logging in:", error);
+    }
+  } finally {
+    loading.value = false;
+  }
+}
+
+const roleMsg = () => {
+  Swal.fire({
+    position: "center", // Changed to center
+    position: "top-end",
+    icon: "error",
+    title: "Login not allowed for this role.",
+    showConfirmButton: false,
+    timer: 3000
+  });
+}
 
 const fetchData = async (page = 1) => {
   try {
@@ -250,6 +477,7 @@ const checkrow = async () => {
 };
 
 onMounted(() => {
+  createCaptcha();
   fetchData();
   checkrow();
 });
@@ -262,6 +490,49 @@ onMounted(() => {
 /* .gig_image{
   height: 250px;
 } */
+
+
+.CaptchaTxtField {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.categories_list_section {
+  border-bottom: 1px solid #E9E9E9;
+  padding: 7px 0 3px;
+  position: relative;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ReloadBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+.ReloadBtn img {
+  width: 30px;
+  margin-left: -50px;
+}
+
+.CaptchaWrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.CaptchaTxtField {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
 .mbp_pagination {
   display: flex;
   justify-content: center;

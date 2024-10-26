@@ -40,10 +40,8 @@
                 </div>
                 <div class="col-sm-4 col-lg-2">
                   <div class="d-flex align-items-center justify-content-sm-end">
-                    <div class="share-save-widget d-flex align-items-center" @click="currentPageCopy">
-
-                      <!-- <span class="icon flaticon-share dark-color fz12 mr10"></span>
-                      <div class="h6 mb-0"><a href="#">Share</a></div> -->
+                    <div class="share-save-widget d-flex align-items-center" >
+                      <div class="h6 mb-0" @click="currentPageCopy"><a href="#"><i class="fas fa-share-alt"></i>&nbsp;Share GIG</a></div>  
 
                     </div>
 
@@ -645,14 +643,26 @@ const currentPageCopy = async () => {
   try {
     // Get the current page URL
     const currentUrl = window.location.href;
+
     await navigator.clipboard.writeText(currentUrl);
-    message.value = 'URL copied to clipboard!';
-    setTimeout(() => {
-      message.value = '';
-    }, 2000);
+
+    // Show SweetAlert notification
+    Swal.fire({
+      icon: 'success',
+      title: 'Copied!',
+      text: 'URL copied to clipboard!',
+      showConfirmButton: false,
+      timer: 2000
+    });
+
   } catch (err) {
     console.error('Failed to copy: ', err);
-    message.value = 'Failed to copy URL.';
+    Swal.fire({
+      icon: 'error',
+      title: 'Failed to Copy',
+      text: 'Could not copy the URL.',
+      showConfirmButton: true,
+    });
   }
 };
 const contactSend = async () => {
