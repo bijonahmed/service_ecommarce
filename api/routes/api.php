@@ -118,10 +118,12 @@ Route::group(['prefix' => 'gig'], function () {
     Route::post('createGig', [GigController::class, 'createGig']);
     Route::post('updateGig', [GigController::class, 'updateGig']);
     Route::get('deleteGig', [GigController::class, 'deleteGig']);
+    Route::get('deleteGigAdmin/{id}', [GigController::class, 'deleteGigAdmin']);
     Route::get('deleteWishListGig', [GigController::class, 'deleteWishListGig']);
     Route::get('getGigHistory', [GigController::class, 'getGigHistory']);
     Route::get('getwishListGig', [GigController::class, 'getwishListGig']);
     Route::get('getgitrow', [GigController::class, 'getgitrow']);
+    Route::get('getAllGigForAdmin', [GigController::class, 'getAllGigForAdmin']);
 });
 
 Route::group(

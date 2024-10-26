@@ -38,6 +38,44 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // Validate the input
+        $this->validateLogin($request);
+
+        // Retrieve credentials
+        $credentials = $request->only('email', 'password');
+
+        // Attempt to authenticate the user
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Invalid username or password"
+                    ]
+                ]
+            ], 422);
+        }
+
+        // Check the user's status
+        $user = auth('api')->user(); 
+        //dd($user);
+        if ($user->status == 0) {
+            // If the status is 0, return an error response
+            auth('api')->logout(); // Log the user out if they're authenticated
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Your account is inactive. Please contact support."
+                    ]
+                ]
+            ], 403); // Forbidden
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    /*
+    public function login(Request $request)
+    {
         //   dd($request->all());
         $this->validateLogin($request);
         $credentials = request(['email', 'password']);
@@ -51,6 +89,25 @@ class AuthController extends Controller
             ], 422);
         }
         return $this->respondWithToken($token);
+    }
+        */
+
+    protected function respondWithToken($token)
+    {
+        $user = auth('api')->user(); // Retrieve the authenticated user
+        return response()->json([
+            'access_token'  => $token,
+            'token_type'    => 'bearer',
+            'expires_in'    => auth('api')->factory()->getTTL() * 60,
+            'user' => [
+                'id'        => $user->id,
+                'role_id'   => $user->role_id,
+                'name'      => $user->name,
+                'email'     => $user->email,
+                'status'    => $user->status,
+                // Add any other user information you want to include
+            ],
+        ]);
     }
 
     public function register(Request $request)
@@ -235,9 +292,9 @@ class AuthController extends Controller
             } else {
                 $response['twitter'] = ""; // Assign an empty string if it is null or doesn't exist
             }
-            
+
             $response['introduce_yourself'] = !empty($user) ? strip_tags($user->introduce_yourself) : "";
-           // dd($response['githubs']);
+            // dd($response['githubs']);
         }
 
         return response()->json($response);
@@ -251,23 +308,7 @@ class AuthController extends Controller
     {
         return $this->respondWithToken($this->guard('api')->refresh());
     }
-    protected function respondWithToken($token)
-    {
-        $user = auth('api')->user(); // Retrieve the authenticated user
-        return response()->json([
-            'access_token'  => $token,
-            'token_type'    => 'bearer',
-            'expires_in'    => auth('api')->factory()->getTTL() * 60,
-            'user' => [
-                'id'        => $user->id,
-                'role_id'   => $user->role_id,
-                'name'      => $user->name,
-                'email'     => $user->email,
-                'status'    => $user->status,
-                // Add any other user information you want to include
-            ],
-        ]);
-    }
+
     public function guard()
     {
         return Auth::guard();
@@ -354,10 +395,10 @@ class AuthController extends Controller
             'phone_number'    => !empty($request->phone_number) ? $request->phone_number : "",
             'profession_name' => !empty($request->profession_name) ? $request->profession_name : "",
             'github'          => !empty($request->github) ? $request->github : "",
-            'website'         => !empty($request->website) ? $request->website : "", 
-            'gender'          => !empty($request->gender) ? $request->gender : "", 
-            'twitter'         => !empty($request->twitter) ? $request->twitter : "", 
-            'introduce_yourself' => $description_with_line_breaks , 
+            'website'         => !empty($request->website) ? $request->website : "",
+            'gender'          => !empty($request->gender) ? $request->gender : "",
+            'twitter'         => !empty($request->twitter) ? $request->twitter : "",
+            'introduce_yourself' => $description_with_line_breaks,
 
         ];
 

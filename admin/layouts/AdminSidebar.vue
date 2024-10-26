@@ -110,9 +110,10 @@ const menuItems = ref([
     open: false,
     route: null,
     children: [
+    { label: 'GIG List', icon: 'fa-circle', route: '/gig/list' },
     { label: 'Notificaiton List', icon: 'fa-circle', route: '/post/notificaiton/list' },
-      { label: 'Add Post', icon: 'fa-circle', route: '/post/add' },
-      { label: 'Post List', icon: 'fa-circle', route: '/post/list' },
+    { label: 'Add Post', icon: 'fa-circle', route: '/post/add' },
+    { label: 'Post List', icon: 'fa-circle', route: '/post/list' },
 
     ]
   },

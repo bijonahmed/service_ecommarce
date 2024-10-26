@@ -493,16 +493,10 @@ class UserController extends Controller
     {
         //dd($request->all());
         $user = User::find($this->userid);
-        if ($request->email === $user->email) {
-            // $unqie=uniqid();
-            //  $email= $request->email.$unqie;
-        } else {
-            $email = $request->email;
-        }
-
-        $data['name']            = $request->fname . ' ' . $request->lname;
-        $data['phone_number']    = $request->phone_number;
-        $data['email']           = $request->email;
+        $data['status']          = $request->status;
+      //  $data['name']            = $request->fname . ' ' . $request->lname;
+      //  $data['phone_number']    = $request->phone_number;
+       // $data['email']           = $request->email;
 
         if (!empty($request->file('file'))) {
             $files = $request->file('file');
@@ -515,8 +509,9 @@ class UserController extends Controller
             $file_url = $uploadPath . $path;
             $data['image'] = $file_url;
         }
+        //dd($data);
 
-        User::where('id', $this->userid)->update($data);
+        User::where('id', $request->id)->update($data);
         $response = [
             'message' => 'User successfully update:',
         ];

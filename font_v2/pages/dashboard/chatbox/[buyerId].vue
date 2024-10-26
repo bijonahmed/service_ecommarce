@@ -160,7 +160,7 @@
                   <p>Completed orders</p>
                   <p>{{ sellerOrder }}</p>
                 </div>
-                <div class="d-flex justify-content-between align-items-center">
+                <div class="d-none d-flex justify-content-between align-items-center">
                   <p>Average rating given</p>
                   <p>{{ sellerReview }}</p>
                 </div>

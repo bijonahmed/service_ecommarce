@@ -49,7 +49,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <div class="row mb-3 d-none">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Name</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control name" v-model="insertdata.name"
@@ -61,16 +61,16 @@
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <!-- <div class="row mb-3">
                                         <label for="inputEnterYourName" class="col-sm-3 col-form-label">Email</label>
                                         <div class="col-sm-9">
-                                            <input type="text" class="form-control name" v-model="insertdata.email"
+                                            <input type="text" class="form-control name"  disabled
                                                 id="email" placeholder="Email">
                                             <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                                         </div>
-                                    </div>
+                                    </div> -->
 
-                                    <div class="row mb-3">
+                                    <div class="row mb-3  d-none">
                                         <label for="inputPhoneNo2" class="col-sm-3 col-form-label">Phone No</label>
                                         <div class="col-sm-9">
                                             <input type="text" class="form-control phone" v-model="insertdata.phone"
@@ -80,16 +80,6 @@
                                     </div>
 
 
-                                    <div class="row mb-3">
-                                        <label for="inputPhoneNo2" class="col-sm-3 col-form-label">KYC </label>
-                                        <div class="col-sm-9">
-                                            <img v-if="doc_file" :src="doc_file" style="height: 150px; width: 150px;" />
-                                            <!-- Optional fallback content if the image is not available -->
-                                            <div v-else>
-                                                <p>No image available</p>
-                                            </div>
-                                        </div>
-                                    </div>
 
 
                                     <div class="row mb-3 d-none">

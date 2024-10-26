@@ -106,7 +106,7 @@ class ChatController extends Controller
 
             $sellerReview       = SellerReview::where('seller_id', $v->user_id)->sum('rating');
             $orderSum           = Order::where('sellerId', $v->user_id)->where('order_status', 5)->sum('order_status');
-            $avgReview          = !empty($sellerReview) ? $sellerReview / $orderSum : $orderSum;
+            $avgReview          = ($orderSum > 0) ? ($sellerReview / $orderSum) : 0; //!empty($sellerReview) ? $sellerReview / $orderSum : $orderSum;
 
 
             $chatusers[] = [
@@ -363,8 +363,8 @@ class ChatController extends Controller
         $udata['is_read'] = 1;
         MyMessage::where('user_id', $buyerid)->update($udata);
 
-        $sellerOrder        = $row && $row->user_id  ? Order::where('sellerId', $row->user_id)->where('order_status', 5)->count('order_status') : 0; // or '' if you prefer a blank //Count Seller Complete Orders
-        $lastOrderDate      = $row && $row->user_id ?  Order::where('sellerId', $row->user_id)->where('order_status', 5)->orderBy('id', 'desc')->first() : 0; //Count Seller Complete Orders
+        $sellerOrder        = $row && $row->user_id  ? Order::where('buyerId', $row->user_id)->where('order_status', 5)->count('order_status') : 0; // or '' if you prefer a blank //Count Seller Complete Orders
+        $lastOrderDate      = $row && $row->user_id ?  Order::where('buyerId', $row->user_id)->where('order_status', 5)->orderBy('id', 'desc')->first() : 0; //Count Seller Complete Orders
         $lorder             = !empty($lastOrderDate) ? date("Y-m-d", strtotime($lastOrderDate->created_at)) : "No Order";
         $ujoin              = $row && $row->user_id ? User::where('id', $row->user_id)->select('created_at')->first() : "";
 
@@ -424,7 +424,7 @@ class ChatController extends Controller
 
         $sellerReview       = SellerReview::where('seller_id', $row->user_id)->sum('rating');
         $orderSum           = Order::where('sellerId', $row->user_id)->where('order_status', 5)->sum('order_status');
-        $avgReview          = !empty($sellerReview) ? $sellerReview / $orderSum : $orderSum;
+        $avgReview          = ($orderSum > 0) ? ($sellerReview / $orderSum) : 0; //!empty($sellerReview) ? $sellerReview / $orderSum : $orderSum;
 
         $chkCountry         = Country::where('id', $row->country_1)->first();
         $chkProfession      = Profession::where('id', $row->profession_name)->first();

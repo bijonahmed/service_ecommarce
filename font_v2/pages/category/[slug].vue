@@ -124,9 +124,9 @@
                   <div class="listing-style1">
                     <div class="list-thumb">
                       <!-- Dynamically set the image source -->
-                      <img class="w-100 gig_image"
+                      <nuxt-link :to="`/gigs/${data.gig_slug}`"><img class="w-100 gig_image"
                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
-                        alt="Listing Image">
+                        alt="Listing Image"></nuxt-link>
 
                         <a href="#" class="listing-fav fz12" @click.prevent="myHeart(data)"><span
                           class="far fa-heart"></span></a>
