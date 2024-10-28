@@ -36,8 +36,17 @@ class UnauthenticatedController extends Controller
 
     public function allCategorys(Request $request)
     {
-        $categories = Categorys::with('children.children.children.children.children')->where('status', 1)->get();
-        return response()->json($categories);
+        // $categories = Categorys::with('children.children.children')->where('status', 1)->get();
+        // return response()->json($categories);
+        try {
+            $categories = Categorys::with('children.children.children')
+                ->where('status', 1)
+                ->where('parent_id', 0) // Fetch only top-level categories
+                ->get();
+            return response()->json($categories);
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
     }
 
 
@@ -308,12 +317,15 @@ class UnauthenticatedController extends Controller
 
         $categories              = Categorys::select('id', 'name', 'slug')->where('slug', $request->slug)->where('status', 1)->first();
         $categoryID              = isset($categories->id) ? $categories->id : '';
-
         try {
-            $rows                = Gig::where('category_id', $categoryID)
-                ->where('gig.status', 1)
+            $rows = Gig::where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
                 ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images')
+                ->where(function ($query) use ($categoryID) {
+                    $query->where('category_id', $categoryID)
+                        ->orWhere('subcategory_id', $categoryID)
+                        ->orWhere('insubcategory_id', $categoryID);
+                })
                 ->orderBy('gig.id', 'desc')
                 ->paginate(20);
 

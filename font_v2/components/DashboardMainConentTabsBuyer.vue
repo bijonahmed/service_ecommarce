@@ -112,8 +112,7 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
-                      <h3> Available Balance: ${{ depositAmount }}</h3>
-
+                      <h3> Available Balance: ${{ currentBalance }}</h3>
 
                       <center><span>Messages List</span></center>
                       <div v-if="chatUsers.length">
@@ -147,7 +146,6 @@
                         <h4>Description</h4>
                         <p class="text mb30 text-justify" style="text-align: justify;">
                           {{ introduce_yourself }}</p>
-
 
                       </div>
                     </div>
@@ -192,7 +190,6 @@
                                 deliveryOrdersCount }}</span>
                             </a>
                           </li>
-
 
                           <li class="custom-tab-item nav-item" role="presentation">
                             <a class="custom-tab-link nav-link" id="complete-tab" data-bs-toggle="tab" href="#complete"
@@ -400,9 +397,8 @@
                         </div>
                       </div>
 
-
                       <!-- <center><button class="btn btn-primary" @click=getwhislistData>Test</button></center> -->
-
+                      <!-- <nuxt-link :to="`/gigs/${data.gig_slug}`">{{ data.name || '' }} </nuxt-link> -->
                       <div class="row">
                         <center>
                           <p>Wish List</p>
@@ -411,34 +407,29 @@
                           <div class="listing-style1">
                             <div class="list-thumb">
                               <!-- Delete -->
-                              <img class="w-100" :src="gig.thumbnail_images" alt="">
+                              <nuxt-link :to="`/gigs/${gig.gig_slug}`" ><img class="w-100" :src="gig.thumbnail_images" alt="">
                               <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
-                                  class="fa-solid fa-trash"></i></a>
+                                  class="fa-solid fa-trash"></i></a></nuxt-link>
                               <!-- Share  -->
-                              <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12"
-                                style="left: 20px;"><i class="fa-solid fa-share"></i></nuxt-link>
+                              <nuxt-link :to="`/gigs/${gig.gig_slug}`" @click="shareUrl(gig.gig_slug)"
+                                class="listing-fav fz12" style="left: 20px;">
+                                <i class="fa-solid fa-share"></i>
+                              </nuxt-link>
+
                               <!-- Edit  -->
                             </div>
-
 
                           </div>
                         </div>
                       </div>
 
-
-
-
                     </div>
-
-
 
                   </div>
                 </div>
               </section>
 
             </div>
-
-
 
             <!-- Modal -->
             <!-- Modal -->
@@ -471,24 +462,16 @@
               </div>
             </div>
 
-
-
-
-
-
-
             <!-- END -->
 
           </div>
         </div>
-
 
       </div>
 
       <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
     </div>
   </div>
-
 
 </template>
 
@@ -517,9 +500,8 @@ const skillsdata = ref('');
 const loading = ref(false);
 const route = useRoute();
 const orderData = ref('');
-const depositAmount = ref(0);
+const currentBalance = ref(0);
 const cancelReason = ref('');
-
 
 definePageMeta({
   middleware: "is-logged-out",
@@ -527,7 +509,6 @@ definePageMeta({
 
 const profileModal = ref(null);
 const msgData = ref([]);
-
 
 const gigData = ref([]);
 const getwhislistData = async () => {
@@ -539,7 +520,6 @@ const getwhislistData = async () => {
   }
 };
 
-
 const getMessages = async () => {
   try {
     const response = await axios.get(`/user/getMessagesNoti`);
@@ -549,46 +529,44 @@ const getMessages = async () => {
   }
 };
 
-
-
 const deleteGig = async (id) => {
-    // Show confirmation dialog
-    const result = await Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-    });
+  // Show confirmation dialog
+  const result = await Swal.fire({
+    title: 'Are you sure?',
+    text: "You won't be able to revert this!",
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, delete it!'
+  });
 
-    // Check if the user confirmed
-    if (result.isConfirmed) {
-        try {
-            const response = await axios.get('/gig/deleteWishListGig', {
-                params: { id: id }
-            });
+  // Check if the user confirmed
+  if (result.isConfirmed) {
+    try {
+      const response = await axios.get('/gig/deleteWishListGig', {
+        params: { id: id }
+      });
 
-            // Call gigList function after successful deletion
-            if (response.status === 200) {
+      // Call gigList function after successful deletion
+      if (response.status === 200) {
 
-                Swal.fire(
-                    'Deleted!',
-                    'Your gig has been deleted.',
-                    'success'
-                );
-                getwhislistData();
-            }
-        } catch (error) {
-            console.log(error);
-            Swal.fire(
-                'Error!',
-                'There was an error deleting your gig.',
-                'error'
-            );
-        }
+        Swal.fire(
+          'Deleted!',
+          'Your gig has been deleted.',
+          'success'
+        );
+        getwhislistData();
+      }
+    } catch (error) {
+      console.log(error);
+      Swal.fire(
+        'Error!',
+        'There was an error deleting your gig.',
+        'error'
+      );
     }
+  }
 };
 
 const selectUser = (users) => {
@@ -597,7 +575,6 @@ const selectUser = (users) => {
   const fullUrl = `${currentUrl}/dashboard/buyer/chatbox/${userId}`; // Construct the full URL
   window.location.href = fullUrl;
 }
-
 
 const getChatusersList = async () => {
   try {
@@ -620,8 +597,6 @@ const shareUrl = (slug) => {
         'success'
       );
 
-
-
       //alert('URL copied to clipboard!');
     })
     .catch(err => {
@@ -630,8 +605,8 @@ const shareUrl = (slug) => {
 };
 
 const submitCancelOrder = () => {
-  console.log("============orderId:" + canceOrderID.value);
-  console.log("============cancelReason:" + cancelReason.value);
+  //console.log("============orderId:" + canceOrderID.value);
+  //console.log("============cancelReason:" + cancelReason.value);
   // Show the confirmation alert before proceeding
   Swal.fire({
     title: 'Are you sure?',
@@ -678,7 +653,6 @@ const cancelOrders = (orderId) => {
 
 }
 
-
 const chkUserrow = async () => {
   try {
     const response = await axios.post(`/auth/me`);
@@ -724,14 +698,11 @@ const mlm = () => {
 const getBalance = async () => {
   try {
     const response = await axios.get(`/user/checkDepositBalance`);
-    depositAmount.value = response.data.show_depositAmount;
+    currentBalance.value = response.data.currentBalance;
   } catch (error) {
     console.log(error);
   }
 };
-
-
-
 
 const getAllOrdersList = async () => {
   try {
@@ -741,10 +712,6 @@ const getAllOrdersList = async () => {
     console.log(error);
   }
 };
-
-
-
-
 
 // Function to format the date
 const formatDate = (date) => {
@@ -783,7 +750,6 @@ const getOrderCounting = async () => {
   }
 };
 
-
 const getOrderStatus = async (orderStatusId = 1) => {
   try {
     const response = await axios.get(`/order/getOrderPlaceForByer`, {
@@ -818,8 +784,6 @@ const getOrderStatus = async (orderStatusId = 1) => {
     console.log(error);
   }
 };
-
-
 
 onMounted(() => {
   getwhislistData();

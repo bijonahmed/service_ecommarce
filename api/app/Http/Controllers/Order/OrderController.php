@@ -16,6 +16,7 @@ use App\Models\Categorys;
 use App\Models\MyMessage;
 use App\Models\BuyerReview;
 use App\Models\OrderStatus;
+use App\Models\CancelOrders;
 use App\Models\SellerReview;
 use Illuminate\Http\Request;
 use App\Models\ordersProduct;
@@ -663,6 +664,31 @@ class OrderController extends Controller
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+
+        $orders = Order::where('orderId', $request->orderId)->first();
+
+        // Validate the incoming request
+        $request->validate([
+            'orderId' => 'required', // Ensure orderId is present and is an integer
+        ]);
+
+        // Fetch the order based on the orderId
+        $chkOrder = CancelOrders::find($request->orderId);
+        if ($chkOrder) {
+            return response()->json(['message' => 'Order ID already exists. No insertion performed.'], 409);
+        } else {
+            // No orderId, proceed with insertion
+            $cancelOrder = [
+                'orderId'        => $request->orderId,
+                'sellerId'       => !empty($orders->sellerId) ? $orders->sellerId : "", // Assuming this comes from somewhere else
+                'buyerId'        => !empty($orders->buyerId) ? $orders->buyerId : "", // Assuming this comes from somewhere else
+                'selectedPrice'  => !empty($orders->selected_price) ? $orders->selected_price : "", // Assuming this comes from somewhere else
+            ];
+           // dd($cancelOrder);
+            CancelOrders::create($cancelOrder);
+            //return response()->json(['message' => 'Order canceled successfully.'], 201);
         }
 
         $data['order_status']  = 3;

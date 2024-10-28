@@ -110,10 +110,7 @@
                               }}</a>
                           </div>
                         </div>
-                        <span class="timestamp">{{ new Date(message.created_at).toLocaleTimeString([], {
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        }) }}</span>
+                        <span class="timestamp">{{ message.time_sent}}</span>
                       </div>
                     </div>
                   </div>
@@ -260,15 +257,28 @@ const getFileName = (fileUrl) => {
 }
 
 
+const getFormattedTime = () => {
+  const date = new Date();
+  let hours = date.getHours();
+  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const seconds = date.getSeconds().toString().padStart(2, '0');
+  const ampm = hours >= 12 ? 'PM' : 'AM';
+
+  hours = hours % 12;
+  hours = hours ? hours : 12; // If hour is 0, set to 12
+
+  //return `${hours}:${minutes}:${seconds} ${ampm}`;
+  return `${hours}:${minutes} ${ampm}`;
+}
 
 // Method to send the message
 async function sendMessage() {
-
-
   const formData = new FormData();
   formData.append("senderId", senderId.value);
   formData.append("recipientId", recipientId.value);
   formData.append("message", messageContent.value);
+  const currentTime = getFormattedTime();
+    formData.append("time_sent", currentTime); // Adds time in "hh:mm:ss AM/PM" format
 
   if (uploadedFile.value) {
     formData.append("files", uploadedFile.value);

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
   router: {
     options: {
       hashMode: false, // Disable hash mode
+      
     },
   },
   async asyncData({ $nuxt }) {

@@ -744,10 +744,10 @@ const setPrice = async (packages, price, delivery_day) => {
       const depositLink = '/dashboard/buyer/deposit'; // Dynamic link
 
       Swal.fire({
-        icon: 'error',
-        title: 'Insufficient balance',
+        icon: 'info',
+        title: 'To place order',
         html: `
-        <p>Please make a deposit.</p>
+        <p>Please Recharge your account</p>
         <a href="${depositLink}" target="_blank" style="color: #007bff; text-decoration: underline;">
             Click here to deposit
         </a>

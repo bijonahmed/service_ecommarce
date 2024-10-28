@@ -115,12 +115,10 @@
                       <center><span>Messages List</span></center>
                       <div v-if="chatUsers.length">
                         <ul class="list-group">
-                          <li v-for="user in chatUsers" :key="user.id" 
-                            class="list-group-item chat-user-item">
+                          <li v-for="user in chatUsers" :key="user.id" class="list-group-item chat-user-item">
                             <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
                               style="width: 40px; height: 40px;" />
-                            <a :href="`/dashboard/chatbox/${user.user_id}`"
-                              class="text-decoration-none text-dark">
+                            <a :href="`/dashboard/chatbox/${user.user_id}`" class="text-decoration-none text-dark">
                               {{ user.user_name }}
                             </a>
                             <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count
@@ -259,7 +257,7 @@
                                         <button class="btn btn-success btn-sm text-white me-2"
                                           @click="acceptMyOrders(order.orderId)">Accept</button>
                                         <button class="btn btn-danger btn-sm text-white"
-                                          @click="rejectOrders(order.orderId)">Cancel</button>
+                                          @click="cancelOrders(order.orderId)">Cancel</button>
                                       </td>
                                     </tr>
 
@@ -472,7 +470,35 @@
 
 
 
-
+            <!-- Modal -->
+            <div class="modal fade" id="myModal_cancel" tabindex="-1" aria-labelledby="myModal_cancelLabel"
+              aria-hidden="true">
+              <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="myModal_cancelLabel">Cancel Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <!-- Cancel Order Form -->
+                    <form @submit.prevent="submitCancelOrder">
+                      <div class="mb-3">
+                        <label for="cancelReason" class="form-label">Reason for
+                          Cancellation</label>
+                        <textarea v-model="cancelReason" id="cancelReason" class="form-control" rows="4"
+                          placeholder="Please explain why you want to cancel the order"></textarea>
+                      </div>
+                      <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+                    </form>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary text-white" @click="submitCancelOrder">Submit
+                      Cancellation</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 
             <!-- <div class="tab-pane fade fz15 text" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"></div> -->
@@ -626,6 +652,59 @@ const acceptMyOrders = async (orderId) => {
 
 }
 
+
+const canceOrderID = ref("");
+const cancelOrders = (orderId) => {
+  canceOrderID.value = orderId;
+  $('#myModal_cancel').modal('show');
+
+}
+const submitCancelOrder = () => {
+  // Show the confirmation alert before proceeding
+  Swal.fire({
+    title: 'Are you sure?',
+    text: 'Do you want to cancel this order?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Yes, cancel it!',
+    cancelButtonText: 'No, keep it'
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // If user confirms, send the cancel request
+      axios.get('/order/cancel-order-buyer', {
+        params: {
+          orderId: canceOrderID.value,
+          cancel_resion: cancelReason.value
+        }
+      })
+        .then(response => {
+          $('#myModal_cancel').modal('hide');
+          getOrderStatus();
+
+
+          // Handle the response (success or failure)
+          Swal.fire(
+            'Cancelled!',
+            'Your order has been cancelled.',
+            'success'
+          );
+        })
+        .catch(error => {
+          // Handle errors
+          Swal.fire(
+            'Error!',
+            'There was an issue cancelling your order. Please try again.',
+            'error'
+          );
+        });
+    }
+  });
+}
+
+
+/*
 const rejectOrders = async (orderId) => {
 
   // Show confirmation alert
@@ -674,7 +753,7 @@ const rejectOrders = async (orderId) => {
     }
   }
 };
-
+*/
 
 
 const getChatusersList = async () => {

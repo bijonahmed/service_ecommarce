@@ -30,21 +30,21 @@ class Categorys extends Authenticatable
     'speacial_status',
   ];
 
-  public function categories()
-  {
-    return $this->hasMany(Categorys::class);
-  }
-
   public function children()
-  {
-      return $this->hasMany(Categorys::class, 'parent_id')->where('status', 1);
-  }
+{
+    return $this->hasMany(Categorys::class, 'parent_id')->where('status', 1);
+}
 
-  public function parent()
-  {
-      return $this->belongsTo(Categorys::class, 'parent_id')->where('status', 1);
-  }
+  // public function parent()
+  // {
+  //     return $this->belongsTo(Categorys::class, 'parent_id')->where('status', 1);
+  // }
 
+  // // Optional if needed in your application context
+  // public function categories()
+  // {
+  //     return $this->hasMany(Categorys::class);
+  // }
  
  
 }

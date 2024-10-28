@@ -25,6 +25,7 @@ use App\Models\GigWishList;
 use App\Models\OrderStatus;
 use App\Models\PaymentCard;
 use Illuminate\Support\Str;
+use App\Models\CancelOrders;
 use App\Models\Notification;
 use function Ramsey\Uuid\v1;
 use Illuminate\Http\Request;
@@ -120,19 +121,18 @@ class UserController extends Controller
         exit; 
         */
 
-        $result      = $orderAmount + $returnAmount + $commissionAmt;
-        $orderAmount = $result;
-
-        $depositAmt = Deposit::where('user_id', $this->userid)
-            ->where('status', 1)
-            ->sum('deposit_amount');
+        $result         = $orderAmount + $returnAmount + $commissionAmt;
+        $orderAmount    = $result;
+        $chkCanceOrders = CancelOrders::where('buyerId',$this->userid)->sum('selectedPrice');
+        $depositAmt     = Deposit::where('user_id', $this->userid)
+                        ->where('status', 1)
+                        ->sum('deposit_amount');
         try {
             // Calculate the deposit amount
-
-            $result = abs($depositAmt - $orderAmount);
+            $result = abs($depositAmt - $orderAmount) + $chkCanceOrders;
 
             $data['depositAmount']      = $result;
-            $data['show_depositAmount'] = number_format($result, 2);
+            $data['currentBalance']     = number_format($result, 2);
             $data['service_fee']        = $settingrow->service_fee;
 
             //$data['depositAmount'] = abs($depositAmt - $orderAmount);

@@ -7,18 +7,14 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use AuthorizesRequests;
 use DB;
-class MyMessage extends Authenticatable
+class CancelOrders extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
-    public $table = "messages";
+    public $table = "cancel_orders";
     protected $fillable = [
-        'user_id',
-        'to_id',
-        'sender_id',
-        'message',
-        'time_sent',
-        'files',
+        'orderId',
+        'sellerId',
+        'buyerId',
+        'selectedPrice',
     ];
-
-    
 }

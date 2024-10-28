@@ -155,8 +155,6 @@ class ChatController extends Controller
 
     public function sendMessages(Request $request)
     {
-
-
         // dd($request->all());
         $validator = Validator::make($request->all(), [
             'senderId'        => 'required', // Set this to the ID of the logged-in buyer
@@ -187,6 +185,7 @@ class ChatController extends Controller
         $rdata['to_id']          = $request->recipientId;
         $rdata['sender_id']      = $this->userid;
         $rdata['message']        = $request->message;
+        $rdata['time_sent']      = $request->time_sent;
         $rdata['files']          = $imagePaths;
 
         $message = MyMessage::insertGetId($rdata);
@@ -227,6 +226,7 @@ class ChatController extends Controller
         $rdata['to_id']          = $request->buyer;
         $rdata['sender_id']      = $request->seller;
         $rdata['message']        = $request->message;
+        $rdata['time_sent']      = $request->time_sent;
         $rdata['files']          = $imagePaths;
 
         $message = MyMessage::insertGetId($rdata);
@@ -270,7 +270,7 @@ class ChatController extends Controller
                 'message'     => $message->message, // Message content
                 'files'       => !empty($message->files) ? url($message->files) : "", // File attachment (if any)
                 'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
-
+                'time_sent'   => $message->time_sent, // Message timestamp
                 // Sender details
                 'sender_id'               => $message->sender_id,
                 'sender_name'             => $sender ? $sender->name : "Unknown",
@@ -324,6 +324,8 @@ class ChatController extends Controller
                 'message'     => $message->message, // Message content
                 'files'       => !empty($message->files) ? url($message->files) : "", // File attachment (if any)
                 'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
+                'time_sent'   => $message->time_sent, // Message timestamp
+
 
                
 
