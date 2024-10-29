@@ -787,167 +787,59 @@ class SettingController extends Controller
         }
     }
 
-    public function getdealsbanners()
+
+
+
+
+    
+ public function addBranch(request $request)
     {
-
-        $dealbanner    = dealsbanner::first();
-        // $imagesUrlone = !empty($dealbanner->image) ? url($dealbanner->imageOne) : "";
-        // $imagesUrltwo = !empty($dealbanner->image) ? url($dealbanner->imageTwo) : "";
-
-        if ($dealbanner->count() > 0) {
-            return response()->json([
-                'status' => 200,
-                'imageone' => url($dealbanner->imageOne),
-                'imagetwo' => url($dealbanner->imageTwo),
-            ], 200);
-        } else {
-            return response()->json([
-                'status' => 202,
-                'message' => "Banner Not Found"
-            ], 202);
-        }
-    }
-
-    public function savecoupons(request $request)
-    {
-
         $validator = Validator::make($request->all(), [
-            // 'coupon_type'   => "required|string", 
-            'name'                  => "",
-            'promocode'             => "required",
-            'code_type'             => "required",
-            'min_shopping'          => "required|numeric",
-            'd_percent'             => "max:100",
-            'd_fvalue'              => "",
+            'name'                  => "required", // Fixed typo
+            'bank_id'               => "required",
             'status'                => "required",
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $request->name)));
-
-        // $coupons = coupons::create([
-        //     'name'              => $request->name,
-        //     'slug'              => $slug,
-        //     'promocode'         => $request->promocode,
-        //     'code_type'         => $request->code_type,
-        //     'min_shopping'      => $request->min_shopping,
-        //     'd_percent'         => $request->d_percent,
-        //     'd_fvalue'          => $request->d_fvalue,
-        //     'status'            => $request->status,
-        // ]);
-        $couponsData = [
+        $data = [
+            'bank_id'        => $request->bank_id,
             'name'          => $request->name,
-            'slug'          => $slug,
-            'promocode'     => $request->promocode,
-            'code_type'     => $request->code_type,
-            'min_shopping'  => $request->min_shopping,
             'status'        => $request->status,
         ];
-
-        if ($request->code_type == 'percentage') {
-            $couponsData['d_percent'] = $request->d_percent;
+        if (empty($request->id)) {
+            BranchList::create($data);
         } else {
-            $couponsData['d_fvalue'] = $request->d_fvalue;
+            BranchList::where('id', $request->id)->update($data);
         }
 
-        $coupons = coupons::create($couponsData);
-
-        if ($coupons) {
-            return response()->json([
-                'status'    => true,
-                'data'      => $coupons
-            ], 200);
-        } else {
-            return response()->json([
-                'status'    => true,
-                'data'      => "Coupon Not Create"
-            ], 404);
-        }
-    }
-    public function couponsList()
-    {
-        $coupons = coupons::all();
-        $formatedData = [];
-        foreach ($coupons as $Key => $value) {
-            $formatedData[] = [
-
-                'id'                => $value->id,
-                'name'          => $value->name,
-                'slug'          => $value->slug,
-                'promocode'     => $value->promocode,
-                'code_type'     => $value->code_type,
-                'min_shopping'  => $value->min_shopping,
-                'status'        => $value->status,
-                'd_percent'     => $value->d_percent,
-                'd_fvalue'      => $value->d_fvalue,
-
-                // 'role'              => $value->role_id,
-                // 'businessName'      => $value->business_name,
-                // 'slug'      => $value->business_name_slug,
-                // 'businessLogo'      => !empty($value->business_logo) ? url($value->business_logo) : "",
-            ];
-        }
-        return response()->json($formatedData, 200);
+        return response()->json(['message' => "Succesfully Insert"]);
     }
 
-    public function getcoupons($id)
+    public function addBank(request $request)
     {
-        $id = (int) $id;
-        $data = coupons::where('id', $id)->first();
-        $response = [
-            'data' => $data,
-            'message' => 'success'
-        ];
-        return response()->json($response, 200);
-    }
-    public function updatecoupon(Request $request)
-    {
-        $id = $request->input('id');
         $validator = Validator::make($request->all(), [
-            // 'coupon_type'   => "required|string", 
-            'name'                  => "",
-            'promocode'             => "required",
-            'code_type'             => "required",
-            'min_shopping'          => "required|numeric",
-            'd_percent'             => "",
-            'd_fvalue'              => "",
+            'name'                    => "required", // Fixed typo
             'status'                => "required",
         ]);
         if ($validator->fails()) {
-            return response()->json([
-                'errors' => $validator->errors(),
-                // 'id' => $id
-            ], 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
-        $updateCoupon = coupons::where('id', $id)->first();
-        $updateData = [
-            'name'         => $request->name,
-            'promocode'    => $request->promocode,
-            'code_type'    => $request->code_type,
-            'min_shopping' => $request->min_shopping,
-            'status'       => $request->status
+        $data = [
+            'name'          => $request->name,
+            'status'        => $request->status,
         ];
-
-        // Check if d_percent is not null or 0
-        if ($request->d_percent !== null && $request->d_percent !== 0) {
-            $updateData['d_percent'] = $request->d_percent;
+        if (empty($request->id)) {
+            BankList::create($data);
         } else {
-            // If d_percent is null or 0, set it to null in the update data
-            $updateData['d_percent'] = null;
-        }
-        // Check if d_percent is not null or 0
-        if ($request->d_fvalue !== null && $request->d_percent !== 0) {
-            $updateData['d_fvalue'] = $request->d_fvalue;
-        } else {
-            // If d_percent is null or 0, set it to null in the update data
-            $updateData['d_fvalue'] = null;
+            BankList::where('id', $request->id)->update($data);
         }
 
-        $updateCoupon->update($updateData);
+        return response()->json(['message' => "Succesfully Insert"]);
     }
+
     public function updatesliderLeftads(request $request)
     {
         $messages = [
@@ -1072,6 +964,36 @@ class SettingController extends Controller
         ];
         return response()->json($response, 200);
     }
+
+
+    public function editbank($id)
+    {
+        $id = (int) $id;
+        $data = BankList::where('id', $id)->first();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+
+  public function editBranch($id)
+    {
+        $id = (int) $id;
+        $data = BranchList::where('id', $id)->first();
+        $response = [
+            'data' => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+
+    
+
+
+
     public function updateSeller(request $request)
     {
 
@@ -1243,11 +1165,11 @@ class SettingController extends Controller
     }
 
 
-  public function checkBankWiseBranch(Request $request)
+    public function checkBankWiseBranch(Request $request)
     {
-        $bankId = $request->bankId; 
+        $bankId = $request->bankId;
 
-        $data = BranchList::where('bank_id',$bankId)->where('status', 1)->get();
+        $data = BranchList::where('bank_id', $bankId)->where('status', 1)->get();
         $response = [
             'data'     => $data,
             'message' => 'success'
@@ -1255,7 +1177,7 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
-    
+
 
 
 
@@ -1263,6 +1185,14 @@ class SettingController extends Controller
     {
         $getData = companyProfile::get()->first();
         $getData['logo'] = url($getData->logo);
+        return response()->json($getData);
+    }
+
+
+
+    public function getallActiveBank()
+    {
+        $getData = BankList::where('status', 1)->get();
         return response()->json($getData);
     }
 
@@ -1342,5 +1272,86 @@ class SettingController extends Controller
             'message' => 'Successfull',
         ];
         return response()->json($response);
+    }
+
+
+    public function getBranchListAdmin(Request $request)
+    {
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        // Get search query from the request
+        $searchQuery    = $request->searchQuery;
+        $selectedFilter = (int)$request->selectedFilter;
+        // dd($selectedFilter);
+        $query = BranchList::join('bank_info', 'branch.bank_id', '=', 'bank_info.id')
+            ->select('branch.*', 'bank_info.name as bank_name') // Select all columns from BranchList and bank name from BankList
+            ->orderBy('branch.id', 'desc');
+
+
+        if ($searchQuery !== null) {
+            $query->where('name', 'like', '%' . $searchQuery . '%');
+            // $query->where('notification.name', $searchQuery);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+
+
+            return [
+                'id'            => $item->id,
+                'name'          => $item->name,
+                'bank_name'     => $item->bank_name,
+                'status'        => $item->status,
+                'created_at'  => date("Y-M-d H:i:s", strtotime($item->created_at)), //$item->created_at,
+            ];
+        });
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
+    }
+
+
+
+    public function getBankListsAdmin(Request $request)
+    {
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        // Get search query from the request
+        $searchQuery    = $request->searchQuery;
+        $selectedFilter = (int)$request->selectedFilter;
+        // dd($selectedFilter);
+        $query = BankList::orderBy('id', 'desc');
+
+        if ($searchQuery !== null) {
+            $query->where('name', 'like', '%' . $searchQuery . '%');
+            // $query->where('notification.name', $searchQuery);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+            return [
+                'id'            => $item->id,
+                'name'          => substr($item->name, 0, 250),
+                'status'        => $item->status,
+                'created_at'  => date("Y-M-d H:i:s", strtotime($item->created_at)), //$item->created_at,
+            ];
+        });
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
     }
 }

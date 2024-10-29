@@ -110,10 +110,10 @@ const menuItems = ref([
     open: false,
     route: null,
     children: [
-    { label: 'GIG List', icon: 'fa-circle', route: '/gig/list' },
-    { label: 'Notificaiton List', icon: 'fa-circle', route: '/post/notificaiton/list' },
-    { label: 'Add Post', icon: 'fa-circle', route: '/post/add' },
-    { label: 'Post List', icon: 'fa-circle', route: '/post/list' },
+      { label: 'GIG List', icon: 'fa-circle', route: '/gig/list' },
+      { label: 'Notificaiton List', icon: 'fa-circle', route: '/post/notificaiton/list' },
+      { label: 'Add Post', icon: 'fa-circle', route: '/post/add' },
+      { label: 'Post List', icon: 'fa-circle', route: '/post/list' },
 
     ]
   },
@@ -128,7 +128,8 @@ const menuItems = ref([
     open: false,
     route: null,
     children: [
-
+      { label: "Bank", icon: "fa-circle", route: "/setting/bank/list" },
+      { label: "Branch", icon: "fa-circle", route: "/setting/branch/list" },
       { label: 'Category List', icon: 'fa-circle', route: '/category/list' },
       //  { label: 'Reward Center List', icon: 'fa-circle', route: '/setting/reward/rewardcenter-list' },
       //  { label: "Boost Mining Setup", icon: "fa-circle", route: "/setting/boost/boostMiningSetupList" },

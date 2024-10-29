@@ -732,7 +732,7 @@ const setPrice = async (packages, price, delivery_day) => {
 
   const setprice = price;
   try {
-    const response = await axios.get(`/user/checkDepositBalance`);
+    const response = await axios.get(`/user/checkBalance`);
     console.log("Deposit Amount is: " + response.data.depositAmount);
     const depositAmount = response.data.depositAmount;
     serviceFee.value = response.data.service_fee;

@@ -356,6 +356,13 @@ Route::group(
     ],
     function () {
         // sliders
+        Route::get('getallActiveBank', [SettingController::class, 'getallActiveBank']);
+        Route::post('addBank', [SettingController::class, 'addBank']);
+        Route::post('addBranch', [SettingController::class, 'addBranch']);
+        Route::get('editbank/{id}', [SettingController::class, 'editbank']);
+        Route::get('editBranch/{id}', [SettingController::class, 'editBranch']);
+        Route::get('getBranchListAdmin', [SettingController::class, 'getBranchListAdmin']);
+        Route::get('getBankListAdmin', [SettingController::class, 'getBankListsAdmin']);
         Route::get('getBankList', [SettingController::class, 'getBankLists']);
         Route::get('checkBankWiseBranch', [SettingController::class, 'checkBankWiseBranch']);
         Route::post('addslidersImages', [SettingController::class, 'saveslidersImages']);
