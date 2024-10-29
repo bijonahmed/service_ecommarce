@@ -50,6 +50,31 @@ class UnauthenticatedController extends Controller
     }
 
 
+ public function allCategoryActiveStatus(Request $request)
+    {
+        try {
+            $categories = Categorys::where('status', 1)->orderBy('id', 'desc')->get();
+            // dd($categories);
+            return response()->json(
+                $categories
+            );
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    public function allActiveCategory(Request $request)
+    {
+        try {
+            $categories = Categorys::where('status', 1)->limit(50)->orderBy('id', 'desc')->get();
+            // dd($categories);
+            return response()->json(
+                $categories
+            );
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
     public function checkContent(Request $request)
     {
 

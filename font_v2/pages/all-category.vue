@@ -90,7 +90,7 @@
 
                     <!-- Our Features -->
 
-                    <section class="p-0">
+                    <section class="p-0 d-none">
                         <div
                             class="cta-banner3 bgc-thm4 mx-auto maxw1600 pt120 pt60-lg pb90 pb60-lg position-relative overflow-hidden">
                             <div class="container">
@@ -139,7 +139,7 @@
                         </div>
                     </section>
                     <!-- Funfact -->
-                    <section class="pb0 pt60">
+                    <section class="pb0 pt60 d-none">
                         <div class="container maxw1600 bdrb1 pb60">
                             <div class="row">
                                 <div class="col-xl-11 mx-auto">
@@ -230,7 +230,7 @@ const categoryData = ref([]);
 const fetchCatData = async () => {
     try {
         loading.value = true;
-        const response = await axios.get("/unauthenticate/getCategoryList", {
+        const response = await axios.get("/unauthenticate/allCategory", {
             params: {
                 searchtxt: searchtxt.value,
             }

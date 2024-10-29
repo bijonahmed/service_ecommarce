@@ -71,6 +71,8 @@
                                                 <tr>
                                                     <th class="text-left">ID</th>
                                                     <th class="text-left">User Info</th>
+                                                    <th class="text-center">Role</th>
+                                                    <th class="text-center">Pay Type</th>
                                                     <th class="text-center">Date</th>
                                                     <th class="text-center">Status</th>
                                                     <th class="text-center">USDT($)</th>
@@ -82,26 +84,34 @@
                                             <tbody>
                                                 <tr v-for="(pro, index) in productdata" :key="index">
                                                     <td class="text-left">{{ pro.withdrawID }}</td>
-                                                    <td class="text-left"><small>Name: {{ pro.user_info_name }}<br />Email:
-                                                        {{ pro.user_info_email }}<br />Phone: {{ pro.user_info_phone
-                                                        }}</small></td>
-                                                      <td class="text-center">{{ pro.created_at }}</td>  
-                                                      <td class="text-center">
-                                                    <span v-if="pro.sts == 0" class="badge rounded-pill bg-secondary w-100"> {{ pro.status }}</span>
-                                                    <span class="badge rounded-pill bg-success w-100" v-if="pro.sts == 1">{{ pro.status }}</span>
-                                                    <span class="badge rounded-pill bg-danger w-100" v-if="pro.sts == 2">{{ pro.status }}</span>
+                                                    <td class="text-left"><small>Name: {{ pro.user_info_name
+                                                            }}<br />Email:
+                                                            {{ pro.user_info_email }}<br />Phone: {{ pro.user_info_phone
+                                                            }}</small></td>
+
+                                                    <td class="text-center">{{ pro.role_id }}</td>
+                                                    <td class="text-center">{{ pro.type.charAt(0).toUpperCase() + pro.type.slice(1) }}</td>
+                                                    <td class="text-center">{{ pro.created_at }}</td>
+                                                    <td class="text-center">
+                                                        <span v-if="pro.sts == 0"
+                                                            class="badge rounded-pill bg-secondary w-100"> {{ pro.status
+                                                            }}</span>
+                                                        <span class="badge rounded-pill bg-success w-100"
+                                                            v-if="pro.sts == 1">{{ pro.status }}</span>
+                                                        <span class="badge rounded-pill bg-danger w-100"
+                                                            v-if="pro.sts == 2">{{ pro.status }}</span>
                                                     </td>
                                                     <td class="text-center">{{ pro.withdrawal_amount }}</td>
                                                     <!-- <td class="text-center">{{ pro.transection_fee }}%</td> -->
                                                     <!-- <td class="text-center">{{ pro.payable_amount }}</td> -->
-                                                  
+
                                                     <td>
                                                         <center>
                                                             <!-- <span @click="edit(pro.id)"><button type="button"><i
                                                                         class="fas fa-edit btnSize"></i></button></span> -->
-                                                                        <button class="btn btn-default btn-sm btn-flat"
-                                                            @click="preview(pro.id)"><i
-                                                                class="fas fa-eye"></i>Details</button>
+                                                            <button class="btn btn-default btn-sm btn-flat"
+                                                                @click="preview(pro.id)"><i
+                                                                    class="fas fa-eye"></i>Details</button>
                                                         </center>
                                                     </td>
                                                 </tr>

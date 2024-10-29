@@ -237,7 +237,7 @@
                     </button></center>
 
                     <div class="row">
-                        <div v-for="(category, index) in limitedCategories" :key="index"
+                        <div v-for="(category, index) in categoryData" :key="index"
                             class="col-6 col-md-4 col-lg-3 mb-4">
                             <div class="category-item">
                                 <nuxt-link :to="`/category/${category.slug}`" class="category-link">
@@ -337,14 +337,14 @@ const categoryData = ref([]);
 const filter_name = ref('');
 
 const limitedCategories = computed(() => {
-    return categoryData.value.slice(-100); // Get the last 20 categories
+    return categoryData.value.slice(-500); // Get the last 20 categories
 });
 
 const loading = ref(false);
 const fetchCatData = async () => {
     try {
         loading.value = true;
-        const response = await axios.get("/unauthenticate/getCategoryList");
+        const response = await axios.get("/unauthenticate/allActiveCategory");
         categoryData.value = response.data;
 
     } catch (error) {

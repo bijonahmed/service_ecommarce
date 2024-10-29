@@ -38,6 +38,8 @@
 
                                         <div class="row">
                                             <div class="col-md-12">
+
+                                               
                                                 <table class="table table-bordered w-100">
                                                     <tr>
                                                         <td width="40%">ID</td>
@@ -55,17 +57,75 @@
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.withdrawal_amount }}</td>
                                                     </tr>
-
                                                     <tr>
-                                                        <td>Payment Method</td>
+                                                        <td>Payment Type</td>
                                                         <td><strong>:</strong></td>
-                                                        <td>{{ request.payment_method }}</td>
+                                                        <td>{{ request.type }}</td>
                                                     </tr>
-                                                    <tr>
+
+
+
+
+
+                                                    <tr v-if="request.selected_type == 1">
+                                                        <td>Wallet Type</td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.crypto_wallet_type }}</td>
+                                                    </tr>
+                                                    <tr v-if="request.selected_type == 1">
                                                         <td>Request Wallet Address </td>
                                                         <td><strong>:</strong></td>
                                                         <td>{{ request.wallet_address }}</td>
                                                     </tr>
+
+                                                    <tr v-if="request.selected_type == 2">
+                                                        <td>Paypal ID</td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.email }}</td>
+                                                    </tr>
+                                                    <tr v-if="request.selected_type == 3">
+                                                        <td>Payoneer ID</td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.email }}</td>
+                                                    </tr>
+
+                                                    <tr v-if="request.selected_type == 4">
+                                                        <td>Bank Name </td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.bankName }}</td>
+                                                    </tr>
+
+                                                    <tr v-if="request.selected_type == 4">
+                                                        <td>Branch Name </td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.branchName }}</td>
+                                                    </tr>
+
+                                                    <tr v-if="request.selected_type == 4">
+                                                        <td>Account Name </td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.account_name }}</td>
+                                                    </tr>
+
+                                                    <tr v-if="request.selected_type == 4">
+                                                        <td>Account Number</td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.account_num }}</td>
+                                                    </tr>
+
+                                                    <tr v-if="request.selected_type == 4">
+                                                        <td>IBN No.</td>
+                                                        <td><strong>:</strong></td>
+                                                        <td>{{ request.ibn_no }}</td>
+                                                    </tr>
+
+
+
+
+
+
+
+
 
                                                     <tr>
                                                         <td>Created Time</td>
@@ -159,6 +219,16 @@ const request = ref({
     created_at: '',
     name: '',
     status: '',
+
+    selected_type: '',
+    type: '',
+    email: '',
+    account_name: '',
+    account_num: '',
+    ibn_no: '',
+    bankName: '',
+    branchName: '',
+    crypto_wallet_type: '',
 
 });
 const apiError = ref(null);
@@ -262,18 +332,29 @@ const productDetails = () => {
         const wallet_address = response.data.wallet_address;
         console.log("request wallet address: " + wallet_address);
         request.value.name = data.name;
+
+        request.value.selected_type = data.selected_type;
+        request.value.type = data.type;
+        request.value.email = data.email;
+        request.value.account_name = data.account_name;
+        request.value.account_num = data.account_num;
+        request.value.ibn_no = data.ibn_no;
+        request.value.bankName = response.data.bankName;
+        request.value.branchName = response.data.branchName;
+        request.value.crypto_wallet_type = data.crypto_wallet_type;
+
+
         request.value.withdrawID = data.withdrawID;
         request.value.withdrawal_amount = data.withdrawal_amount;
         request.value.usdt_amount = data.usd_amount;
         request.value.payable_amount = data.payable_amount;
         request.value.payment_method = data.payment_method;
         request.value.approved_by = data.approved_by;
-
         request.value.payment_method = data.payment_method;
+
+
         // request.value.wallet_address = data.wallet_address;
-
         request.value.created_at = response.data.created_at;
-
         request.value.remarks = response.data.remarks;
         request.value.status = data.status;
         request.value.currency_type_name = data.currency_type_name;

@@ -147,7 +147,7 @@ Route::group(
         Route::get('checkLevelHistorysAdmin', [UserController::class, 'checkLevelHistorysAdmin']);
 
         Route::get('getmlmlists', [UserController::class, 'getmlmlists']);
-        Route::get('checkDepositBalance', [UserController::class, 'checkDepositBalance']);
+        Route::get('checkBalance', [UserController::class, 'checkBalance']);
         Route::get('getDeposit', [UserController::class, 'getDeposit']);
         Route::post('saveDeposit', [UserController::class, 'saveDeposit']);
         Route::post('getWaypaymentConfirm', [UserController::class, 'getWaypaymentConfirm']);
@@ -188,7 +188,10 @@ Route::group(
         Route::get('getTime', [UserController::class, 'getTime']);
         Route::get('cardlist/{id}', [UserController::class, 'getCard']);
         Route::get('blogs', [UserController::class, 'getblogs']);
-        Route::post('addWalletAddress', [UserController::class, 'addWalletAddress']);
+        Route::post('addCryptoWalletAddress', [UserController::class, 'addCryptoWalletAddress']);
+        Route::post('addCryptoWalletAddressPaypal', [UserController::class, 'addCryptoWalletAddressPaypal']);
+        Route::post('addCryptoWalletAddressPayooner', [UserController::class, 'addCryptoWalletAddressPayooner']);
+        Route::post('addCryptoWalletAddressBank', [UserController::class, 'addCryptoWalletAddressBank']);
         Route::get('getwithdrawalMethod', [UserController::class, 'getwithdrawalMethod']);
         Route::post('addwithdrawal', [UserController::class, 'addwithdrawal']);
     },
@@ -199,6 +202,7 @@ Route::group(
         'prefix' => 'deposit',
     ],
     function () {
+        Route::post('saveWithdrawalSeller', [UserController::class, 'saveWithdrawalSeller']);
         Route::post('saveWithdrawal', [UserController::class, 'saveWithdrawal']);
         Route::post('addwithdrawal', [DepositController::class, 'getWithdrwalfetchdata']);
         Route::get('getWithdrwalfetchdata', [DepositController::class, 'getWithdrwalfetchdata']);
@@ -243,6 +247,7 @@ Route::group(
         Route::post('saveAttribute', [CategoryController::class, 'saveAttribute']);
         Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
         Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
+     
         Route::get('getSpeacialCategoryList', [CategoryController::class, 'getSpeacialCategoryList']);
         Route::post('edit', [CategoryController::class, 'edit']);
         Route::get('getInacCategoryList', [CategoryController::class, 'allInacCategory']);
@@ -323,7 +328,8 @@ Route::group(
 
 Route::group(['prefix' => 'unauthenticate'], function () {
 
-
+    Route::get('allCategory', [UnauthenticatedController::class, 'allCategoryActiveStatus']);
+    Route::get('allActiveCategory', [UnauthenticatedController::class, 'allActiveCategory']);
     Route::get('checkContent', [UnauthenticatedController::class, 'checkContent']);
     Route::get('checkGetList', [UnauthenticatedController::class, 'checkGetList']);
     Route::get('getPublic', [UnauthenticatedController::class, 'getPublic']);
@@ -350,6 +356,8 @@ Route::group(
     ],
     function () {
         // sliders
+        Route::get('getBankList', [SettingController::class, 'getBankLists']);
+        Route::get('checkBankWiseBranch', [SettingController::class, 'checkBankWiseBranch']);
         Route::post('addslidersImages', [SettingController::class, 'saveslidersImages']);
         Route::post('deleteSlider', [SettingController::class, 'deleteSliderimage']);
         Route::post('upateSetting', [SettingController::class, 'upateSetting']);

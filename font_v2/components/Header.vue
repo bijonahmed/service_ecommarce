@@ -221,26 +221,6 @@ const logout = async () => {
     }
   }
 };
-/*
-const logout = async () => {
-  try {
-    const router = useRouter();  
-    await userStore.logout(); 
-    Cookies.remove('user'); // Remove the user cookie
-    localStorage.removeItem('token'); // Remove the token from local storage
-    router.push('/').then(() => {
-      location.reload();  
-    });
-  } catch (error) {
-   // console.error('Error during logout:', error);
-    if (error.response && error.response.status === 401) {
-      Cookies.remove('user'); // Remove the user cookie again if unauthorized
-      console.log('Unauthorized access - logging out...');
-      location.reload();  
-    }
-  }
-};
-*/
 
 const groupedSubCategories = (children) => {
   const groupSize = 2; // Adjust the number of columns per row

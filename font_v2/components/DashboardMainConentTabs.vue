@@ -703,59 +703,6 @@ const submitCancelOrder = () => {
   });
 }
 
-
-/*
-const rejectOrders = async (orderId) => {
-
-  // Show confirmation alert
-  const { isConfirmed } = await Swal.fire({
-    title: 'Are you sure?',
-    text: 'Do you really want to reject this order?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#d33',
-    cancelButtonColor: '#3085d6',
-    confirmButtonText: 'Yes, reject it!',
-    cancelButtonText: 'No, cancel!',
-  });
-
-  if (isConfirmed) {
-    try {
-
-      console.log('Rejecting order with ID:', orderId); // Log the orderId
-      // Send the request to reject the order
-      const response = await axios.get(`/order/rejectOrder`, {
-        params: { orderId } // Passing orderId as a query parameter
-      });
-
-      // Check if response is successful (you can adjust this based on your API response)
-      if (response.status === 200) {
-        Swal.fire({
-          title: 'Rejected!',
-          text: 'The order has been rejected.',
-          icon: 'success',
-          confirmButtonText: 'OK',
-        });
-        getOrderStatus();
-        // Optionally handle the response data here
-        // skillsdata.value = response.data.skillsdata; // If needed
-      } else {
-        throw new Error('Failed to reject the order');
-      }
-    } catch (error) {
-      console.error(error);
-      Swal.fire({
-        title: 'Error!',
-        text: 'There was an error rejecting the order. Please try again.',
-        icon: 'error',
-        confirmButtonText: 'OK',
-      });
-    }
-  }
-};
-*/
-
-
 const getChatusersList = async () => {
   try {
     const response = await axios.get(`/chat/getChatUsersTo`);

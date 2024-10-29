@@ -16,9 +16,16 @@ class WithdrawMethod extends Authenticatable
   public $table = "withdrawal_method";
   
   protected $fillable = [
-    'user_id',
     'name',
-    'account_number',
+    'user_id',
+    'type',
+    'email',
+    'account_name',
+    'account_num',
+    'ibn_no',
+    'bank_id',
+    'branch_id'
+    
   ];
  
 }

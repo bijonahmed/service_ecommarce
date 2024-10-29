@@ -14,10 +14,12 @@ use App\Models\Skills;
 use App\Models\Deposit;
 use App\Models\Profile;
 use App\Models\Setting;
+use App\Models\BankList;
 use App\Models\Withdraw;
 use App\Models\BlogModel;
 use App\Models\Education;
 use App\Models\SellerAds;
+use App\Models\BranchList;
 use App\Models\Experience;
 use App\Models\Profession;
 use App\Models\Certificate;
@@ -70,14 +72,14 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-    public function myheartTouch(Request $request){
+    public function myheartTouch(Request $request)
+    {
 
         //dd($request->all());
         $data['gig_id']  = !empty($request->gig_id) ? $request->gig_id : "";
         $data['user_id'] = $this->userid;
         GigWishList::create($data);
         return response()->json($data);
-
     }
     public function getMessagesNotification()
     {
@@ -87,7 +89,7 @@ class UserController extends Controller
         return response()->json($notificationMSg);
     }
 
-    public function checkDepositBalance()
+    public function checkBalance()
     {
 
         $odController  = new OrderController();
@@ -108,25 +110,12 @@ class UserController extends Controller
             ->whereNotIn('order_status', [3])
             ->sum('sub_total');
 
-        /*
-        Calculate 5% of the complete amount
-        echo "Complete Amount : $completeAmount<br>";
-        $fivePercentOfCompleteAmount = $completeAmount * 0.05;
-        echo $fivePercentOfCompleteAmount;
-        exit;
-        If you need to return or use this value
-         return $fivePercentOfCompleteAmount;
-
-        echo "canel amount is : $returnAmount--------------------order amount : $orderAmount-";
-        exit; 
-        */
-
         $result         = $orderAmount + $returnAmount + $commissionAmt;
         $orderAmount    = $result;
-        $chkCanceOrders = CancelOrders::where('buyerId',$this->userid)->sum('selectedPrice');
+        $chkCanceOrders = CancelOrders::where('buyerId', $this->userid)->sum('selectedPrice');
         $depositAmt     = Deposit::where('user_id', $this->userid)
-                        ->where('status', 1)
-                        ->sum('deposit_amount');
+            ->where('status', 1)
+            ->sum('deposit_amount');
         try {
             // Calculate the deposit amount
             $result = abs($depositAmt - $orderAmount) + $chkCanceOrders;
@@ -372,12 +361,26 @@ class UserController extends Controller
         return md5($uniqueNumber);
     }
 
-    public function saveWithdrawal(Request $request)
+    public function saveWithdrawalSeller(Request $request)
     {
 
+        $orderController = new OrderController();
+        // Step 2: Call the getOrderForSellerEarning method
+        $response = $orderController->getOrderForSellerEarning();
+
+        // Step 3: Check if response is a JsonResponse and get the data
+        if ($response instanceof JsonResponse) {
+            $earningData = $response->getData(true); // Retrieve as an associative array
+        } else {
+            // Handle the case where the response is not as expected
+            $earningData = ['message' => 'Failed to retrieve earnings'];
+        }
+        $currentBalance = (int) $earningData['earning'];
+        //dd($request->all());
         $validator = Validator::make($request->all(), [
-            'withdrawal_amount'  => 'required',
-            'wallet_address'     => 'required',
+            'selected_type'     => 'required',
+            'method_id'         => 'required',
+            'withdrawal_amount' => 'required',
 
         ]);
         if ($validator->fails()) {
@@ -391,26 +394,140 @@ class UserController extends Controller
 
         $userid        = $this->userid;
         $depositAmount = Order::where('sellerId', $userid)->select('selected_price')->where('order_status', 5)->sum('selected_price');
+        $balanceAmount = 0;
+
         $setting       = Setting::find(1);
 
         if ($request->withdrawal_amount < $setting->minimum_withdrawal) {
             return response()->json(['errors' => ['error_minim_usdt' => ['Minimum USDT balance is ', $setting->minimum_withdrawal]]], 422);
         }
 
-        if ($request->withdrawal_amount > $depositAmount) {
+        if ($request->withdrawal_amount > $currentBalance) {
             return response()->json(['errors' => ['error_usdt' => ['You have no sufficiant USDT balance']]], 422);
         }
+
+        $type = $request->selected_type == 1 ? 'crypto' : ($request->selected_type == 2 ? 'paypal' : ($request->selected_type == 3 ? 'payooner' : ($request->selected_type == 4 ? 'bank' : null)));
+
+        $ckhwithdraw         = WithdrawMethod::where('type', $type)->where('id', $request->method_id)->where('user_id', $this->userid)->first();
+        //For Crypto 
+        $walletname          = !empty($ckhwithdraw->name) ? $ckhwithdraw->name : "";
+        $wallet_address      = !empty($ckhwithdraw->wallet_address) ? $ckhwithdraw->wallet_address : "";
+        //For Paypal or Payeenor
+        $field_email         = !empty($ckhwithdraw->email) ? $ckhwithdraw->email : "";
+        //For Bank
+        $account_name        = !empty($ckhwithdraw->account_name) ? $ckhwithdraw->account_name : "";
+        $account_num         = !empty($ckhwithdraw->account_num) ? $ckhwithdraw->account_num : "";
+        $ibn_no              = !empty($ckhwithdraw->ibn_no) ? $ckhwithdraw->ibn_no : "";
+        $bank_id             = !empty($ckhwithdraw->bank_id) ? $ckhwithdraw->bank_id : "";
+        $branch_id           = !empty($ckhwithdraw->branch_id) ? $ckhwithdraw->branch_id : "";
+        //dd($ckhwithdraw);
 
         $uniqueID = 'W.' . $this->generateUnique4DigitNumber();
         $data = array(
             'withdrawID'     => $uniqueID,
             'depscription'   => $uniqueID,
-            'withdrawal_amount' => $request->withdrawal_amount,
-            'wallet_address' => $request->wallet_address,
+            'selected_type'  => $request->selected_type,
             'status'         => 0,
-            'payment_method' => 'USDTTRC-20',
-            'user_id'        => $this->userid
+            'method_id'      => $request->method_id,
+            'type'           => $type,
+            'email'          => $field_email,
+            'crypto_wallet_type'    => $walletname,
+            'wallet_address'        => $wallet_address,
+            'withdrawal_amount' => $request->withdrawal_amount,
+
+            'account_name'      => $account_name,
+            'account_num'       => $account_num,
+            'ibn_no'            => $ibn_no,
+            'bank_id'           => $bank_id,
+            'branch_id'         => $branch_id,
+            'user_id'           => $this->userid,
+
         );
+        //  dd($data);
+        $last_Id = Withdraw::insertGetId($data);
+
+        return response()->json(['data' => 'Successfully send your request.'], 200);
+    }
+
+    public function saveWithdrawal(Request $request)
+    {
+
+        $balanceResponse = $this->checkBalance();
+        if ($balanceResponse instanceof JsonResponse) {
+            $balanceData = $balanceResponse->getData(true);
+        } else {
+            $balanceData = ['message' => 'Failed to retrieve balance data'];
+        }
+        $currentBalance = (int) $balanceData['currentBalance'];
+
+        //dd($request->all());
+        $validator = Validator::make($request->all(), [
+            'selected_type'     => 'required',
+            'method_id'         => 'required',
+            'withdrawal_amount' => 'required',
+
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $user = User::find($this->userid);
+        if (!$user) {
+            return response()->json(['error' => 'User not found'], 404);
+        }
+
+        $userid        = $this->userid;
+        $depositAmount = Order::where('sellerId', $userid)->select('selected_price')->where('order_status', 5)->sum('selected_price');
+        $balanceAmount = 0;
+
+        $setting       = Setting::find(1);
+
+        if ($request->withdrawal_amount < $setting->minimum_withdrawal) {
+            return response()->json(['errors' => ['error_minim_usdt' => ['Minimum USDT balance is ', $setting->minimum_withdrawal]]], 422);
+        }
+
+        if ($request->withdrawal_amount > $currentBalance) {
+            return response()->json(['errors' => ['error_usdt' => ['You have no sufficiant USDT balance']]], 422);
+        }
+
+        $type = $request->selected_type == 1 ? 'crypto' : ($request->selected_type == 2 ? 'paypal' : ($request->selected_type == 3 ? 'payooner' : ($request->selected_type == 4 ? 'bank' : null)));
+
+        $ckhwithdraw         = WithdrawMethod::where('type', $type)->where('id', $request->method_id)->where('user_id', $this->userid)->first();
+        //For Crypto 
+        $walletname          = !empty($ckhwithdraw->name) ? $ckhwithdraw->name : "";
+        $wallet_address      = !empty($ckhwithdraw->wallet_address) ? $ckhwithdraw->wallet_address : "";
+        //For Paypal or Payeenor
+        $field_email         = !empty($ckhwithdraw->email) ? $ckhwithdraw->email : "";
+        //For Bank
+        $account_name        = !empty($ckhwithdraw->account_name) ? $ckhwithdraw->account_name : "";
+        $account_num         = !empty($ckhwithdraw->account_num) ? $ckhwithdraw->account_num : "";
+        $ibn_no              = !empty($ckhwithdraw->ibn_no) ? $ckhwithdraw->ibn_no : "";
+        $bank_id             = !empty($ckhwithdraw->bank_id) ? $ckhwithdraw->bank_id : "";
+        $branch_id           = !empty($ckhwithdraw->branch_id) ? $ckhwithdraw->branch_id : "";
+        //dd($ckhwithdraw);
+
+        $uniqueID = 'W.' . $this->generateUnique4DigitNumber();
+        $data = array(
+            'withdrawID'     => $uniqueID,
+            'depscription'   => $uniqueID,
+            'selected_type'  => $request->selected_type,
+            'status'         => 0,
+            'method_id'      => $request->method_id,
+            'type'           => $type,
+            'email'          => $field_email,
+            'crypto_wallet_type'    => $walletname,
+            'wallet_address'        => $wallet_address,
+            'withdrawal_amount' => $request->withdrawal_amount,
+
+            'account_name'      => $account_name,
+            'account_num'       => $account_num,
+            'ibn_no'            => $ibn_no,
+            'bank_id'           => $bank_id,
+            'branch_id'         => $branch_id,
+            'user_id'           => $this->userid,
+
+        );
+        //  dd($data);
         $last_Id = Withdraw::insertGetId($data);
 
         return response()->json(['data' => 'Successfully send your request.'], 200);
@@ -494,9 +611,9 @@ class UserController extends Controller
         //dd($request->all());
         $user = User::find($this->userid);
         $data['status']          = $request->status;
-      //  $data['name']            = $request->fname . ' ' . $request->lname;
-      //  $data['phone_number']    = $request->phone_number;
-       // $data['email']           = $request->email;
+        //  $data['name']            = $request->fname . ' ' . $request->lname;
+        //  $data['phone_number']    = $request->phone_number;
+        // $data['email']           = $request->email;
 
         if (!empty($request->file('file'))) {
             $files = $request->file('file');
@@ -538,10 +655,49 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-    public function getwithdrawalMethod()
+    public function getwithdrawalMethod(Request $request)
     {
 
-        $data = WithdrawMethod::where('user_id', $this->userid)->get();
+        $reqst = !empty($request->type) ? $request->type : 1;
+        if ($reqst == 1) {
+            $type = 'crypto';
+        }
+
+        if ($reqst == 2) {
+            $type = 'paypal';
+        }
+
+        if ($reqst == 3) {
+            $type = 'payooner';
+        }
+
+        if ($reqst == 4) {
+            $type = 'bank';
+        }
+
+        $result = WithdrawMethod::where('type', $type)->where('user_id', $this->userid)->get();
+
+        $data = [];
+        foreach ($result as $v) {
+            $bankrow = BankList::find($v->bank_id);
+            $branchrow = BranchList::find($v->branch_id);
+
+            $data[] = [
+                'id'           => $v->id,
+                'user_id'      => $v->user_id,
+                'name'         => $v->name,
+                'type'         => $v->type,
+                'wallet_address' => $v->wallet_address,
+                'email'          => $v->email,
+                'account_name' => $v->account_name,
+                'account_num'  => $v->account_num,
+                'ibn_no'       => $v->ibn_no,
+                'bankName'     => !empty($bankrow) ? $bankrow->name : "",
+                'branchName'   => !empty($branchrow) ? $branchrow->name : "",
+            ];
+        }
+        // Return messages as a JSON response
+        // return response()->json($data);
         $response = [
             'data' => $data,
             'message' => 'success'
@@ -549,16 +705,15 @@ class UserController extends Controller
         return response()->json($response, 200);
     }
 
-    public function addWalletAddress(Request $request)
+    public function addCryptoWalletAddress(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'name'           => 'required',
-            'account_number' => 'required|unique:withdrawal_method,account_number', // Add unique validation
+            'wallet_address' => 'required|unique:withdrawal_method,wallet_address', // Add unique validation
         ], [
             'name.required'           => 'The withdrawal method field is required.',
-            'account_number.required' => 'The wallet number field is required.',
-            'account_number.unique'   => 'The wallet number has already been taken.', // Custom message for unique validation
+            'wallet_address.required' => 'The wallet number field is required.',
+            'wallet_address.unique'   => 'The wallet number has already been taken.', // Custom message for unique validation
         ]);
 
         if ($validator->fails()) {
@@ -567,7 +722,8 @@ class UserController extends Controller
         $data = array(
             'name'             => !empty($request->name) ? $request->name : "",
             'user_id'          => $this->userid,
-            'account_number'   => $request->account_number,
+            'type'             => $request->type,
+            'wallet_address'   => $request->wallet_address,
         );
         if (empty($request->id)) {
             $id = WithdrawMethod::insertGetId($data);
@@ -576,7 +732,102 @@ class UserController extends Controller
             WithdrawMethod::where('id', $request->id)->update($data);
         }
         $response = [
-            'message' => 'User register successfully insert UserID:' . $id
+            'message' => 'Successfully insert UserID:' . $id
+        ];
+        return response()->json($response);
+    }
+
+    public function addCryptoWalletAddressBank(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'account_name'     => 'required',
+            'account_num'      => 'required',
+            'ibn_no'           => 'required',
+            'bank_id'          => 'required',
+            'branch_id'        => 'required',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'user_id'          => $this->userid,
+            'type'             => $request->type,
+            'account_name'     => $request->account_name,
+            'account_num'      => $request->account_num,
+            'ibn_no'           => $request->ibn_no,
+            'bank_id'          => $request->bank_id,
+            'branch_id'        => $request->branch_id,
+
+        );
+        if (empty($request->id)) {
+            $id = WithdrawMethod::insertGetId($data);
+        } else {
+            $id = $request->id;
+            WithdrawMethod::where('id', $request->id)->update($data);
+        }
+        $response = [
+            'message' => 'Successfully insert UserID:' . $id
+        ];
+        return response()->json($response);
+    }
+
+    public function addCryptoWalletAddressPayooner(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email'           => 'required',
+        ], [
+            'email.required'           => 'The field is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'user_id'          => $this->userid,
+            'type'             => $request->type,
+            'email'            => !empty($request->email) ? $request->email : "",
+
+        );
+        if (empty($request->id)) {
+            $id = WithdrawMethod::insertGetId($data);
+        } else {
+            $id = $request->id;
+            WithdrawMethod::where('id', $request->id)->update($data);
+        }
+        $response = [
+            'message' => 'Successfully insert UserID:' . $id
+        ];
+        return response()->json($response);
+    }
+
+    public function addCryptoWalletAddressPaypal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email'           => 'required|email',
+        ], [
+            'email.required'           => 'The Email field is required.',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+        $data = array(
+            'user_id'          => $this->userid,
+            'type'             => $request->type,
+            'email'            => !empty($request->email) ? $request->email : "",
+
+        );
+        if (empty($request->id)) {
+            $id = WithdrawMethod::insertGetId($data);
+        } else {
+            $id = $request->id;
+            WithdrawMethod::where('id', $request->id)->update($data);
+        }
+        $response = [
+            'message' => 'Successfully insert UserID:' . $id
         ];
         return response()->json($response);
     }

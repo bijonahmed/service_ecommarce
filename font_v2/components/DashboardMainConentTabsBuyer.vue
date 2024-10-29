@@ -697,7 +697,7 @@ const mlm = () => {
 
 const getBalance = async () => {
   try {
-    const response = await axios.get(`/user/checkDepositBalance`);
+    const response = await axios.get(`/user/checkBalance`);
     currentBalance.value = response.data.currentBalance;
   } catch (error) {
     console.log(error);

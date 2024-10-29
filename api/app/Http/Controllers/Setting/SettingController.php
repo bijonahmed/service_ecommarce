@@ -10,17 +10,19 @@ use App\Models\coupons;
 use App\Models\Profile;
 use App\Models\Setting;
 use App\Models\Sliders;
+use App\Models\BankList;
+use App\Models\BuyToken;
 use App\Models\students;
+use App\Models\BranchList;
 use App\Models\dealsbanner;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\companyProfile;
 use App\Models\topHeaderBanner;
 use App\Rules\MatchOldPassword;
+use App\Models\couponUseHistory;
 use App\Models\sliderSideAdsModel;
 use App\Http\Controllers\Controller;
-use App\Models\companyProfile;
-use App\Models\BuyToken;
-use App\Models\couponUseHistory;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -1229,6 +1231,34 @@ class SettingController extends Controller
         return response()->json($response, 200);
     }
 
+
+    public function getBankLists()
+    {
+        $data = BankList::where('status', 1)->get();
+        $response = [
+            'data'     => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+
+  public function checkBankWiseBranch(Request $request)
+    {
+        $bankId = $request->bankId; 
+
+        $data = BranchList::where('bank_id',$bankId)->where('status', 1)->get();
+        $response = [
+            'data'     => $data,
+            'message' => 'success'
+        ];
+        return response()->json($response, 200);
+    }
+
+    
+
+
+
     public function getProfileData()
     {
         $getData = companyProfile::get()->first();
@@ -1257,9 +1287,6 @@ class SettingController extends Controller
             }
         }
 
-        // dd($couponList);
-        // return false;
-
         return response()->json(['couponList' => array_values($couponList->toArray())]);
     }
 
@@ -1279,7 +1306,7 @@ class SettingController extends Controller
             'level_4_bonus'      => 'required',
             'level_5_bonus'      => 'required',
             'service_fee'        => 'required',
-            
+
 
         ]);
         if ($validator->fails()) {
@@ -1305,7 +1332,7 @@ class SettingController extends Controller
 
             'service_fee'      => !empty($request->service_fee) ? $request->service_fee : "",
             'register_bonus'              => !empty($request->register_bonus) ? $request->register_bonus : 0,
-         
+
         );
 
         //dd($data);

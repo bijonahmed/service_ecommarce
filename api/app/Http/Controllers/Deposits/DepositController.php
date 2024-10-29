@@ -2,42 +2,44 @@
 
 namespace App\Http\Controllers\Deposits;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Auth;
-use Validator;
-use Helper;
-use App\Models\Holiday;
-use App\Models\User;
-use App\Models\ProductAttributeValue;
-use App\Models\ProductVarrientHistory;
-use App\Models\Categorys;
-use App\Models\ProductAttributes;
-use App\Models\ProductCategory;
-use App\Models\Product;
-use App\Models\ProductAdditionalImg;
-use App\Models\ProductVarrient;
-use App\Models\AttributeValues;
-use App\Models\Deposit;
-use App\Models\MiningServicesBuyHistory;
-use App\Models\Setting;
-use App\Models\TransactionHistory;
-use App\Models\WalletAddress;
-use App\Models\Withdraw;
-use App\Models\addWithDrawMethod;
-use App\Models\LoanPayHistory;
-use App\Models\SendReceived;
-use App\Models\UserPaymentAddress;
-use App\Models\WithdrawMethod;
-use Illuminate\Support\Str;
-use App\Rules\MatchOldPassword;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\JsonResponse;
-use Session;
-use Carbon\Carbon;
 use DB;
 use PDO;
+use Auth;
+use Helper;
+use Session;
+use Validator;
+use Carbon\Carbon;
+use App\Models\User;
+use App\Models\Deposit;
+use App\Models\Holiday;
+use App\Models\Product;
+use App\Models\Setting;
+use App\Models\BankList;
+use App\Models\Withdraw;
+use App\Models\Categorys;
+use App\Models\BranchList;
+use Illuminate\Support\Str;
+use App\Models\SendReceived;
+use Illuminate\Http\Request;
+use App\Models\WalletAddress;
+use App\Models\LoanPayHistory;
+use App\Models\WithdrawMethod;
+use App\Models\AttributeValues;
+use App\Models\ProductCategory;
+use App\Models\ProductVarrient;
+use App\Rules\MatchOldPassword;
+use App\Models\addWithDrawMethod;
+use App\Models\ProductAttributes;
+use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
+use App\Models\TransactionHistory;
+use App\Models\UserPaymentAddress;
+use App\Http\Controllers\Controller;
+use App\Models\ProductAdditionalImg;
+use Illuminate\Support\Facades\Hash;
+use App\Models\ProductAttributeValue;
+use App\Models\ProductVarrientHistory;
+use App\Models\MiningServicesBuyHistory;
 
 class DepositController extends Controller
 {
@@ -554,6 +556,9 @@ class DepositController extends Controller
 
         foreach ($data as $v) {
 
+            $bankrow = BankList::find($v->bank_id);
+            $branchrow = BranchList::find($v->branch_id);
+
             if ($v->status == 0) {
                 $wStatus = '<span style="color: orange; background-color: rgba(255, 165, 0, 0.2); padding: 5px; border-radius: 3px;">Review</span>';
             } elseif ($v->status == 1) {
@@ -571,8 +576,17 @@ class DepositController extends Controller
                 'account_number' => $v->account_number,
                 'wStatus'        => $wStatus,
                 'status'         => $v->status,
+                'selected_type'      => $v->selected_type,
                 'withdrawal_amount'  => $v->withdrawal_amount,
                 'wallet_address'     => $v->wallet_address,
+                'crypto_wallet_type' => $v->crypto_wallet_type,
+                'type'               => $v->type,
+                'email'              => $v->email,
+                'account_name'       => $v->account_name,
+                'account_num'        => $v->account_num,
+                'ibn_no'             => $v->ibn_no,
+                'bankName'           => !empty($bankrow) ? $bankrow->name : "",
+                'branchName'         => !empty($branchrow) ? $branchrow->name : "",
                 'remarks'            => $v->remarks,
                 'created_at'     => date("d-m-Y", strtotime($v->created_at)),
             ];
@@ -597,7 +611,7 @@ class DepositController extends Controller
         $searchOrderId  = $request->searchOrderId;
 
         $query = Withdraw::orderBy('withdraw.id', 'desc')
-            ->select('withdraw.*', 'users.name', 'users.email', 'users.phone_number')
+            ->select('withdraw.*', 'users.name', 'users.email', 'users.phone_number', 'users.role_id')
             ->join('users', 'withdraw.user_id', '=', 'users.id') // Join condition
             ->orderBy('withdraw.id', 'desc'); // Sorting by 'id' in descending order
 
@@ -641,6 +655,15 @@ class DepositController extends Controller
             } else if ($item->status == 2) {
                 $status = "Rejected";
             }
+
+
+            $role_id = "";
+            if ($item->role_id == 2) {
+                $role_id = "Sellers";
+            } else if ($item->role_id == 3) {
+                $role_id = "Buyer";
+            }
+
             $userrow = User::find($item->user_id);
             return [
                 'id'                => $item->id,
@@ -653,6 +676,8 @@ class DepositController extends Controller
                 'withdrawal_amount' => $item->withdrawal_amount,
                 'payable_amount'    => $item->payable_amount,
                 'transection_fee'   => $item->transection_fee,
+                'type'              => $item->type,
+                'role_id'           => $role_id,
                 'withdrawal_method_id' => $item->withdrawal_method_id,
                 'status'            => $status,
                 'sts'               => $item->status,
@@ -852,11 +877,20 @@ class DepositController extends Controller
                 ->join('users', 'withdraw.user_id', '=', 'users.id')
                 ->first();
 
+            $bankId = !empty($user->bank_id) ? $user->bank_id : "";
+            $branchid = !empty($user->branch_id) ? $user->branch_id : "";
+
+            $bankrow = BankList::find($bankId);
+            $branchrow = BranchList::find($branchid);
+
             $wallet_address         = !empty($user->wallet_address) ? $user->wallet_address : "";
             $data['datarow']        = $user;
             $data['created_at']     = !empty($user->created_at) ? date("d-m-Y H:i:s", strtotime($user->created_at)) : "";
             $data['remarks']        = !empty($user->remarks) ? $user->remarks : "";
             $data['wallet_address'] = $wallet_address;
+            $data['bankName']       = !empty($bankrow) ? $bankrow->name : "";
+            $data['branchName']     = !empty($branchrow) ? $branchrow->name : "";
+
             return response()->json($data);
         } catch (\Exception $e) {
             echo "Error: " . $e->getMessage();
