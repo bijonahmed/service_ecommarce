@@ -124,35 +124,31 @@
                   <div class="listing-style1">
                     <div class="list-thumb">
                       <!-- Dynamically set the image source -->
-                      <nuxt-link :to="`/gigs/${data.gig_slug}`"><img class="w-100 gig_image"
+                      <nuxt-link :to="`/gigs/${data.gig_slug}`"> <img class="w-100 gig_image"
                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
                         alt="Listing Image"></nuxt-link>
-
-                        <a href="#" class="listing-fav fz12" @click.prevent="myHeart(data)"><span
-                          class="far fa-heart"></span></a>
-
-                      <a href="#" v-if="!isLoggedIn" class="listing-fav fz12" @click="faJheart()"><span
-                          class="far fa-heart"></span></a>
-
+                      <!-- <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a> -->
                     </div>
                     <div class="list-content">
-                      <p class="list-text body-color fz14 mb-1">{{ categoryName || '' }}</p>
+                      <div class="d-flex justify-content-between align-items-center">
+                        <p class="list-text body-color fz14 mb-1">{{ categoryName || '' }}</p>
+                        <p class="mb-1"><i class="fa-solid fa-star text-success"></i> {{ data.calculatedReview }}/5 ({{ data.completeOrder }} Jobs)</p>
+                      </div>
                       <h5 class="list-title">
                         <nuxt-link :to="`/gigs/${data.gig_slug}`">{{ data.name || '' }} </nuxt-link>
                       </h5>
 
                       <hr class="my-2">
                       <div class="list-meta d-flex justify-content-between align-items-center mt15">
-                        <a href="#">
+                        <nuxt-link :to="{ path: '/public', query: { profile: data.sellerSlug } }">
                           <span class="position-relative mr10">
-                            <img class="rounded-circle" :src="data.freelancer_images || '/blank_user.jpg'"
-                              alt="Freelancer Photo" style="height: 50px;width: 50px;">
+                            <img class="rounded-circle" :src="data.freelancer_images || '/blank_user.jpg'" alt="Photo" style="height: 50px;width: 50px;">
                             <span class="online-badge" style="height: 10px;width: 10px;"></span>
                           </span>
-                          <span class="fz14">{{ data.user_name || '' }}</span>
-                        </a>
+                          <span class="fz14">{{ data.user_name || '' }}   </span>
+                        </nuxt-link>
                         <div class="budget">
-
+                          
                           <p v-if="data.types == 1">
                             Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.price }}</span>
                           </p>
@@ -160,7 +156,7 @@
                           <p v-if="data.types == 2">
                             Starting at<span class="fz17 fw500 dark-color ms-1">${{ data.basic_price }}</span>
                           </p>
-
+                           
                         </div>
                       </div>
                     </div>
@@ -286,6 +282,7 @@ const categoryName = ref('');
 const categoryData = ref([]);
 const responseData = ref([]);
 const currentPage = ref(1);
+const completeOrder = ref(1);
 const totalPages = ref(5);    // Total number of pages (update as needed)
 const isLoading = ref(false); // Loading state indicator
 

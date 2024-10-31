@@ -11,6 +11,7 @@ use App\Models\Gig;
 use App\Models\Post;
 use App\Models\User;
 
+use App\Models\Order;
 use App\Models\Skills;
 use App\Models\Country;
 use App\Models\Setting;
@@ -345,7 +346,7 @@ class UnauthenticatedController extends Controller
         try {
             $rows = Gig::where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
-                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images')
+                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images','users.slug as sellerSlug')
                 ->where(function ($query) use ($categoryID) {
                     $query->where('category_id', $categoryID)
                         ->orWhere('subcategory_id', $categoryID)
@@ -354,8 +355,24 @@ class UnauthenticatedController extends Controller
                 ->orderBy('gig.id', 'desc')
                 ->paginate(20);
 
+
+
+
             $data = [];
             foreach ($rows as $v) {
+
+                $completeOrder =  Order::where('sellerId',$v->user_id)->where('order_status',5)->count('order_status');
+                $seller_review =  SellerReview::where('seller_id',$v->user_id)->count('id');
+                $totaStar      =  SellerReview::where('seller_id',$v->user_id)->sum('rating');  
+                if ($seller_review > 0) {
+                    // Calculate the average rating and round up to the next whole number
+                    $calculatedReview = $totaStar / $seller_review;
+                } else {
+                    // Handle the case where there are no reviews to avoid division by zero
+                    $calculatedReview = 0;
+                }
+
+
                 $data[] = [
                     'id'                => $v->id,
                     'user_id'           => $v->user_id,
@@ -365,6 +382,9 @@ class UnauthenticatedController extends Controller
                     'basic_price'       => $v->basic_price,
                     'types'             => $v->types,
                     'price'             => $v->price,
+                    'sellerSlug'        => $v->sellerSlug,
+                    'completeOrder'     => $completeOrder,
+                    'calculatedReview'  => $calculatedReview,
                     'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
                     'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
 
