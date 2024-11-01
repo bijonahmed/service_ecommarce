@@ -13,7 +13,7 @@
                                 <li class="breadcrumb-item">
                                     <LazyNuxtLink to="/admin/dashboard">Dashboard</LazyNuxtLink>
                                 </li>
-                                
+
                             </ol>
                         </div>
                     </div>
@@ -27,13 +27,18 @@
                             <div class="row">
                                 <div class="col-lg-8 col-md-8 col-sm-12 mb-2">
                                     <input type="text" v-model="searchQuery" class="form-control"
-                                        placeholder="Search Name" />
+                                        placeholder="Search OrderID" />
                                 </div>
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
+                                    <!-- 1=Order Placed, 2=In Progess, 3=Cancel, 4=Delivery, 5=Complete -->
                                     <select v-model="selectedFilter" class="form-control" @change="filterData">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="">All Orders</option>
+                                        <option value="1">Order Place</option>
+                                        <option value="2">In Progress</option>
+                                        <option value="3">Cancel</option>
+                                        <option value="4">Delivery</option>
+                                        <option value="5">Complete</option>
                                     </select>
                                 </div>
 
@@ -60,7 +65,7 @@
                                                     <th class="text-left">Seller Name</th>
                                                     <th class="text-left">Package </th>
                                                     <th class="text-left">Price</th>
-                                                    <th class="text-left">Status</th>
+                                                    <th class="text-left">Order Status</th>
                                                     <!-- <th class="text-left">Action</th> -->
                                                 </tr>
                                             </thead>
@@ -72,10 +77,8 @@
                                                     <td class="text-left">{{ item.seller }}</td>
                                                     <td class="text-left"> {{ item.selected_packages }}</td>
                                                     <td class="text-left">${{ item.selected_price }}</td>
-                                                    <td class="text-left">
-                                                        {{ getOrderStatus(item.order_status) }}
-                                                    </td>
-                                                     
+                                                    <td class="text-left">{{ item.ststxt }}</td>
+
                                                 </tr>
                                             </tbody>
                                             <tfoot>
@@ -86,7 +89,7 @@
                                                     <th class="text-left">Seller Name</th>
                                                     <th class="text-left">Package </th>
                                                     <th class="text-left">Price</th>
-                                                    <th class="text-left">Status</th>
+                                                    <th class="text-left">Order Status</th>
                                                     <!-- <th class="text-left">Action</th> -->
                                                 </tr>
                                             </tfoot>
@@ -94,7 +97,8 @@
 
                                         <center>
                                             <div class="pagination" style="text-align: center">
-                                                <button :disabled="currentPage === 1" @click="fetchData(currentPage - 1)">
+                                                <button :disabled="currentPage === 1"
+                                                    @click="fetchData(currentPage - 1)">
                                                     Previous
                                                 </button>
                                                 <template v-for="pageNumber in displayedPages" :key="pageNumber">
@@ -135,27 +139,12 @@ const totalRecords = ref(0);
 const totalPages = ref(0);
 const productdata = ref([]);
 const searchQuery = ref(""); // Add a ref for the search query
-const selectedFilter = ref(1); // Add a ref for the search query
-const getOrderStatus = (status) => {
-  switch (status) {
-    case "1":
-      return "Order Placed";
-    case "2":
-      return "Completed";
-    case "3":
-      return "Delivered";
-    case "4":
-      return "Review";
-    case "5":
-      return "Order Cancelled";
-    default:
-      return "Unknown";
-  }
-}
+const selectedFilter = ref(""); // Add a ref for the search query
+
 const fetchData = async (page) => {
     try {
         loading.value = true;
-        const response = await axios.get(`/order/allOrders`, {
+        const response = await axios.get(`/order/allOrdersFilter`, {
             params: {
                 page: page,
                 pageSize: pageSize,
@@ -163,7 +152,7 @@ const fetchData = async (page) => {
                 selectedFilter: selectedFilter.value, // Pass the search query parameter
             },
         });
-        productdata.value = response.data;
+        productdata.value = response.data.data;
         totalRecords.value = response.data.total_records;
         totalPages.value = response.data.total_pages;
         currentPage.value = response.data.current_page;
@@ -313,4 +302,5 @@ td {
 
 tr:hover {
     background-color: rgb(221, 221, 221);
-}</style>
+}
+</style>

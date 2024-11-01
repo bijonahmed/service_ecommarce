@@ -127,6 +127,13 @@
                       <nuxt-link :to="`/gigs/${data.gig_slug}`"> <img class="w-100 gig_image"
                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
                         alt="Listing Image"></nuxt-link>
+
+
+                             <a href="#" class="listing-fav fz12" @click.prevent="myHeart(data)"><span
+                          class="far fa-heart"></span></a>
+
+                      <a href="#" v-if="!isLoggedIn" class="listing-fav fz12" @click="faJheart()"><span
+                          class="far fa-heart"></span></a>
                       <!-- <a href="#" class="listing-fav fz12"><span class="far fa-heart"></span></a> -->
                     </div>
                     <div class="list-content">

@@ -63,7 +63,7 @@ class UserController extends Controller
     public function dashboardCounting()
     {
         $user_row = User::find($this->userid);
-        $data['total_deposit']  = Deposit::where('status', 1)->count();
+        $data['total_deposit']  = Deposit::where('status', 1)->sum('receivable_amount');
         $data['total_withdraw'] = Withdraw::where('status', 1)->count();
         $data['total_users']    = User::where('role_id', 2)->where('status', 1)->count();
         $data['total_products'] = 0;

@@ -287,6 +287,44 @@ class ChatController extends Controller
     }
 
 
+    public function checkChatHistory(Request $request)
+    {
+        //Admin Query : 
+        $user_id = $request->id;
+        $messages = MyMessage::where(function ($query) use ($user_id) {
+            $query->where('user_id', $user_id)
+                  ->orWhere('to_id', $user_id);
+        })->orderBy('created_at', 'asc')->get();
+    
+        $data = [];
+    
+        foreach ($messages as $message) {
+            $sender = User::find($message->sender_id);
+            $recipient = User::find($message->to_id);
+            $data[] = [
+                'id'                        => $message->id,
+                'user_id'                   => $message->sender_id,
+                'message'                   => $message->message ?? "", // Fallback if null
+                'files'                     => !empty($message->files) ? url($message->files) : "",
+                'created_at'                => date("Y-m-d", strtotime($message->created_at)),
+                'time_sent'                 => $message->time_sent,
+    
+                // Recipient details
+                'recipient_id'              => $message->to_id,
+                'recipient_name'            => $recipient ? $recipient->name : "Unknown",
+                'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
+    
+                // Sender details
+                'sender_id'                 => $message->sender_id,
+                'sender_name'               => $sender ? $sender->name : "Unknown",
+                'sender_profile_picture'    => !empty($sender->image) ? url($sender->image) : "",
+            ];
+        }
+    
+        return response()->json($data);
+        
+    }
+
     public function getMessagesSeller(Request $request)
     {
 
@@ -326,19 +364,16 @@ class ChatController extends Controller
                 'created_at'  => $message->created_at->format('Y-m-d H:i:s'), // Message timestamp
                 'time_sent'   => $message->time_sent, // Message timestamp
 
-
-               
-
                 // Recipient details
                 'recipient_id'            => $message->to_id,
                 'recipient_name'          => $recipient ? $recipient->name : "Unknown",
                 'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
 
 
-                 // Sender details
-                 'sender_id'               => $message->sender_id,
-                 'sender_name'             => $sender ? $sender->name : "Unknown",
-                 'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
+                // Sender details
+                'sender_id'               => $message->sender_id,
+                'sender_name'             => $sender ? $sender->name : "Unknown",
+                'sender_profile_picture'  => !empty($sender->image) ? url($sender->image) : "",
             ];
         }
         // Return messages as a JSON response

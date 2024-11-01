@@ -95,6 +95,7 @@
                     <th class="text-left">Invite users</th>
                     <th class="text-left">Register Country</th>
                     <th class="text-left">Reg/Update time</th>
+                    <th class="text-center">Chat History</th>
                     <th class="text-center">Action</th>
                   </tr>
                 </thead>
@@ -125,6 +126,12 @@
                     <td class="text-center">
                       <p>R: {{ item.created_at }}</p>
                       <p>U: {{ item.updated_at }}</p>
+                    </td>
+                    <td class="text-center" @click="getHistoryChat(item.id)">
+                      <button class="btn w-100 btn-warning btn-sm btn-flat">
+                        <i class="fas fa-history"></i>Chat
+                      </button>
+
                     </td>
                     <td>
                       <div class="">
@@ -166,6 +173,52 @@
     </div>
 
     <!-- Start Modal  -->
+
+    <!-- chatModal -->
+
+    <div class="modal fade" id="chatModal" tabindex="-1" role="chatModal" aria-labelledby="detailsTitle"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document" style="max-width: 80%;">
+        <div class="modal-content">
+          <div class="modal-header py-1">
+            <h5 class="modal-title" id="detailsTitle">
+              Chat History
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+
+              <div v-if="chatHistory">
+                <div v-for="message in chatHistory" :key="message.id" class="message-item">
+                  <div class="message-header">
+                    <span>{{ message.sender_name }} to {{ message.recipient_name }}</span>
+                    <span>{{ message.created_at }} {{ message.time_sent }}</span>
+                  </div>
+                  <div class="message-content">
+                    <p>{{ message.message }}</p>
+                    <template v-if="message.files">
+                      <template v-if="isImage(message.files)">
+                        <img :src="message.files" alt="Image Preview" class="file-preview" />
+                      </template>
+                      <template v-else>
+                        <a :href="message.files" download>Download Attachment</a>
+                      </template>
+                    </template>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <hr />
+
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- details modal  -->
     <div class="modal fade" id="details" tabindex="-1" role="dialog" aria-labelledby="detailsTitle" aria-hidden="true">
       <div class="modal-dialog" role="document" style="max-width: 80%;">
@@ -182,7 +235,6 @@
             <div class="container-fluid">
               <h2 class="text-center">Order Details</h2>
               <div class="text-center">
-                
 
               </div>
               <div class="table-responsive" v-if="orders">
@@ -213,13 +265,8 @@
                 </table>
               </div>
             </div>
-            <hr/>
+            <hr />
 
-           <!-- Start MLM -->
-              <!-- <UserLevels :user-email="u_details_email" /> -->
-
-            <!-- END MLM -->
- 
             <table class="table">
               <tr>
                 <td class="text-left">User type</td>
@@ -350,8 +397,34 @@ const maximum_supply = ref(0);
 const total_supply = ref(0);
 const circulatingSupply = ref(0);
 const swap_tran = ref([]);
+const chatHistory = ref([]);
 
 //END userDetails Information
+
+const isImage = (fileUrl) => {
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif']
+  const extension = fileUrl.split('.').pop().toLowerCase()
+  return imageExtensions.includes(extension)
+}
+
+const getHistoryChat = async (id) => {
+
+  try {
+    loading.value = true;
+    const response = await axios.get(`/chat/checkChatHistory`, {
+      params: {
+        id: id,
+      },
+    });
+    $('#chatModal').modal('show');
+    chatHistory.value = response.data;
+  } catch (error) {
+    // Handle error
+  } finally {
+    loading.value = false;
+  }
+
+}
 
 const fetchData = async (page) => {
   try {
@@ -380,28 +453,20 @@ onMounted(() => {
   fetchData(currentPage.value);
 });
 
-// Watch for changes in current page and fetch data accordingly
 watch(currentPage, (newPage) => {
   fetchData(newPage);
 });
 
 const logoutUsers = async () => {
   try {
-    // Call the server-side logout endpoint
     await axios.post("/logout/all");
-    // Clear JWT token from local storage or wherever it's stored
-    //await userStore.logout();
     localStorage.removeItem("token");
     success_noti();
-    //localStorage.removeItem('token');
-    // Redirect to the login page
     router.push("/");
   } catch (error) {
     console.error("Error logging out all devices:", error);
   }
 };
-
- 
 
 const success_noti = () => {
   const Toast = swal.mixin({
@@ -623,19 +688,65 @@ const filterData = () => {
   border-top: 1px solid #dae2ea;
 }
 
-table {
-  border-collapse: collapse;
+/* new */
+.chat-container {
   width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
 }
 
-th,
-td {
-  padding: 1px;
+.message {
+  display: flex;
+  margin: 10px 0;
+}
+
+.outgoing {
+  justify-content: flex-end;
+}
+
+.incoming {
+  justify-content: flex-start;
+}
+
+.message-content {
+  max-width: 70%;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.outgoing .message-content {
+  background-color: #d1f0ff;
+  text-align: right;
+}
+
+.incoming .message-content {
+  background-color: #f1f1f1;
   text-align: left;
-  border-bottom: 1px solid #ddd;
 }
 
-tr:hover {
-  background-color: rgb(221, 221, 221);
+.message-item {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+
+.message-header {
+  font-weight: bold;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-content {
+  margin-top: 10px;
+}
+
+.file-preview {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 4px;
 }
 </style>

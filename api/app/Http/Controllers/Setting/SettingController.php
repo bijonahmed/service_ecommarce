@@ -791,8 +791,8 @@ class SettingController extends Controller
 
 
 
-    
- public function addBranch(request $request)
+
+    public function addBranch(request $request)
     {
         $validator = Validator::make($request->all(), [
             'name'                  => "required", // Fixed typo
@@ -978,7 +978,7 @@ class SettingController extends Controller
     }
 
 
-  public function editBranch($id)
+    public function editBranch($id)
     {
         $id = (int) $id;
         $data = BranchList::where('id', $id)->first();
@@ -990,7 +990,7 @@ class SettingController extends Controller
     }
 
 
-    
+
 
 
 

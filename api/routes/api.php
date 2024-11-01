@@ -44,7 +44,7 @@ Route::group(
         Route::get('sendChatRequest', [ChatController::class, 'sendChatRequest']);
         Route::get('/getMessages', [ChatController::class, 'getMessages']);
         Route::get('/getMessagesSeller', [ChatController::class, 'getMessagesSeller']);
-
+        Route::get('/checkChatHistory', [ChatController::class, 'checkChatHistory']);
         Route::get('/getSelectedMessages', [ChatController::class, 'getSelectedMessages']);
         Route::get('/getChatUsers', [ChatController::class, 'getChatUsers']);
         Route::get('/getChatUsersTo', [ChatController::class, 'getChatUsersTo']);
@@ -247,7 +247,7 @@ Route::group(
         Route::post('saveAttribute', [CategoryController::class, 'saveAttribute']);
         Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
         Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
-     
+
         Route::get('getSpeacialCategoryList', [CategoryController::class, 'getSpeacialCategoryList']);
         Route::post('edit', [CategoryController::class, 'edit']);
         Route::get('getInacCategoryList', [CategoryController::class, 'allInacCategory']);
@@ -323,6 +323,7 @@ Route::group(
         Route::get('getOrderForSellerEarning', [OrderController::class, 'getOrderForSellerEarning']);
         Route::get('getOrderPlace', [OrderController::class, 'getOrderPlace']);
         Route::get('allOrders', [OrderController::class, 'allOrders']);
+        Route::get('allOrdersFilter', [OrderController::class, 'allOrdersFilter']);
     },
 );
 

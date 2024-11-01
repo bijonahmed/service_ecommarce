@@ -686,7 +686,7 @@ class OrderController extends Controller
                 'buyerId'        => !empty($orders->buyerId) ? $orders->buyerId : "", // Assuming this comes from somewhere else
                 'selectedPrice'  => !empty($orders->selected_price) ? $orders->selected_price : "", // Assuming this comes from somewhere else
             ];
-           // dd($cancelOrder);
+            // dd($cancelOrder);
             CancelOrders::create($cancelOrder);
             //return response()->json(['message' => 'Order canceled successfully.'], 201);
         }
@@ -773,6 +773,72 @@ class OrderController extends Controller
         return response()->json($ordata, 200);
     }
 
+
+    public function allOrdersFilter(Request $request)
+    {
+        //dd($request->all());
+
+        $page = $request->input('page', 1);
+        $pageSize = $request->input('pageSize', 10);
+
+        // Get search query from the request
+        $searchQuery       = $request->searchQuery;
+        $selectedFilter    = $request->selectedFilter;
+        // dd($selectedFilter);
+        $query = Order::join('gig', 'orders.gig_id', '=', 'gig.id')
+            ->select('orders.*', 'gig.name as gig_name', 'gig.gig_slug');
+
+        if ($searchQuery !== null) {
+            $query->where('orders.orderId', 'like', '%' . $searchQuery . '%');
+        }
+
+        if ($selectedFilter !== null) {
+            $query->where('orders.order_status', $selectedFilter);
+        }
+
+        $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
+        $modifiedCollection = $paginator->getCollection()->map(function ($item) {
+
+
+            $seller = User::where('id', $item->sellerId)->first();
+            $buyer = User::where('id', $item->buyerId)->first();
+
+            $statusTexts = [
+                1 => 'Order Placed',
+                2 => 'In Progress',
+                3 => 'Cancel',
+                4 => 'Delivery',
+                5 => 'Complete'
+            ];
+
+            $ststxt = $statusTexts[$item->order_status] ?? '';
+
+            return [
+                'id'                => $item->id,
+                'orderId'           => $item->orderId,
+                'gig_slug'          => $item->gig_slug,
+                'seller'            => !empty($seller) ? $seller->name : "",
+                'buyer'             => !empty($buyer) ? $buyer->name : "---",
+                'created_at'        => !empty($item->created_at) ? date("d-M-Y", strtotime($item->created_at)) : "",
+                'selected_price'    => $item->selected_price,
+                'selected_packages' => $item->selected_packages,
+                'order_status'      => $item->order_status,
+                'ststxt'            => $ststxt,
+
+            ];
+
+
+        });
+
+        // Return the modified collection along with pagination metadata
+        return response()->json([
+            'data' => $modifiedCollection,
+            'current_page' => $paginator->currentPage(),
+            'total_pages' => $paginator->lastPage(),
+            'total_records' => $paginator->total(),
+        ], 200);
+    }
+
     public function allOrders()
     {
 
@@ -804,6 +870,15 @@ class OrderController extends Controller
             $seller = User::where('id', $v->sellerId)->first();
             $buyer = User::where('id', $v->buyerId)->first();
 
+            $statusTexts = [
+                1 => 'Order Placed',
+                2 => 'In Progress',
+                3 => 'Cancel',
+                4 => 'Delivery',
+                5 => 'Complete'
+            ];
+
+            $ststxt = $statusTexts[$v->order_status] ?? '';
             $orders[] = [
                 'id'                => $v->id,
                 'orderId'           => $v->orderId,
@@ -814,6 +889,7 @@ class OrderController extends Controller
                 'selected_price'    => $v->selected_price,
                 'selected_packages' => $v->selected_packages,
                 'order_status'      => $v->order_status,
+                'ststxt'            => $ststxt,
                 'reamingitime'      => $formattedTime,
 
             ];
