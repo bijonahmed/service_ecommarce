@@ -1,12 +1,12 @@
 <template>
-  <title>Add Notification</title>
+  <title>Send Notification</title>
   <div>
     <div class="content-wrapper">
       <section class="content-header">
         <div class="container-fluid">
           <div class="row mb-2">
             <div class="col-sm-6">
-              <p>Add Notification</p>
+              <p>Send Notification</p>
             </div>
             <div class="col-sm-6">
               <ol class="breadcrumb float-sm-right">
@@ -28,23 +28,32 @@
           <!-- Start -->
           <div class="card border-top border-0 border-4 border-info">
             <div class="border p-4 rounded">
-              <form @submit.prevent="saveData()" id="formrest" class="forms-sample" enctype="multipart/form-data">
-                <div class="card card-primary card-outline card-tabs">
-                  <div class="card-header p-0 pt-1 border-bottom-0">
-                    <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
-                      <li class="nav-item">
-                        <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill"
-                          href="#custom-tabs-three-home" role="tab" aria-controls="custom-tabs-three-home"
-                          aria-selected="true">General</a>
-                      </li>
 
-                    </ul>
-                  </div>
-                  <div class="card-body">
-                    <div class="tab-content" id="custom-tabs-three-tabContent">
-                      <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel"
-                        aria-labelledby="custom-tabs-three-home-tab">
-                        <!-- General  -->
+              <div class="card card-primary card-outline card-tabs">
+                <div class="card-header p-0 pt-1 border-bottom-0">
+                  <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
+                    <li class="nav-item">
+                      <a class="nav-link active" id="general-tab" data-toggle="pill" href="#general" role="tab"
+                        aria-controls="general" aria-selected="true">Global</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="seller-message-tab" data-toggle="pill" href="#seller-message" role="tab"
+                        aria-controls="seller-message" aria-selected="false">Seller Message</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link" id="buyer-message-tab" data-toggle="pill" href="#buyer-message" role="tab"
+                        aria-controls="buyer-message" aria-selected="false">Buyer Message</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <div class="tab-content" id="custom-tabs-three-tabContent">
+
+                    <!-- General Tab -->
+                    <div class="tab-pane fade active show" id="general" role="tabpanel" aria-labelledby="general-tab">
+                      <!-- General fields -->
+                      <form @submit.prevent="saveData()" id="formrest" class="forms-sample"
+                        enctype="multipart/form-data">
                         <div class="row mb-3 required">
                           <label for="input-name-1" class="col-sm-2 col-form-label required-label">Title</label>
                           <div class="col-sm-10">
@@ -53,18 +62,18 @@
                             <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                           </div>
                         </div>
-
-                         
                         <div class="row mb-3">
                           <label for="input-description-1"
                             class="col-sm-2 col-form-label required-label">Messages</label>
                           <div class="col-sm-10">
-                            <textarea class="form-control" v-model="insertdata.description_full" rows="5" cols="5"></textarea>
+                            <textarea class="form-control" v-model="insertdata.description_full" rows="5"
+                              cols="5"></textarea>
                             <span class="text-danger" v-if="errors.description_full">{{ errors.description_full[0]
                               }}</span>
                           </div>
+
                         </div>
-                        <hr />
+
                         <div class="row mb-3">
                           <label for="input-description-1" class="col-sm-2 col-form-label required-label">Type</label>
                           <div class="col-sm-10">
@@ -75,34 +84,117 @@
                             </select>
                             <span class="text-danger" v-if="errors.selectedtype">{{ errors.selectedtype[0] }}</span>
                           </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <button type="submit" class="btn btn-success px-5 w-100">
+                          <i class="bx bx-check-circle mr-1"></i> Save
+                        </button>
+                      </form>
+
+                    </div>
+
+
+                    <!-- Seller Message Tab -->
+                    <div class="tab-pane fade" id="seller-message" role="tabpanel" aria-labelledby="seller-message-tab">
+                      <form @submit.prevent="sendSellerMessages()" id="formrest" class="forms-sample"
+                        enctype="multipart/form-data">
+                        <div class="row mb-3">
+                          <label for="seller-message" class="col-sm-2 col-form-label">Sellers</label>
+                          <div class="col-sm-10">
+                            <select v-model="sellerInsertdata.selectedSeller" id="sellerSelect" class="form-control">
+                              <option value="" disabled>Select a seller</option>
+                              <option v-for="(seller, index) in sellersData" :key="index" :value="seller.id">
+                                {{ seller.name }}
+                              </option>
+                            </select>
+                            <span class="text-danger" v-if="errors.selectedSeller">{{ errors.selectedSeller[0] }}</span>
+
+                            <br />
+                          </div>
+
+
+
+
+                          <label for="seller-message" class="col-sm-2 col-form-label">Title</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="name" placeholder="Title" v-model="sellerInsertdata.name"
+                              class="form-control" />
+                            <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                            <br />
+                          </div>
+
+
+
+                          <label for="row mb-3 required" class="col-sm-2 col-form-label"> Message</label>
+                          <div class="col-sm-10">
+                            <textarea class="form-control" v-model="sellerInsertdata.sellerMessage"
+                              placeholder="Enter seller message here" rows="5" cols="5"></textarea>
+                            <span class="text-danger" v-if="errors.sellerMessage">{{ errors.sellerMessage[0] }}</span>
+                          </div>
+                        </div>
+
+                        <!-- Save Button -->
+                        <button type="submit" class="btn btn-success px-5 w-100">
+                          <i class="bx bx-check-circle mr-1"></i> Save
+                        </button>
+                      </form>
+
+                    </div>
+
+                    <!-- Buyer Message Tab -->
+                    <div class="tab-pane fade" id="buyer-message" role="tabpanel" aria-labelledby="buyer-message-tab">
+                      <form @submit.prevent="sendBuyerMessages()" id="formrest" class="forms-sample"
+                        enctype="multipart/form-data">
+                        <div class="row mb-3">
+                          <label for="seller-message" class="col-sm-2 col-form-label">Buyer</label>
+                          <div class="col-sm-10">
+                            <select v-model="buyerInsertdata.selectedBuyer" id="sellerSelect" class="form-control">
+                              <option value="" disabled>Select a seller</option>
+                              <option v-for="(seller, index) in buyersData" :key="index" :value="seller.id">
+                                {{ seller.name }}
+                              </option>
+                            </select>
+                            <span class="text-danger" v-if="errors.selectedBuyer">{{ errors.selectedBuyer[0] }}</span>
+                          </div>
+
+                        </div>
+
+
+                        <div class="row mb-3">
+                          <label for="seller-message" class="col-sm-2 col-form-label">Title</label>
+                          <div class="col-sm-10">
+                            <input type="text" name="name" placeholder="Title" v-model="buyerInsertdata.name"
+                              class="form-control" />
+                            <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+
+
+                          </div>
 
                         </div>
 
                         <div class="row mb-3">
-                          <label for="input-description-1" class="col-sm-2 col-form-label required-label">Status</label>
+                          <label for="buyer-message" class="col-sm-2 col-form-label">Buyer Message</label>
                           <div class="col-sm-10">
-                            <select name="" id="" class="form-control" v-model="insertdata.selectedStatus">
-                              <option value="" selected>Select</option>
-                              <option value="1">Active</option>
-                              <option value="0">Inactive</option>
-                            </select>
-                            <span class="text-danger" v-if="errors.selectedStatus">{{ errors.selectedStatus[0] }}</span>
+                            <textarea class="form-control" v-model="buyerInsertdata.buyerMessage"
+                              placeholder="Enter buyer message here" rows="5" cols="5"></textarea>
+                            <span class="text-danger" v-if="errors.buyerMessage">{{ errors.buyerMessage[0] }}</span>
                           </div>
                         </div>
 
-
-
-
-
+                        <!-- Save Button -->
                         <button type="submit" class="btn btn-success px-5 w-100">
                           <i class="bx bx-check-circle mr-1"></i> Save
                         </button>
-
-                      </div>
+                      </form>
                     </div>
+
+
                   </div>
                 </div>
-              </form>
+              </div>
+
+
             </div>
           </div>
         </div>
@@ -118,8 +210,11 @@ import axios from 'axios';
 import swal from 'sweetalert2';
 import 'summernote/dist/summernote-bs4.js';
 import 'summernote/dist/summernote-bs4.css';
+
 const router = useRouter()
 window.Swal = swal;
+const sellersData = ref([]);
+const buyersData = ref([]);
 const insertdata = reactive({
   name: '',
   selectedtype: '',
@@ -127,17 +222,74 @@ const insertdata = reactive({
   selectedStatus: 1,
 });
 
+const sellerInsertdata = reactive({
+  name: '',
+  selectedSeller: '',
+  sellerMessage: '',
+});
+
+const buyerInsertdata = reactive({
+  name: '',
+  selectedBuyer: '',
+  buyerMessage: '',
+});
 
 const errors = ref({});
-;
-
-// Initialize Summernote editor
 
 definePageMeta({
   middleware: 'is-logged-out',
 })
 
 
+const sendBuyerMessages = async () => {
+
+const formData = new FormData();
+formData.append('name', buyerInsertdata.name);
+formData.append('selectedBuyer', buyerInsertdata.selectedBuyer); // Using reactive object
+formData.append('buyerMessage', buyerInsertdata.buyerMessage);
+const headers = {
+  'Content-Type': 'multipart/form-data'
+};
+axios.post('/post/buyerMessageSend', formData, { headers })
+  .then((res) => {
+    document.getElementById('formrest').reset();
+    success_noti();
+    router.push('/post/notificaiton/list');
+  }).catch(error => {
+    if (error.response && error.response.status === 422) {
+      errors.value = error.response.data.errors;
+    } else {
+      // Handle other types of errors here
+      console.error('An error occurred:', error);
+    }
+  });
+};
+
+
+
+const sendSellerMessages = async () => {
+
+  const formData = new FormData();
+  formData.append('name', sellerInsertdata.name);
+  formData.append('selectedSeller', sellerInsertdata.selectedSeller); // Using reactive object
+  formData.append('sellerMessage', sellerInsertdata.sellerMessage);
+  const headers = {
+    'Content-Type': 'multipart/form-data'
+  };
+  axios.post('/post/sellerMessageSend', formData, { headers })
+    .then((res) => {
+      document.getElementById('formrest').reset();
+      success_noti();
+      router.push('/post/notificaiton/list');
+    }).catch(error => {
+      if (error.response && error.response.status === 422) {
+        errors.value = error.response.data.errors;
+      } else {
+        // Handle other types of errors here
+        console.error('An error occurred:', error);
+      }
+    });
+};
 const saveData = async () => {
 
   const formData = new FormData();
@@ -182,6 +334,36 @@ const success_noti = () => {
     title: "Your data has been successfully inserted."
   });
 };
+
+const allSellerLists = async () => {
+  try {
+    const response = await axios.get(`/user/allsellers`);
+    sellersData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+const allBuyerLists = async () => {
+  try {
+    const response = await axios.get(`/user/allbuyers`);
+    buyersData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loading.value = false;
+  }
+};
+
+
+
+onMounted(() => {
+  allSellerLists();
+  allBuyerLists();
+});
 
 </script>
 

@@ -93,16 +93,19 @@
                   </div>
                 </div>
               </section>
-
-
               <!-- Success Alert -->
-              <div v-if="msgData.length > 0">
+              <div>
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  <span v-for="data in msgData" :key="data.id" class="text-justify">
-                    <strong>{{ data.name }}</strong> {{ data.messages }}<br />
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </span>
+                  {{ msgData.name }}<br />
+                  {{ msgData.messages }}<br />
+                  {{ msgData.created_at }}<br />
+
+                  <div align="right">
+                    <nuxt-link to="/dashboard/notificationBox">View More...</nuxt-link>
+                  </div>
                 </div>
+
+
               </div>
 
 
@@ -126,10 +129,8 @@
                           </li>
                         </ul>
                       </div>
-                      <hr />
 
                       <ShareProfileLink />
-                      <hr>
                       <h4 class="widget-title">My Skills</h4>
                       <div class="tag-list mt30">
                         <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
@@ -181,6 +182,16 @@
                     </div>
 
                     <div class="col-lg-8">
+
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ usermsgData.name }}<br />
+                        {{ usermsgData.messages }}<br />
+                        {{ usermsgData.created_at }}<br />
+                        <div align="right">
+                          <nuxt-link to="/dashboard/notidificationBox">View More...</nuxt-link>
+                        </div>
+                      </div>
+
 
                       <div class="custom-tab-container">
                         <!-- Custom Nav Tabs -->
@@ -822,6 +833,7 @@ const cancelData = ref([]);
 const deliveryData = ref([]);
 const completeData = ref([]);
 const msgData = ref([]);
+const usermsgData = ref([]);
 const placeOrdersCount = ref(0);
 const inprogressOrdersCount = ref(0);
 const deliveryOrdersCount = ref(0);
@@ -849,6 +861,15 @@ const getMessages = async () => {
   try {
     const response = await axios.get(`/user/getMessagesNoti`);
     msgData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getUsersMessages = async () => {
+  try {
+    const response = await axios.get(`/user/getMessagesUserWise`);
+    usermsgData.value = response.data;
   } catch (error) {
     console.log(error);
   }
@@ -890,6 +911,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 };
 
 onMounted(() => {
+  getUsersMessages();
   getChatusersList();
   getMessages();
   getOrderCounting();
@@ -901,6 +923,7 @@ onMounted(() => {
   getEducations();
   getSkills();
   chkUserrow();
+
 });
 
 </script>

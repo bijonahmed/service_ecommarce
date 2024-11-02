@@ -18,6 +18,8 @@ class NotificationMsg extends Authenticatable
   protected $fillable = [
     'name',
     'type',
+    'seller_id',
+    'buyer_id',
     'messages',
     'status',
   ];

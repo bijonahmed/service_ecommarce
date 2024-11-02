@@ -72,6 +72,19 @@ class UserController extends Controller
         return response()->json($data);
     }
 
+
+    public function allsellers()
+    {
+        $sellers = User::where('role_id', 2)->where('status', 1)->get();
+        return response()->json($sellers);
+    }
+
+    public function allbuyers()
+    {
+        $buyers = User::where('role_id', 3)->where('status', 1)->get();
+        return response()->json($buyers);
+    }
+
     public function myheartTouch(Request $request)
     {
 
@@ -83,11 +96,89 @@ class UserController extends Controller
     }
     public function getMessagesNotification()
     {
-        // echo $this->role_id;
-        // exit; 
-        $notificationMSg = NotificationMsg::where('type', $this->role_id)->where('status', 1)->get();
-        return response()->json($notificationMSg);
+        // $notificationMSg = NotificationMsg::where('type', $this->role_id)->where('status', 1)->get();
+        // return response()->json($notificationMSg);
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+        $data['name']           = $notificationMsg->name;
+        $data['messages']       = $notificationMsg->messages;
+        $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
+
+        return response()->json($data);
     }
+
+    public function getMessagesUserWisebuyer()
+    {
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+            ->where('buyer_id', $this->userid)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+        $data['name']           = $notificationMsg->name;
+        $data['messages']       = $notificationMsg->messages;
+        $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
+
+        return response()->json($data);
+    }
+
+    //For Seller Start Notification
+    public function getMessagesUserWise()
+    {
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+            ->where('seller_id', $this->userid)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->first();
+        $data['name']           = $notificationMsg->name;
+        $data['messages']       = $notificationMsg->messages;
+        $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
+
+        return response()->json($data);
+    }
+    public function getSellerAllMessages()
+    {
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+        //    ->where('seller_id', $this->userid)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json($notificationMsg);
+    }
+
+
+    public function getSellerAllMessagesSignle()
+    {
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+            ->where('seller_id', $this->userid)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json($notificationMsg);
+    }
+    //END For notification
+
+
+
+ public function getBuyerAllMessagesSignle()
+    {
+        $notificationMsg = NotificationMsg::where('type', $this->role_id)
+            ->where('buyer_id', $this->userid)
+            ->where('status', 1)
+            ->orderBy('id', 'desc')
+            ->get();
+
+        return response()->json($notificationMsg);
+    }
+
+
+    
+
+
+
 
     public function checkBalance()
     {

@@ -58,6 +58,10 @@ Route::group(
     function () {
         Route::delete('notifidelete/{id}', [PostController::class, 'notifidelete']);
         Route::post('notificaitonsave', [PostController::class, 'notificationsend']);
+
+        Route::post('sellerMessageSend', [PostController::class, 'sellerMessageSend']);
+        Route::post('buyerMessageSend', [PostController::class, 'buyerMessageSend']);
+
         Route::post('save', [PostController::class, 'save']);
         Route::post('userRequestPost', [PostController::class, 'userRequestPost']);
         Route::post('update', [PostController::class, 'update']);
@@ -132,8 +136,17 @@ Route::group(
         'prefix' => 'user',
     ],
     function () {
+        Route::get('allbuyers', [UserController::class, 'allbuyers']);
+        Route::get('allsellers', [UserController::class, 'allsellers']);
         Route::get('myheartTouch', [UserController::class, 'myheartTouch']);
         Route::get('getMessagesNoti', [UserController::class, 'getMessagesNotification']);
+        Route::get('getSellerAllMessages', [UserController::class, 'getSellerAllMessages']);
+        Route::get('getBuyerAllMessages', [UserController::class, 'getSellerAllMessages']);
+        Route::get('getMessagesUserWise', [UserController::class, 'getMessagesUserWise']);
+        Route::get('getMessagesUserWisebuyer', [UserController::class, 'getMessagesUserWisebuyer']);
+        Route::get('getSellerAllMessagesSignle', [UserController::class, 'getSellerAllMessagesSignle']);
+        Route::get('getBuyerAllMessagesSignle', [UserController::class, 'getBuyerAllMessagesSignle']);
+
         Route::post('updateUser', [UserController::class, 'updateUser']);
         Route::get('allrolelist', [UserController::class, 'allrolelist']);
         Route::get('dashboardCounting', [UserController::class, 'dashboardCounting']);

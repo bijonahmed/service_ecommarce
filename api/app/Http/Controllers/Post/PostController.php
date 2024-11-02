@@ -141,6 +141,61 @@ class PostController extends Controller
         }
     }
 
+
+
+    public function buyerMessageSend(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required',
+            'selectedBuyer'   => 'required',
+            'buyerMessage'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors with a 422 status code
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = array(
+            'name'                       => $request->name,
+            'buyer_id'                   => $request->selectedBuyer,
+            'type'                       => 3,
+            'messages'                   => !empty($request->buyerMessage) ? $request->buyerMessage : "",
+            'status'                     => 1,
+        );
+
+        NotificationMsg::create($data);
+        return response()->json(['message' => 'Notification saved successfully']);
+    }
+
+
+    public function sellerMessageSend(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name'             => 'required',
+            'selectedSeller'   => 'required',
+            'sellerMessage'    => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            // Return validation errors with a 422 status code
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data = array(
+            'name'                       => $request->name,
+            'seller_id'                  => $request->selectedSeller,
+            'type'                       => 2,
+            'messages'                   => !empty($request->sellerMessage) ? $request->sellerMessage : "",
+            'status'                     => 1,
+        );
+
+        NotificationMsg::create($data);
+        return response()->json(['message' => 'Notification saved successfully']);
+    }
+
     public function notificationsend(Request $request)
     {
 
@@ -176,8 +231,8 @@ class PostController extends Controller
     {
         //dd($request->all());
         $validator = Validator::make($request->all(), [
-               'name'           => 'required',
-               'categoryId'     => 'required',
+            'name'           => 'required',
+            'categoryId'     => 'required',
         ]);
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
@@ -249,6 +304,7 @@ class PostController extends Controller
         $paginator = $query->paginate($pageSize, ['*'], 'page', $page);
         $modifiedCollection = $paginator->getCollection()->map(function ($item) {
 
+            $type = "";
             if ($item->type == 2) {
                 $type = "Seller";
             }

@@ -98,14 +98,16 @@
                   </div>
                 </div>
               </section>
-              <div v-if="msgData.length > 0">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                  <span v-for="data in msgData" :key="data.id" class="text-justify">
-                    <strong>{{ data.name }}</strong> {{ data.messages }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </span>
+              <div class="alert alert-success alert-dismissible fade show" role="alert">
+                  {{ msgData.name }}<br />
+                  {{ msgData.messages }}<br />
+                  {{ msgData.created_at }}<br />
+
+                  <div align="right">
+                    <nuxt-link to="/dashboard/buyer/notificationBox">View More...</nuxt-link>
+                  </div>
                 </div>
-              </div>
+
 
               <!-- Service Details -->
               <section class="pt10 pb90">
@@ -153,6 +155,18 @@
                     <!-- Start -->
 
                     <div class="col-lg-8">
+
+                
+                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ usermsgData.name }}<br />
+                        {{ usermsgData.messages }}<br />
+                        {{ usermsgData.created_at }}<br />
+                        <div align="right">
+                          <nuxt-link to="/dashboard/buyer/notidificationBox">View More...</nuxt-link>
+                        </div>
+                      </div>
+
+
 
                       <div class="custom-tab-container">
                         <!-- Custom Nav Tabs -->
@@ -492,6 +506,7 @@ const certificatedata = ref([]);
 const router = useRouter();
 const name = ref('');
 const joindate = ref('');
+const usermsgData = ref([]);
 const countryName = ref('');
 const profName = ref('');
 const introduce_yourself = ref('');
@@ -703,6 +718,25 @@ const getBalance = async () => {
     console.log(error);
   }
 };
+const getUsersMessages = async () => {
+  try {
+    const response = await axios.get(`/user/getMessagesUserWisebuyer`);
+    usermsgData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getMessagesNotif = async () => {
+  try {
+    const response = await axios.get(`/user/getMessagesNoti`);
+    msgData.value = response.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
 
 const getAllOrdersList = async () => {
   try {
@@ -786,6 +820,7 @@ const getOrderStatus = async (orderStatusId = 1) => {
 };
 
 onMounted(() => {
+  getUsersMessages();
   getwhislistData();
   getChatusersList();
   getMessages();
@@ -794,6 +829,7 @@ onMounted(() => {
   getOrderStatus();
   getAllOrdersList();
   chkUserrow();
+  getMessagesNotif();
 });
 onBeforeUnmount(() => {
   clearInterval(intervalId); // Clear interval when component is unmounted

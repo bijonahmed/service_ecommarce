@@ -74,8 +74,8 @@
                                                     </td>
                                                     <td>
                                                         <center>
-                                                            <button type="button"><i class="fas fa-edit"
-                                                                    @click="edit(item.id)"></i></button>
+                                                            <!-- <button type="button"><i class="fas fa-edit"
+                                                                    @click="edit(item.id)"></i></button> -->
                                                             <button type="button"><i class="fas fa-trash"
                                                                     @click="deleteProduct(item.id)"></i></button>
 
