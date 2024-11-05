@@ -124,8 +124,9 @@
                     </td>
 
                     <td class="text-center">
-                      <p>R: {{ item.created_at }}</p>
-                      <p>U: {{ item.updated_at }}</p>
+                      <p>Login in: {{ item.login_in_time }}</p>
+                      <p>Register: {{ item.created_at }}</p>
+                     
                     </td>
                     <td class="text-center" @click="getHistoryChat(item.id)">
                       <button class="btn w-100 btn-warning btn-sm btn-flat">

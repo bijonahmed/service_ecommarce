@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Validator;
+use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Country;
 use App\Models\Profession;
-use App\Models\User;
-use Validator;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException; // Import the ValidationException class
-use DB;
 
 class AuthController extends Controller
 {
@@ -36,6 +37,50 @@ class AuthController extends Controller
         }
     }
 
+    public function login(Request $request)
+    {
+        // dd($request->all());
+        // Validate the input
+        $this->validateLogin($request);
+
+        // Retrieve credentials
+        $credentials = $request->only('email', 'password');
+
+        // Attempt to authenticate the user
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Invalid username or password"
+                    ]
+                ]
+            ], 422);
+        }
+
+        // Check the user's status
+        $user = auth('api')->user();
+
+        // Check if the user is inactive
+        if ($user->status == 0) {
+            // Log the user out if they're authenticated
+            auth('api')->logout();
+            return response()->json([
+                'errors' => [
+                    'account' => [
+                        "Your account is inactive. Please contact support."
+                    ]
+                ]
+            ], 403); // Forbidden
+        }
+        // Get device time from the request
+        $deviceTime = $request->input('deviceTime'); // Assume this is an ISO format string
+        $user->login_in_time = $deviceTime; // Set to the formatted device time
+        $user->save(); // Save the updated user model
+
+        return $this->respondWithToken($token);
+    }
+
+    /* This method now no need.
     public function login(Request $request)
     {
         // Validate the input
@@ -72,25 +117,8 @@ class AuthController extends Controller
 
         return $this->respondWithToken($token);
     }
-
-    /*
-    public function login(Request $request)
-    {
-        //   dd($request->all());
-        $this->validateLogin($request);
-        $credentials = request(['email', 'password']);
-        if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json([
-                'errors' => [
-                    'account' => [
-                        "Invalid username or password"
-                    ]
-                ]
-            ], 422);
-        }
-        return $this->respondWithToken($token);
-    }
         */
+
 
     protected function respondWithToken($token)
     {
@@ -540,16 +568,16 @@ class AuthController extends Controller
         $data = auth('api')->user();
 
         $addressData = [
-            'address_1' => $data->address_1 ?? '',
-            'country_1' => $data->country_1 ?? '',
-            'city_1' => $data->city_1 ?? '',
+            'address_1'  => $data->address_1 ?? '',
+            'country_1'  => $data->country_1 ?? '',
+            'city_1'     => $data->city_1 ?? '',
             'landmark_1' => $data->landmark_1 ?? '',
-            'phone_1' => $data->phone_1 ?? '',
-            'country_2' => $data->country_2 ?? '',
-            'city_2' => $data->city_2 ?? '',
+            'phone_1'    => $data->phone_1 ?? '',
+            'country_2'  => $data->country_2 ?? '',
+            'city_2'     => $data->city_2 ?? '',
             'landmark_2' => $data->landmark_2 ?? '',
-            'phone_2' => $data->phone_2 ?? '',
-            'address_2' => $data->address_2 ?? '',
+            'phone_2'    => $data->phone_2 ?? '',
+            'address_2'  => $data->address_2 ?? '',
         ];
         $formattedAddresses = [];
 

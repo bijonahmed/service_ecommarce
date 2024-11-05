@@ -43,6 +43,7 @@
     "sweetalert2": "^11.10.5",
     "swiper": "^8.4.7",
     "tinymce": "^7.3.0",
-    "vue-advanced-cropper": "^2.8.8"
+    "vue-advanced-cropper": "^2.8.8",
+    "vuex": "^4.0.2"
   }
 }

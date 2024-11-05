@@ -28,7 +28,8 @@
 
             <section class="content">
                 <div class="container-fluid">
-                    <div style="text-align: right;"><button @click="fetchData()"><i class="fas fa-filter"></i> Filter</button> </div>
+                    <div style="text-align: right;"><button @click="fetchData()"><i class="fas fa-filter"></i>
+                            Filter</button> </div>
                     <!-- Start -->
                     <div class="card border-top border-0 border-4 border-info">
                         <div class="border p-4 rounded">
@@ -39,9 +40,10 @@
 
                                     <ul class="nav nav-tabs" id="custom-tabs-three-tab" role="tablist">
                                         <li class="nav-item">
-                                            <a class="nav-link active" id="custom-tabs-three-home-tab" data-toggle="pill"
-                                                href="#custom-tabs-three-home" role="tab"
-                                                aria-controls="custom-tabs-three-home" aria-selected="true">Active List</a>
+                                            <a class="nav-link active" id="custom-tabs-three-home-tab"
+                                                data-toggle="pill" href="#custom-tabs-three-home" role="tab"
+                                                aria-controls="custom-tabs-three-home" aria-selected="true">Active
+                                                List</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" id="custom-tabs-three-profile-tab" data-toggle="pill"
@@ -58,85 +60,59 @@
                                 </div>
                                 <div class="card-body">
                                     <div class="tab-content" id="custom-tabs-three-tabContent">
-                                        <div class="tab-pane fade active show" id="custom-tabs-three-home" role="tabpanel"
-                                            aria-labelledby="custom-tabs-three-home-tab">
+                                        <div class="tab-pane fade active show" id="custom-tabs-three-home"
+                                            role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                                             <!-- General  -->
 
+
                                             <ul>
-                                                <li v-for="category in categories" :key="category.id">
-                                                    <span class="badge bg-dark">{{ category.name }}
-                                                        
-                                                         <span v-if="category.percentage_amt" style="background-color: red; color:white;">
+                                                <!-- Top-Level Categories -->
+                                                <li v-for="category in filterUniqueCategories(categories)"
+                                                    :key="category.id">
+                                                    <span class="badge bg-dark">
+                                                        {{ category.name }}
+                                                        <span v-if="category.percentage_amt"
+                                                            style="background-color: red; color:white;">
                                                             [{{ category.percentage_amt }}%]
                                                         </span>
-                                                        
-                                                            
-                                                            <span @click="editCategory(category.id)"><i class="fas fa-edit"></i></span></span>
-                                                    <ul v-if="category.children && category.children.length">
-                                                        <template v-for="childLevel1 in category.children"
-                                                            :key="childLevel1.id">
-                                                            <li>
-                                                                <span class="badge bg-secondary">{{ childLevel1.name }}&nbsp;
-                                                                    <span v-if="childLevel1.percentage_amt" style="background-color: red; color:white;">
-                                                            [{{ childLevel1.percentage_amt }}%]
+                                                        <span @click="editCategory(category.id)">
+                                                            <i class="fas fa-edit"></i>
                                                         </span>
+                                                    </span>
 
-                                                                    <span @click="editCategory(childLevel1.id)"><i class="fas fa-edit"></i></span></span>
-                                                                <ul
-                                                                    v-if="childLevel1.children && childLevel1.children.length">
-                                                                    <template v-for="childLevel2 in childLevel1.children"
-                                                                        :key="childLevel2.id">
-                                                                        <li>
-                                                                            <span>{{ childLevel2.name }}&nbsp;<span @click="editCategory(childLevel2.id)"><i class="fas fa-edit"></i></span></span>
-                                                                            <ul
-                                                                                v-if="childLevel2.children && childLevel2.children.length">
-                                                                                <template
-                                                                                    v-for="childLevel3 in childLevel2.children"
-                                                                                    :key="childLevel3.id">
-                                                                                    <li>
-                                                                                        <span >{{ childLevel3.name }}&nbsp;<span @click="editCategory(childLevel3.id)"><i class="fas fa-edit"></i></span></span>
-                                                                                        <ul
-                                                                                            v-if="childLevel3.children && childLevel3.children.length">
-                                                                                            <template
-                                                                                                v-for="childLevel4 in childLevel3.children"
-                                                                                                :key="childLevel4.id">
-                                                                                                <li>
-                                                                                                    <span>{{  childLevel4.name }}&nbsp;<span @click="editCategory(childLevel4.id)"><i class="fas fa-edit"></i></span></span> 
-                                                                                                    <ul
-                                                                                                        v-if="childLevel4.children && childLevel4.children.length">
-                                                                                                        <template
-                                                                                                            v-for="childLevel5 in childLevel4.children"
-                                                                                                            :key="childLevel5.id">
-                                                                                                            <li>
-                                                                                                                <span >{{ childLevel5.name }}&nbsp;<span @click="editCategory(childLevel5.id)"><i class="fas fa-edit"></i></span></span>
-                                                                                                                <ul
-                                                                                                                    v-if="childLevel5.children && childLevel5.children.length">
-                                                                                                                    <template
-                                                                                                                        v-for="childLevel6 in childLevel5.children"
-                                                                                                                        :key="childLevel6.id">
-                                                                                                                        <li>
-                                                                                                                            <span>{{ childLevel6.name }}&nbsp;<span @click="editCategory(childLevel6.id)"><i class="fas fa-edit"></i></span></span>
-                                                                                                                            <!-- Add more nested levels if needed -->
-                                                                                                                        </li>
-                                                                                                                    </template>
-                                                                                                                </ul>
-                                                                                                            </li>
-                                                                                                        </template>
-                                                                                                    </ul>
-                                                                                                </li>
-                                                                                            </template>
-                                                                                        </ul>
-                                                                                    </li>
-                                                                                </template>
-                                                                            </ul>
-                                                                        </li>
-                                                                    </template>
-                                                                </ul>
-                                                            </li>
-                                                        </template>
+                                                    <!-- Render Subcategories Recursively -->
+                                                    <ul v-if="category.children && category.children.length">
+                                                        <li v-for="child in filterUniqueCategories(category.children)"
+                                                            :key="child.id">
+                                                            <span class="badge bg-secondary">
+                                                                {{ child.name }}
+                                                                <span v-if="child.percentage_amt"
+                                                                    style="background-color: red; color:white;">
+                                                                    [{{ child.percentage_amt }}%]
+                                                                </span>
+                                                                <span @click="editCategory(child.id)">
+                                                                    <i class="fas fa-edit"></i>
+                                                                </span>
+                                                            </span>
+
+                                                            <!-- Insub-categories -->
+                                                            <ul v-if="child.children && child.children.length">
+                                                                <li v-for="subChild in filterUniqueCategories(child.children)"
+                                                                    :key="subChild.id">
+                                                                    <span>
+                                                                        {{ subChild.name }}
+                                                                        <span @click="editCategory(subChild.id)">
+                                                                            <i class="fas fa-edit"></i>
+                                                                        </span>
+                                                                    </span>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
                                                     </ul>
                                                 </li>
                                             </ul>
+
+
 
                                         </div>
 
@@ -192,10 +168,23 @@ const editCategory = (id) => {
     });
 };
 
+
+
+const filterUniqueCategories = (items) => {
+    const seenIds = new Set();
+    return items.filter(item => {
+        if (seenIds.has(item.id)) {
+            return false;
+        }
+        seenIds.add(item.id);
+        return true;
+    });
+}
+
 const fetchData = async () => {
     try {
         loading.value = true;
-        const response = await axios.get('/category/getCategoryList');
+        const response = await axios.get('/category/allCategoryforAdmin');
         //console.log(response.data); // Print the data received from the server
         categories.value = response.data; // Set the categories value to the data received
     } catch (error) {
@@ -220,7 +209,19 @@ onMounted(async () => {
     await fetchInacCatData();
 });
 </script>
-<style scoped>/* Add CSS styles for the hover effect */
+<style scoped>
+.badge {
+    padding: 5px 10px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+ul {
+    list-style-type: none;
+    padding-left: 20px;
+}
+
+/* Add CSS styles for the hover effect */
 ul li:hover {
     background-color: #f0f0f0;
     /* Change the background color on hover */
@@ -231,4 +232,5 @@ ul li:hover {
 ul li:hover .bx-edit {
     color: #007bff;
     /* Change the color of the edit icon on hover */
-}</style>
+}
+</style>

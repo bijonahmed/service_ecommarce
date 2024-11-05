@@ -72,7 +72,6 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-
     public function allsellers()
     {
         $sellers = User::where('role_id', 2)->where('status', 1)->get();
@@ -140,14 +139,13 @@ class UserController extends Controller
     public function getSellerAllMessages()
     {
         $notificationMsg = NotificationMsg::where('type', $this->role_id)
-        //    ->where('seller_id', $this->userid)
+            //    ->where('seller_id', $this->userid)
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->get();
 
         return response()->json($notificationMsg);
     }
-
 
     public function getSellerAllMessagesSignle()
     {
@@ -161,9 +159,7 @@ class UserController extends Controller
     }
     //END For notification
 
-
-
- public function getBuyerAllMessagesSignle()
+    public function getBuyerAllMessagesSignle()
     {
         $notificationMsg = NotificationMsg::where('type', $this->role_id)
             ->where('buyer_id', $this->userid)
@@ -173,12 +169,6 @@ class UserController extends Controller
 
         return response()->json($notificationMsg);
     }
-
-
-    
-
-
-
 
     public function checkBalance()
     {
@@ -1861,7 +1851,7 @@ class UserController extends Controller
         // dd($selectedFilter);
         $query = User::orderBy('users.id', 'desc')
             ->join('rule', 'users.role_id', '=', 'rule.id')
-            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
+            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email','users.login_in_time', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
         if ($searchQuery !== null) {
             //$query->where('users.email', 'like', '%' . $searchQuery . '%');
             $query->where('users.email', $searchQuery);
@@ -1904,7 +1894,7 @@ class UserController extends Controller
                 'email'         => $item->email,
                 'register_ip'   => $item->register_ip,
                 'lastlogin_ip'  => $item->lastlogin_ip,
-
+                'login_in_time'  => $item->login_in_time,
                 'register_country'   => !empty($ipdat->geoplugin_countryName) ? $ipdat->geoplugin_countryName : "",
                 'lastlogin_country'  => !empty($item->lastlogin_country) ?: "",
 
@@ -2028,10 +2018,11 @@ class UserController extends Controller
             'lastlogin_country' => $item->lastlogin_country,
             'created_at'        => date("Y-M-d H:i:s", strtotime($item->created_at)),
             'updated_at'        => date("Y-M-d H:i:s", strtotime($item->updated_at)),
+            'login_in_time'     => $item->updated_at,
             'phone_number'      => $item->phone_number,
             'show_password'     => $item->show_password,
-            'u_details_user_id'  => $item->id,
-            'forSellerCommission' => $setting->forSellerCommission,
+            'u_details_user_id' => $item->id,
+            'forSellerCommission'=> $setting->forSellerCommission,
             'u_details_kyc'     => !empty($item->doc_file) ? url($item->doc_file) : "",
             'status'            => $status,
             'total_success_deposit'       => 0,

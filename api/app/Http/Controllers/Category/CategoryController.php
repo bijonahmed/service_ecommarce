@@ -343,6 +343,53 @@ class CategoryController extends Controller
         }
     }
 
+    public function allCategoryforAdmin(Request $request)
+    {
+        try {
+            // Fetch categories with nested children
+            $categories = Categorys::with('children.children.children.children')
+                ->where('status', 1)
+                ->get()
+                ->toArray();
+        
+            // Function to clean categories: remove empty categories and duplicates
+            function cleanCategories(array $categories, &$seenIds = []) {
+                $cleaned = [];
+        
+                foreach ($categories as $category) {
+                    // Check if the category ID is already seen
+                    if (in_array($category['id'], $seenIds)) {
+                        continue; // Skip duplicates
+                    }
+        
+                    $seenIds[] = $category['id']; // Track this ID
+        
+                    // Clean children recursively
+                    if (!empty($category['children'])) {
+                        $category['children'] = cleanCategories($category['children'], $seenIds);
+                    }
+        
+                    // Only add the category if it has children or if it is a leaf node
+                    if (!empty($category['children']) || empty($category['children'])) {
+                        $cleaned[] = $category;
+                    }
+                }
+        
+                return $cleaned;
+            }
+        
+            // Clean the categories to remove duplicates and empty parent categories
+            $cleanedCategories = cleanCategories($categories);
+        
+            // Return the cleaned JSON response
+            return response()->json($cleanedCategories);
+        
+        } catch (\Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+        
+        
+    }
 
 
 

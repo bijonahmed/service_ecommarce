@@ -1,6 +1,6 @@
 <template>
   <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <aside class="main-sidebar sidebar-dark-primary elevation-4" v-if="verfificationSts == 0 & isLoggedIn">
     <!-- Sidebar -->
     <div class="sidebar">
       <!-- Sidebar Menu -->
@@ -37,25 +37,40 @@
 </template>
 
 <script setup>
+import { useUserStore } from '~~/stores/user'
+import { storeToRefs } from 'pinia';
+const userStore = useUserStore();
+const { isLoggedIn } = storeToRefs(userStore)
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
 const router = useRouter();
 const isActive = ref(null);
-//const userStatusIsAdmin = computed(() => userStore.status === 1);
-const fetchData = async () => {
+const verfificationSts = ref(null);
+
+
+
+
+const fetchAdminInfo = async () => {
+  const token = localStorage.getItem('token'); // Get the token from local storage
+
   try {
-    const response = await axios.post(`/auth/me`);
-    console.log("====" + response.data.status);
-    isActive.value = response.data.status;
+    const response = await axios.post('/auth/adminMe', {
+      headers: {
+        'Authorization': `Bearer ${token}` // Set the Authorization header
+      }
+    });
+    verfificationSts.value = response.data.verification_code;
   } catch (error) {
-    console.log("--------------------" + error);
-    // Handle error
-  } finally {
+    console.error("Error fetching admin info:", error);
   }
 };
+
+
+
 onMounted(async () => {
-  fetchData();
+  fetchAdminInfo();
+
 });
 const menuItems = ref([
   {

@@ -19,7 +19,9 @@
 <script>
 import $ from "jquery";
 
-
+definePageMeta({
+  middleware: 'auth'
+});
 export default {
     middleware: "auth",
     components: {

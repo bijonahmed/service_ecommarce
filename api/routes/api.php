@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\blogController;
 use App\Http\Controllers\Customer\CustomerController;
 use App\Http\Controllers\User\UserController;
@@ -83,6 +84,13 @@ Route::group(
         Route::post('registerSeller', [AuthController::class, 'registerSeller']);
         Route::post('login', [AuthController::class, 'login']);
         Route::post('logout', [AuthController::class, 'logout']);
+        //For Admin Login
+        Route::post('adminLogin', [AdminAuthController::class, 'adminLogin']);
+        Route::post('admin-logout', [AdminAuthController::class, 'adminLogout']);
+        Route::post('/adminVertificationCode', [AdminAuthController::class, 'verifyCode']); 
+        Route::post('adminMe', [AdminAuthController::class, 'me']);
+
+        //END
         Route::post('refresh', [AuthController::class, 'refresh']);
         Route::post('me', [AuthController::class, 'me']);
         Route::post('profile', [AuthController::class, 'profile']);
@@ -260,6 +268,7 @@ Route::group(
         Route::post('saveAttribute', [CategoryController::class, 'saveAttribute']);
         Route::post('saveAttributeVal', [CategoryController::class, 'saveAttributeVal']);
         Route::get('getCategoryList', [CategoryController::class, 'allCategory']);
+        Route::get('allCategoryforAdmin', [CategoryController::class, 'allCategoryforAdmin']);
 
         Route::get('getSpeacialCategoryList', [CategoryController::class, 'getSpeacialCategoryList']);
         Route::post('edit', [CategoryController::class, 'edit']);

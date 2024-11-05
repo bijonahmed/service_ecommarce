@@ -1,6 +1,6 @@
 <template>
-	<div v-if="isLoggedIn">
-		<nav class="main-header navbar navbar-expand navbar-white navbar-light" v-if="userStatusIsAdmin">
+	<div v-if="verfificationSts == 0 & isLoggedIn">
+		<nav class="main-header navbar navbar-expand navbar-white navbar-light">
 			<ul class="navbar-nav">
 				<li class="nav-item">
 					<a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
@@ -8,7 +8,7 @@
 				<li class="nav-item d-none d-sm-inline-block">
 					<LazyNuxtLink to="/admin/dashboard" class="nav-link">FANS GAMES Dashboard</LazyNuxtLink>
 				</li>
-				
+
 			</ul>
 
 			<ul class="navbar-nav ml-auto">
@@ -136,40 +136,67 @@
 
 			</ul>
 		</nav>
-	<!-- Modal HTML -->
-	<div id="myModal" class="modal fade" tabindex="-1">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">Logout</h5>
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-				</div>
-				<div class="modal-body">
-					<p>Do you want to logout?</p>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-					<button type="button" class="btn btn-danger" @click="logout">Yes</button>
+		<!-- Modal HTML -->
+		<div id="myModal" class="modal fade" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Logout</h5>
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+					</div>
+					<div class="modal-body">
+						<p>Do you want to logout?</p>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+						<button type="button" class="btn btn-danger" @click="logout">Yes</button>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 	</div>
 
 </template>
 
 <script setup>
+import axios from "axios";
 import { useUserStore } from '~~/stores/user'
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '~~/stores/cart';
 const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore)
 const cartStore = useCartStore()
+const verfificationSts = ref(null);
 
 const userRoleIsAdmin = computed(() => userStore.role_id === 1);
 const userStatusIsAdmin = computed(() => userStore.status === 1);
+const verification_status = computed(() => userStore.verification_status === 1);
+
+
+const fetchAdminInfo = async () => {
+	const token = localStorage.getItem('token'); // Get the token from local storage
+
+	try {
+		const response = await axios.post('/auth/adminMe', {
+			headers: {
+				'Authorization': `Bearer ${token}` // Set the Authorization header
+			}
+		});
+		verfificationSts.value = response.data.verification_code;
+	} catch (error) {
+		console.error("Error fetching admin info:", error);
+	}
+};
+
+
+
+onMounted(() => {
+	fetchAdminInfo();
+});
+
 
 computed(async () => {
+
 	try {
 		await userStore.getUser()
 	} catch (error) { }
@@ -187,11 +214,12 @@ const logout = async () => {
 	//let res = confirm('Are you sure you want to sign out?');
 	try {
 		//if (res) {
-			$("#myModal").modal('hide');
-			await userStore.logout();
-			localStorage.removeItem('token');
-			router.push('/'); // Redirect to the root route
-			return;
+		$("#myModal").modal('hide');
+		await userStore.logout();
+		localStorage.removeItem('token');
+		router.push('/'); // Redirect to the root route
+		location.reload();
+		return;
 		//}
 	} catch (error) {
 		console.error(error);
