@@ -126,9 +126,54 @@
 
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
+                    </div>
+                </div>
+            </section>
+            <!-- Browse talent by category -->
+
+            <section class="mt-50">
+                <div class="container">
+                    <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
+                        <div class="col-lg-9 m-auto">
+                            <div class="main-title2 text-center">
+                                <h1>Browse skills</h1>
+                                <span></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                        <Loader />
+                    </div> -->
+
+
+                    <center><button class="btn btn-primary mb-2" type="button" disabled v-if="loading">
+                            <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                            Loading...
+                        </button></center>
+
+                    <div class="row">
+                        <div v-for="(category, index) in categoryData.slice(0, 8)" :key="index"
+                            class="col-6 col-md-4 col-lg-3 mb-4">
+                            <div class="category-item">
+                                <nuxt-link :to="`/category/${category.slug}`" class="category-link">
+                                    <span class="category-index">{{ index + 1 }}. </span>
+                                    <span class="category-name">{{ category.name }}</span>
+                                </nuxt-link>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-auto">
+
+                        <h2 class="title text-center"> <nuxt-link class="btn btn-primary-outline"
+                                to="/all-category">Browse All Skills</nuxt-link></h2>
+                        <!-- <h2 class="title text-center"> <nuxt-link class="btn btn-primary-outline" to="/all-category">Browse All Skills<i
+                                            class="fal fa-arrow-right-long"></i></nuxt-link></h2> -->
                     </div>
                 </div>
             </section>
@@ -211,100 +256,222 @@
                 </div>
             </section>
 
-            <!-- Popular Services -->
-            <!-- Browse talent by category -->
-
-            <section class="mt-50">
+            <!-- telent section start here  -->
+            <section class="freelance_talent">
                 <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="content_part">
+                                <h1>A whole world of freelance talent at your fingertips</h1>
+                                <ul>
+                                    <li>
+                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
+                                            <h2>The best for every budget</h2>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
+                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
+                                            aliquam.</p>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
+                                            <h2>The best for every budget</h2>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
+                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
+                                            aliquam.</p>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
+                                            <h2>The best for every budget</h2>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
+                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
+                                            aliquam.</p>
+                                    </li>
+                                    <li>
+                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
+                                            <h2>The best for every budget</h2>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
+                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
+                                            aliquam.</p>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ms-auto">
+                            <div class="talent_img text-end"><img src="/freelance_talent.png" alt=""
+                                    class="img-fluid ms-auto"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="details_sec">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="details_content">
+                                <i class="fa-regular fa-grid-2-plus"></i>
+                                <h5>Over 700 categories</h5>
+                                <p>Get results from skilled freelancers from all over the world, for every task, at any
+                                    price point.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="details_content">
+                                <i class="fa-regular fa-handshake"></i>
+                                <h5>Clear, transparent pricing</h5>
+                                <p>Pay per project or by the hour (Pro). Payment only get released when you approve.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="details_content">
+                                <i class="fa-regular fa-bolt"></i>
+                                <h5>Quality work done faster</h5>
+                                <p>Filter to find ther right freelancers quickly and get great work deliverd in no time,
+                                    every time.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="details_content">
+                                <i class="fa-solid fa-life-ring"></i>
+                                <h5>24/7 award-winning suport</h5>
+                                <p>Chat with our team to get your questions answered or resolve any issues with your
+                                    orders.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+            <section class="review_sec pt-2">
+                <div class="container">
+
                     <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
-                        <div class="col-lg-9">
-                            <div class="main-title2">
-                                <h2 class="title"> <nuxt-link class="ud-btn2" to="/all-category">Browse All Categories<i
-                                            class="fal fa-arrow-right-long"></i></nuxt-link></h2>
+                        <div class="col-lg-9 m-auto">
+                            <div class="main-title2 text-center">
+                                <h1>What Clients Say</h1>
+                                <span></span>
                             </div>
                         </div>
 
                     </div>
-
-                    <!-- <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                        <Loader />
-                    </div> -->
-
-
-                    <center><button class="btn btn-primary" type="button" disabled v-if="loading">
-                        <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-                        Loading...
-                    </button></center>
 
                     <div class="row">
-                        <div v-for="(category, index) in categoryData" :key="index"
-                            class="col-6 col-md-4 col-lg-3 mb-4">
-                            <div class="category-item">
-                                <nuxt-link :to="`/category/${category.slug}`" class="category-link">
-                                    <span class="category-index">{{ index + 1 }}. </span>
-                                    <span class="category-name">{{ category.name }}</span>
-                                </nuxt-link>
-                            </div>
-                        </div>
-                    </div>
+                        <div class="col-md-6 col-sm-10 m-auto">
+                            <div class="review_content">
 
-
-                </div>
-            </section>
-
-            <!-- CTA Banner -->
-
-            <section class="cta-banner-about2 before-none at-home2 position-relative py-0">
-                <div class="container position-relative">
-                    <div class="row align-items-center">
-                        <div class="col-lg-7 col-xl-5 mb100-md">
-                            <div class="mb30">
-                                <h5 class="text-thm">For clients</h5>
-                                <h2 class="title">Find talent your way</h2>
-                            </div>
-                            <p class="text">
-                                Work with the largest network of independent professionals
-                                and
-                                <br class="d-none d-lg-block" />
-                                get things done—from quick turnarounds to big
-                                transformations.
-                            </p>
-                            <!-- <nuxt-link class="ud-btn btn-thm bdrs90 default-box-shadow2 mt15 mb30-sm"
-                                to="/support">Contact Us<i class="fal fa-arrow-right-long"></i></nuxt-link> -->
-
-                                <nuxt-link class="ud-btn btn-thm bdrs90 default-box-shadow2 mt15 mb30-sm"
-                                to="/help-and-support">Contact Us<i class="fal fa-arrow-right-long"></i></nuxt-link>
-
-
-                        </div>
-                        <div class="col-lg-5 col-xl-4 offset-xl-1 position-relative">
-                            <div class="listbox-style1 px30 py-5 bdrs16 bgc-thm2 mt30-md position-relative">
-                                <div class="list-style1">
-                                    <ul class="mb-0">
-                                        <li class="text-white fw500">
-                                            <i class="far fa-check dark-color bgc-white"></i>The
-                                            best for every budget
-                                        </li>
-                                        <li class="text-white fw500">
-                                            <i class="far fa-check dark-color bgc-white"></i>Quality work done quickly
-                                        </li>
-                                        <li class="text-white fw500">
-                                            <i class="far fa-check dark-color bgc-white"></i>Protected payments, every
-                                            time
-                                        </li>
-                                        <li class="text-white fw500 mb-0">
-                                            <i class="far fa-check dark-color bgc-white"></i>24/7
-                                            support
-                                        </li>
-                                    </ul>
+                                <div class="swiper reviewSlider">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide">
+                                            <div class="reviews">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
+                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
+                                                    iure id ipsa.</p>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div class="rounded profile_image">
+                                                        <img src="/images/team/team-1.jpg" alt="" class="img-fluid">
+                                                    </div>
+                                                    <div>
+                                                        <h4>Jhone smith</h4>
+                                                        <p>Director of Product Marketing o.c Tabber Company.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="reviews">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
+                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
+                                                    iure id ipsa.</p>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div class="rounded profile_image">
+                                                        <img src="/images/team/team-2.jpg" alt="" class="img-fluid">
+                                                    </div>
+                                                    <div>
+                                                        <h4>Jhone smith</h4>
+                                                        <h6>Director of Product Marketing o.c Tabber Company.</h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="swiper-slide">
+                                            <div class="reviews">
+                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
+                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
+                                                    iure id ipsa.</p>
+                                                <div class="d-flex justify-content-center align-items-center">
+                                                    <div class="rounded profile_image">
+                                                        <img src="/images/team/team-3.jpg" alt="" class="img-fluid">
+                                                    </div>
+                                                    <div>
+                                                        <h4>Jhone smith</h4>
+                                                        <p>Director of Product Marketing o.c Tabber Company.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+                                
+                                    <!--   Navigation Buttons -->
+                                    <div class="swiper-button-next button_next"></div>
+                                    <div class="swiper-button-prev button_prev"></div>
+
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <img class="home6-cta-img" src="/about-17.png" alt="N/A" />
-
             </section>
+
+            <!-- partner section start here  -->
+            <section class="partner_sec">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3"><img src="/frontend/partner(1).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(2).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(3).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(4).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(5).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(6).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(7).png" alt="" class="img-fluid w-100"></div>
+                        <div class="col-md-3"><img src="/frontend/partner(8).png" alt="" class="img-fluid w-100"></div>
+                    </div>
+                </div>
+            </section>
+            <!-- partner section end here  -->
+
+            <!-- project management section start here  -->
+            <section class="project_management">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="project_content">
+                                <h4>Project management service <strong>Made for your business</strong></h4>
+                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, fugit? Voluptatibus fugiat deserunt dolor omnis similique quibusdam, commodi nemo perspiciatis?</p>
+                                <h6>To get started your have</h6>
+                                <ul>
+                                    <li>
+                                        And e-commerce project requiring experting in various fields
+                                    </li>
+                                    <li>A budget excodding $100000</li>
+                                    <li>A budget excodding $100000</li>
+                                </ul>
+                                <a href="#" class="btn btn-primary text-white"> Get started</a>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <img src="/frontend/footer-top.png" class="img-fluid" alt="">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- project management section end here  -->
+
+
             <Footer />
         </div>
         <!-- END -->
@@ -363,6 +530,15 @@ const fiterbySearch = () => {
 }
 
 onMounted(() => {
+
+    new Swiper(".reviewSlider", {
+        loop: true,
+        slidesPerView: 1,
+        navigation: {
+            nextEl: ".button_next",
+            prevEl: ".button_prev",
+        },
+    });
     fetchCatData();
     // Initialize Owl Carousel
     $('.owl-carousel').owlCarousel({
@@ -374,6 +550,7 @@ onMounted(() => {
         nav: true,
         dots: true,
     });
+
 });
 </script>
 

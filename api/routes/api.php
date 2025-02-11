@@ -215,6 +215,7 @@ Route::group(
         Route::post('addCryptoWalletAddressBank', [UserController::class, 'addCryptoWalletAddressBank']);
         Route::get('getwithdrawalMethod', [UserController::class, 'getwithdrawalMethod']);
         Route::post('addwithdrawal', [UserController::class, 'addwithdrawal']);
+        Route::post('/notifications/{id}/seen', [UserController::class, 'markAsSeen']);
     },
 );
 

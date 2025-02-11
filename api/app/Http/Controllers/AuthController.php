@@ -426,6 +426,8 @@ class AuthController extends Controller
             'website'         => !empty($request->website) ? $request->website : "",
             'gender'          => !empty($request->gender) ? $request->gender : "",
             'twitter'         => !empty($request->twitter) ? $request->twitter : "",
+            'linkdin'         => !empty($request->linkdin) ? $request->linkdin : "",
+            'whatsapp'         => !empty($request->whatsapp) ? $request->whatsapp : "",
             'introduce_yourself' => $description_with_line_breaks,
 
         ];
@@ -568,6 +570,8 @@ class AuthController extends Controller
         $data = auth('api')->user();
 
         $addressData = [
+
+            'name'  => $data->name ?? '',
             'address_1'  => $data->address_1 ?? '',
             'country_1'  => $data->country_1 ?? '',
             'city_1'     => $data->city_1 ?? '',

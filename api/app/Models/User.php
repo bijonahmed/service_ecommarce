@@ -50,6 +50,9 @@ class User extends Authenticatable implements JWTSubject
     'business_return_phone',
     'password',
     'status',
+    'linkdin',
+    'whatsapp',
+
     'home_status',
   ];
 

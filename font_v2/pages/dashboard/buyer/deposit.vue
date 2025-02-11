@@ -6,19 +6,36 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
+
                 <section class="categories_list_section overflow-hidden">
                     <div class="container">
                         <div class="row">
                             <div class="col-lg-12">
-                                <div class="listings_category_nav_list_menu">
-                                    <ul class="mb0 d-flex ps-0">
-                                        <li v-for="data in categoryData" :key="data.id">
-                                            <nuxt-link :to="`/category/${data.slug}`">
-                                                {{ data.name }}
-                                            </nuxt-link>
-                                        </li>
-                                        <!-- {{categoryData}} -->
-                                    </ul>
+                                <div class="position-relative">
+
+                                    <!-- Left navigation button -->
+                                    <button class="btn btn-default btn_l position-absolute left-0"
+                                        @click="goToPrevSlide">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </button>
+
+                                    <!-- Swiper container -->
+                                    <div class="swiper-container">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                                                <nuxt-link :to="`/category/${data.slug}`">
+                                                    {{ data.name }}
+                                                </nuxt-link>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Right navigation button -->
+                                    <button class="btn btn-default btn_r position-absolute right-0"
+                                        @click="goToNextSlide">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -52,8 +69,63 @@
                         </div>
                     </div>
                 </section>
+                <div class="container my-5">
+                    <form action="">
+                        <div class="row">
+                            <div class="col-md-5">
+                                
+                                <div class="mb-3">
+                                    <label for="name" class="form-label">Amount <span class="text-danger">*</span> </label>
+                                    <input type="number" placeholder="00.00" class="form-control" name="name">
+                                </div>
+                                <div class="button_list">
+                                    <button class="btn_card active">
+                                        <span>Creadit Card</span>
+                                        <img src="/cards1.png" alt="" class="img-fluid">
+                                    </button>
+                                    <a href="" class="btn_card">
+                                        <span>Paypal</span>
+                                        <img src="/paypal.webp" alt="" class="img-fluid">
+                                    </a>
+                                    <a href="" class="btn_card">
+                                        <span>Stripe</span>
+                                        <img src="/stripe.png" alt="" class="img-fluid">
+                                    </a>
+                                    <a href="" class="btn_card">
+                                        <span>USDT(TRC-20)</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="card_form">
+                                    <h6 class="mb-3">Amount being paid now: <strong>$115.50</strong></h6>
+                                    <img src="/cards1.png" alt="" class="img-fluid mb-2">
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label">Card Holder Name</label>
+                                        <input type="text" class="form-control" name="name">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="number" class="form-label">Card number</label>
+                                        <input type="text" class="form-control" id="number" name="number">
+                                    </div>
+                                    <div class="d-flex align-items-center">
+                                        <div class="mb-6 me-3">
+                                            <label for="exdate" class="form-label">Expiration Date</label>
+                                            <input type="text" class="form-control" id="exdate" name="exdate">
+                                        </div>
+                                        <div class="mb-6">
+                                            <label for="cvv" class="form-label">CVV Code</label>
+                                            <input type="text" class="form-control" id="cvv" name="cvv">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
 
-                <div class="container mt-5">
+                <!-- <div class="container mt-5">
                     <form @submit.prevent="handleSubmit" class="shadow p-4 rounded bg-light">
                         <div class="mb-3">
                             <label for="amount" class="form-label">Enter Amount</label>
@@ -86,7 +158,7 @@
                             <button type="submit" class="btn btn-primary text-white">Proceed to Pay</button>
                         </div>
                     </form>
-                </div>
+                </div> -->
 
 
             </div>
@@ -142,7 +214,7 @@ const handleSubmit = async () => {
         return;
     }
 
-   // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
+    // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
     try {
         const response = await axios.post('/user/getWaypaymentConfirm', {
             paymentMethod: selectedPayment.value,
@@ -243,10 +315,53 @@ const getDeposit = async () => {
     }
 };
 
+const swiper = ref(null)
+
 onMounted(() => {
     getCatList();
     getDeposit();
 
+    swiper.value = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.btn_r',
+            prevEl: '.btn_l'
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
+        },
+        breakpoints: {
+            1024: {
+                slidesPerView: 7,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 5,
+                spaceBetween: 15,
+            },
+            576: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            }
+        }
+    })
+    const goToPrevSlide = () => {
+        if (swiper.value) {
+            swiper.value.slidePrev()  // Go to previous slide
+        }
+    }
+
+    const goToNextSlide = () => {
+        if (swiper.value) {
+            swiper.value.slideNext()  // Go to next slide
+        }
+    }
 });
 
 </script>

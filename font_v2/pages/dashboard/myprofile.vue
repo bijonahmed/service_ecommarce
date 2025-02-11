@@ -6,7 +6,7 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-      
+
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -19,7 +19,7 @@
                 <div class="breadcumb-style1 mb10-xs">
                   <div class="breadcumb-list">
                     <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
-                    <a href="#">Profile</a>
+                    <a href="#">Seller Profile</a>
                   </div>
                 </div>
               </div>
@@ -46,27 +46,77 @@
 
                 <div class="col-lg-12">
 
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <ul class="nav nav-tabs mb-3 tb_btns" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                         type="button" role="tab" aria-controls="home" aria-selected="true">Particular
                         Information</button>
                     </li>
                     <li class="nav-item" role="presentation">
-                      <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile"
-                        type="button" role="tab" aria-controls="profile" aria-selected="false">Picture</button>
+                      <button class="nav-link" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills"
+                        type="button" role="tab" aria-controls="skills" aria-selected="false">Skills</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="education-tab" data-bs-toggle="tab" data-bs-target="#education"
+                        type="button" role="tab" aria-controls="Education" aria-selected="false">Education</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="experience-tab" data-bs-toggle="tab" data-bs-target="#experience"
+                        type="button" role="tab" aria-controls="experience" aria-selected="false">Experience</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="certification-tab" data-bs-toggle="tab"
+                        data-bs-target="#certification" type="button" role="tab" aria-controls="certification"
+                        aria-selected="false">Certification</button>
                     </li>
 
                   </ul>
                   <div class="tab-content" id="myTabContent">
+
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
 
+                      <!-- =================Profile Picture =========== -->
+
+                      <div class="image-upload">
+                        <input class="form-control" id="_image" style="height: auto; padding-left: 5px;" type="file"
+                          hidden @change="handleFileUpload" accept="image/*" />
+                        <label class="pro_image position-relative me-2" for="_image">
+                          <img :src="imagePreview || '/blank_user.jpg'" alt="Image Preview" class="preview-imag" />
+                          <i class="fa-solid fa-camera  position-absolute "
+                            style="    left: 50%; transform: translateX(-50%); bottom: 10px;"></i>
+                        </label>
+                        <div class="p-3">
+                          <div class="d-flex align-items-center">
+                            <button class="btn btn_upload m-1 text-white mt-3"
+                              style="background-color: #5BBB7B !important;" @click="uploadImage">Upload</button>
+                            <button class="btn btn_upload  m-1 text-white mt-3"
+                              style="border-color: red; color: red !important;" @click="">Delete</button>
+                          </div>
+                          <p style="max-width: 300px;" class="">image must be png, jpg, jpeg formate. Height and weight
+                            must be
+                            <spna class="text-danger">200x200</spna>.
+                          </p>
+                        </div>
+                      </div>
+                      <div v-if="uploadStatus">
+                        <p>{{ uploadStatus }}</p>
+                      </div>
+                      <hr>
                       <!-- Start -->
                       <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
                         <div class="row">
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Name</label>
+                              <label class="heading-color ff-heading fw500 mb10">First name <span
+                                  class="text-danger">*</span> </label>
+                              <input type="text" class="form-control" v-model="name">
+                              <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Last name<span
+                                  class="text-danger">*</span></label>
                               <input type="text" class="form-control" v-model="name">
                               <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                             </div>
@@ -74,16 +124,63 @@
 
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Email Address</label>
+                              <div class="form-style1">
+                                <label class="heading-color ff-heading fw500 mb10">Country<span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control" tabindex="null" v-model="country_1">
+                                  <option value="">Select</option>
+                                  <option v-for="country in CountryData" :key="country.id" :value="country.id">{{
+                                    country.countryname }}</option>
+                                </select>
+                                <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Email Address<span
+                                  class="text-danger">*</span></label>
                               <input type="email" class="form-control" v-model="email">
                               <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                             </div>
                           </div>
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Phone Number</label>
-                              <input type="text" class="form-control" v-model="phone_number">
+                              <label class="heading-color ff-heading fw500 mb10">Phone Number<span
+                                  class="text-danger">*</span></label>
+                              <input type="number" class="form-control" v-model="phone_number"
+                                placeholder="+1 00 0000000">
                               <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <div class="form-style1">
+                                <label class="heading-color ff-heading fw500 mb10">Gender<span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control" tabindex="null" v-model="gender">
+                                  <option value="">Select Gender</option>
+                                  <option value="1">Male</option>
+                                  <option value="2">Female</option>
+                                  <option value="3">Other</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <div class="form-style1">
+                                <label class="heading-color ff-heading fw500 mb10">Profession</label>
+                                <select class="form-control" tabindex="null" v-model="profession_name">
+                                  <option value="">Select</option>
+                                  <option v-for="profession in professionData" :key="profession.id"
+                                    :value="profession.id">
+                                    {{ profession.name }}</option>
+                                </select>
+                                <span class="text-danger" v-if="errors.profession_name">{{ errors.profession_name[0]
+                                  }}</span>
+                              </div>
                             </div>
                           </div>
                           <div class="col-sm-4">
@@ -105,49 +202,20 @@
                               <input type="text" class="form-control" v-model="twitter">
                             </div>
                           </div>
-
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <div class="form-style1">
-                                <label class="heading-color ff-heading fw500 mb10">Profession</label>
-                                <select class="form-control" tabindex="null" v-model="profession_name">
-                                  <option value="">Select</option>
-                                  <option v-for="profession in professionData" :key="profession.id"
-                                    :value="profession.id">
-                                    {{ profession.name }}</option>
-                                </select>
-                                <span class="text-danger" v-if="errors.profession_name">{{ errors.profession_name[0]
-                                  }}</span>
-                              </div>
+                              <label class="heading-color ff-heading fw500 mb10">LinkedIn</label>
+                              <input type="text" class="form-control" v-model="linkdin">
                             </div>
                           </div>
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <div class="form-style1">
-                                <label class="heading-color ff-heading fw500 mb10">Gender</label>
-                                <select class="form-control" tabindex="null" v-model="gender">
-                                  <option value="">Select Gender</option>
-                                  <option value="1">Male</option>
-                                  <option value="2">Female</option>
-                                  <option value="3">Other</option>
-                                </select>
-                              </div>
+                              <label class="heading-color ff-heading fw500 mb10">Whatsapp</label>
+                              <input type="text" class="form-control" placeholder="+1 00 0000000"  v-model="whatsapp">
                             </div>
                           </div>
 
-                          <div class="col-sm-4">
-                            <div class="mb20">
-                              <div class="form-style1">
-                                <label class="heading-color ff-heading fw500 mb10">Country</label>
-                                <select class="form-control" tabindex="null" v-model="country_1">
-                                  <option value="">Select</option>
-                                  <option v-for="country in CountryData" :key="country.id" :value="country.id">{{
-                                    country.countryname }}</option>
-                                </select>
-                                <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
-                              </div>
-                            </div>
-                          </div>
+
 
                           <div class="col-md-12">
                             <div class="mb10">
@@ -159,181 +227,195 @@
                             </div>
                           </div>
                           <div class="col-md-12">
-                            <div class="text-start">
-                              <button type="submit" class="ud-btn btn-thm">Save<i
-                                  class="fal fa-arrow-right-long"></i></button>
+                            <div class="text-start d-flex align-items-center">
+                              <button type="submit" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills"
+                                role="tab" aria-controls="skills" aria-selected="false" class="ud-btn btn-thm">Save
+                              </button>
+                              <!-- <button type="button" id="skills-tab" data-bs-toggle="tab" data-bs-target="#skills"
+                                role="tab" aria-controls="skills" aria-selected="false" class="ud-btn btn-thm ms-2">Save
+                                & next </button> -->
                             </div>
                           </div>
                         </div>
                       </form>
                       <!-- END -->
                     </div>
-                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                      <br />
-                      <div class="image-upload">
-                        <input type="file" @change="handleFileUpload" accept="image/*" />
-                        <button @click="uploadImage">Upload Image</button>
-                        <div v-if="imagePreview">
-                          <p>Image Preview:</p>
-                          <img :src="imagePreview" alt="Image Preview" class="preview-image" />
+
+                    <div class="tab-pane fade" id="skills" role="tabpanel" aria-labelledby="skills-tab">
+
+                      <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+                        <div class="bdrb1 pb15 mb25">
+                          <h5 class="list-title">Skills</h5>
+                          <ul class="d-flex flex-wrap align-items-center p-0 mt-3">
+                            <li class="badge bg-primary  me-2 my-2" v-for="(skill, index) in skillsdata"
+                              :key="skill.id">
+                              {{ index + 1 }}. {{ skill.name }}&nbsp;<i class="fa fa-times" aria-hidden="true"
+                                @click="removeListfrmSkills(skill.id)"></i>
+                            </li>
+                          </ul>
                         </div>
-                        <div v-if="uploadStatus">
-                          <p>{{ uploadStatus }}</p>
-                        </div>
-                      </div>
 
-                    </div>
+                        <div class="row">
+                          <div class="col-sm-12">
+                            <div class="mb20">
+                              <div class="form-style1">
+                                <div class="col-md-12 mb-3">
+                                  <div class="d-flex flex-wrap" id="skillsContainer">
+                                    <div v-for="(skill, index) in skills" :key="index"
+                                      class="badge bg-primary me-2 mb-2">
+                                      {{ skill }}
+                                      <button type="button" class="btn-close btn-close-white"
+                                        @click="removeSkill(index)" aria-label="Remove"></button>
+                                    </div>
+                                  </div>
+                                  <form @submit.prevent="addSkill"> <!-- Prevent form submission on Enter -->
+                                    <div class="input-group">
+                                      <input ref="skillInputRef" type="text" class="form-control" v-model="skillInput"
+                                        placeholder="Add a skill and press Enter" />
+                                      <button class="btn btn-primary text-white" type="submit">Add</button>
+                                      <!-- Change button to submit type -->
+                                    </div>
+                                    <div v-if="skillsError" class="text-danger">{{ skillsError }}</div>
 
-                  </div>
+                                    <!-- <p>Skills List</p> -->
 
-                </div>
-              </div>
-              <br />
-              <br />
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb25">
-                  <h5 class="list-title">Skills</h5>
-                </div>
-                <div class="col-lg-12">
-                  <div class="row">
-
-                    <div class="row">
-                      <div class="col-sm-12">
-                        <div class="mb20">
-                          <div class="form-style1">
-                            <div class="col-md-12 mb-3">
-                              <div class="d-flex flex-wrap" id="skillsContainer">
-                                <div v-for="(skill, index) in skills" :key="index" class="badge bg-primary me-2 mb-2">
-                                  {{ skill }}
-                                  <button type="button" class="btn-close btn-close-white" @click="removeSkill(index)"
-                                    aria-label="Remove"></button>
+                                  </form>
                                 </div>
                               </div>
-                              <form @submit.prevent="addSkill"> <!-- Prevent form submission on Enter -->
-                                <div class="input-group">
-                                  <input ref="skillInputRef" type="text" class="form-control" v-model="skillInput"
-                                    placeholder="Add a skill and press Enter" />
-                                  <button class="btn btn-outline-secondary" type="submit">Add</button>
-                                  <!-- Change button to submit type -->
-                                </div>
-                                <div v-if="skillsError" class="text-danger">{{ skillsError }}</div>
+                            </div>
+                          </div>
 
-                                <p>Skills List</p>
-                                <ul>
-                                  <li v-for="(skill, index) in skillsdata" :key="skill.id">
-                                    {{ index + 1 }}. {{ skill.name }}&nbsp;<i class="fa fa-times" aria-hidden="true"
-                                      @click="removeListfrmSkills(skill.id)"></i>
-                                  </li>
-                                </ul>
+                          <div class="col-md-12">
 
-                              </form>
+                            <div class="text-start d-flex align-items-center">
+                              <button type="submit" @click="submitskills" id="skills-tab" data-bs-toggle="tab"
+                                data-bs-target="#skills" role="tab" aria-controls="skills" aria-selected="false"
+                                class="ud-btn btn-thm">Save </button>
+                              <button type="button" id="skills-tab" data-bs-toggle="tab" data-bs-target="#education"
+                                role="tab" aria-controls="skills" aria-selected="false" class="ud-btn btn-thm ms-2">Save
+                                & next </button>
                             </div>
                           </div>
                         </div>
                       </div>
+                    </div>
+                    <div class="tab-pane fade" id="education" role="tabpanel" aria-labelledby="education-tab">
+                      <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+                        <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
+                          <h5 class="list-title">Education</h5>
+                          <a href="#" class=" ud-btn btn-thm add-more-btn  p-2" data-bs-toggle="modal"
+                            data-bs-target="#addEducationModal"> Add Education</a>
+                        </div>
+                        <div class="position-relative">
+                          <div class="educational-quality__">
 
-                      <div class="col-md-12">
-                        <div class="text-start">
-                          <button type="submit" @click="submitskills" class="ud-btn btn-thm">Save<i
-                              class="fal fa-arrow-right-long"></i></button>
+                            <div v-for="edu in euddata" :key="edu.id" class="wrapper mb40 position-relative">
+                              <div class="del-edit">
+                                <div class="d-flex">
+                                  <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                                    data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
+                                  <a href="#"
+                                    class=" p-2 text-danger rounded-2 d-flex jastify-content-center align-items-center"
+                                    style="border-color: red; border: 1px solid;" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="" @click.prevent="removeEducation(edu.id)"
+                                    data-bs-original-title="Delete" aria-label="Delete"><span
+                                      class="flaticon-delete m-0"></span></a>
+                                </div>
+                              </div>
+                              <span class=" text-black fw-bold">{{ edu.year }}</span>
+                              <h5 class=" ">{{ edu.subject }}</h5>
+                              <h6 class="text-thm">{{ edu.college }}</h6>
+                              <p>{{ edu.description }}</p>
+                            </div>
+
+                          </div>
+
                         </div>
                       </div>
                     </div>
+                    <div class="tab-pane fade" id="experience" role="tabpanel" aria-labelledby="experience-tab">
+                      <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+                        <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
+                          <h5 class="list-title">Work &amp; Experience</h5>
+                          <a href="javascript:void(0);" class=" ud-btn btn-thm add-more-btn  p-2" data-bs-toggle="modal"
+                            data-bs-target="#addExperienceModal">Add Experience</a>
+                        </div>
+                        <div class="position-relative">
+                          <div class="educational-quality__">
 
-                  </div>
-                </div>
-              </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
-                  <h5 class="list-title">Education</h5>
-                  <a href="#" class="add-more-btn text-thm" data-bs-toggle="modal"
-                    data-bs-target="#addEducationModal"><i class="icon far fa-plus mr10"></i>Add Aducation</a>
-                </div>
-                <div class="position-relative">
-                  <div class="educational-quality__">
-
-                    <div v-for="edu in euddata" :key="edu.id" class="wrapper mb40 position-relative">
-                      <div class="del-edit">
-                        <div class="d-flex">
-                          <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title=""
+                            <div class="wrapper mb40 position-relative" v-for="exdata in expdata" :key="exdata.id">
+                              <div class="del-edit">
+                                <div class="d-flex">
+                                  <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
                             data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
-                          <a href="#" class="icon" data-bs-toggle="tooltip" data-bs-placement="top" title=""
-                            @click.prevent="removeEducation(edu.id)" data-bs-original-title="Delete"
-                            aria-label="Delete"><span class="flaticon-delete"></span></a>
+                                  <a href="javascript:void(0);"
+                                    class=" p-2 text-danger rounded-2 d-flex jastify-content-center align-items-center"
+                                    style="border-color: red; border: 1px solid;" data-bs-toggle="tooltip"
+                                    data-bs-placement="top" title="" @click.prevent="removeExperience(exdata.id)"
+                                    data-bs-original-title="Delete" aria-label="Delete"><span
+                                      class="flaticon-delete"></span></a>
+                                </div>
+                              </div>
+                              <span class="fw-bold text-black">{{ exdata.year || "" }}</span>
+                              <h5 class="">{{ exdata.role }}</h5>
+                              <h6 class="text-thm">{{ exdata.company }}</h6>
+                              <p>{{ exdata.description }}</p>
+                            </div>
+
+                          </div>
+
                         </div>
                       </div>
-                      <span class="tag">{{ edu.year }}</span>
-                      <h5 class="mt15">{{ edu.subject }}</h5>
-                      <h6 class="text-thm">{{ edu.college }}</h6>
-                      <p>{{ edu.description }}</p>
+
                     </div>
+                    <div class="tab-pane fade" id="certification" role="tabpanel" aria-labelledby="certification-tab">
+                      <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
+                        <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
+                          <h5 class="list-title">Certification</h5>
+                          <a href="javascript:void(0);" class=" ud-btn btn-thm add-more-btn  p-2" data-bs-toggle="modal"
+                            data-bs-target="#addCertificationeModal">Add
+                            Certification</a>
 
-                  </div>
-
-                </div>
-              </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
-                  <h5 class="list-title">Work &amp; Experience</h5>
-                  <a href="javascript:void(0);" class="add-more-btn text-thm" data-bs-toggle="modal"
-                    data-bs-target="#addExperienceModal"><i class="icon far fa-plus mr10"></i>Add Experience</a>
-                </div>
-                <div class="position-relative">
-                  <div class="educational-quality__">
-
-                    <div class="wrapper mb40 position-relative" v-for="exdata in expdata" :key="exdata.id">
-                      <div class="del-edit">
-                        <div class="d-flex">
-                          <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
-                            data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
-                          <a href="javascript:void(0);" class="icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                            title="" @click.prevent="removeExperience(exdata.id)" data-bs-original-title="Delete"
-                            aria-label="Delete"><span class="flaticon-delete"></span></a>
                         </div>
-                      </div>
-                      <span class="tag">{{ exdata.year || "" }}</span>
-                      <h5 class="mt15">{{ exdata.role }}</h5>
-                      <h6 class="text-thm">{{ exdata.company }}</h6>
-                      <p>{{ exdata.description }}</p>
-                    </div>
+                        <div class="position-relative">
+                          <div class="educational-quality ps-0">
+                            <div class="wrapper mb40 position-relative">
 
-                  </div>
-
-                </div>
-              </div>
-              <div class="ps-widget bgc-white bdrs4 p1 mb30 overflow-hidden position-relative">
-                <div class="bdrb1 pb15 mb30 d-sm-flex justify-content-between">
-                  <h5 class="list-title">Certification</h5>
-                  <a href="javascript:void(0);" class="add-more-btn text-thm" data-bs-toggle="modal"
-                    data-bs-target="#addCertificationeModal"><i class="icon far fa-plus mr10"></i>Add Certification</a>
-
-                </div>
-                <div class="position-relative">
-                  <div class="educational-quality ps-0">
-                    <div class="wrapper mb40 position-relative">
-
-                      <div class="wrapper mb40 position-relative" v-for="cerdata in certificatedata" :key="cerdata.id">
-                        <div class="del-edit">
-                          <div class="d-flex">
-                            <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
+                              <div class="wrapper mb40 position-relative" v-for="cerdata in certificatedata"
+                                :key="cerdata.id">
+                                <div class="del-edit">
+                                  <div class="d-flex">
+                                    <!-- <a href="#" class="icon me-2" data-bs-toggle="tooltip" data-bs-placement="top" title="" removeExperience
                             data-bs-original-title="Edit" aria-label="Edit"><span class="flaticon-pencil"></span></a> -->
-                            <a href="javascript:void(0);" class="icon" data-bs-toggle="tooltip" data-bs-placement="top"
-                              title="" @click.prevent="removeCertificate(cerdata.id)" data-bs-original-title="Delete"
-                              aria-label="Delete"><span class="flaticon-delete"></span></a>
+                                    <a href="javascript:void(0);"
+                                      class=" p-2 text-danger rounded-2 d-flex jastify-content-center align-items-center"
+                                      style="border-color: red; border: 1px solid;" data-bs-toggle="tooltip"
+                                      data-bs-placement="top" title="" @click.prevent="removeCertificate(cerdata.id)"
+                                      data-bs-original-title="Delete" aria-label="Delete"><span
+                                        class="flaticon-delete"></span></a>
+                                  </div>
+                                </div>
+                                <span class="fw-bold text-black">{{ cerdata.year || "" }}</span>
+                                <h5 class="">{{ cerdata.course_name }}</h5>
+                                <h6 class="text-thm">{{ cerdata.institute_name }}</h6>
+                                <p>{{ cerdata.description }}</p>
+                              </div>
+
+                            </div>
+
                           </div>
                         </div>
-                        <span class="tag">{{ cerdata.year || "" }}</span>
-                        <h5 class="mt15">{{ cerdata.course_name }}</h5>
-                        <h6 class="text-thm">{{ cerdata.institute_name }}</h6>
-                        <p>{{ cerdata.description }}</p>
-                      </div>
 
+                      </div>
                     </div>
 
                   </div>
-                </div>
 
+                </div>
               </div>
+
+
+
             </div>
           </div>
           <!-- END Profile -->
@@ -383,7 +465,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary text-white" id="submitCertificate">Add Certificate</button>
+              <button type="submit" class="btn btn-primary text-white" id="submitCertificate">Save & Close</button>
             </div>
           </div>
         </div>
@@ -430,7 +512,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" id="submitExperience">Add Experience</button>
+              <button type="submit" class="btn btn-primary" id="submitExperience">Save & next</button>
             </div>
           </div>
         </div>
@@ -448,7 +530,7 @@
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="year" class="form-label">Year:</label>
+                <label for="year" class="form-label">Passing Year:</label>
                 <input type="text" id="year" class="form-control" v-model="education.year" />
                 <span class="text-danger" v-if="errors.year">{{ errors.year[0] }}</span>
               </div>
@@ -470,7 +552,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
+              <button type="submit" class="btn btn-primary">Save & next</button>
             </div>
           </div>
         </div>
@@ -506,13 +588,17 @@ const github = ref('');
 const website = ref('');
 const gender = ref('');
 const twitter = ref('');
+
+const linkdin = ref('');
+const whatsapp = ref('');
+
 const country_1 = ref('');
 const introduce_yourself = ref('');
 const profession_name = ref('');
 const professionData = ref([]);
 const CountryData = ref([]);
 const imageFile = ref(null);
-const imagePreview = ref(null);
+const imagePreview = ref();
 const uploadStatus = ref(null);
 const skillsdata = ref([]);
 const euddata = ref([]);
@@ -845,6 +931,10 @@ const uploadImage = async () => {
           uploadStatus.value = 'Image uploaded successfully!'; // Success message
           console.log(response.data); // Handle server response (e.g., URL of uploaded image)
           imagePreview.value = response.data.profileLogo;
+          // Reload the current page
+          location.reload();
+          getUserRow();
+
         } catch (error) {
           uploadStatus.value = 'Error uploading the image.'; // Error message
           console.error('Error uploading image:', error);
@@ -853,11 +943,11 @@ const uploadImage = async () => {
         uploadStatus.value = 'Image must be exactly 200x200 pixels.';
 
         Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Image must be exactly 200x200 pixels.",
-            showConfirmButton: false,
-            timer: 3000
+          position: "top-end",
+          icon: "error",
+          title: "Image must be exactly 200x200 pixels.",
+          showConfirmButton: false,
+          timer: 3000
         });
 
 
@@ -876,6 +966,8 @@ const submitFrm = () => {
   formData.append("email", email.value);
   formData.append("phone_number", phone_number.value);
   formData.append("github", github.value);
+  formData.append("linkdin", linkdin.value);
+  formData.append("whatsapp", whatsapp.value);
   formData.append("website", website.value);
   formData.append("gender", gender.value);
   formData.append("twitter", twitter.value);
@@ -911,6 +1003,11 @@ const getUserRow = async () => {
     website.value = response.data.website;
     github.value = response.data.github;
     twitter.value = response.data.twitter;
+
+    linkdin.value = response.data.linkdin;
+    whatsapp.value = response.data.whatsapp;
+
+
     id.value = response.data.id;
     gender.value = response.data.gender;
     profession_name.value = response.data.profession_name;
@@ -1030,7 +1127,8 @@ onMounted(() => {
   border-bottom: 1px solid #E9E9E9;
   padding: 7px 0 3px;
   position: relative;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
 }

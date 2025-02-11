@@ -15,8 +15,8 @@
             <div class="social-style1">
               <a class="text-white me-2 fw500 fz17" href="#">Follow us</a>
               <a :href="fblink" target="_blank" rel="noopener noreferrer">
-  <i class="fab fa-facebook-f list-inline-item"></i>
-</a>
+                <i class="fab fa-facebook-f list-inline-item"></i>
+              </a>
               <!-- <a href="#"><i class="fab fa-twitter list-inline-item"></i></a>
               <a href="#"><i class="fab fa-instagram list-inline-item"></i></a>
               <a href="#"><i class="fab fa-linkedin-in list-inline-item"></i></a> -->
@@ -29,10 +29,12 @@
           <div class="link-style1 mb-4 mb-sm-5">
             <h5 class="text-white mb15">About</h5>
             <div class="link-list">
+              <nuxt-link to="/yes-deal">Yes Deal</nuxt-link>
+              <nuxt-link to="/affiliate">Affiliate</nuxt-link>
               <nuxt-link to="/aboutus">About us</nuxt-link>
               <nuxt-link to="/privacy-and-policy">Privacy Policy</nuxt-link>
               <nuxt-link to="/terms-and-condition">Terms of Service</nuxt-link>
-            
+
             </div>
           </div>
         </div>
@@ -40,7 +42,7 @@
           <div class="link-style1 mb-4 mb-sm-5">
             <h5 class="text-white mb15">Categories</h5>
             <ul class="ps-0">
-              <li><Nuxt-link  to="/category/programming-tech">Programming & Tech</Nuxt-link></li>
+              <li><Nuxt-link to="/category/programming-tech">Programming & Tech</Nuxt-link></li>
               <li><Nuxt-link to="/category/graphics-design">Graphics & Design</Nuxt-link></li>
               <li><Nuxt-link to="/category/digital-marketing">Digital Marketing</Nuxt-link></li>
               <li><Nuxt-link to="/category/video-animation">Video & Animation</Nuxt-link></li>
@@ -54,10 +56,11 @@
           <div class="link-style1 mb-4 mb-sm-5">
             <h5 class="text-white mb15">Support</h5>
             <ul class="ps-0">
-              <li><nuxt-link to="/help-and-support">Help & Support</nuxt-link></li>
+              <li><nuxt-link to="/help-support">Help & Support</nuxt-link></li>
               <li><nuxt-link to="/trustand-safety">Trust & Safety</nuxt-link></li>
-              <li><nuxt-link to="/selling-on-isumax">Selling on isumax</nuxt-link></li>
-              <li><nuxt-link to="/buying-on-isumax">Buying on isumax</nuxt-link></li>
+              <li><nuxt-link to="/selling">Selling on isumax</nuxt-link></li>
+              <li><nuxt-link to="/buying">Buying on isumax</nuxt-link></li>
+              <li><nuxt-link to="/media">Media & News</nuxt-link></li>
             </ul>
           </div>
         </div>
@@ -125,26 +128,92 @@
     style="bottom: 0;left: 0;right: 0;padding: 20px;z-index: 99;">
     <ul class="d-flex justify-content-between align-items-center m-0 p-0 footer_menu">
       <li>
-        <NuxtLink to="/">Home</NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 2" to="/dashboard/welcome"><i
+            class="fas fa-grid"></i>
+          <p>Dashboard</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 3" to="/dashboard/buyer/welcome">
+          <i class="fas fa-grid"></i>
+          <p>Dashboard</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="!isLoggedIn" to="/sign-in"><i class="fas fa-grid"></i>
+          <p>Dashboard</p>
+        </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/dashboard/orders">Order</NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 2" to="/yes-deal"><i
+            class="fa-brands fa-ideal"></i>
+          <p>iDeal</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 3" to="/yes-deal">
+          <i class="fa-brands fa-ideal"></i>
+          <p>iDeal</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="!isLoggedIn" to="/sign-in"><i class="fa-brands fa-ideal"></i>
+          <p>iDeal</p>
+        </NuxtLink>
       </li>
       <li>
-        <NuxtLink to="/dashboard/chatbox">Messages</NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 2" to="/dashboard/buyer/mlm"><i
+            class="fas fa-users"></i>
+          <p>Community</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="isLoggedIn && userStore.role_id == 3" to="/dashboard/buyer/mlm"><i
+            class="fas fa-users"></i>
+          <p>Community</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-if="!isLoggedIn" to="/sign-in"><i class="fas fa-users"></i>
+          <p>Community</p>
+        </NuxtLink>
       </li>
       <li>
+        <NuxtLink class="text-center d-block" v-if="!isLoggedIn" to="/sign-in"><i class="fas fa-shopping-cart"></i>
+          <p>Affiliate</p>
+        </NuxtLink>
+        <NuxtLink class="text-center d-block" v-else to="/dashboard/affiliate"><i class="fa-regular fa-handshake"></i>
+          <p>Affiliate</p>
+        </NuxtLink>
+      </li>
+      <li>
+
         <div class="dropdown ms-2" v-if="isLoggedIn">
-          <a class="" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Profile
-            <!-- <img :src="imagePreview || '/blank_user.jpg'" style="height: 30px;width: 30px;" alt=""
-              class="img-fluid rounded-circle bordered"><span class="text-white fw-bold">&nbsp;{{ name }}</span> -->
+          <a class="d-block text-center align-items-center" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <i class="fa-solid fa-ellipsis-stroke"></i>
+            <p>More</p>
           </a>
 
           <ul class="dropdown-menu bordered-0">
-            <li><nuxt-link class="dropdown-item" to="/dashboard/myprofile"><i
-                  class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
-            <li><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/welcome"><i class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/chatbox"><i class="fa fa-envelope"></i>&nbsp;Messages</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/mlm"><i class="fa fa-users"></i>&nbsp;Community</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/withdraw"><i class="fas fa-dollar-sign"></i>&nbsp;Withdraw</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
+                to="/dashboard/buyer/deposit"><i class="far fa-money-bill-alt"></i>&nbsp;Deposit</nuxt-link></li>
+
+
+
+
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                to="/dashboard/myprofile"><i class="fa fa-user"></i>&nbsp;Profile</nuxt-link></li>
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item" to="/dashboard/welcome"><i
                   class="fa fa-grid"></i>&nbsp;Dashboard</nuxt-link></li>
 
             <li v-if="isLoggedIn && userStore.role_id == 2">
@@ -152,21 +221,24 @@
                 <i class="fa fa-list"></i>&nbsp;My Gig
               </nuxt-link>
             </li>
-            <li><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
-                  class="fa fa-messages"></i>&nbsp;Messages</nuxt-link></li>
-            <li><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item" to="/dashboard/chatbox"><i
+                  class="fa fa-envelope"></i>&nbsp;Messages</nuxt-link></li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item" to="/dashboard/orders"><i
                   class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
-            
-            <li><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
+
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item"
+                to="/dashboard/withdrawalrequest"><i class="fa fas fa-dollar-sign"></i>&nbsp;Withdraw</nuxt-link>
+            </li>
+
+            <li v-if="isLoggedIn && userStore.role_id == 2"><nuxt-link class="dropdown-item" to="/dashboard/setting"><i
                   class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>
-
-
 
             <li><nuxt-link class="dropdown-item" to="#" @click="logout()"><i
                   class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link></li>
           </ul>
         </div>
-        <NuxtLink v-else to="/sign-in">Profile</NuxtLink>
+
       </li>
     </ul>
   </div>
@@ -324,7 +396,7 @@ onMounted(async () => {
 
 <style scoped>
 /* Add your styles for the header here */
-.footer_menu i{
+.footer_menu i {
   color: #204c3f;
   font-size: 20px;
 }

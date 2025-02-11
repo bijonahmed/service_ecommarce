@@ -1,9 +1,10 @@
 <template>
   <div class="referral-link-container">
-    <h2 class="heading">Your Profile Link</h2>
+    <h2 class="heading title_balence">Your Profile Link</h2>
     <div class="input-group">
       <input ref="referralInput" type="text" class="form-control referral-input" :value="referralLink" readonly />
-      <button class="btn btn-copy" type="button" @click="copyToClipboard">
+      <button class="btn btn-copy" style="display: flex;
+  align-items: center;" type="button" @click="copyToClipboard">
         Copy <i class="bi bi-clipboard"></i>
       </button>
     </div>
@@ -86,6 +87,7 @@ const copyToClipboard = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: nowrap;
 }
 
 /* Referral Input Styling */

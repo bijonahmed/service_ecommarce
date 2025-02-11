@@ -6,24 +6,41 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
-                <section class="categories_list_section overflow-hidden">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="listings_category_nav_list_menu">
-                                    <ul class="mb0 d-flex ps-0">
-                                        <li v-for="data in categoryData" :key="data.id">
-                                            <nuxt-link :to="`/category/${data.slug}`">
-                                                {{ data.name }}
-                                            </nuxt-link>
-                                        </li>
-                                        <!-- {{categoryData}} -->
-                                    </ul>
-                                </div>
+
+<section class="categories_list_section overflow-hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="position-relative">
+
+                    <!-- Left navigation button -->
+                    <button class="btn btn-default btn_l position-absolute left-0"
+                        @click="goToPrevSlide">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <!-- Swiper container -->
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                                <nuxt-link :to="`/category/${data.slug}`">
+                                    {{ data.name }}
+                                </nuxt-link>
                             </div>
                         </div>
+
                     </div>
-                </section>
+
+                    <!-- Right navigation button -->
+                    <button class="btn btn-default btn_r position-absolute right-0"
+                        @click="goToNextSlide">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
                 <!-- Breadcumb Sections -->
                 <DashboardMainConentTabsBuyer />
                 <div />
@@ -300,12 +317,55 @@ const professionlist = async () => {
 };
 
 
+const swiper = ref(null);
 
 onMounted(() => {
     getCountrys();
     professionlist();
     chkUserrow();
     getCatList();
+
+swiper.value = new Swiper('.swiper-container', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+    navigation: {
+        nextEl: '.btn_r',
+        prevEl: '.btn_l'
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+    },
+    breakpoints: {
+        1024: {
+            slidesPerView: 7,
+            spaceBetween: 20,
+        },
+        768: {
+            slidesPerView: 5,
+            spaceBetween: 15,
+        },
+        576: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        320: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        }
+    }
+})
+const goToPrevSlide = () => {
+    if (swiper.value) {
+        swiper.value.slidePrev()  // Go to previous slide
+    }
+}
+
+const goToNextSlide = () => {
+    if (swiper.value) {
+        swiper.value.slideNext()  // Go to next slide
+    }
+}
 
 });
 

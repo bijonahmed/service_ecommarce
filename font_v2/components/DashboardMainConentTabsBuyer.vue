@@ -4,11 +4,11 @@
     <div class="col-lg-12" style="margin-top: 10px;;">
       <div class="ui-content container">
         <div class="navpill-style1">
-          <ul class="nav nav-pills mb12" id="pills-tab" role="tablist">
+          <ul class="nav overflow_auto nav-pills mb12" id="pills-tab" role="tablist">
             <li class="nav-item" role="presentation">
               <button class="nav-link active fw500 dark-color" id="pills-home-tab" data-bs-toggle="pill"
                 data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true"><i
-                  class="fa fa-home" aria-hidden="true"></i>&nbsp;Welcome</button>
+                  class="fa fa-grid" aria-hidden="true"></i>&nbsp;Dashboard</button>
             </li>
 
             <li class="nav-item" role="presentation">
@@ -36,7 +36,7 @@
 
             <li class="nav-item" role="presentation">
               <button class="nav-link fw500 dark-color" @click="mlm" aria-selected="false"><i class="fa fa-user"
-                  aria-hidden="true"></i>&nbsp;MLM</button>
+                  aria-hidden="true"></i>&nbsp;Community</button>
             </li>
 
             <li class="nav-item" role="presentation">
@@ -63,31 +63,29 @@
                       <div class="col-xl-7">
                         <div class="position-relative">
                           <!-- <h2>I will design website UI UX in adobe xd or figma</h2> -->
-                          <div class="list-meta d-sm-flex align-items-center mt30">
-                            <a class="position-relative freelancer-single-style" href="#">
+                          <div class="list-meta d-flex align-items-center mt30">
+                            <a class="position-relative freelancer-single-style me-1" href="#">
                               <span class="online"></span>
 
-                              <img class=" wa-sm mb15-sm rounded-circle"
-                                style="height:150px; width: 150px; overflow: hidden; object-fit: cover;"
+                              <img class=" wa-sm mb15-sm rounded-circle profile_" 
                                 :src="profileLogo || '/blank_user.jpg'" alt="">
 
                             </a>
-                            <div class="ml20 ml0-xs">
-                              <h5 class="title mb-1">{{ name }} <b><u>Buyer
-                                    Account</u></b></h5>
+                            <div class="ml20 ml0-xs pro_details">
+                              <h5 class="title  mb-1">{{ name }} <b><u>Buyer</u></b></h5>
                               <p class="mb-0">{{ profName }}</p>
                               <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
                                 0
                                 reviews
                               </p> -->
-                              <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm ml0-xs">
+                              <p class="mb-0 me-2 dark-color fz15 fw500 list-inline-item mb5-sm ml0-xs">
                                 <i class="flaticon-place vam fz20 me-2"></i>
                                 {{ countryName }}
                               </p>
-                              <p class="mb-0 dark-color fz15 fw500 list-inline-item ml15 mb5-sm ml0-xs">
+                              <p class="mb-0 dark-color _date fz15 fw500 list-inline-item ml15 mb5-sm ml0-xs">
                                 <i class="flaticon-30-days vam fz20 me-2"></i>
-                                Join Date {{ joindate }}
+                                Join : {{ joindate }}
                               </p>
 
                             </div>
@@ -114,7 +112,7 @@
                 <div class="container">
                   <div class="row wow fadeInUp">
                     <div class="col-lg-4">
-                      <h3> Available Balance: ${{ currentBalance }}</h3>
+                      <h3 class="title_balence"> Available Balance: ${{ currentBalance }}</h3>
 
                       <center><span>Messages List</span></center>
                       <div v-if="chatUsers.length">
@@ -136,7 +134,7 @@
                       <hr />
                       <ShareProfileLinkBuyer />
 
-                      <h4 class="widget-title">My Skills</h4>
+                      <h4 class="widget-title  title_balence">My Skills</h4>
                       <div class="tag-list mt30">
                         <a v-for="(skill, index) in skillsdata" :key="index" href="#">{{ skill.name }}</a>
                       </div>
@@ -145,7 +143,7 @@
 
                       <!-- ============{{ userResponseData . profile_status }}======== -->
                       <div class="service-about">
-                        <h4>Description</h4>
+                        <h4 class="title_balence">Description</h4>
                         <p class="text mb30 text-justify" style="text-align: justify;">
                           {{ introduce_yourself }}</p>
 
@@ -157,14 +155,14 @@
                     <div class="col-lg-8">
 
                 
-                      <div class="alert alert-success alert-dismissible fade show" role="alert">
+                      <!-- <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ usermsgData.name }}<br />
                         {{ usermsgData.messages }}<br />
                         {{ usermsgData.created_at }}<br />
                         <div align="right">
                           <nuxt-link to="/dashboard/buyer/notidificationBox">View More...</nuxt-link>
                         </div>
-                      </div>
+                      </div> -->
 
 
 
@@ -997,7 +995,10 @@ onBeforeUnmount(() => {
 /* Responsive Tabs */
 @media (max-width: 767px) {
   .custom-nav-tabs {
-    flex-direction: column;
+    width: 100%;
+    overflow: auto;
+    display: grid;
+    grid-template-columns: repeat(3,3fr);
   }
 
   .custom-tab-item {
@@ -1022,5 +1023,12 @@ onBeforeUnmount(() => {
 .table-responsive {
   max-width: 100%;
   overflow-x: auto;
+}
+@media(max-width: 576px){
+  .custom-tab-link{
+  display: block;
+  padding: 10px 0;
+  font-size: 14px;
+  }
 }
 </style>

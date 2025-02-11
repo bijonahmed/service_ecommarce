@@ -6,19 +6,34 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
+
         <section class="categories_list_section overflow-hidden">
           <div class="container">
             <div class="row">
               <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
+                <div class="position-relative">
+
+                  <!-- Left navigation button -->
+                  <button class="btn btn-default btn_l position-absolute left-0" @click="goToPrevSlide">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
+
+                  <!-- Swiper container -->
+                  <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                        <nuxt-link :to="`/category/${data.slug}`">
+                          {{ data.name }}
+                        </nuxt-link>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  <!-- Right navigation button -->
+                  <button class="btn btn-default btn_r position-absolute right-0" @click="goToNextSlide">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
                 </div>
               </div>
             </div>
@@ -36,7 +51,7 @@
                 <div class="breadcumb-style1 mb10-xs">
                   <div class="breadcumb-list">
                     <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
-                    <a href="#">Profile</a>
+                    <a href="#">Buyer Profile</a>
                   </div>
                 </div>
               </div>
@@ -61,7 +76,7 @@
 
                 <div class="col-lg-12">
 
-                  <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <!-- <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item" role="presentation">
                       <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
                         type="button" role="tab" aria-controls="home" aria-selected="true">Particular
@@ -72,16 +87,50 @@
                         type="button" role="tab" aria-controls="profile" aria-selected="false">Picture</button>
                     </li>
 
-                  </ul>
+                  </ul> -->
                   <div class="tab-content" id="myTabContent">
                     <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+
+                      <div class="image-upload">
+                        <input class="form-control" id="_image" style="height: auto; padding-left: 5px;" type="file"
+                          hidden @change="handleFileUpload" accept="image/*" />
+                        <label class="pro_image position-relative me-2" for="_image">
+                          <img :src="imagePreview || '/blank_user.jpg'" alt="Image Preview" class="preview-imag" />
+                          <i class="fa-solid fa-camera  position-absolute "
+                            style="    left: 50%; transform: translateX(-50%); bottom: 10px;"></i>
+                        </label>
+                        <div class="p-3">
+                          <div class="d-flex align-items-center">
+                            <button class="btn  m-1  btn_upload text-white mt-3" style="background-color: #5BBB7B !important;"
+                              @click="uploadImage">Upload</button>
+                            <button class="btn btn_upload  m-1 text-white mt-3" style="border-color: red; color: red !important;"
+                              @click="">Delete</button>
+                          </div>
+                          <p style="max-width: 300px;">image must be png, jpg, jpeg formate. Height and weight must be
+                            <spna class="text-danger">200x200</spna>.
+                          </p>
+                        </div>
+                      </div>
+                      <div v-if="uploadStatus">
+                        <p>{{ uploadStatus }}</p>
+                      </div>
 
                       <!-- Start -->
                       <form class="form-style1" @submit.prevent="submitFrm()" id="formrest">
                         <div class="row">
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Name</label>
+                              <label class="heading-color ff-heading fw500 mb10">First name <span
+                                  class="text-danger">*</span> </label>
+                              <input type="text" class="form-control" v-model="name">
+                              <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Last name<span
+                                  class="text-danger">*</span></label>
                               <input type="text" class="form-control" v-model="name">
                               <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                             </div>
@@ -89,38 +138,50 @@
 
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Email Address</label>
+                              <div class="form-style1">
+                                <label class="heading-color ff-heading fw500 mb10">Country<span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control" tabindex="null" v-model="country_1">
+                                  <option value="">Select</option>
+                                  <option v-for="country in CountryData" :key="country.id" :value="country.id">{{
+                                    country.countryname }}</option>
+                                </select>
+                                <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Email Address<span
+                                  class="text-danger">*</span></label>
                               <input type="email" class="form-control" v-model="email">
                               <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
                             </div>
                           </div>
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Phone Number</label>
-                              <input type="text" class="form-control" v-model="phone_number">
+                              <label class="heading-color ff-heading fw500 mb10">Phone Number<span
+                                  class="text-danger">*</span></label>
+                              <input type="number" class="form-control" v-model="phone_number"
+                                placeholder="+1 00 0000000">
                               <span class="text-danger" v-if="errors.phone_number">{{ errors.phone_number[0] }}</span>
                             </div>
                           </div>
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Website</label>
-                              <input type="text" class="form-control" v-model="website">
+                              <div class="form-style1">
+                                <label class="heading-color ff-heading fw500 mb10">Gender<span
+                                    class="text-danger">*</span></label>
+                                <select class="form-control" tabindex="null" v-model="gender">
+                                  <option value="">Select Gender</option>
+                                  <option value="1">Male</option>
+                                  <option value="2">Female</option>
+                                  <option value="3">Other</option>
+                                </select>
+                              </div>
                             </div>
                           </div>
-                          <div class="col-sm-4">
-                            <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Github</label>
-                              <input type="text" class="form-control" v-model="github">
-                            </div>
-                          </div>
-
-                          <div class="col-sm-4">
-                            <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">Twitter</label>
-                              <input type="text" class="form-control" v-model="twitter">
-                            </div>
-                          </div>
-
                           <div class="col-sm-4">
                             <div class="mb20">
                               <div class="form-style1">
@@ -138,31 +199,36 @@
                           </div>
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <div class="form-style1">
-                                <label class="heading-color ff-heading fw500 mb10">Gender</label>
-                                <select class="form-control" v-model="gender">
-                                  <option value="">Select Gender</option>
-                                  <option value="1">Male</option>
-                                  <option value="2">Female</option>
-                                  <option value="3">Other</option>
-                                </select>
-                              </div>
+                              <label class="heading-color ff-heading fw500 mb10">Website</label>
+                              <input type="text" class="form-control" v-model="website">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Github</label>
+                              <input type="text" class="form-control" v-model="github">
+                            </div>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">LinkedIn</label>
+                              <input type="text" class="form-control" v-model="github">
                             </div>
                           </div>
 
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <div class="form-style1">
-                                <label class="heading-color ff-heading fw500 mb10">Country</label>
-                                <select class="form-control" tabindex="null" v-model="country_1">
-                                  <option value="">Select</option>
-                                  <option v-for="country in CountryData" :key="country.id" :value="country.id">{{
-                                    country.countryname }}</option>
-                                </select>
-                                <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
-                              </div>
+                              <label class="heading-color ff-heading fw500 mb10">Twitter</label>
+                              <input type="text" class="form-control" v-model="twitter">
                             </div>
                           </div>
+                          <div class="col-sm-4">
+                            <div class="mb20">
+                              <label class="heading-color ff-heading fw500 mb10">Whatsapp</label>
+                              <input type="text" class="form-control" placeholder="+1 00 0000000">
+                            </div>
+                          </div>
+
 
 
                           <div class="col-md-12">
@@ -176,8 +242,7 @@
                           </div>
                           <div class="col-md-12">
                             <div class="text-start">
-                              <button type="submit" class="ud-btn btn-thm">Save<i
-                                  class="fal fa-arrow-right-long"></i></button>
+                              <button type="submit" class="ud-btn btn-thm">Save </button>
                             </div>
                           </div>
                         </div>
@@ -187,8 +252,8 @@
                     <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                       <br />
                       <div class="image-upload">
-                        <input type="file" @change="handleFileUpload" accept="image/*" />
-                        <button @click="uploadImage">Upload Image</button>
+                        <input type="file" class="form-control" style="height: auto;padding-left: 10px;"
+                          @change="handleFileUpload" accept="image/*" />
                         <div v-if="imagePreview">
                           <p>Image Preview:</p>
                           <img :src="imagePreview" alt="Image Preview" class="preview-image" />
@@ -196,6 +261,7 @@
                         <div v-if="uploadStatus">
                           <p>{{ uploadStatus }}</p>
                         </div>
+                        <button class="btn btn-primary text-white mt-3" @click="uploadImage">Upload Image</button>
                       </div>
 
                     </div>
@@ -869,11 +935,11 @@ const uploadImage = async () => {
         uploadStatus.value = 'Image must be exactly 200x200 pixels.';
 
         Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Image must be exactly 200x200 pixels.",
-            showConfirmButton: false,
-            timer: 3000
+          position: "top-end",
+          icon: "error",
+          title: "Image must be exactly 200x200 pixels.",
+          showConfirmButton: false,
+          timer: 3000
         });
 
 
@@ -922,10 +988,10 @@ const getUserRow = async () => {
     console.log("Response data:", response.data.name); // Log the response data
     name.value = response.data.name;
     email.value = response.data.email;
-    phone_number.value =  response.data.phone_number !== null && response.data.phone_number !== undefined ? response.data.phone_number : ""; //response.data.phone_number;
+    phone_number.value = response.data.phone_number !== null && response.data.phone_number !== undefined ? response.data.phone_number : ""; //response.data.phone_number;
     website.value = response.data.website !== null && response.data.website !== undefined ? response.data.website : ""; // response.data.website;
-    github.value =  response.data.github !== null && response.data.github !== undefined ? response.data.github : "";  //response.data.github;
-    twitter.value = response.data.twitter !== null && response.data.twitter !== undefined ? response.data.twitter : ""; 
+    github.value = response.data.github !== null && response.data.github !== undefined ? response.data.github : "";  //response.data.github;
+    twitter.value = response.data.twitter !== null && response.data.twitter !== undefined ? response.data.twitter : "";
     id.value = response.data.id;
     gender.value = response.data.gender;
     profession_name.value = response.data.profession_name;
@@ -1003,6 +1069,8 @@ const getCatList = async () => {
   }
 };
 
+const swiper = ref(null);
+
 onMounted(() => {
   getCertificates();
   getExperience();
@@ -1012,6 +1080,48 @@ onMounted(() => {
   getProfession();
   getUserRow();
   getCatList();
+
+  swiper.value = new Swiper('.swiper-container', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+    navigation: {
+      nextEl: '.btn_r',
+      prevEl: '.btn_l'
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true
+    },
+    breakpoints: {
+      1024: {
+        slidesPerView: 7,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 5,
+        spaceBetween: 15,
+      },
+      576: {
+        slidesPerView: 3,
+        spaceBetween: 10,
+      },
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      }
+    }
+  })
+  const goToPrevSlide = () => {
+    if (swiper.value) {
+      swiper.value.slidePrev()  // Go to previous slide
+    }
+  }
+
+  const goToNextSlide = () => {
+    if (swiper.value) {
+      swiper.value.slideNext()  // Go to next slide
+    }
+  }
 
 });
 
@@ -1045,8 +1155,15 @@ onMounted(() => {
   border-bottom: 1px solid #E9E9E9;
   padding: 7px 0 3px;
   position: relative;
-  white-space: nowrap;
+  /* white-space: nowrap; */
+  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+@media(min-width: 768px) {
+  .categories_list_section {
+    white-space: nowrap;
+  }
 }
 </style>

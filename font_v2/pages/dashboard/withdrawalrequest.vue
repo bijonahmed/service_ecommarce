@@ -342,6 +342,16 @@
                     <div class="col-md-5">
                       <form class="mt-3" @submit.prevent="submitWithdrawalAddressBank()">
                         <div>
+                          <label for="withdrawalMethod" class="form-label">Country</label>
+                          <select name="" id="" class="form-control">
+                            <option value="" selected disabled >Select country</option>
+                            <option value="">Bangladesh</option>
+                            <option value="">Pakistan</option>
+                            <option value="">USA</option>
+                          </select>
+                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
+                        </div>
+                        <div>
                           <label for="withdrawalMethod" class="form-label">Name</label>
                           <input type="text" class="form-control" id="accountDetails" placeholder="Account Name"
                             v-model="insertdataBank.account_name">

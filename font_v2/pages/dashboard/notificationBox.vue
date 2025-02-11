@@ -13,13 +13,13 @@
                     <Loader />
                 </div>
                 <section class="breadcumb-section">
-                    <div class="container">
+                    <div class="container-fluid">
                         <div class="row">
                             <div class="col-sm-8 col-lg-10">
                                 <div class="breadcumb-style1 mb10-xs">
                                     <div class="breadcumb-list">
                                         <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
-                                        <a href="#">All Messages</a>
+                                        <a href="#">All Notification</a>
                                     </div>
                                 </div>
                             </div>
@@ -36,104 +36,38 @@
                 </section>
 
                 <!-- Start Profile -->
-                <div class="container">
-                    <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
-                        <div class="packages_table table-responsive">
-                           
-
-
-                        </div>
-                    </div>
-                </div>
-
-
                 <!-- start -->
-                <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="home-tab" data-bs-toggle="tab"
-                            data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
-                            aria-selected="true">Global Messages</button>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="profile-tab" data-bs-toggle="tab"
-                            data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
-                            aria-selected="false">Important Message</button>
-                    </li>
+                <div class="table-responsive">
+                    <table class="table-style1 table at-savesearch">
+                        <thead class="t-head bg-primary text-white">
+                            <tr>
+                                <th scope="col" class="p-3">Notification</th>
+                                <th scope="col" class="p-3">Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody class="t-body">
 
-                </ul>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
-                        tabindex="0">
+                            <!-- v-for loop to iterate over sellerMsgData -->
+                            <tr v-for="(order, index) in sellerMsgData" :key="index" @click="markAsSeen(order)"
+                                :class="{ 'unseen-notification': !order.seen, 'seen-notification': order.seen }"
+                                class="notification-row border-bottom">
+                                <td class="vam p-3">
+                                    <span :class="{ 'fw-bold': !order.seen }">User Name</span>,
+                                    <span :class="{ 'fw-bold': !order.seen }">Gig Name</span>
+                                    <span :class="{ 'fw-bold': !order.seen, 'text-muted': order.seen }">
+                                        {{ order.messages }}
+                                    </span>
+                                </td>
+                                <td class="vam p-3 text-end"
+                                    :class="{ 'fw-bold': !order.seen, 'text-muted': order.seen }">
+                                    {{ formatDate(order.created_at) }}
+                                </td>
+                            </tr>
 
-
-
-                        <table class="table-style1 table at-savesearch">
-                                <thead class="t-head">
-                                    <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Messages</th>
-                                        <th scope="col">Sending Date</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="t-body">
-
-                                    <!-- v-for loop to iterate over orderData -->
-                                    <tr v-for="(order, index) in sellerMsgData" :key="index">
-                                        <td class="vam">{{ order.name }}</td>
-                                        <td class="vam">{{ order.messages }}</td>
-                                        <td class="vam">{{ formatDate(order.created_at) }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-                    </div>
-                    <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
-                        tabindex="0">
-                    
-                    
-                        <!-- start -->
-                        <table class="table-style1 table at-savesearch">
-                                <thead class="t-head">
-                                    <tr>
-                                        <th scope="col">Title</th>
-                                        <th scope="col">Messages</th>
-                                        <th scope="col">Sending Date</th>
-
-                                    </tr>
-                                </thead>
-                                <tbody class="t-body">
-
-                                    <!-- v-for loop to iterate over orderData -->
-                                    <tr v-for="(order, index) in sellData" :key="index">
-                                        <td class="vam">{{ order.name }}</td>
-                                        <td class="vam">{{ order.messages }}</td>
-                                        <td class="vam">{{ formatDate(order.created_at) }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-
-
-                        <!-- END -->
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    </div>
-
+                        </tbody>
+                    </table>
                 </div>
+
 
                 <!-- END -->
 
@@ -227,6 +161,20 @@ const formatDate = (date) => {
     return new Date(date).toLocaleDateString(undefined, options);
 };
 
+
+
+const markAsSeen = async (order) => {
+  if (!order.seen) {
+    try {
+      // Send API request to mark as seen
+      await axios.post(`/api/notifications/${order.id}/seen`);
+      order.seen = true; // Update frontend state after successful API call
+    } catch (error) {
+      console.error('Error marking notification as seen:', error);
+    }
+  }
+};
+
 onMounted(() => {
     getSellerAllMessagesSignle();
     allSellersreadporbo();
@@ -254,12 +202,55 @@ onMounted(() => {
     }
 }
 
-.categories_list_section {
-    border-bottom: 1px solid #E9E9E9;
-    padding: 7px 0 3px;
-    position: relative;
-    white-space: nowrap;
+/* General Table Styling */
+.table-style1 {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.table-style1 th,
+.table-style1 td {
+    padding: 15px;
+    vertical-align: middle;
+}
+
+/* Header Styling */
+.t-head {
+    background-color: #007bff;
+    /* Bootstrap primary color */
+    color: #ffffff;
+    font-weight: bold;
+}
+
+/* Notification Row Hover Effect */
+.notification-row {
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+}
+
+.notification-row:hover {
+    background-color: #f1f1f1;
+}
+
+/* Unseen Notifications: Bold and Light Background */
+.unseen-notification {
+    background-color: #f9f9f9;
+    font-weight: bold;
+}
+
+/* Seen Notifications: Normal Font and White Background */
+.seen-notification {
+    background-color: #ffffff;
+    font-weight: normal;
+    color: #6c757d;
+    /* Muted text color */
+}
+
+/* Responsive Design */
+.table-responsive {
+    border: 1px solid #ddd;
+    border-radius: 8px;
     overflow: hidden;
-    text-overflow: ellipsis;
 }
 </style>

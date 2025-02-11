@@ -6,24 +6,41 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
+
+<section class="categories_list_section overflow-hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="position-relative">
+
+                    <!-- Left navigation button -->
+                    <button class="btn btn-default btn_l position-absolute left-0"
+                        @click="goToPrevSlide">
+                        <i class="fa-solid fa-chevron-left"></i>
+                    </button>
+
+                    <!-- Swiper container -->
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                                <nuxt-link :to="`/category/${data.slug}`">
+                                    {{ data.name }}
+                                </nuxt-link>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Right navigation button -->
+                    <button class="btn btn-default btn_r position-absolute right-0"
+                        @click="goToNextSlide">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
                 </div>
-              </div>
             </div>
-          </div>
-        </section>
+        </div>
+    </div>
+</section>
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
@@ -358,28 +375,50 @@
                   <div class="row">
                     <div class="col-md-5">
                       <form class="mt-3" @submit.prevent="submitWithdrawalAddressBank()">
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">Name</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account Name"
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Country</label>
+                          <select name="" id="" class="form-control">
+                            <option value="" selected disabled >Select country</option>
+                            <option value="">Bangladesh</option>
+                            <option value="">Pakistan</option>
+                            <option value="">USA</option>
+                          </select>
+                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
+                        </div>
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Bank name</label>
+                          <input type="text" class="form-control" id="accountDetails" placeholder="Bank name"
                             v-model="insertdataBank.account_name">
                           <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
                         </div>
 
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">A/C No.</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account Number"
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Account title</label>
+                          <input type="text" class="form-control" id="accountDetails" placeholder="Account title"
+                            v-model="insertdataBank.account_num">
+                          <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
+                        </div>
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Account number</label>
+                          <input type="text" class="form-control" id="accountDetails" placeholder="Account number"
                             v-model="insertdataBank.account_num">
                           <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
                         </div>
 
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">IBN No.</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="IBN Number"
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">IBN</label>
+                          <input type="text" class="form-control" id="accountDetails" placeholder="IBN"
+                            v-model="insertdataBank.ibn_no">
+                          <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
+                        </div>
+                        <div class="mb-3">
+                          <label for="withdrawalMethod" class="form-label">Swift/BIC</label>
+                          <input type="text" class="form-control" id="accountDetails" placeholder="Swift/BIC"
                             v-model="insertdataBank.ibn_no">
                           <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
                         </div>
 
-                        <div>
+                        <!-- <div>
                           <label for="withdrawalMethod" class="form-label">Bank</label>
                           <select v-model="insertdataBank.bank_id" class="form-control" @change="getBranchList">
                             <option value="">Select Bank</option>
@@ -396,7 +435,7 @@
                             </option>
                           </select>
                           <span class="text-danger" v-if="errors.branch_id">{{ errors.branch_id[0] }}</span>
-                        </div>
+                        </div> -->
 
                         <br />
 
@@ -779,6 +818,7 @@ const withdrawList = async () => {
   }
 };
 
+const swiper = ref(null);
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
   getBankList();
@@ -786,6 +826,48 @@ onMounted(async () => {
   getCatList();
   getWithdrawalMethod();
   getEarning();
+
+swiper.value = new Swiper('.swiper-container', {
+    slidesPerView: 'auto',
+    spaceBetween: 10,
+    navigation: {
+        nextEl: '.btn_r',
+        prevEl: '.btn_l'
+    },
+    pagination: {
+        el: '.swiper-pagination',
+        clickable: true
+    },
+    breakpoints: {
+        1024: {
+            slidesPerView: 7,
+            spaceBetween: 20,
+        },
+        768: {
+            slidesPerView: 5,
+            spaceBetween: 15,
+        },
+        576: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+        },
+        320: {
+            slidesPerView: 2,
+            spaceBetween: 10,
+        }
+    }
+})
+const goToPrevSlide = () => {
+    if (swiper.value) {
+        swiper.value.slidePrev()  // Go to previous slide
+    }
+}
+
+const goToNextSlide = () => {
+    if (swiper.value) {
+        swiper.value.slideNext()  // Go to next slide
+    }
+}
 });
 
 </script>

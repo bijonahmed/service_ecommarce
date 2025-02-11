@@ -60,6 +60,21 @@ class UserController extends Controller
         }
     }
 
+    public function markAsSeen(Request $request, $id)
+    {
+        $notification = Notification::find($id);
+
+        if (!$notification) {
+            return response()->json(['message' => 'Notification not found'], 404);
+        }
+
+        $notification->seen = true;
+        $notification->save();
+
+        return response()->json(['message' => 'Notification marked as seen']);
+    }
+
+
     public function dashboardCounting()
     {
         $user_row = User::find($this->userid);
@@ -1851,7 +1866,7 @@ class UserController extends Controller
         // dd($selectedFilter);
         $query = User::orderBy('users.id', 'desc')
             ->join('rule', 'users.role_id', '=', 'rule.id')
-            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email','users.login_in_time', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
+            ->select('users.created_at', 'users.updated_at', 'users.join_id', 'users.role_id', 'users.id', 'users.name', 'users.email', 'users.login_in_time', 'users.phone_number', 'users.show_password', 'users.status', 'rule.name as rulename');
         if ($searchQuery !== null) {
             //$query->where('users.email', 'like', '%' . $searchQuery . '%');
             $query->where('users.email', $searchQuery);
@@ -2022,7 +2037,7 @@ class UserController extends Controller
             'phone_number'      => $item->phone_number,
             'show_password'     => $item->show_password,
             'u_details_user_id' => $item->id,
-            'forSellerCommission'=> $setting->forSellerCommission,
+            'forSellerCommission' => $setting->forSellerCommission,
             'u_details_kyc'     => !empty($item->doc_file) ? url($item->doc_file) : "",
             'status'            => $status,
             'total_success_deposit'       => 0,

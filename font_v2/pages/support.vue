@@ -1,6 +1,6 @@
 <template>
     <div>
-        <title>Seller</title>
+        <title>Support</title>
 
         <body class="bgc-thm1">
             <div class="wrapper ovh">

@@ -4,8 +4,8 @@
       <div class="header bdrb1">
         <div class="menu_and_widgets">
           <div class="mobile_menu_bar d-flex justify-content-between align-items-center">
-            <nuxt-link class="mobile_logo" to="/"><img src="/images/header-logo.png" alt=""
-                style="width: 150px;" /></nuxt-link>
+            <nuxt-link class="mobile_logo" to="/"><img src="/logo-green.png" alt=""
+                style="width: 100px;" /></nuxt-link>
             <div class="right-side text-end">
 
 
@@ -22,9 +22,47 @@
               <nuxt-link to="#" v-if="isLoggedIn" @click="logout"><i class="fa fa-sign-out"></i>&nbsp;Logout</nuxt-link> -->
 
 
+              <ul class="d-flex align-item-center m-0 p-0">
 
-              <a class="menubar ml30" href="#menu" @click="toggleMenu"><img src="/images/mobile-dark-nav-icon.svg"
-                  alt="" /></a>
+<li v-if="isLoggedIn" class="me-2">
+  <nuxt-link  style="padding: 2px 15px;" class="list-item pe-0 position-relative" to="/dashboard/buyer/notificationBox" v-if="isLoggedIn"><i
+      class="fa fa-bell "></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">3<span class="visually-hidden">unread messages</span>
+    </span>
+    </nuxt-link>
+</li>
+<li v-if="isLoggedIn" class="me-2">
+  <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative"
+    to="/dashboard/chatbox" v-if="isLoggedIn"><i class="fa fa-envelope "></i>
+
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">5<span class="visually-hidden">unread messages</span>
+    </span>
+  </nuxt-link>
+  
+</li>
+
+<li v-if="isLoggedIn" class=" "  >
+
+  <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative" to="/dashboard/welcome"
+    v-if="isLoggedIn && userStore.role_id == 2">
+    <i class="fa fa-shopping-cart "></i>
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">9<span class="visually-hidden">unread messages</span>
+    </span>
+  </nuxt-link>
+
+  <nuxt-link style="padding: 2px 15px;"  class="list-item  position-relative pe-0" to="/dashboard/buyer/welcome"
+    v-if="isLoggedIn && userStore.role_id == 3">
+    <i class="fa fa-shopping-cart "></i>                  
+    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span class="visually-hidden">unread messages</span>
+    </span>
+  </nuxt-link>
+
+</li>
+</ul>
+
+
+              <!-- <a class="menubar ml30" href="#menu" @click="toggleMenu"><img src="/images/mobile-dark-nav-icon.svg"
+                  alt="" /></a> -->
             </div>
           </div>
         </div>
@@ -37,6 +75,7 @@
     </div>
     <!-- /.mobile-menu -->
     <nav id="menu" :class="{ 'hidden': !isMenuOpen, 'shown': isMenuOpen }">
+
       <ul>
         <li v-for="(category, index) in categoryData" :key="index">
           <span> <nuxt-link :to="`/category/${category.slug}`">{{ category.name }}</nuxt-link></span>
