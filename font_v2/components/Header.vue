@@ -91,17 +91,18 @@
 
                 <li v-if="isLoggedIn" class="me-2">
                   <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative"
-                    to="/dashboard/buyer/notificationBox" v-if="isLoggedIn && userStore.role_id == 3"><i class="fa fa-bell "></i>
+                    to="/dashboard/buyer/notificationBox" v-if="isLoggedIn && userStore.role_id == 3"><i
+                      class="fa fa-bell "></i>
                     <span
                       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
                         class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
                   <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative"
-                    to="/dashboard/notificationBox" v-if="isLoggedIn  && userStore.role_id == 2"><i class="fa fa-bell "></i>
-                    <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
-                        class="visually-hidden">unread messages</span>
+                    to="/dashboard/notificationBox" v-if="isLoggedIn && userStore.role_id == 2"><i
+                      class="fa fa-bell "></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{
+                      unseen_notifications }}+<span class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
                 </li>
@@ -109,13 +110,13 @@
                   <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative" to="/dashboard/chatbox"
                     v-if="isLoggedIn && userStore.role_id == 2"><i class="fa fa-envelope "></i>
 
-                    <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
-                        class="visually-hidden">unread messages</span>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{
+                      countmsg }}+<span class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
-                  <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative" to="/dashboard/buyer/chatbox"
-                    v-if="isLoggedIn && userStore.role_id == 3"><i class="fa fa-envelope "></i>
+                  <nuxt-link style="padding: 2px 15px;" class="list-item pe-0 position-relative"
+                    to="/dashboard/buyer/chatbox" v-if="isLoggedIn && userStore.role_id == 3"><i
+                      class="fa fa-envelope "></i>
 
                     <span
                       class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
@@ -130,7 +131,7 @@
                     v-if="isLoggedIn && userStore.role_id == 2">
                     <i class="fa fa-shopping-cart "></i>
                     <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ pendingOrders }}+<span
                         class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
@@ -157,8 +158,10 @@
                   <img :src="imagePreview || '/blank_user.jpg'" style="height: 40px;width: 40px;" alt=""
                     class="img-fluid rounded-circle bordered m-1">
                   <div class="p-2 " style="display: flex; flex-direction: column;">
-                    <span style="font-size: 14px;text-transform: capitalize; line-height: auto;" class="list-item fw-bold m-0"> {{ name }}</span>
-                    <span style="font-size: 11px;line-height: auto;" class="list-item m-0" v-if="isLoggedIn && userStore.role_id == 3">
+                    <span style="font-size: 14px;text-transform: capitalize; line-height: auto;"
+                      class="list-item fw-bold m-0"> {{ name }}</span>
+                    <span style="font-size: 11px;line-height: auto;" class="list-item m-0"
+                      v-if="isLoggedIn && userStore.role_id == 3">
                       Buyer </span>
                     <span style="font-size: 11px;" class="list-item m-0" v-if="isLoggedIn && userStore.role_id == 2">
                       Seller </span>
@@ -239,10 +242,13 @@ import { useUserStore } from '~~/stores/user'
 import { storeToRefs } from 'pinia';
 const userStore = useUserStore();
 const { isLoggedIn } = storeToRefs(userStore)
-import Swal from "sweetalert2";
+
 const loading = ref(false);
 const router = useRouter();
 const name = ref();
+const unseen_notifications = ref(0);
+const countmsg = ref(0);
+const pendingOrders = ref(0);
 const imagePreview = ref();
 const email = ref();
 
@@ -306,6 +312,19 @@ const fetchCatData = async () => {
   }
 };
 
+const notificationCount = async () => {
+  try {
+    loading.value = true;
+    const response = await axios.get("/user/pendingCountNotification");
+    unseen_notifications.value = response.data.unseen_notifications;
+
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  } finally {
+    loading.value = false;
+  }
+};
+
 
 const navbarScrollfixed = () => {
   $('.navbar-scrolltofixed').scrollToFixed();
@@ -328,18 +347,32 @@ const navbarScrollfixed = () => {
     });
   });
 }
+const getChatusersList = async () => {
+  loading.value = true; // Start loading
+  try {
+    const response = await axios.get(`/chat/getChatUsersTo`);
+    countmsg.value = response.data.countmsg;
+    pendingOrders.value = response.data.pendingOrders;
+    //console.log("pendingOrders: " + response.data.pendingOrders);
 
+  } catch (error) {
+    console.error('Error fetching chat users:', error);
+  } finally {
+    loading.value = false; // Stop loading
+  }
+};
 
 onMounted(async () => {
   fetchCatData();
   navbarScrollfixed();
   getUserRow();
+  notificationCount();
+  getChatusersList();
 });
 
 </script>
 
 <style scoped>
-
 /* Base Dropdown Styling */
 .dropdown-menu {
   background-color: #ffffff;
@@ -369,7 +402,8 @@ onMounted(async () => {
 .dropdown-menu .dropdown-item i {
   margin-right: 10px;
   font-size: 16px;
-  color: #007bff; /* Icon color */
+  color: #007bff;
+  /* Icon color */
 }
 
 /* Hover Effects */

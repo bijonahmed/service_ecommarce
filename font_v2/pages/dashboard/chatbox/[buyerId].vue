@@ -72,7 +72,7 @@
               <div class="card">
                 <div class="card-header justify-content-between align-items-center d-flex p-2">
                   <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
-                  <span style="font-size: 12px;">Last seen: Oct 20, 2024, 9:52 AM</span>
+                  <span style="font-size: 12px;"></span>
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
@@ -108,25 +108,106 @@
                 </div>
                 <div class="card-footer">
                   <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
-                    <div class="input-group">
+                    <div class="input-group"
+                      style="display: flex; align-items: center; gap: 8px; background-color: #f9f9f9; padding: 10px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                      <!-- Message Input -->
                       <input class="form-control" id="message" placeholder="Type your message..."
-                        v-model="messageContent">
+                        v-model="messageContent" style="
+      flex: 1;
+      padding: 12px 16px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      outline: none;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    " />
 
-                      <div class="p-2 px-3 bg-white d-flex align-items-center justify-content-center">
-                        <label for="fileInput" style="cursor: pointer;"
-                          class=" d-flex align-items-center justify-content-center"><i
-                            class="fas fa-paperclip"></i></label>
-
+                      <!-- File Upload Icon -->
+                      <div class="p-2 bg-white d-flex align-items-center justify-content-center" style="
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    ">
+                        <label for="fileInput" class="d-flex align-items-center justify-content-center"
+                          style="cursor: pointer; margin: 0;">
+                          <i class="fas fa-paperclip" style="font-size: 20px; color: #555;"></i>
+                        </label>
                       </div>
 
-                      <input type="file" hidden class=" " id="fileInput" accept="image/*,application/pdf"
+                      <!-- Hidden File Input -->
+                      <input type="file" hidden id="fileInput" accept="image/*,application/pdf,application/zip"
                         @change="handleFileUpload" />
-                      <button class="btn btn-primary text-white send_button" type="submit"><i
-                          class="fas fa-paper-plane"></i></button>
+
+                      <!-- Send Button -->
+                      <button class="btn btn-primary text-white send_button" type="submit" style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 50px;
+                  height: 50px;
+                  border-radius: 50%;
+                  border: none;
+                  background-color: #007bff;
+                  transition: background-color 0.3s, box-shadow 0.3s;">
+                        <i class="fas fa-paper-plane" style="font-size: 20px;"></i>
+                      </button>
 
                     </div>
-                    <small><span>&nbsp;Max File Size: 1GB</span></small>
+
+                    <small style="display: block; margin-top: 5px; color: #888;">Max File Size: 1GB</small>
                   </form>
+
+                  <!-- File Preview Modal -->
+                  <div v-if="showModal" class="modal-backdrop">
+                    <div class="modal-content">
+                      <h5>File Preview</h5>
+                      <div class="preview-container">
+
+                        <!-- Preview for Images -->
+                        <img v-if="isImage" :src="filePreview" class="img-fluid" />
+
+                        <!-- Preview for PDFs -->
+                        <iframe v-if="isPDF" :src="filePreview" width="100%" height="400px" frameborder="0"></iframe>
+
+                        <!-- File Info for Unsupported Files -->
+                        <div v-if="!issImage && !isPDF" class="unsupported-file">
+                          <i class="fas fa-file fa-3x"></i>
+                          <p style="margin-top: 10px;">{{ selectedFile?.name }}</p>
+                        </div>
+                      </div>
+
+                      <!-- Modal Actions -->
+                      <div class="modal-actions">
+                        <button class="btn btn-success text-white" @click="confirmFileSend" :disabled="loading.value">Send
+                          File</button>
+                        <button class="btn btn-danger text-white" @click="cancelPreview">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- File Preview Modal -->
+                  <div v-if="showModalMsg" class="modal-backdrop">
+                    <div class="modal-content">
+                      <h5>Message</h5>
+                      <div class="preview-container">
+                        <center>
+                          <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        </center>
+                      </div>
+                      <div class="modal-actions">
+                        <button class="btn btn-danger text-white" @click="cancelPreviewMsg">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
                 </div>
               </div>
 
@@ -233,14 +314,64 @@ const sellerOrder = ref(0);
 const lastOrderDate = ref("");
 const sellerReview = ref("");
 const txtSearch = ref("");
+const selectedFile = ref(null);
+const filePreview = ref('');
+const showModal = ref(false);
+const showModalMsg = ref(false);
+const errorMessage = ref(""); // Define a reactive variable for error message
 
 const handleFileUpload = (event) => {
   uploadedFile.value = event.target.files[0];
+  const file = event.target.files[0];
+  if (file) {
+    selectedFile.value = file;
+    const fileType = file.type;
+
+    // Preview for Images
+    if (fileType.startsWith('image/')) {
+      filePreview.value = URL.createObjectURL(file);
+      showModal.value = true;
+    }
+    // Preview for PDFs
+    else if (fileType === 'application/pdf') {
+      filePreview.value = URL.createObjectURL(file);
+      showModal.value = true;
+    }
+    // Unsupported File Types
+    else {
+      filePreview.value = '';
+      showModal.value = true;
+    }
+  }
+
 };
 
-const isImage = (fileUrl) => {
-  return fileUrl.match(/\.(jpeg|jpg|gif|png)$/) != null;
-}
+// Computed properties to identify file types
+const issImage = computed(() => {
+  return selectedFile.value && selectedFile.value.type.startsWith('image/');
+});
+
+
+
+const isPDF = computed(() => {
+  return selectedFile.value && selectedFile.value.type === 'application/pdf';
+});
+
+const isImage = (file) => {
+  if (!file) return false;
+
+  // Check if it's a File object or a file path
+  if (file.type) {
+    return file.type.startsWith('image/');
+  } else {
+    // For URL or string-based file paths
+    return /\.(jpeg|jpg|gif|png|bmp|webp)$/i.test(file);
+  }
+};
+
+// const isImage = (fileUrl) => {
+//   return fileUrl.match(/\.(jpeg|jpg|gif|png)$/) != null;
+// }
 
 const getFileName = (fileUrl) => {
   return fileUrl.split('/').pop();
@@ -262,14 +393,30 @@ const getFormattedTime = () => {
 
 async function sendMessage() {
   try {
+    //loading.value = true;  // Show loader when request starts
     const formData = new FormData();
+    const message = messageContent.value.trim(); // Remove any unnecessary spaces
+   
+    // Check if the message is empty
+
+    if (message == "") {
+      showModalMsg.value = true;
+      errorMessage.value = "Blank message not allowed."; // Standard message for blank message
+      return; // Stop execution if message is blank
+    }
+
+    // Check for message length (can add a specific length limit if needed)
+    if (message.length < 5) {
+      showModalMsg.value = true;
+      errorMessage.value = "Message is too short. Please write more than 5 characters."; // For too short messages
+      return; // Stop execution if message is too short
+    }
 
     formData.append("buyer", buyer.value);
     formData.append("seller", seller.value);
-    formData.append("message", messageContent.value);
+    formData.append("message", message);
     const currentTime = getFormattedTime();
     formData.append("time_sent", currentTime); // Adds time in "hh:mm:ss AM/PM" format
-
     if (uploadedFile.value) {
       formData.append("files", uploadedFile.value);
     }
@@ -293,6 +440,61 @@ async function sendMessage() {
   }
 }
 
+// Confirm sending the selected file
+const confirmFileSend = async () => {
+  try {
+    loading.value = true;  // Show loader and disable button
+
+    const formData = new FormData();
+    const message = messageContent.value.trim(); // Remove any unnecessary spaces
+
+    // Check if the message is empty
+    if (message === "") {
+      formData.append("message", "File send"); // If empty, send "File send"
+    } else {
+      formData.append("message", message); // If not, send the actual message content
+    }
+    formData.append("buyer", buyer.value);
+    formData.append("seller", seller.value);
+    const currentTime = getFormattedTime();
+    formData.append("time_sent", currentTime); // Adds time in "hh:mm:ss AM/PM" format
+    if (uploadedFile.value) {
+      formData.append("files", uploadedFile.value);
+    }
+
+    const response = await axios.post("/chat/sendMessagesForSeller", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    // Process the response
+    fetchChatHistory();
+    messageContent.value = '';
+    uploadedFile.value = null;
+    filePreview.value = '';
+    showModal.value = false;
+  } catch (error) {
+    // Handle errors
+    if (error.response && error.response.status === 422) {
+      errors.value = error.response.data.errors;
+    } else {
+      console.error("An error occurred:", error);
+    }
+  } finally {
+    loading.value = false;  // Re-enable the button and hide the loader
+  }
+};
+
+
+// Cancel file preview
+const cancelPreview = () => {
+  selectedFile.value = null;
+  filePreview.value = '';
+  showModal.value = false;
+};
+const cancelPreviewMsg = () => {
+  showModalMsg.value = false;
+};
 
 
 const handleScroll = () => {
@@ -443,7 +645,7 @@ onMounted(() => {
   chkUserrow();
   getParticularData();
   fetchChatHistory();
-  intervalId = setInterval(fetchChatHistory, 5000);
+  intervalId = setInterval(fetchChatHistory, 15000);
   if (chatContainer.value) {
     chatContainer.value.addEventListener('scroll', handleScroll);
     handleScroll();
@@ -745,5 +947,50 @@ input[type="file"]+label {
 .send_button {
   background: #1f4b3f !important;
   color: #fff;
+}
+
+/* Modal Styling */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 500px;
+  text-align: center;
+}
+
+.preview-container img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.preview-container iframe {
+  border-radius: 8px;
+}
+
+.unsupported-file {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #555;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 </style>

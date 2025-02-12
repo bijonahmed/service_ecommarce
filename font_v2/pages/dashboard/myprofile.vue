@@ -90,7 +90,7 @@
                             <button class="btn btn_upload m-1 text-white mt-3"
                               style="background-color: #5BBB7B !important;" @click="uploadImage">Upload</button>
                             <button class="btn btn_upload  m-1 text-white mt-3"
-                              style="border-color: red; color: red !important;" @click="">Delete</button>
+                              style="border-color: red; color: red !important;" @click="clearImages">Delete</button>
                           </div>
                           <p style="max-width: 300px;" class="">image must be png, jpg, jpeg formate. Height and weight
                             must be
@@ -291,9 +291,9 @@
                               <button type="submit" @click="submitskills" id="skills-tab" data-bs-toggle="tab"
                                 data-bs-target="#skills" role="tab" aria-controls="skills" aria-selected="false"
                                 class="ud-btn btn-thm">Save </button>
-                              <button type="button" id="skills-tab" data-bs-toggle="tab" data-bs-target="#education"
+                              <!-- <button type="button" id="skills-tab" data-bs-toggle="tab" data-bs-target="#education"
                                 role="tab" aria-controls="skills" aria-selected="false" class="ud-btn btn-thm ms-2">Save
-                                & next </button>
+                                & next </button> -->
                             </div>
                           </div>
                         </div>
@@ -512,7 +512,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary" id="submitExperience">Save & next</button>
+              <button type="submit" class="btn btn-primary" id="submitExperience">Save & Close</button>
             </div>
           </div>
         </div>
@@ -552,7 +552,7 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save & next</button>
+              <button type="submit" class="btn btn-primary">Save & Close</button>
             </div>
           </div>
         </div>
@@ -634,6 +634,13 @@ const certificate = ref({
 });
 
 const errorMessage = ref('');
+
+
+const clearImages = async () => {
+  imageFile.value = null;
+  imagePreview.value = null;
+
+}
 
 const submitCertifiate = async () => {
   try {

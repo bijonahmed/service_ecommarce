@@ -242,6 +242,17 @@ class UserController extends Controller
         return response()->json($response);
     }
 
+    public function pendingCountNotification()
+    {
+        $countData = Notification::where('seller_id', $this->userid)
+        ->where(function($query) {
+            $query->whereNull('seen')->orWhere('seen', '');
+        })
+        ->count();
+    
+    return response()->json(['unseen_notifications' => $countData]);
+    }
+
     public function getNotifications(Request $request)
     {
 
@@ -820,6 +831,7 @@ class UserController extends Controller
             'user_id'          => $this->userid,
             'type'             => $request->type,
             'wallet_address'   => $request->wallet_address,
+            'type'   => 'crypto',
         );
         if (empty($request->id)) {
             $id = WithdrawMethod::insertGetId($data);

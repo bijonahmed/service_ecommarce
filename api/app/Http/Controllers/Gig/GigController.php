@@ -274,7 +274,7 @@ class GigController extends Controller
 
     public function createGig(Request $request)
     {
-        //dd($request->all());
+        // dd($request->all());
         $validator = Validator::make(
             $request->all(),
             [
@@ -312,11 +312,11 @@ class GigController extends Controller
         if ($request->type == '1') {
             $request->validate(
                 [
-                    'price' => 'required',
+                    'price' => 'required|numeric|min:1',
                     'delivery_day' => 'required|integer|min:0', // Ensure it's an integer and >= 0,
                 ],
                 [
-                    'price.required' => 'The price field is required.',
+                    'price.required' => 'The price required.',
                     'price.numeric' => 'The price must be a number.',
                 ],
             );
@@ -324,13 +324,13 @@ class GigController extends Controller
 
         if ($request->type == 2) {
             $request->validate([
-                'basic_price' => 'required|numeric',
-                'standard_price' => 'required|numeric',
-                'premium_price' => 'required|numeric',
+                'basic_price' => 'required|numeric|min:1',
+                'standard_price' => 'required|numeric|min:1',
+                'premium_price' => 'required|numeric|min:1',
             ]);
         }
 
-        // Handle thumbnail upload
+
 
         if (!empty($request->file('thumbnail_images'))) {
             $files = $request->file('thumbnail_images');
@@ -391,7 +391,7 @@ class GigController extends Controller
         $data['basic_price'] = $request->basic_price;
         $data['basic_description'] = $request->basic_description;
         $data['basic_delivery_days'] = $request->basic_delivery_days;
-        $data['basic_source_file'] = $request->basic_source_file;
+        $data['source_file'] = $request->source_file;
         //For Standard
         $data['standard_price'] = $request->standard_price;
         $data['stn_description'] = $request->stn_description;
@@ -505,14 +505,18 @@ class GigController extends Controller
             $data = [];
             foreach ($filterData as $v) {
                 $data[] = [
-                    'id' => $v->id,
-                    'user_id' => $v->user_id,
-                    'name' => $v->name,
-                    'gig_slug' => $v->gig_slug,
-                    'price' => $v->price,
-                    'status' => $v->gig_status,
-                    'category_name' => $v->category_name,
-                    'thumbnail_images' => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : '',
+                    'id'                => $v->id,
+                    'user_id'           => $v->user_id,
+                    'name'              => $v->name,
+                    'gig_slug'          => $v->gig_slug,
+                    'price'             => $v->price,
+                    'types'             => $v->types,
+                    'basic_price'       => $v->basic_price ?? 0,
+                    'standard_price'    => $v->standard_price ?? 0,
+                    'premium_price'     => $v->premium_price ?? 0,
+                    'status'            => $v->gig_status,
+                    'category_name'     => $v->category_name,
+                    'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : '',
                 ];
             }
 

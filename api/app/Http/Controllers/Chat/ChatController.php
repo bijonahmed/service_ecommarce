@@ -47,6 +47,11 @@ class ChatController extends Controller
             ->groupBy('messages.sender_id')
             ->orderBy('created_at', 'desc')
             ->get();
+
+
+        $pendingOrder = Order::where('sellerId', $this->userid)->where('order_status', 1)->count();
+
+
         //  dd($data);
 
         $chatusers = [];
@@ -60,13 +65,18 @@ class ChatController extends Controller
                     'user_id'        => !empty($userrecords->id) ? $userrecords->id : "",
                     'user_name'      => !empty($userrecords->name) ? $userrecords->name : "",
                     'slug'           => $v->slug,
+                    'last_seen'       => date("Y-m-d",strtotime($v->created_at)).''.$v->time_sent,
                     'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
                     'unread_count'   => $rowcont, // This will reflect the count of unread messages
                 ];
             }
         }
         // Return messages as a JSON response
-        return response()->json($chatusers);
+        $resdata['chatusers']     = $chatusers;
+        $resdata['countmsg']      = count($chatusers);
+        $resdata['pendingOrders'] = $pendingOrder;
+
+        return response()->json($resdata);
     }
 
     public function getChatUsers()
@@ -201,7 +211,7 @@ class ChatController extends Controller
         $validator = Validator::make($request->all(), [
             'buyer'        => 'required', // Set this to the ID of the logged-in buyer
             'seller'       => 'required', // The ID of the recipient (seller)
-            'message'         => 'required', // Validate message content
+            'message'      => 'required', // Validate message content
         ]);
 
         if ($validator->fails()) {
@@ -212,7 +222,13 @@ class ChatController extends Controller
 
         $imagePaths = "";
         if (!empty($request->file('files'))) {
+
             $files = $request->file('files');
+            // Check if file size exceeds 1GB (1GB = 1024 * 1024 * 1024 bytes)
+            if ($files->getSize() > 1024 * 1024 * 1024) {
+                return response()->json(['error' => 'File size exceeds the 1GB limit.'], 400);
+            }
+
             $fileName = Str::random(20);
             $ext = strtolower($files->getClientOriginalExtension());
             $path = $fileName . '.' . $ext;
@@ -293,11 +309,11 @@ class ChatController extends Controller
         $user_id = $request->id;
         $messages = MyMessage::where(function ($query) use ($user_id) {
             $query->where('user_id', $user_id)
-                  ->orWhere('to_id', $user_id);
+                ->orWhere('to_id', $user_id);
         })->orderBy('created_at', 'asc')->get();
-    
+
         $data = [];
-    
+
         foreach ($messages as $message) {
             $sender = User::find($message->sender_id);
             $recipient = User::find($message->to_id);
@@ -308,21 +324,20 @@ class ChatController extends Controller
                 'files'                     => !empty($message->files) ? url($message->files) : "",
                 'created_at'                => date("Y-m-d", strtotime($message->created_at)),
                 'time_sent'                 => $message->time_sent,
-    
+
                 // Recipient details
                 'recipient_id'              => $message->to_id,
                 'recipient_name'            => $recipient ? $recipient->name : "Unknown",
                 'recipient_profile_picture' => !empty($recipient->image) ? url($recipient->image) : "",
-    
+
                 // Sender details
                 'sender_id'                 => $message->sender_id,
                 'sender_name'               => $sender ? $sender->name : "Unknown",
                 'sender_profile_picture'    => !empty($sender->image) ? url($sender->image) : "",
             ];
         }
-    
+
         return response()->json($data);
-        
     }
 
     public function getMessagesSeller(Request $request)

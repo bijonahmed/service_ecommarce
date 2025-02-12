@@ -38,7 +38,7 @@
                 <br>
 
                 <div class="container">
-                    <center><span>Buyer List</span></center>
+                    <center><span>Chat List</span></center>
                     <div v-if="chatUsers.length">
                         <ul class="list-group">
                             <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"

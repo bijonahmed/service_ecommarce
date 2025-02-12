@@ -22,6 +22,7 @@ class WithdrawMethod extends Authenticatable
     'email',
     'account_name',
     'account_num',
+    'wallet_address',
     'ibn_no',
     'bank_id',
     'branch_id'

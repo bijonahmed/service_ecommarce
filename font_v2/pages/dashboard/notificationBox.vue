@@ -1,5 +1,5 @@
 <template>
-    <title>All Messages</title>
+    <title>All Notification</title>
 
     <body class="bgc-thm1">
         <div class="wrapper ovh">
@@ -13,27 +13,29 @@
                     <Loader />
                 </div>
                 <section class="breadcumb-section">
-                    <div class="container-fluid">
-                        <div class="row">
-                            <div class="col-sm-8 col-lg-10">
-                                <div class="breadcumb-style1 mb10-xs">
-                                    <div class="breadcumb-list">
-                                        <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
-                                        <a href="#">All Notification</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-lg-2">
-                                <div class="d-flex align-items-center justify-content-sm-end">
-                                    <div class="share-save-widget d-flex align-items-center">
-                                        <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
-                                    </div>
-
-                                </div>
-                            </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-8 col-lg-10">
+                <div class="breadcumb-style1 mb10-xs">
+                    <div class="breadcumb-list">
+                        <nuxt-link to="/dashboard/welcome">Dashboard</nuxt-link>
+                        <nuxt-link to="/notifications">All Notifications</nuxt-link> <!-- Changed from <a> to <nuxt-link> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4 col-lg-2">
+                <div class="d-flex align-items-center justify-content-sm-end">
+                    <div class="share-save-widget d-flex align-items-center">
+                        <div>
+                            <nuxt-link to="/dashboard/welcome">Back</nuxt-link>
                         </div>
                     </div>
-                </section>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
 
                 <!-- Start Profile -->
                 <!-- start -->
@@ -42,7 +44,7 @@
                         <thead class="t-head bg-primary text-white">
                             <tr>
                                 <th scope="col" class="p-3">Notification</th>
-                                <th scope="col" class="p-3">Date & Time</th>
+                                <th scope="col" class="p-3" style="text-align: right;">Date & Time</th>
                             </tr>
                         </thead>
                         <tbody class="t-body">
@@ -52,8 +54,6 @@
                                 :class="{ 'unseen-notification': !order.seen, 'seen-notification': order.seen }"
                                 class="notification-row border-bottom">
                                 <td class="vam p-3">
-                                    <span :class="{ 'fw-bold': !order.seen }">User Name</span>,
-                                    <span :class="{ 'fw-bold': !order.seen }">Gig Name</span>
                                     <span :class="{ 'fw-bold': !order.seen, 'text-muted': order.seen }">
                                         {{ order.messages }}
                                     </span>
@@ -167,7 +167,7 @@ const markAsSeen = async (order) => {
   if (!order.seen) {
     try {
       // Send API request to mark as seen
-      await axios.post(`/api/notifications/${order.id}/seen`);
+      await axios.post(`/user/notifications/${order.id}/seen`);
       order.seen = true; // Update frontend state after successful API call
     } catch (error) {
       console.error('Error marking notification as seen:', error);

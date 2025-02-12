@@ -21,7 +21,7 @@
                             </div>
                             <div class="col-sm-4 col-lg-2">
                                 <div class="d-flex align-items-center justify-content-sm-end">
-                                    <div class="share-save-widget d-flex align-items-center">
+                                    <div class="">
                                         <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
                                     </div>
 
@@ -30,6 +30,13 @@
                         </div>
                     </div>
                 </section>
+
+                <center>
+                    <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                        <Loader />
+                    </div>
+                </center>
+
 
                 <!-- Start Profile -->
                 <div class="container">
@@ -52,8 +59,8 @@
                                         <a href="#" class="listing-fav fz12" @click="deleteGig(gig.id)"><i
                                                 class="fa-solid fa-trash"></i></a>
                                         <!-- Share  -->
-                                        <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12" style="left: 20px;"><i
-                                                class="fa-solid fa-share"></i></nuxt-link>
+                                        <nuxt-link href="#" @click="shareUrl(gig.gig_slug)" class="listing-fav fz12"
+                                            style="left: 20px;"><i class="fa-solid fa-share"></i></nuxt-link>
                                         <!-- Edit  -->
                                         <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`" class="listing-fav fz12 "
                                             style="top: 65px;"><i class="fa-solid fa-pen"></i></nuxt-link>
@@ -66,13 +73,25 @@
                                     <div class="list-content">
                                         <p class="list-text body-color fz14 mb-1">{{ gig.category_name }}</p>
                                         <h6 class="list-title"> <nuxt-link :to="`/dashboard/editgig/${gig.gig_slug}`">
-                                                {{ gig.name }}</nuxt-link></h6>
+                                                <p>{{ gig.name.length > 70 ? gig.name.slice(0, 70) + '...' : gig.name }}
+                                                </p>
+                                            </nuxt-link></h6>
                                         <hr class="my-2">
                                         <div class="list-meta mt15 d-flex justify-content-between align-items-center">
-                                            <div class="budget">
-                                                <p class="mb-0 body-color">Starting at<span
-                                                        class="fz17 fw500 dark-color ms-1">${{ gig.price }}</span></p>
+
+                                            <div class="budget" v-if="gig.types == 1">
+                                                <p class="mb-0 body-color">
+                                                    Starting at<span class="fz17 fw500 dark-color ms-1">${{ gig.price
+                                                        }}</span>
+                                                </p>
                                             </div>
+                                            <div class="budget" v-else>
+                                                <p class="mb-0 body-color">
+                                                    Starting at<span class="fz17 fw500 dark-color ms-1">${{
+                                                        gig.basic_price }}</span>
+                                                </p>
+                                            </div>
+
                                             <div>
                                                 <span v-if="gig.status == 1">
                                                     <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span
@@ -122,25 +141,25 @@ const gigData = ref([]);
 
 
 const shareUrl = (slug) => {
-  const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
-  const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
+    const currentUrl = window.location.origin; // Get the base URL (e.g., https://example.com)
+    const fullUrl = `${currentUrl}/gigs/${slug}`; // Construct the full URL with slug
 
-  navigator.clipboard.writeText(fullUrl)
-    .then(() => {
+    navigator.clipboard.writeText(fullUrl)
+        .then(() => {
 
-        Swal.fire(
-                    'Copied!',
-                    'Your gig URL has been copied.',
-                    'success'
-                );
+            Swal.fire(
+                'Copied!',
+                'Your gig URL has been copied.',
+                'success'
+            );
 
 
 
-      //alert('URL copied to clipboard!');
-    })
-    .catch(err => {
-      console.error('Failed to copy URL: ', err);
-    });
+            //alert('URL copied to clipboard!');
+        })
+        .catch(err => {
+            console.error('Failed to copy URL: ', err);
+        });
 };
 
 const deleteGig = async (id) => {
@@ -183,16 +202,6 @@ const deleteGig = async (id) => {
 };
 
 
-const getCatList = async () => {
-    try {
-        const response = await axios.get(`/unauthenticate/getFindCategorys`);
-        categoryData.value = response.data;
-    } catch (error) {
-        console.log(error);
-    }
-};
-
-
 const gigList = async () => {
     try {
         loading.value = true;
@@ -206,15 +215,24 @@ const gigList = async () => {
 };
 
 onMounted(() => {
-   // getCatList();
     gigList();
-   
+
 
 });
 
 </script>
 
 <style scoped>
+.listing-style1 .list-title {
+    margin-bottom: 15px;
+    height: 48px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
 .body_content {
     padding: 100px;
 }

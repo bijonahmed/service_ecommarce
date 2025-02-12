@@ -491,7 +491,7 @@ import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
-
+import Swal from "sweetalert2";
 const orderData = ref([]);
 const inprogressData = ref([]);
 const cancelData = ref([]);

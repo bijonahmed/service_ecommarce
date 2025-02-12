@@ -160,6 +160,7 @@ Route::group(
         Route::get('dashboardCounting', [UserController::class, 'dashboardCounting']);
         Route::get('deleteNotification/{id}', [UserController::class, 'deleteNotification']);
         Route::get('getNotifications', [UserController::class, 'getNotifications']);
+        Route::get('pendingCountNotification', [UserController::class, 'pendingCountNotification']);
         Route::post('sendNotification', [UserController::class, 'sendNotification']);
         Route::get('findUserDetails', [UserController::class, 'findUserDetails']);
         Route::get('allUsers', [UserController::class, 'AllUsersList']);

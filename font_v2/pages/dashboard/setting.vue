@@ -65,8 +65,8 @@
                         <div class="mb-3">
                           <label for="accountDetails" class="form-label">Wallet Address</label>
                           <input type="text" class="form-control" id="accountDetails"
-                            placeholder="Enter your wallet address" v-model="insertdatawithdrwal.account_number">
-                          <span class="text-danger" v-if="errors.account_number">{{ errors.account_number[0] }}</span>
+                            placeholder="Enter your wallet address" v-model="insertdatawithdrwal.wallet_address">
+                          <span class="text-danger" v-if="errors.wallet_address">{{ errors.wallet_address[0] }}</span>
                         </div>
                         <button type="submit" class="btn btn-primary text-white">Save Withdrawal Method</button>
                       </form>
@@ -82,7 +82,7 @@
                         <tbody>
                           <tr v-for="(withdrawal, index) in withDrawaldata" :key="index">
                             <td>{{ withdrawal.name }}</td>
-                            <td>{{ withdrawal.account_number }}</td>
+                            <td>{{ withdrawal.wallet_address }}</td>
                           </tr>
                           <tr v-if="withDrawaldata.length === 0">
                             <td colspan="2" class="text-center">No withdrawal data available.</td>
@@ -182,7 +182,7 @@ const insertdata = reactive({
 
 const insertdatawithdrwal = reactive({
   name: '',
-  account_number: '',
+  wallet_address: '',
 });
 const withDrawaldata = ref([]);
 const categoryData = ref([]);
@@ -198,12 +198,12 @@ const submitWithdrawalAdd = () => {
 
   const formData = new FormData();
   formData.append('name', insertdatawithdrwal.name);
-  formData.append('account_number', insertdatawithdrwal.account_number);
+  formData.append('wallet_address', insertdatawithdrwal.wallet_address);
 
   const headers = {
     'Content-Type': 'multipart/form-data'
   };
-  axios.post('/user/addWalletAddress', formData, { headers })
+  axios.post('/user/addCryptoWalletAddress', formData, { headers })
     .then((res) => {
       document.getElementById('formrest').reset();
 
