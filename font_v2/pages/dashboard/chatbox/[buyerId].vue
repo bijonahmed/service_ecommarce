@@ -10,10 +10,12 @@
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
-          <Loader />
+          <ChatLoader />
         </div>
         <section class="breadcumb-section">
-          <div class="container">
+          <center style="display: none;"><button @click="getBuyerUserId" id="clickstorageId">Get Local Storage
+              UserIds</button></center>
+          <div class="container-fluid">
             <div class="row">
               <div class="col-sm-8 col-lg-10">
                 <div class="breadcumb-style1 mb10-xs">
@@ -26,7 +28,7 @@
               <div class="col-sm-4 col-lg-2">
                 <div class="d-flex align-items-center justify-content-sm-end">
                   <div class="share-save-widget d-flex align-items-center">
-                    <div class="h6 mb-0"><nuxt-link to="/dashboard/welcome">Back</nuxt-link></div>
+                    <div class="h6 mb-0"><nuxt-link to="/dashboard/chatbox">Back</nuxt-link></div>
                   </div>
                 </div>
               </div>
@@ -43,7 +45,7 @@
 
                 <div class="m-4 d-flex align-items-center justify-content-center">
                   <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch"
-                    @keyup="getSellerList">
+                    @keyup="getChatusersList">
                   <button type="button" class="btn btn-primary m-0 h-100 search_btn">
                     <i class="fas fa-search"></i>
                   </button>
@@ -183,7 +185,8 @@
 
                       <!-- Modal Actions -->
                       <div class="modal-actions">
-                        <button class="btn btn-success text-white" @click="confirmFileSend" :disabled="loading.value">Send
+                        <button class="btn btn-success text-white" @click="confirmFileSend"
+                          :disabled="loading.value">Send
                           File</button>
                         <button class="btn btn-danger text-white" @click="cancelPreview">Cancel</button>
                       </div>
@@ -319,6 +322,7 @@ const filePreview = ref('');
 const showModal = ref(false);
 const showModalMsg = ref(false);
 const errorMessage = ref(""); // Define a reactive variable for error message
+const buyerUserId = ref(null);
 
 const handleFileUpload = (event) => {
   uploadedFile.value = event.target.files[0];
@@ -369,9 +373,6 @@ const isImage = (file) => {
   }
 };
 
-// const isImage = (fileUrl) => {
-//   return fileUrl.match(/\.(jpeg|jpg|gif|png)$/) != null;
-// }
 
 const getFileName = (fileUrl) => {
   return fileUrl.split('/').pop();
@@ -396,7 +397,7 @@ async function sendMessage() {
     //loading.value = true;  // Show loader when request starts
     const formData = new FormData();
     const message = messageContent.value.trim(); // Remove any unnecessary spaces
-   
+
     // Check if the message is empty
 
     if (message == "") {
@@ -447,7 +448,6 @@ const confirmFileSend = async () => {
 
     const formData = new FormData();
     const message = messageContent.value.trim(); // Remove any unnecessary spaces
-
     // Check if the message is empty
     if (message === "") {
       formData.append("message", "File send"); // If empty, send "File send"
@@ -521,11 +521,16 @@ const formatCurrentTime = () => {
 }
 
 const getChatusersList = async () => {
+  // Search
   try {
-    const response = await axios.get(`/chat/getChatUsersTo`);
-    chatUsers.value = response.data;
+    const response = await axios.get(`/chat/getChatUsersTo`, {
+      params: {
+        search: txtSearch.value  // Sending search parameter
+      }  // Corrected closing curly brace here
+    });
+    chatUsers.value = response.data.chatusers;
   } catch (error) {
-    // Handle error
+    console.error('Error fetching chat users:', error);  // Added error logging for better debugging
   }
 };
 
@@ -542,44 +547,89 @@ async function selectUser(users) {
   professionName.value = users.professionName;
   country.value = users.country;
   profilePicture.value = users.profilePicture;
-
-  console.log("Selected SellerId: " + seller.value);
-  console.log("Selected BuyerId: " + buyer.value);
-
   seller.value = seller.value;
-  buyer.value = buyer.value;
-
+  buyer.value = users.sender_id;
   selectedUserId.value = users.id;
   user_name.value = users.user_name;
-
-  // Call other functions, which might have async operations
-  await checkBuyerDetails(buyer.value);
+  // Call other functions, which might have async operations 
+  await checkBuyerDetails(users.sender_id);
   await fetchChatHistory();
 }
 
 
 
 const checkBuyerDetails = async (buyerId) => {
+
+  const response = await axios.get('/chat/userrowCheckSeller', {
+    params: {
+      buyerId: buyerId,
+    }
+  });
+  seller.value = response.data.sellerId;
+  buyer.value = response.data.buyerId;
+  sellerReview.value = response.data.sellerReview;
+  lastOrderDate.value = response.data.lastOrderDate;
+  sellerOrder.value = response.data.sellerOrder;
+  join_date.value = response.data.join_date;
+  professionName.value = response.data.professionName;
+  country.value = response.data.country;
+  profilePicture.value = response.data.profilePicture;
+  user_name.value = response.data.user_name;
+  //selectUser(response.data);
+}
+
+const getBuyerUserId = async () => {
+
+  const senderId = localStorage.getItem('to_id');;
+  buyerUserId.value = localStorage.getItem('buyer_user_id');
+  checkBuyerDetails(buyerUserId.value);
+  selectedUserId.value = buyerUserId.value
+  console.log('Buyer User ID:', buyerUserId.value);
+
   try {
-    const response = await axios.get('/chat/userrowCheckSeller', {
+    loading.value = true;
+    const response = await axios.get('/chat/getMessagesSeller', {
       params: {
-        buyerId: buyerId,
+        seller: senderId,
+        buyer: buyerUserId.value
       }
     });
-    seller.value = response.data.sellerId;
-    buyer.value = response.data.buyerId;
-    selectUser(response.data);
+
+    chatMessages.value = response.data.map(message => ({
+      ...message,
+      sender_name: message.sender_name || 'Unknown' // Use sender_name directly
+    }));
+
+    nextTick(() => {
+      if (isUserAtBottom.value && chatContainer.value) {
+        handleScroll();
+        chatContainer.value.scrollTo({
+          top: chatContainer.value.scrollHeight,
+          behavior: 'smooth' // Smooth scrolling effect
+        });
+      }
+    });
   } catch (error) {
-    console.error('Error fetching user data:', error);
+    console.error('Error fetching messages:', error); // Handle errors gracefully
+  } finally {
+    loading.value = false;
+
   }
-}
+};
+
 
 const getSellerList = async () => {
 
   console.log("=====" + txtSearch.value);
 
+
+
+
+
+
 }
 const fetchChatHistory = async () => {
+
   try {
     const response = await axios.get('/chat/getMessagesSeller', {
       params: {
@@ -602,6 +652,7 @@ const fetchChatHistory = async () => {
         });
       }
     });
+
   } catch (error) {
     console.error('Error fetching chat history:', error);
   }
@@ -616,6 +667,7 @@ const getParticularData = async () => {
   }
 };
 
+
 const chkUserrow = async () => {
   const buyerId = route.params.buyerId;
   loading.value = true;
@@ -628,7 +680,6 @@ const chkUserrow = async () => {
     seller.value = response.data.sellerId;
     buyer.value = response.data.buyerId;
     selectUser(response.data);
-
   } catch (error) {
     console.error('Error fetching user data:', error);
   } finally {
@@ -637,21 +688,25 @@ const chkUserrow = async () => {
 };
 
 
-
-
-
+const isDataFetched = ref(false);
 let intervalId;
 onMounted(() => {
-  chkUserrow();
-  getParticularData();
-  fetchChatHistory();
-  intervalId = setInterval(fetchChatHistory, 15000);
+  setTimeout(() => {
+    $("#clickstorageId").click();
+  }, 0); // This gives Vue time to render the button
+  if (!isDataFetched.value) {
+    getParticularData();
+    getChatusersList();
+    fetchChatHistory();
+    isDataFetched.value = true;  // Set the flag to true after fetching data
+  }
+
+  intervalId = setInterval(fetchChatHistory, 30000);
   if (chatContainer.value) {
     chatContainer.value.addEventListener('scroll', handleScroll);
     handleScroll();
   }
-  getChatusersList();
-  fetchChatHistory();
+
 
 });
 
@@ -743,12 +798,14 @@ onBeforeUnmount(() => {
 
 .chat-user-item:hover {
   background-color: #075e54;
+  color: white;
 
 }
 
 
 .chat-user-item.selected {
   background-color: #075e54;
+  color: white;
 }
 
 

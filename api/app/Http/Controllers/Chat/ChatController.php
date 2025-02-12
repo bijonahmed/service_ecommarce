@@ -38,21 +38,26 @@ class ChatController extends Controller
 
 
 
-    public function getChatUsersTo()
+    //This method working only  seller role_id ==2
+    public function getChatUsersTo(Request $request)
     {
+        // Initialize the query with the correct variable name
+        $query = MyMessage::where('messages.to_id', $this->userid)
+            ->groupBy('messages.user_id')
+            ->orderBy('messages.created_at', 'desc');
+        // Apply search filter if the search term exists
+        if ($request->has('search') && !empty($request->search)) {
+            $searchTerm = $request->search;
+            // Assuming there is a relationship between messages and users
+             // Join with the users table to search by name
+        $query->join('users', 'messages.user_id', '=', 'users.id')
+        ->where('users.name', 'LIKE', '%' . $searchTerm . '%');
+        }
+
+        // Execute the query and fetch the data
+        $data = $query->get();
 
 
-
-        $data = MyMessage::where('messages.to_id', $this->userid)
-            ->groupBy('messages.sender_id')
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-
-        $pendingOrder = Order::where('sellerId', $this->userid)->where('order_status', 1)->count();
-
-
-        //  dd($data);
 
         $chatusers = [];
         foreach ($data as $v) {
@@ -65,17 +70,20 @@ class ChatController extends Controller
                     'user_id'        => !empty($userrecords->id) ? $userrecords->id : "",
                     'user_name'      => !empty($userrecords->name) ? $userrecords->name : "",
                     'slug'           => $v->slug,
-                    'last_seen'       => date("Y-m-d",strtotime($v->created_at)).''.$v->time_sent,
+                    'sender_id'      => $v->sender_id,
+                    'to_id'          => $v->to_id,
+                    'last_seen'      => date("Y-m-d", strtotime($v->created_at)) . '' . $v->time_sent,
                     'profilePicture' => !empty($userrecords->image) ? url($userrecords->image) : "",
                     'unread_count'   => $rowcont, // This will reflect the count of unread messages
                 ];
             }
         }
+        $pendingOrder   = Order::where('sellerId', $this->userid)->where('order_status', 1)->count();
+        $countunreadMsg = MyMessage::where('messages.to_id', $this->userid)->where('is_read', 0)->count();
         // Return messages as a JSON response
         $resdata['chatusers']     = $chatusers;
-        $resdata['countmsg']      = count($chatusers);
+        $resdata['countmsg']      = $countunreadMsg;
         $resdata['pendingOrders'] = $pendingOrder;
-
         return response()->json($resdata);
     }
 
@@ -343,9 +351,11 @@ class ChatController extends Controller
     public function getMessagesSeller(Request $request)
     {
 
+        // dd($request->all());
+
         // Validate the incoming request
         $request->validate([
-            'buyer' => 'required',
+            'buyer'  => 'required',
             'seller' => 'required',
         ]);
 

@@ -29,9 +29,14 @@
                             <li v-for="user in chatUsers" :key="user.id" class="list-group-item chat-user-item">
                                 <img :src="user.profilePicture || '/about-17.png'" alt="" class="rounded-circle me-2"
                                     style="width: 40px; height: 40px;" />
-                                <a :href="`/dashboard/chatbox/${user.user_id}`" class="text-decoration-none text-dark">
+                                <!-- <a :href="`/dashboard/chatbox/${user.user_id}`" class="text-decoration-none text-dark">
                                     {{ user.user_name }}
-                                </a>
+                                </a> -->
+                                <NuxtLink :to="`/dashboard/chatbox/${user.user_id}`" @click="setBuyerUserId(user)"
+                                    class="text-decoration-none text-dark">
+                                    {{ user.user_name }}
+                                </NuxtLink>
+
                                 <span class="badge bg-danger ms-1" v-if="user.unread_count > 0">{{ user.unread_count
                                     }}</span>
                             </li>
@@ -72,7 +77,6 @@ const getChatusersList = async () => {
         const response = await axios.get(`/chat/getChatUsersTo`);
         chatUsers.value = response.data.chatusers;
         //  console.log("counts" + response.data.countmsg);
-
     } catch (error) {
         console.error('Error fetching chat users:', error);
     } finally {
@@ -82,6 +86,12 @@ const getChatusersList = async () => {
 
 
 
+const setBuyerUserId = (user) => {
+    const userId = user.user_id;
+    const to_id = user.to_id;
+    localStorage.setItem('buyer_user_id', userId);
+    localStorage.setItem('to_id', to_id);
+};
 
 onMounted(() => {
     getChatusersList();
