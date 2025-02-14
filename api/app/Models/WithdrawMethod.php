@@ -25,7 +25,8 @@ class WithdrawMethod extends Authenticatable
     'wallet_address',
     'ibn_no',
     'bank_id',
-    'branch_id'
+    'branch_id',
+    'swift_bic'
     
   ];
  

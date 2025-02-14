@@ -342,7 +342,7 @@
                     <div class="col-md-5">
                       <form class="mt-3" @submit.prevent="submitWithdrawalAddressBank()">
                         <div>
-                          <label for="withdrawalMethod" class="form-label">Country</label>
+                          <label for="withdrawalMethod" class="form-label">Country:</label>
                           <select name="" id="" class="form-control">
                             <option value="" selected disabled >Select country</option>
                             <option value="">Bangladesh</option>
@@ -351,29 +351,9 @@
                           </select>
                           <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
                         </div>
+                       
                         <div>
-                          <label for="withdrawalMethod" class="form-label">Name</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account Name"
-                            v-model="insertdataBank.account_name">
-                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
-                        </div>
-
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">A/C No.</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account Number"
-                            v-model="insertdataBank.account_num">
-                          <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
-                        </div>
-
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">IBN No.</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="IBN Number"
-                            v-model="insertdataBank.ibn_no">
-                          <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
-                        </div>
-
-                        <div>
-                          <label for="withdrawalMethod" class="form-label">Bank</label>
+                          <label for="withdrawalMethod" class="form-label">Bank Name:</label>
                           <select v-model="insertdataBank.bank_id" class="form-control" @change="getBranchList">
                             <option value="">Select Bank</option>
                             <option v-for="bank in bankData" :key="bank.id" :value="bank.id">{{ bank.name }}</option>
@@ -381,7 +361,7 @@
                           <span class="text-danger" v-if="errors.bank_id">{{ errors.bank_id[0] }}</span>
                         </div>
 
-                        <div>
+                        <!-- <div>
                           <label for="withdrawalMethod" class="form-label">Branch</label>
                           <select v-model="insertdataBank.branch_id" class="form-control">
                             <option value="">Select Branch</option>
@@ -389,8 +369,38 @@
                             </option>
                           </select>
                           <span class="text-danger" v-if="errors.branch_id">{{ errors.branch_id[0] }}</span>
+                        </div> -->
+
+
+                        <div>
+                          <label for="withdrawalMethod" class="form-label">Account Title:</label>
+                          <input type="text" class="form-control"
+                            v-model="insertdataBank.account_name">
+                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
                         </div>
 
+                        <div>
+                          <label for="withdrawalMethod" class="form-label">Account Number:</label>
+                          <input type="text" class="form-control" 
+                            v-model="insertdataBank.account_num">
+                          <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
+                        </div>
+
+                        <div>
+                          <label for="withdrawalMethod" class="form-label">IBAN:</label>
+                          <input type="text" class="form-control"
+                            v-model="insertdataBank.ibn_no">
+                          <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
+                        </div>
+
+                        <div>
+                          <label for="withdrawalMethod" class="form-label">Swift/BIC:</label>
+                          <input type="text" class="form-control"
+                            v-model="insertdataBank.swift_bic">
+                          <span class="text-danger" v-if="errors.swift_bic">{{ errors.swift_bic[0] }}</span>
+                        </div>
+
+                      
                         <br />
 
                         <button type="submit" class="btn btn-primary text-white">Save</button>
@@ -400,7 +410,7 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th scope="col">Account Name</th>
+                            <th scope="col">Account Title</th>
                             <th scope="col">Account Number</th>
                             <th scope="col">IBN No.</th>
                             <th scope="col">Bank Name</th>
@@ -487,6 +497,7 @@ const insertdataBank = reactive({
   ibn_no: '',
   bank_id: '',
   branch_id: '',
+  swift_bic: '',
 });
 
 const getBranchList = async () => {
@@ -556,6 +567,7 @@ const submitWithdrawalAddressBank = () => {
   formData.append('ibn_no', insertdataBank.ibn_no);
   formData.append('bank_id', insertdataBank.bank_id);
   formData.append('branch_id', insertdataBank.branch_id);
+  formData.append('swift_bic', insertdataBank.swift_bic);
 
   const headers = {
     'Content-Type': 'multipart/form-data'
@@ -577,7 +589,7 @@ const submitWithdrawalAddressBank = () => {
       insertdataBank.account_num = "";
       insertdataBank.ibn_no = "";
       insertdataBank.bank_id = "";
-      insertdataBank.branch_id = "";
+      insertdataBank.swift_bic = "";
 
       // router.push('/dashboard/buyer/welcome');
     }).catch(error => {

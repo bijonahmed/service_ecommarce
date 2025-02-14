@@ -853,7 +853,7 @@ class UserController extends Controller
             'account_num'      => 'required',
             'ibn_no'           => 'required',
             'bank_id'          => 'required',
-            'branch_id'        => 'required',
+            'swift_bic'        => 'required',
 
         ]);
 
@@ -867,7 +867,7 @@ class UserController extends Controller
             'account_num'      => $request->account_num,
             'ibn_no'           => $request->ibn_no,
             'bank_id'          => $request->bank_id,
-            'branch_id'        => $request->branch_id,
+            'swift_bic'        => $request->swift_bic,
 
         );
         if (empty($request->id)) {
