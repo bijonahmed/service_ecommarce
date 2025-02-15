@@ -151,14 +151,8 @@ definePageMeta({
   middleware: "is-logged-out",
 });
 
-const sellerId = ref('');
-const orderId = ref('');
 
-const setReview = async (orders) => {
-  sellerId.value = orders.sellerId;
-  orderId.value = orders.orderId;
-  $('#review_modal').modal('show');
-}
+
 
 
 const chkUserrow = async () => {

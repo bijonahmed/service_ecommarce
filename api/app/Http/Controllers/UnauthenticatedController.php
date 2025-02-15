@@ -123,7 +123,11 @@ class UnauthenticatedController extends Controller
 
     public function getPublic(Request $request)
     {
-        $row        =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
+        $row            =  User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself','profession_name')->first();
+        $professionId   =  !empty($row->profession_name) ? (int)$row->profession_name : "";
+        $professionRow  =  Profession::where('id', $professionId)->first();
+        $professionName =  $professionRow->name ?? "";
+
         $filterData = Gig::where('user_id', $row->id)
             ->where('gig.status', 1)
             ->join('users', 'gig.user_id', '=', 'users.id')
@@ -159,13 +163,12 @@ class UnauthenticatedController extends Controller
             ];
         }
 
-        $row                =   User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
-        $chkCountry         =   Country::where('id', $row->country_1)->first();
+        $row                = User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
+        $chkCountry         = Country::where('id', $row->country_1)->first();
+       
 
         $review             = BuyerReview::where('buyer_id', $row->id)->get();
-
-
-        $result     = BuyerReview::where('buyer_id', $row->id)
+        $result             = BuyerReview::where('buyer_id', $row->id)
             ->select('buyer_review.*', 'users.name', 'users.image', 'users.slug')
             ->join('users', 'buyer_review.seller_id', '=', 'users.id')->get();
 
@@ -183,20 +186,16 @@ class UnauthenticatedController extends Controller
             ];
         }
         //return response()->json($reviewList);
-
-
-
-
-
         $response = [
             'gigList'             => $gigList,
-            'review'             => $reviewList,
+            'review'              => $reviewList,
             'name'                => $row->name,
             'email'               => $row->email,
             'joindate'            => date("d-M-Y", strtotime($row->created_at)),
             'countryName'         => $chkCountry->countryname,
             'image'               => !empty($row->image) ? url($row->image) : "",
             'introduce_yourself'  => $row->introduce_yourself,
+            'profName'            => $professionName,
             'message' => 'success'
         ];
 

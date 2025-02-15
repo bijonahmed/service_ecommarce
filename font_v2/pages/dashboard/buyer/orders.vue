@@ -31,9 +31,15 @@
             </div>
           </div>
         </section>
-
+        <center>
+          <div class="container">
+            <div class="loading-indicator" v-if="loading" style="text-align: center;">
+              <ProgressbarLoader />
+            </div>
+          </div>
+          </center>
         <div class="container">
-          <h3>Total Amount is : {{totalAmt}}</h3>
+          <h3>Total Amount is : ${{totalAmt}}</h3>
           <div class="ps-widget bgc-white bdrs4 overflow-hidden position-relative">
             <div class="packages_table table-responsive">
               <table class="table-style1 table at-savesearch">
@@ -224,6 +230,13 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
 .body_content {
   padding: 100px;
 }

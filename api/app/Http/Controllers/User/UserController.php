@@ -244,14 +244,25 @@ class UserController extends Controller
 
     public function pendingCountNotification()
     {
-        $countData = Notification::where('seller_id', $this->userid)
-        ->where(function($query) {
-            $query->whereNull('seen')->orWhere('seen', '');
-        })
-        ->count();
+        $roleid = $this->role_id; 
     
-    return response()->json(['unseen_notifications' => $countData]);
+        if ($roleid == 3) {
+            $countData = Notification::where('buyer_id', $this->userid)
+                ->where(function ($query) {
+                    $query->whereNull('seen')->orWhere('seen', '');
+                })
+                ->count();
+        } else {
+            $countData = Notification::where('seller_id', $this->userid)
+                ->where(function ($query) {
+                    $query->whereNull('seen')->orWhere('seen', '');
+                })
+                ->count();
+        }
+    
+        return response()->json(['unseen_notifications' => $countData]);
     }
+    
 
     public function getNotifications(Request $request)
     {
@@ -624,7 +635,7 @@ class UserController extends Controller
             'email'          => $field_email,
             'crypto_wallet_type'    => $walletname,
             'wallet_address'        => $wallet_address,
-            'withdrawal_amount' => $request->withdrawal_amount,
+            'withdrawal_amount'     => $request->withdrawal_amount,
 
             'account_name'      => $account_name,
             'account_num'       => $account_num,
@@ -798,8 +809,10 @@ class UserController extends Controller
                 'email'          => $v->email,
                 'account_name' => $v->account_name,
                 'account_num'  => $v->account_num,
+                'countryName'  => $v->countryName,
                 'ibn_no'       => $v->ibn_no,
                 'bankName'     => !empty($bankrow) ? $bankrow->name : "",
+                'bank_name'    => !empty($v->bank_name) ? $v->bank_name : "",
                 'branchName'   => !empty($branchrow) ? $branchrow->name : "",
             ];
         }
@@ -849,25 +862,28 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(), [
+            'countryName'      => 'required',
             'account_name'     => 'required',
             'account_num'      => 'required',
             'ibn_no'           => 'required',
-            'bank_id'          => 'required',
+            'bank_name'        => 'required',
             'swift_bic'        => 'required',
-
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
         $data = array(
+
             'user_id'          => $this->userid,
             'type'             => $request->type,
+            'countryName'      => $request->countryName,
             'account_name'     => $request->account_name,
             'account_num'      => $request->account_num,
             'ibn_no'           => $request->ibn_no,
             'bank_id'          => $request->bank_id,
             'swift_bic'        => $request->swift_bic,
+            'bank_name'        => $request->bank_name,
 
         );
         if (empty($request->id)) {

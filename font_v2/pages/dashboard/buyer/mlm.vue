@@ -7,44 +7,44 @@
             <MobileMenu />
             <div class="body_content">
 
-<section class="categories_list_section overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="position-relative">
+                <section class="categories_list_section overflow-hidden">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="position-relative">
 
-                    <!-- Left navigation button -->
-                    <button class="btn btn-default btn_l position-absolute left-0"
-                        @click="goToPrevSlide">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
+                                    <!-- Left navigation button -->
+                                    <button class="btn btn-default btn_l position-absolute left-0"
+                                        @click="goToPrevSlide">
+                                        <i class="fa-solid fa-chevron-left"></i>
+                                    </button>
 
-                    <!-- Swiper container -->
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
-                                <nuxt-link :to="`/category/${data.slug}`">
-                                    {{ data.name }}
-                                </nuxt-link>
+                                    <!-- Swiper container -->
+                                    <div class="swiper-container">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                                                <nuxt-link :to="`/category/${data.slug}`">
+                                                    {{ data.name }}
+                                                </nuxt-link>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Right navigation button -->
+                                    <button class="btn btn-default btn_r position-absolute right-0"
+                                        @click="goToNextSlide">
+                                        <i class="fa-solid fa-chevron-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-
                     </div>
-
-                    <!-- Right navigation button -->
-                    <button class="btn btn-default btn_r position-absolute right-0"
-                        @click="goToNextSlide">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
+                </section>
                 <!-- Breadcumb Sections -->
 
                 <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
+                    <ProgressbarLoader />
                 </div>
                 <section class="breadcumb-section">
                     <div class="container">
@@ -76,13 +76,8 @@
                 </div>
 
                 <div class="container mt-5">
-
                     <h4 class="mb-4">Referral Commission</h4>
                     <p>Total Users: {{ uniqueUserCount }}<br /> Amount : ${{ totalAmount }}</p>
-                    <!-- Displaying the count -->
-
-                    <!-- <h4 class="mb-4">Total Users 0522,
-                        Total Profiel ${{ sumAmount }}</h4> -->
                 </div>
 
 
@@ -209,13 +204,13 @@ const getCatList = async () => {
 };
 // Computed property to calculate the total amount
 const totalAmount = computed(() => {
-  const sum = allUsers.value.reduce((sum, user) => {
-    const userAmount = parseFloat(user.amount) || 0;
-    return sum + userAmount;
-  }, 0);
+    const sum = allUsers.value.reduce((sum, user) => {
+        const userAmount = parseFloat(user.amount) || 0;
+        return sum + userAmount;
+    }, 0);
 
-  // Fix the precision to 2 decimal places if needed
-  return parseFloat(sum.toFixed(2));
+    // Fix the precision to 2 decimal places if needed
+    return parseFloat(sum.toFixed(2));
 });
 
 const swiper = ref(null)
@@ -225,53 +220,121 @@ onMounted(() => {
     getRefferalCommission();
     getCatList();
 
-swiper.value = new Swiper('.swiper-container', {
-    slidesPerView: 'auto',
-    spaceBetween: 10,
-    navigation: {
-        nextEl: '.btn_r',
-        prevEl: '.btn_l'
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-    },
-    breakpoints: {
-        1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
+    swiper.value = new Swiper('.swiper-container', {
+        slidesPerView: 'auto',
+        spaceBetween: 10,
+        navigation: {
+            nextEl: '.btn_r',
+            prevEl: '.btn_l'
         },
-        768: {
-            slidesPerView: 5,
-            spaceBetween: 15,
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true
         },
-        576: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        320: {
-            slidesPerView: 2,
-            spaceBetween: 10,
+        breakpoints: {
+            1024: {
+                slidesPerView: 7,
+                spaceBetween: 20,
+            },
+            768: {
+                slidesPerView: 5,
+                spaceBetween: 15,
+            },
+            576: {
+                slidesPerView: 3,
+                spaceBetween: 10,
+            },
+            320: {
+                slidesPerView: 2,
+                spaceBetween: 10,
+            }
+        }
+    })
+    const goToPrevSlide = () => {
+        if (swiper.value) {
+            swiper.value.slidePrev()  // Go to previous slide
         }
     }
-})
-const goToPrevSlide = () => {
-    if (swiper.value) {
-        swiper.value.slidePrev()  // Go to previous slide
-    }
-}
 
-const goToNextSlide = () => {
-    if (swiper.value) {
-        swiper.value.slideNext()  // Go to next slide
+    const goToNextSlide = () => {
+        if (swiper.value) {
+            swiper.value.slideNext()  // Go to next slide
+        }
     }
-}
 
 });
 
 </script>
 
 <style scoped>
+/* New */
+
+h4 {
+    color: #333;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+}
+
+p {
+    font-size: 16px;
+    color: #555;
+    text-align: center;
+    font-weight: 500;
+}
+
+.table {
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.table th {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 12px;
+}
+
+.table td {
+    text-align: center;
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f8f9fa;
+}
+
+.table-striped tbody tr:hover {
+    background-color: #e9ecef;
+    transition: 0.3s ease-in-out;
+}
+
+.text-center {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.button {
+    display: block;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+button:hover {
+    background: #0056b3;
+}
+
+/* END */
 .table {
     margin-top: 20px;
 }

@@ -1,0 +1,19 @@
+<template>
+   <div class="loader"></div>
+  </template>
+  
+ 
+  <style scoped>
+.loader {
+  width: 120px;
+  height: 20px;
+  background:
+   linear-gradient(#000 0 0) 0/0% no-repeat
+   #ddd;
+  animation: l1 2s infinite linear;
+}
+@keyframes l1 {
+    100% {background-size:100%}
+}
+  </style>
+  

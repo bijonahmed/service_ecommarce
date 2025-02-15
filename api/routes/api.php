@@ -49,6 +49,8 @@ Route::group(
         Route::get('/getSelectedMessages', [ChatController::class, 'getSelectedMessages']);
         Route::get('/getChatUsers', [ChatController::class, 'getChatUsers']);
         Route::get('/getChatUsersTo', [ChatController::class, 'getChatUsersTo']);
+        Route::get('/byerPendingOrders', [ChatController::class, 'pendingOrdersBuyer']);
+        Route::get('/msgCountBuyer', [ChatController::class, 'msgCountBuyer']);
     },
 );
 

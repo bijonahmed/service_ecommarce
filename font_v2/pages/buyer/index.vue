@@ -26,11 +26,8 @@
               </div>
             </div>
           </section>
-          <!-- Start -->
 
-          <div class="loading-indicator" v-if="loading" style="text-align: center;">
-            <Loader />
-          </div>
+
 
           <section class="breadcumb-section pt-2 pb">
             <div
@@ -50,13 +47,10 @@
                           <img class=" wa-sm mb15-sm rounded-circle"
                             style="height:150px; width: 150px; overflow: hidden; object-fit: cover;"
                             :src="profileLogo || '/blank_user.jpg'" alt="">
-
-
-
                         </a>
                         <div class="ml20 ml0-xs">
-                          <h5 class="title mb-1">{{ name }}</h5>
-                          <p class="mb-0">{{ profName }}</p>
+                          <h5 class="title mb-1">{{ name || 'Loading...' }}</h5>
+                          <p class="mb-0">{{ profName || 'Loading...' }}</p>
                           <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
                                 0
@@ -64,11 +58,11 @@
                               </p> -->
                           <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm ml0-xs">
                             <i class="flaticon-place vam fz20 me-2"></i>
-                            {{ countryName }}
+                            {{ countryName || 'Loading...' }}
                           </p>
                           <p class="mb-0 dark-color fz15 fw500 list-inline-item ml15 mb5-sm ml0-xs">
                             <i class="flaticon-30-days vam fz20 me-2"></i>
-                            Join Date {{ joindate }}
+                            Join Date {{ joindate || 'Loading...' }}
                           </p>
 
                         </div>
@@ -79,7 +73,9 @@
               </div>
             </div>
           </section>
-
+          <div v-if="loading" class="loader-container">
+            <ProgressbarLoader />
+          </div>
           <!-- Service Details -->
           <section class="pt10 pb90 pb30-md">
             <div class="container-fluid">
@@ -130,52 +126,6 @@
                   </span>
                   <!-- ============{{ userResponseData.profile_status }}======== -->
                   <div class="service-about">
-                    <span v-if="euddata && euddata.length > 0">
-                      <hr class="opacity-100 mb10 mt10">
-                      <h4 class="mb30">Education</h4>
-                      <div class="educational-quality_">
-                        <div class="wrapper mb40" v-for="edu in euddata" :key="edu.id">
-                          <span class="tag">{{ edu.year }}</span>
-                          <h5 class="mt15">{{ edu.subject }}</h5>
-                          <h6 class="text-thm">{{ edu.college }}</h6>
-                          <p>{{ edu.description }}
-                          </p>
-                        </div>
-                      </div>
-                    </span>
-
-
-                    <span v-if="expdata && expdata.length > 0">
-                      <hr class="opacity-100 mb60">
-                      <h4 class="mb30">Work & Experience</h4>
-                      <div class="educational-quality_">
-                        <div class="wrapper mb40" v-for="edu in expdata" :key="edu.id">
-                          <span class="tag">{{ edu.year }}</span>
-                          <h5 class="mt15">{{ edu.role }}</h5>
-                          <h6 class="text-thm">{{ edu.company }}</h6>
-                          <p>{{ edu.description }}
-                          </p>
-                        </div>
-
-                      </div>
-                    </span>
-
-                    <span v-if="certificatedata && certificatedata.length > 0">
-                      <hr class="opacity-100 mb60">
-                      <h4 class="mb30">Awards adn Certificates</h4>
-                      <div class="educational-quality__">
-                        <div class="wrapper mb40" v-for="cer in certificatedata" :key="cer.id">
-                          <span class="tag">{{ cer.year }}</span>
-                          <h5 class="mt15">{{ cer.course_name }}</h5>
-                          <h6 class="text-thm">{{ cer.institute_name }}</h6>
-                          <p>{{ cer.description }}
-                          </p>
-                        </div>
-
-                      </div>
-
-
-                    </span>
 
 
                   </div>
@@ -241,59 +191,6 @@ if (process.client) {
   profileSlug.value = codeValue;
 }
 
-const getExperience = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/getExperience`, {
-      params: {
-        slug: profileSlug.value,
-      }
-    });
-    expdata.value = response.data.expdata;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getEducations = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/geteducation`, {
-      params: {
-        slug: profileSlug.value,
-      }
-    });
-    euddata.value = response.data.euddata;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getCertificates = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/getCertificate`, {
-      params: {
-        slug: profileSlug.value,
-      }
-    });
-    certificatedata.value = response.data.certificatedata;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-const getSkills = async () => {
-  try {
-
-    const response = await axios.get(`/unauthenticate/skillsData`, {
-      params: {
-        slug: profileSlug.value,
-      }
-    });
-    skillsdata.value = response.data.skillsdata;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const chkUserrow = async () => {
   try {
     loading.value = true;
@@ -321,14 +218,17 @@ const chkUserrow = async () => {
 
 onMounted(() => {
   getCatList();
-  getCertificates();
-  getExperience();
-  getEducations();
-  getSkills();
   chkUserrow();
 });
 </script>
 <style scoped>
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
 .body_content {
   padding: 100px;
 }

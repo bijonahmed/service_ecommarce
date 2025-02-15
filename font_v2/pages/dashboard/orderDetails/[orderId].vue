@@ -80,24 +80,9 @@
                     </tr>
                     <tr>
                       <th>Category</th>
-                      <td>{{ categoryName }}</td>
+                      <td><div v-if="categoryName"> {{ categoryName }} </div> <div v-if="subCategoryName">{{ subCategoryName }}</div>  <div v-if="inSubCategoryName">{{ inSubCategoryName }}</div></td>
                     </tr>
-                    <tr>
-                      <th>Subcategory</th>
-                      <td>{{ subCategoryName }}</td>
-                    </tr>
-                    <tr>
-                      <th>InsubCategory</th>
-                      <td>{{ inSubCategoryName }}</td>
-                    </tr>
-                    <tr>
-                      <th>Type</th>
-                      <td>
-                        <span v-if="types == 1">Single GIG</span>
-                        <span v-if="types == 2">Multiple GIG</span>
-
-                      </td>
-                    </tr>
+                    
                     <tr v-if="types == 1">
                       <th>Regular Price</th>
                       <td>${{ selected_price }}</td>
@@ -116,8 +101,8 @@
                     </tr>
                   </tbody>
                 </table>
-
-                <span v-if="types == 2">
+                      
+                <span v-if="selected_packages === 'Basic'">
                   <h3><u>Basic Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>
@@ -142,7 +127,7 @@
                   </table>
                 </span>
 
-                <span v-if="types == 2">
+                <span v-else-if="selected_packages === 'Standart'">
                   <h3><u>Standard Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>
@@ -166,7 +151,7 @@
                     </tbody>
                   </table>
                 </span>
-                <span v-if="types == 2">
+                <span v-else-if="selected_packages === 'Premium'">
                   <h3><u>Premimum Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>
@@ -458,6 +443,78 @@ onMounted(() => {
 </script>
 
 <style scoped>
+
+/* new */
+/* General Table Styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Table Header Styling */
+.table th {
+    background: #007bff;
+    color: #ffffff;
+    padding: 14px;
+    text-align: left;
+    font-size: 16px;
+    font-weight: bold;
+    border-right: 1px solid #fff;
+}
+
+/* Table Body Styling */
+.table td {
+    padding: 14px;
+    color: #444;
+    font-size: 15px;
+    border-bottom: 1px solid #ddd;
+    font-weight: 500;
+}
+
+/* Alternating Row Colors */
+.table-striped tbody tr:nth-of-type(odd) {
+    background: #f8f9fa;
+}
+
+/* Hover Effect */
+.table-hover tbody tr:hover {
+    background: #dbe6fd;
+    transition: background 0.3s ease-in-out;
+}
+
+/* Headings */
+h3 {
+    color: #007bff;
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Underline for Headings */
+h3 u {
+    text-decoration: none;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 5px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .table th,
+    .table td {
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+}
+
+/* end */
 .text-danger {
   color: red;
 }

@@ -107,13 +107,13 @@
                         <div class="row">
                           <div class="col-sm-4">
                             <div class="mb20">
-                              <label class="heading-color ff-heading fw500 mb10">First name <span
+                              <label class="heading-color ff-heading fw500 mb10">Full Name<span
                                   class="text-danger">*</span> </label>
                               <input type="text" class="form-control" v-model="name">
                               <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                             </div>
                           </div>
-                          <div class="col-sm-4">
+                          <div class="col-sm-4 d-none">
                             <div class="mb20">
                               <label class="heading-color ff-heading fw500 mb10">Last name<span
                                   class="text-danger">*</span></label>
@@ -639,7 +639,6 @@ const errorMessage = ref('');
 const clearImages = async () => {
   imageFile.value = null;
   imagePreview.value = null;
-
 }
 
 const submitCertifiate = async () => {

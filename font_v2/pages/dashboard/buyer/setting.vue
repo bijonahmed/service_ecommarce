@@ -7,45 +7,42 @@
       <MobileMenu />
       <div class="body_content">
 
-<section class="categories_list_section overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
+        <section class="categories_list_section overflow-hidden">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-12">
                 <div class="position-relative">
 
-                    <!-- Left navigation button -->
-                    <button class="btn btn-default btn_l position-absolute left-0"
-                        @click="goToPrevSlide">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
+                  <!-- Left navigation button -->
+                  <button class="btn btn-default btn_l position-absolute left-0" @click="goToPrevSlide">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </button>
 
-                    <!-- Swiper container -->
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
-                                <nuxt-link :to="`/category/${data.slug}`">
-                                    {{ data.name }}
-                                </nuxt-link>
-                            </div>
-                        </div>
-
+                  <!-- Swiper container -->
+                  <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                      <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
+                        <nuxt-link :to="`/category/${data.slug}`">
+                          {{ data.name }}
+                        </nuxt-link>
+                      </div>
                     </div>
 
-                    <!-- Right navigation button -->
-                    <button class="btn btn-default btn_r position-absolute right-0"
-                        @click="goToNextSlide">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
+                  </div>
+
+                  <!-- Right navigation button -->
+                  <button class="btn btn-default btn_r position-absolute right-0" @click="goToNextSlide">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </button>
                 </div>
+              </div>
             </div>
-        </div>
-    </div>
-</section>
+          </div>
+        </section>
         <!-- Breadcumb Sections -->
 
-        <div class="loading-indicator" v-if="loading" style="text-align: center;">
-          <Loader />
-        </div>
+
+
         <section class="breadcumb-section">
           <div class="container">
             <div class="row">
@@ -68,7 +65,13 @@
             </div>
           </div>
         </section>
-
+        <div class="container">
+          <center>
+            <div class="loading-indicator" v-if="loading" style="text-align: center;">
+              <ProgressbarLoader />
+            </div>
+          </center>
+        </div>
         <!-- Start Profile -->
         <div class="container">
           <div class="card border-top border-0 border-4 border-info">
@@ -271,69 +274,66 @@ const getCatList = async () => {
 };
 
 
-const getWithdrawalMethod = async () => {
-  try {
-    loading.value = true;
-    const response = await axios.get(`/user/getwithdrawalMethod`);
-    withDrawaldata.value = response.data.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 const swiper = ref(null);
 
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
   getCatList();
-  getWithdrawalMethod();
 
-swiper.value = new Swiper('.swiper-container', {
+  swiper.value = new Swiper('.swiper-container', {
     slidesPerView: 'auto',
     spaceBetween: 10,
     navigation: {
-        nextEl: '.btn_r',
-        prevEl: '.btn_l'
+      nextEl: '.btn_r',
+      prevEl: '.btn_l'
     },
     pagination: {
-        el: '.swiper-pagination',
-        clickable: true
+      el: '.swiper-pagination',
+      clickable: true
     },
     breakpoints: {
-        1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 5,
-            spaceBetween: 15,
-        },
-        576: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        320: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        }
+      1024: {
+        slidesPerView: 7,
+        spaceBetween: 20,
+      },
+      768: {
+        slidesPerView: 5,
+        spaceBetween: 15,
+      },
+      576: {
+        slidesPerView: 3,
+        spaceBetween: 10,
+      },
+      320: {
+        slidesPerView: 2,
+        spaceBetween: 10,
+      }
     }
-})
-const goToPrevSlide = () => {
+  })
+  const goToPrevSlide = () => {
     if (swiper.value) {
-        swiper.value.slidePrev()  // Go to previous slide
+      swiper.value.slidePrev()  // Go to previous slide
     }
-}
+  }
 
-const goToNextSlide = () => {
+  const goToNextSlide = () => {
     if (swiper.value) {
-        swiper.value.slideNext()  // Go to next slide
+      swiper.value.slideNext()  // Go to next slide
     }
-}
+  }
 });
 
 </script>
 
 <style scoped>
+.loading-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+}
+
 .body_content {
   padding: 100px;
 }

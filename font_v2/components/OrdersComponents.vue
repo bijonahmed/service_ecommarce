@@ -506,9 +506,18 @@ const cancelOrdersCount = ref(0);
 const completeOrdersCount = ref(0);
 const errors = ref({});
 
-const reviewOrder = () => {
+const sellerId = ref('');
+const orderId = ref('');
 
-    
+const setReview = async (orders) => {
+  sellerId.value = orders.sellerId;
+  orderId.value = orders.orderId;
+  $('#review_modal').modal('show');
+}
+
+
+const reviewOrder = () => {
+  
 
     Swal.fire({
         title: 'Are you sure?',

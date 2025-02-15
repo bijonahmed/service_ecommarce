@@ -94,7 +94,8 @@
                     to="/dashboard/buyer/notificationBox" v-if="isLoggedIn && userStore.role_id == 3"><i
                       class="fa fa-bell "></i>
                     <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{
+                      unseen_notifications }}+<span
                         class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
@@ -119,7 +120,7 @@
                       class="fa fa-envelope "></i>
 
                     <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{ buyermsgCount }}+<span
                         class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
@@ -140,7 +141,7 @@
                     to="/dashboard/buyer/welcome" v-if="isLoggedIn && userStore.role_id == 3">
                     <i class="fa fa-shopping-cart "></i>
                     <span
-                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+<span
+                      class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{buyerpendingOrders}}+<span
                         class="visually-hidden">unread messages</span>
                     </span>
                   </nuxt-link>
@@ -248,7 +249,9 @@ const router = useRouter();
 const name = ref();
 const unseen_notifications = ref(0);
 const countmsg = ref(0);
+const buyermsgCount = ref(0);
 const pendingOrders = ref(0);
+const buyerpendingOrders = ref(0);
 const imagePreview = ref();
 const email = ref();
 
@@ -348,7 +351,7 @@ const navbarScrollfixed = () => {
   });
 }
 const getChatusersList = async () => {
-  loading.value = true; // Start loading
+  
   try {
     const response = await axios.get(`/chat/getChatUsersTo`);
     countmsg.value = response.data.countmsg;
@@ -357,13 +360,31 @@ const getChatusersList = async () => {
 
   } catch (error) {
     console.error('Error fetching chat users:', error);
-  } finally {
-    loading.value = false; // Stop loading
+  }
+};
+const buyerPendingOrderCount = async () => {
+
+  try {
+    const response = await axios.get(`/chat/byerPendingOrders`);
+    buyerpendingOrders.value = response.data.pendingOrders;
+  } catch (error) {
+    console.error('Error fetching chat users:', error);
   }
 };
 
+const buyerPendingMsgCount = async () => {
+ 
+  try {
+    const response = await axios.get(`/chat/msgCountBuyer`);
+    buyermsgCount.value = response.data.buyermsgCount;
+  } catch (error) {
+    console.error('Error fetching chat users:', error);
+  }
+};
 onMounted(async () => {
   fetchCatData();
+  buyerPendingMsgCount();
+  buyerPendingOrderCount();
   navbarScrollfixed();
   getUserRow();
   notificationCount();

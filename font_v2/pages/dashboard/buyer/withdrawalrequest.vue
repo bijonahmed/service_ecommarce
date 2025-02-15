@@ -44,7 +44,7 @@
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
-          <Loader />
+          <ProgressbarLoader />
         </div>
         <section class="breadcumb-section">
           <div class="container">
@@ -377,45 +377,45 @@
                       <form class="mt-3" @submit.prevent="submitWithdrawalAddressBank()">
                         <div class="mb-3">
                           <label for="withdrawalMethod" class="form-label">Country</label>
-                          <select name="" id="" class="form-control">
+                          <select name="" id="" class="form-control" v-model="insertdataBank.countryName">
                             <option value="" selected disabled >Select country</option>
-                            <option value="">Bangladesh</option>
-                            <option value="">Pakistan</option>
-                            <option value="">USA</option>
+                            <option value="Bangladesh">Bangladesh</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="USA">USA</option>
                           </select>
-                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
+                          <span class="text-danger" v-if="errors.countryName">{{ errors.countryName[0] }}</span>
                         </div>
                         <div class="mb-3">
                           <label for="withdrawalMethod" class="form-label">Bank name</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Bank name"
-                            v-model="insertdataBank.account_name">
-                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
+                          <input type="text" class="form-control"  
+                            v-model="insertdataBank.bank_name">
+                          <span class="text-danger" v-if="errors.bank_name">{{ errors.bank_name[0] }}</span>
                         </div>
 
                         <div class="mb-3">
-                          <label for="withdrawalMethod" class="form-label">Account title</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account title"
-                            v-model="insertdataBank.account_num">
-                          <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
+                          <label for="withdrawalMethod" class="form-label">Account Title</label>
+                          <input type="text" class="form-control" 
+                            v-model="insertdataBank.account_name">
+                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
                         </div>
                         <div class="mb-3">
-                          <label for="withdrawalMethod" class="form-label">Account number</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Account number"
+                          <label for="withdrawalMethod" class="form-label">Account Number</label>
+                          <input type="text" class="form-control"  
                             v-model="insertdataBank.account_num">
                           <span class="text-danger" v-if="errors.account_num">{{ errors.account_num[0] }}</span>
                         </div>
 
                         <div class="mb-3">
                           <label for="withdrawalMethod" class="form-label">IBN</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="IBN"
+                          <input type="text" class="form-control"  
                             v-model="insertdataBank.ibn_no">
                           <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
                         </div>
                         <div class="mb-3">
                           <label for="withdrawalMethod" class="form-label">Swift/BIC</label>
-                          <input type="text" class="form-control" id="accountDetails" placeholder="Swift/BIC"
-                            v-model="insertdataBank.ibn_no">
-                          <span class="text-danger" v-if="errors.ibn_no">{{ errors.ibn_no[0] }}</span>
+                          <input type="text" class="form-control"  
+                            v-model="insertdataBank.swift_bic">
+                          <span class="text-danger" v-if="errors.swift_bic">{{ errors.swift_bic[0] }}</span>
                         </div>
 
                         <!-- <div>
@@ -446,20 +446,22 @@
                       <table class="table table-striped">
                         <thead>
                           <tr>
-                            <th scope="col">Account Name</th>
+                            <th scope="col">Country</th>
+                            <th scope="col">Account Title</th>
                             <th scope="col">Account Number</th>
                             <th scope="col">IBN No.</th>
                             <th scope="col">Bank Name</th>
-                            <th scope="col">Branch Name</th>
+                          
                           </tr>
                         </thead>
                         <tbody>
                           <tr v-for="(withdrawal, index) in withDrawaldata" :key="index">
+                            <td>{{ withdrawal.countryName || 'N/A' }}</td>
                             <td>{{ withdrawal.account_name }}</td>
                             <td>{{ withdrawal.account_num }}</td>
                             <td>{{ withdrawal.ibn_no }}</td>
-                            <td>{{ withdrawal.bankName }}</td>
-                            <td>{{ withdrawal.branchName }}</td>
+                            <td>{{ withdrawal.bank_name }}</td>
+                         
                           </tr>
                           <tr v-if="withDrawaldata.length === 0">
                             <td colspan="5" class="text-center">No Bank data available.</td>
@@ -528,11 +530,14 @@ const insertdatawithdrwal = reactive({
   wallet_address: '',
 });
 const insertdataBank = reactive({
+  countryName:'',
   account_name: '',
   account_num: '',
   ibn_no: '',
+  swift_bic: '',
   bank_id: '',
   branch_id: '',
+  bank_name:''
 });
 
 const getBranchList = async () => {
@@ -597,11 +602,14 @@ const submitWithdrawalAddressBank = () => {
 
   const formData = new FormData();
   formData.append('type', 'bank');
+  formData.append('countryName', insertdataBank.countryName);
   formData.append('account_name', insertdataBank.account_name);
   formData.append('account_num', insertdataBank.account_num);
   formData.append('ibn_no', insertdataBank.ibn_no);
   formData.append('bank_id', insertdataBank.bank_id);
   formData.append('branch_id', insertdataBank.branch_id);
+  formData.append('bank_name', insertdataBank.bank_name);
+  formData.append('swift_bic', insertdataBank.swift_bic);
 
   const headers = {
     'Content-Type': 'multipart/form-data'

@@ -65,7 +65,7 @@ const copyToClipboard = () => {
 /* Container Styling */
 .referral-link-container {
     max-width: 600px;
-    margin: 50px auto;
+    margin: 10px auto;
     padding: 20px;
     text-align: center;
     background: #f9f9f9;

@@ -57,8 +57,6 @@ class ChatController extends Controller
         // Execute the query and fetch the data
         $data = $query->get();
 
-
-
         $chatusers = [];
         foreach ($data as $v) {
             $userrecords = User::where('id', $v->user_id)->where('role_id', 3)->first();
@@ -84,6 +82,21 @@ class ChatController extends Controller
         $resdata['chatusers']     = $chatusers;
         $resdata['countmsg']      = $countunreadMsg;
         $resdata['pendingOrders'] = $pendingOrder;
+        return response()->json($resdata);
+    }
+
+
+    public function pendingOrdersBuyer(){
+
+        $pendingOrder   = Order::where('buyerId', $this->userid)->where('order_status', 1)->count();
+        $resdata['pendingOrders'] = $pendingOrder;
+        return response()->json($resdata);
+    }
+
+
+    public function msgCountBuyer(){
+        $countunreadMsg = MyMessage::where('messages.to_id', $this->userid)->where('is_read', 0)->count();
+        $resdata['buyermsgCount'] = $countunreadMsg;
         return response()->json($resdata);
     }
 

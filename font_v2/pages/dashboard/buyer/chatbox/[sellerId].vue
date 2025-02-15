@@ -52,8 +52,9 @@
           </div>
         </section>
         <!-- <DashboardMainConentTabs /> -->
+         <!-- ================================================== Message for pc ======================= -->
         <!-- Start Chatbox -->
-        <div class="dashboard__content content">
+        <div class="dashboard__content content pcMessage">
           <div class="row">
             <div class="col-lg-3">
               <div class="message_container">
@@ -200,6 +201,240 @@
             </div>
           </div>
         </div>
+        <!-- ============================================== Messages for Mobile ===========================================  -->
+        <div class="dashboard__content content MobileMessage">
+          <div class="row">
+            <div class="col-md-12">
+              <!-- user list  -->
+              <div class="message_container" v-if="activeDiv === 'list'">
+                <div class="m-4 d-flex align-items-center justify-content-center">
+                  <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch"
+                    @keyup="getChatusersList">
+                  <button type="button" class="btn btn-primary m-0 h-100 search_btn">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+                <div v-if="chatUsers.length">
+                  <ul class="chat-user-list">
+                    <li v-for="user in chatUsers" :key="user.id" @click="selectUser(user)"
+                      class="chat-user-item chulist"
+                      :class="['chat-user-item', { selected: selectedUserId === user.id }]"
+                      :data-user-id="user.user_id">
+                      <img :src="user.profilePicture ? user.profilePicture : '/blank_user.jpg'" alt="Profile Picture"
+                        class="profile-pic" />
+                      <span>{{ user.user_name }}</span>
+                      <!-- <span>{{ user.user_name }}-----{{ user.user_id }}</span> -->
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!-- userlist end  -->
+
+              <!-- ============================ message section ========================================= -->
+
+              <div class="card" v-if="activeDiv === 'message'">
+                <div class="card-header d-flex">
+                  <button type="button" style="background: transparent; border: none; color: #fff;" @click="change()"><i
+                      class="fa-solid fa-arrow-left me-2"></i></button>
+                  <div class="justify-content-between align-items-center d-flex p-2" @click="profile" style="cursor: pointer;">
+                    <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
+                  </div>
+                  <span style="font-size: 12px;"></span>
+                </div>
+                <div class="chatbox" id="" ref="chatContainer">
+                  <div class="" ref="chatContainer" v-if="chatMessages.length">
+                    <div class="message" v-for="message in chatMessages" :key="message.id"
+                      :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
+                      <!-- <img
+                        :src="message.sender_id === senderId ? message.sender_profile_picture : message.recipient_profile_picture"
+                        alt="Profile Picture" class="profile-picture" /> -->
+
+                      <div class="message-content">
+                        <!-- <strong class="sender-name">{{ message.sender_name }}</strong> -->
+                        <p class="message-text">{{ message.message }}</p>
+                        <div v-if="message.files" class="file-attachment">
+                          <!-- <p>Attached Files:</p> -->
+                          <div v-if="isImage(message.files)">
+                            <img style="width: 100px;" :src="message.files" alt="Attached Image"
+                              class="attached-image" />
+                          </div>
+                          <div v-else>
+                            <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
+                              }}</a>
+                          </div>
+                        </div>
+                        <span class="timestamp">{{ message.time_sent }}</span>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="no-messages" v-else>
+                    <p>No messages yet.</p>
+                  </div>
+                </div>
+                <div class="card-footer">
+                  <form id="chatForm" enctype="multipart/form-data" @submit.prevent="sendMessage()">
+                    <div class="input-group"
+                      style="display: flex; align-items: center; gap: 8px; background-color: #f9f9f9; padding: 10px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+
+                      <!-- Message Input -->
+                      <input class="form-control" id="message" placeholder="Type your message..."
+                        v-model="messageContent" style="
+                        flex: 1;
+                        padding: 12px 16px;
+                        border: 1px solid #ccc;
+                        border-radius: 8px;
+                        font-size: 16px;
+                        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+                        outline: none;
+                        transition: border-color 0.3s, box-shadow 0.3s; " />
+
+                      <!-- File Upload Icon -->
+                      <div class="p-2 bg-white d-flex align-items-center justify-content-center"
+                        style=" width: 50px; height: 50px; border-radius: 50%; border: 1px solid #ccc; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s; ">
+                        <label for="fileInput" class="d-flex align-items-center justify-content-center"
+                          style="cursor: pointer; margin: 0;">
+                          <i class="fas fa-paperclip" style="font-size: 20px; color: #555;"></i>
+                        </label>
+                      </div>
+
+                      <!-- Hidden File Input -->
+                      <input type="file" hidden id="fileInput" accept="image/*,application/pdf,application/zip"
+                        @change="handleFileUpload" />
+
+                      <!-- Send Button -->
+                      <button class="btn btn-primary text-white send_button" type="submit" style="
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  width: 50px;
+                  height: 50px;
+                  border-radius: 50%;
+                  border: none;
+                  background-color: #007bff;
+                  transition: background-color 0.3s, box-shadow 0.3s;">
+                        <i class="fas fa-paper-plane" style="font-size: 20px;"></i>
+                      </button>
+
+                    </div>
+
+                    <small style="display: block; margin-top: 5px; color: #888;">Max File Size: 1GB</small>
+                  </form>
+
+                  <!-- File Preview Modal -->
+                  <div v-if="showModal" class="modal-backdrop">
+                    <div class="modal-content">
+                      <h5>File Preview</h5>
+                      <div class="preview-container">
+
+                        <!-- Preview for Images -->
+                        <img v-if="isImage" :src="filePreview" class="img-fluid" />
+
+                        <!-- Preview for PDFs -->
+                        <iframe v-if="isPDF" :src="filePreview" width="100%" height="400px" frameborder="0"></iframe>
+
+                        <!-- File Info for Unsupported Files -->
+                        <div v-if="!issImage && !isPDF" class="unsupported-file">
+                          <i class="fas fa-file fa-3x"></i>
+                          <p style="margin-top: 10px;">{{ selectedFile?.name }}</p>
+                        </div>
+                      </div>
+
+                      <!-- Modal Actions -->
+                      <div class="modal-actions">
+                        <button class="btn btn-success text-white" @click="confirmFileSend"
+                          :disabled="loading.value">Send
+                          File</button>
+                        <button class="btn btn-danger text-white" @click="cancelPreview">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- File Preview Modal -->
+                  <div v-if="showModalMsg" class="modal-backdrop">
+                    <div class="modal-content">
+                      <h5>Message</h5>
+                      <div class="preview-container">
+                        <center>
+                          <div v-if="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+                        </center>
+                      </div>
+                      <div class="modal-actions">
+                        <button class="btn btn-danger text-white" @click="cancelPreviewMsg">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+              </div>
+              <!-- ======================================== End ===========================================  -->
+
+
+              <div class="bg-white h-100 p-4" v-if="activeDiv === 'profile'">
+                <div class="w-100 d-flex">
+                  <button type="button" @click="backProfile" style="background-color: transparent;border: none;"><i class="fa-solid fa-arrow-left mx-2"></i></button></div>
+
+                <img :src="profilePicture || '/blank_user.jpg'" alt="" class="img-fluid rounded-circle bg-red"
+                  style="height: 80px;width: 80px;">
+                <h4 class="text-center mt-2 mb-0">{{ user_name }}</h4>
+                <p class="text-center">{{ professionName }}</p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>From</p>
+                  <strong>{{ country }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Registered</p>
+                  <strong>{{ join_date }}</strong>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Language</p>
+                  <strong>English</strong>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Completed orders</p>
+                  <p>{{ sellerOrder }}</p>
+                </div>
+                <div class="d-none d-flex justify-content-between align-items-center">
+                  <p>Average rating given</p>
+                  <p>{{ sellerReview }}</p>
+                </div>
+                <!-- <div class=" d-none  justify-content-between align-items-center">
+  <p>Average order price</p>
+  <p>0</p>
+</div> -->
+                <!-- <div class="d-none justify-content-between align-items-center">
+  <p>Tip Frequency</p>
+  <p>0</p>
+</div> -->
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Repeat order rate</p>
+                  <p>0</p>
+                </div>
+                <div class="d-none d-flex justify-content-between align-items-center">
+                  <p>Order completion rate</p>
+                  <p>90%</p>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <p>Date of last order</p>
+                  <p>{{ lastOrderDate }}</p>
+                </div>
+                <div class="d-none justify-content-between align-items-center">
+                  <p>Preferred service</p>
+                  <p>0</p>
+                </div>
+              </div>
+
+
+
+            </div>
+          </div>
+        </div>
+        <!-- =================== End =====================  -->
         <!-- END ChatBox -->
         <div />
       </div>
@@ -246,6 +481,21 @@ const lastOrderDate = ref("");
 const sellerReview = ref("");
 const handleFileUpload = (event) => {
   uploadedFile.value = event.target.files[0];
+};
+
+
+// =================================================================================
+const activeDiv = ref('list'); // Default active div
+
+const change = () => {
+  activeDiv.value = 'list'; // Update the existing ref value
+};
+
+const profile = () => {
+  activeDiv.value = 'profile'; // Update the existing ref value
+};
+const backProfile = () => {
+  activeDiv.value = 'message'; // Update the existing ref value
 };
 
 const isImage = (fileUrl) => {
@@ -366,6 +616,8 @@ async function selectUser(users) {
   console.log("==selectedUserId==" + users.id);
   console.log("==user_name==" + users.user_name);
 
+  activeDiv.value = 'message'; // Update the existing ref value
+
   sellerReview.value = users.sellerReview;
   lastOrderDate.value = users.lastOrderDate;
   sellerOrder.value = users.sellerOrder;
@@ -445,6 +697,29 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
+
+.MobileMessage {
+  display: none;
+  min-height: 80vh;
+}
+
+.MobileMessage .message_container {
+  min-height: 80vh;
+}
+
+.pcMessage {
+  display: block;
+}
+
+@media(max-width: 992px) {
+  .MobileMessage {
+    display: block;
+  }
+
+  .pcMessage {
+    display: none;
+  }
+}
 .message_container {
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;

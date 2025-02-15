@@ -275,7 +275,14 @@ class OrderController extends Controller
 
         $order   = Order::where('orders.orderId', $orderId)
             ->join('gig', 'orders.gig_id', '=', 'gig.id')  // Join orders with gigs table
-            ->select('gig.id', 'orders.sellerId', 'orders.buyerId', 'orders.cancel_resion', 'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description', 'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 'gig.types', 'orders.selected_packages', 'orders.selected_price', 'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
+            ->select('gig.id', 'orders.sellerId', 'orders.buyerId', 'orders.cancel_resion',
+             'orders.orderId', 'orders.order_status', 'gig.premium_price', 'gig.premium_description',
+              'gig.premium_delivery_days', 'gig.premium_source_file', 'gig.standard_price', 
+              'gig.stn_descrition', 'gig.stn_delivery_days', 'gig.stn_source_file', 
+              'gig.basic_price', 'gig.basic_description', 'gig.basic_delivery_days', 
+              'gig.source_file', 'gig.name as gig_name', 'gig.gig_slug', 'gig.category_id', 
+              'gig.types', 'orders.selected_packages', 'orders.selected_price', 
+              'gig.gig_description', 'gig.order_rules', 'gig.delivery_day') // Select fields from all tables
             ->first();
 
         $imgHistory = GigImagesHistory::where('gig_id', $order->id)->get();
