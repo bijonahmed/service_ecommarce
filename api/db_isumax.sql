@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost:3306
--- Generation Time: Oct 22, 2024 at 05:35 AM
--- Server version: 10.11.9-MariaDB
--- PHP Version: 8.3.11
+-- Host: 127.0.0.1
+-- Generation Time: Feb 17, 2025 at 11:11 PM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `isumax_db_isumax`
+-- Database: `db_isumax`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_info`
+--
+
+CREATE TABLE `bank_info` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `bank_info`
+--
+
+INSERT INTO `bank_info` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Habib Bank Limited (HBL)', 1, '2024-10-29 02:20:34', '2024-10-29 02:20:34'),
+(2, 'United Bank Limited (UBL)', 1, '2024-10-29 02:20:34', '2024-10-29 12:20:56'),
+(5, 'Muslim Comercial Bank', 1, '2024-10-31 11:46:22', '2024-10-31 11:46:22'),
+(6, 'Qatar National Bank', 1, '2024-10-31 11:46:53', '2024-10-31 11:46:53');
 
 -- --------------------------------------------------------
 
@@ -95,6 +119,34 @@ INSERT INTO `blog_posts` (`id`, `title`, `slug`, `category`, `content`, `image`,
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `branch`
+--
+
+CREATE TABLE `branch` (
+  `id` int(11) NOT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT 1,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `branch`
+--
+
+INSERT INTO `branch` (`id`, `bank_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'Branch -1', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(2, 1, 'Branch -2', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(3, 2, 'Branch -1', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(4, 2, 'Branch -2', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(5, 2, 'Branch -3', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(6, 2, 'Branch -4', 1, '2024-10-29 02:23:58', '2024-10-29 02:23:58'),
+(8, 5, 'Gouri Town branch', 1, '2024-11-04 13:24:14', '2024-11-04 13:24:14');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `brands`
 --
 
@@ -123,6 +175,34 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `image`, `status`, `created_at`, `up
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `buyer_review`
+--
+
+CREATE TABLE `buyer_review` (
+  `id` int(11) NOT NULL,
+  `seller_id` int(11) DEFAULT NULL,
+  `buyer_id` int(11) DEFAULT NULL,
+  `orderId` int(11) DEFAULT NULL,
+  `rating` int(11) DEFAULT NULL,
+  `review` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `buyer_review`
+--
+
+INSERT INTO `buyer_review` (`id`, `seller_id`, `buyer_id`, `orderId`, `rating`, `review`, `created_at`, `updated_at`) VALUES
+(1, 2, 18, 1816070, 4, '6544566666', '2024-10-25 20:56:29', '2024-10-25 20:56:29'),
+(2, 11, 7, 736042, 2, 'Very Good', '2024-10-26 03:05:35', '2024-10-26 03:05:35'),
+(3, 11, 9, 930775, 5, 'thanks', '2024-10-26 08:36:14', '2024-10-26 08:36:14'),
+(4, 15, 4, 413187, 5, 'a very well', '2024-10-28 10:40:22', '2024-10-28 10:40:22'),
+(5, 11, 3, 356338, 5, 'It\'s been a pleasure collaborating with mdbijonahmed. Looking forward to working with him again. Highly recommended!', '2025-02-14 15:53:04', '2025-02-14 15:53:04');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `buy_token`
 --
 
@@ -145,6 +225,32 @@ INSERT INTO `buy_token` (`id`, `user_id`, `usdt_amount`, `current_price`, `get_t
 (2, 9, 50.00, '0.001188888889', 42056.07, '2024-07-30 21:34:37', '2024-07-30 21:34:37'),
 (3, 9, 21.00, '0.0011244444', 18675.89, '2024-07-31 11:46:22', '2024-07-31 11:46:22'),
 (4, 9, 50.00, '0.0011291111', 44282.62, '2024-07-31 11:46:53', '2024-07-31 11:46:53');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cancel_orders`
+--
+
+CREATE TABLE `cancel_orders` (
+  `id` int(11) NOT NULL,
+  `orderId` varchar(255) DEFAULT NULL,
+  `sellerId` int(11) DEFAULT NULL,
+  `buyerId` int(11) DEFAULT NULL,
+  `selectedPrice` decimal(10,2) DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cancel_orders`
+--
+
+INSERT INTO `cancel_orders` (`id`, `orderId`, `sellerId`, `buyerId`, `selectedPrice`, `created_at`, `updated_at`) VALUES
+(1, '961497-24', 11, 9, 150.00, '2024-10-28 11:33:37', '2024-10-28 11:33:37'),
+(2, '422266-24', 11, 4, 150.00, '2024-10-28 11:39:52', '2024-10-28 11:39:52'),
+(3, '488559-24', 11, 4, 150.00, '2024-10-28 11:50:40', '2024-10-28 11:50:40'),
+(4, '953286-24', 11, 9, 150.00, '2024-10-28 13:29:34', '2024-10-28 13:29:34');
 
 -- --------------------------------------------------------
 
@@ -181,22 +287,116 @@ CREATE TABLE `categorys` (
 --
 
 INSERT INTO `categorys` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `parent_id`, `commission`, `fixcommission`, `product_sell_qty`, `getAmount`, `sort_order`, `file`, `status`, `speacial_status`, `mobile_view_class`, `keyword`, `percentage_amt`, `created_at`, `updated_at`) VALUES
+(1, 'Graphics & Design', 'graphics-design', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(2, 'Digital Marketing', 'digital-marketing', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'Writing & Translation', 'writing-translation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'Video & Animation', 'video-animation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'Music & Audio', 'music-audio', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'Programming & Tech', 'programming-tech', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'Data', 'data', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(8, 'Business', 'business', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'Personal Growth & Hobbies', 'personal-growth-hobbies', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'Photography', 'photography', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'Finance', 'finance', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(12, 'Logo Design', 'logo-design', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(13, 'Business Cards & Stationery', 'business-cards', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(14, 'Illustration', 'illustration', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(15, 'Cartoons & Caricatures', 'cartoons-caricatures', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(16, 'Flyers & Brochures', 'flyers-brochures', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(17, 'Book & eBook Covers', 'book-ebook-covers', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(18, 'Packaging & Labels', 'packaging-labels', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(19, 'Social Media Marketing', 'social-media-marketing', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(20, 'SEO', 'seo', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(21, 'Content Marketing', 'content-marketing', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(22, 'Email Marketing', 'email-marketing', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(23, 'Influencer Marketing', 'influencer-marketing', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(24, 'Article & Blog Writing', 'article-blog-writing', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(25, 'Translation Services', 'translation-services', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(26, 'Proofreading & Editing', 'proofreading-editing', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(27, 'Technical Writing', 'technical-writing', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(28, 'Creative Writing', 'creative-writing', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(29, 'Resume & Cover Letters', 'resume-cover-letters', NULL, NULL, NULL, NULL, 3, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(30, 'Video Editing', 'video-editing', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(31, 'Whiteboard Animation', 'whiteboard-animation', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(32, 'Explainer Videos', 'explainer-videos', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(33, '3D Animation', '3d-animation', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(34, 'Spokesperson Videos', 'spokesperson-videos', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(35, 'Short Video Ads', 'short-video-ads', NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(36, 'Web Development', 'web-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(37, 'Mobile App Development', 'mobile-app-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(38, 'Custom Software Development', 'custom-software-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(39, 'Chatbot Development', 'chatbot-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(40, 'Blockchain & Cryptocurrency', 'blockchain-cryptocurrency', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(41, 'Game Development', 'game-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(42, 'E-Commerce Development', 'ecommerce-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(43, 'WordPress Development', 'wordpress-development', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(44, 'Cybersecurity & Data Protection', 'cybersecurity-data-protection', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(45, 'AI & Machine Learning', 'ai-machine-learning', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(46, 'Data Science & Analytics', 'data-science-analytics', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(47, 'Tech Support & IT Services', 'tech-support-it-services', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(48, 'DevOps & Cloud Services', 'devops-cloud-services', NULL, NULL, NULL, NULL, 6, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(49, 'Voice Over', 'voice-over', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(50, 'Producers & Composers', 'producers-composers', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(51, 'Singer-Songwriters', 'singer-songwriters', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(52, 'Session Musicians', 'session-musicians', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(53, 'Audio Engineers', 'audio-engineers', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(54, 'Podcast Editing', 'podcast-editing', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(55, 'Mixing & Mastering', 'mixing-mastering', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(56, 'Jingles & Intros', 'jingles-intros', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(57, 'Sound Effects', 'sound-effects', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL),
+(58, 'Beats & Custom Music', 'beats-custom-music', NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, 0, NULL, 1, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categorys_backup`
+--
+
+CREATE TABLE `categorys_backup` (
+  `id` bigint(20) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL,
+  `description` text DEFAULT NULL,
+  `meta_title` varchar(255) DEFAULT NULL,
+  `meta_description` text DEFAULT NULL,
+  `meta_keyword` varchar(255) DEFAULT NULL,
+  `parent_id` int(11) DEFAULT 0,
+  `commission` int(11) DEFAULT NULL,
+  `fixcommission` varchar(255) DEFAULT NULL,
+  `product_sell_qty` int(11) DEFAULT NULL,
+  `getAmount` decimal(10,5) DEFAULT NULL COMMENT 'Admin get commission amount ',
+  `sort_order` int(11) DEFAULT 0,
+  `file` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT NULL,
+  `speacial_status` int(11) DEFAULT NULL,
+  `mobile_view_class` varchar(255) DEFAULT NULL,
+  `keyword` varchar(255) DEFAULT NULL,
+  `percentage_amt` int(11) DEFAULT NULL,
+  `created_at` varchar(255) DEFAULT NULL,
+  `updated_at` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categorys_backup`
+--
+
+INSERT INTO `categorys_backup` (`id`, `name`, `slug`, `description`, `meta_title`, `meta_description`, `meta_keyword`, `parent_id`, `commission`, `fixcommission`, `product_sell_qty`, `getAmount`, `sort_order`, `file`, `status`, `speacial_status`, `mobile_view_class`, `keyword`, `percentage_amt`, `created_at`, `updated_at`) VALUES
 (1, 'Programming & Tech', 'programming-tech', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:22', '2024-10-19 09:23:22'),
 (2, 'Graphics & Design', 'graphics-design', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:33', '2024-10-19 09:23:33'),
 (3, 'Digital Marketing', 'digital-marketing', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:43', '2024-10-19 09:23:43'),
 (4, 'Video & Animation', 'video-animation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:23:55', '2024-10-19 09:23:55'),
 (5, 'Writing & Translation', 'writing-translation', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:05', '2024-10-19 09:24:05'),
-(6, 'Music & Audio', 'music-audio', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:17', '2024-10-19 09:24:17'),
+(6, 'Audio stuff', 'audio-stuff', '', 'null', 'null', 'null', 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 09:24:17', '2024-10-29 12:18:46'),
 (7, 'Business Services', 'business-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:30', '2024-10-19 09:24:30'),
 (8, 'Consulting', 'consulting', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:39', '2024-10-19 09:24:39'),
 (9, 'AI Services', 'ai-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:49', '2024-10-19 09:24:49'),
 (10, 'Personal Growth', 'personal-growth', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:24:58', '2024-10-19 09:24:58'),
 (11, 'products /services', 'products-services', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:56:59', '2024-10-19 09:56:59'),
-(12, 'Website Development', 'website-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:57:26', '2024-10-19 09:57:26'),
+(12, 'Web & App Design', 'web-app-design', '', 'null', 'null', 'null', 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 09:57:26', '2024-10-29 09:59:17'),
 (13, 'courses', 'courses', NULL, NULL, NULL, NULL, 0, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 09:57:58', '2024-10-19 09:57:58'),
-(14, 'Business Websites', 'business-websites', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:00:40', '2024-10-19 13:01:02'),
-(15, 'E-Commerce Development', 'e-commerce-development', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:01:29', '2024-10-19 10:01:29'),
-(16, 'Website Platforms', 'website-platforms', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:01:57', '2024-10-19 10:01:57'),
+(14, 'App Design', 'app-design', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:00:40', '2024-10-29 10:00:30'),
+(15, 'UX Design', 'ux-design', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:01:29', '2024-10-29 10:01:01'),
+(16, 'Website Development', 'website-development', '', 'null', 'null', 'null', 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:01:57', '2024-10-29 10:15:52'),
 (17, 'Website Maintenance', 'website-maintenance', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:21', '2024-10-19 10:02:21'),
 (18, 'AI Development', 'ai-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:36', '2024-10-19 10:02:36'),
 (19, 'Chatbot Development', 'chatbot-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:02:50', '2024-10-19 10:02:50'),
@@ -205,11 +405,66 @@ INSERT INTO `categorys` (`id`, `name`, `slug`, `description`, `meta_title`, `met
 (22, 'Cloud & Cybersecurity', 'cloud-cybersecurity', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:39', '2024-10-19 10:03:39'),
 (23, 'Data Science & ML', 'data-science-ml', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:03:54', '2024-10-19 10:03:54'),
 (24, 'Software Development', 'software-development', NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:04:06', '2024-10-19 10:04:06'),
-(25, 'Dropshipping Websites', 'dropshipping-websites', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:04:42', '2024-10-19 10:04:42'),
+(25, 'Website Design', 'website-design', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:04:42', '2024-10-29 10:01:25'),
 (26, 'Landing Pages', 'landing-pages', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:05:11', '2024-10-19 13:16:28'),
 (28, 'Logo & Brand Identity', 'logo-brand-identity', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:30', '2024-10-19 10:05:30'),
-(29, 'Build a Complete Website', 'build-a-complete-website', NULL, NULL, NULL, NULL, 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:41', '2024-10-19 10:05:41'),
-(30, 'Art & Illustration', 'art-illustration', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:44', '2024-10-19 10:05:44');
+(29, 'Icon Design', 'icon-design', '', 'null', 'null', 'null', 12, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-19 10:05:41', '2024-10-29 10:01:47'),
+(30, 'Art & Illustration', 'art-illustration', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-19 10:05:44', '2024-10-19 10:05:44'),
+(31, 'Product & Gaming', 'product-gaming', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:03:59', '2024-10-29 10:03:59'),
+(32, 'Print Design', 'print-design', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:04:15', '2024-10-29 10:04:15'),
+(33, 'Visual Design', 'visual-design', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:04:33', '2024-10-29 10:04:33'),
+(34, 'Marketing Design', 'marketing-design', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:04:48', '2024-10-29 10:04:48'),
+(35, 'Packaging & Covers', 'packaging-covers', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:05:06', '2024-10-29 10:05:06'),
+(36, 'Architecture & Building Design', 'architecture-building-design', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:05:22', '2024-10-29 10:05:22'),
+(37, 'Fashion & Merchandise', 'fashion-merchandise', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:05:42', '2024-10-29 10:05:42'),
+(38, '3D Design', '3d-design', NULL, NULL, NULL, NULL, 2, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:05:56', '2024-10-29 10:05:56'),
+(39, 'Website Platforms', 'website-platforms', '', 'null', 'null', 'null', 1, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, 'null', 0, '2024-10-29 10:14:41', '2024-10-29 10:16:25'),
+(40, 'Business Websites', 'business-websites', NULL, NULL, NULL, NULL, 16, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:16:48', '2024-10-29 10:16:48'),
+(41, 'E-Commerce Development', 'e-commerce-development', NULL, NULL, NULL, NULL, 16, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:17:05', '2024-10-29 10:17:05'),
+(50, 'Landing Page', 'landing-page', NULL, NULL, NULL, NULL, 16, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:33:40', '2024-10-29 10:33:40'),
+(51, 'Dropshipping Websites', 'dropshipping-websites', NULL, NULL, NULL, NULL, 16, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:33:57', '2024-10-29 10:33:57'),
+(52, 'Build a Complete Website', 'build-a-complete-website', NULL, NULL, NULL, NULL, 16, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:34:30', '2024-10-29 10:34:30'),
+(53, 'WordPress', 'wordpress', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:35:13', '2024-10-29 10:35:13'),
+(54, 'Shopify', 'shopify', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:35:48', '2024-10-29 10:35:48'),
+(55, 'Wix', 'wix', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:36:04', '2024-10-29 10:36:04'),
+(56, 'Custom Websites', 'custom-websites', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:36:19', '2024-10-29 10:36:19'),
+(57, 'GoDaddy', 'godaddy', NULL, NULL, NULL, NULL, 39, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:36:36', '2024-10-29 10:36:36'),
+(58, 'Website Customization', 'website-customization', NULL, NULL, NULL, NULL, 17, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:37:16', '2024-10-29 10:37:16'),
+(59, 'Backup & Migration', 'backup-migration', NULL, NULL, NULL, NULL, 17, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:37:29', '2024-10-29 10:37:29'),
+(60, 'Speed Optimization', 'speed-optimization', NULL, NULL, NULL, NULL, 17, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:37:42', '2024-10-29 10:37:42'),
+(61, 'AI Chatbot', 'ai-chatbot', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:38:08', '2024-10-29 10:38:08'),
+(62, 'AI Applications', 'ai-applications', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:38:32', '2024-10-29 10:38:32'),
+(63, 'AI Integrations', 'ai-integrations', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:39:42', '2024-10-29 10:39:42'),
+(64, 'AI Agents', 'ai-agents', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:39:57', '2024-10-29 10:39:57'),
+(65, 'AI Fine-Tuning', 'ai-fine-tuning', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:40:10', '2024-10-29 10:40:10'),
+(66, 'OpenAI GPT Storenew', 'openai-gpt-storenew', NULL, NULL, NULL, NULL, 18, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:40:26', '2024-10-29 10:40:26'),
+(67, 'Discord Chat Service', 'discord-chat-service', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:40:46', '2024-10-29 10:40:46'),
+(68, 'Telegram Chat Platform', 'telegram-chat-platform', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:41:01', '2024-10-29 10:41:01'),
+(69, 'TikTok Short-Video App', 'tiktok-short-video-app', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:41:18', '2024-10-29 10:41:18'),
+(70, 'Facebook Chat Service', 'facebook-chat-service', NULL, NULL, NULL, NULL, 19, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:41:34', '2024-10-29 10:41:34'),
+(71, 'Player Experience and Feedback', 'player-experience-and-feedback', NULL, NULL, NULL, NULL, 20, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:41:55', '2024-10-29 10:41:55'),
+(72, 'Games for PC', 'games-for-pc', NULL, NULL, NULL, NULL, 20, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:42:08', '2024-10-29 10:42:08'),
+(73, 'Smartphone Games', 'smartphone-games', NULL, NULL, NULL, NULL, 20, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:42:21', '2024-10-29 10:42:21'),
+(74, 'Cross-Device Development', 'cross-device-development', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:44:01', '2024-10-29 10:44:01'),
+(75, 'Android Mobile App Creation', 'android-mobile-app-creation', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:44:14', '2024-10-29 10:44:14'),
+(77, 'iOS Mobile App Creation', 'ios-mobile-app-creation', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:44:29', '2024-10-29 10:44:29'),
+(78, 'Web-Based App Development', 'web-based-app-development', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:44:41', '2024-10-29 10:44:41'),
+(79, 'Mobile App Management', 'mobile-app-management', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:44:53', '2024-10-29 10:44:53'),
+(80, 'VR and AR Solutions', 'vr-and-ar-solutions', NULL, NULL, NULL, NULL, 21, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:45:04', '2024-10-29 10:45:04'),
+(81, 'Cloud Services', 'cloud-services', NULL, NULL, NULL, NULL, 22, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:45:27', '2024-10-29 10:45:27'),
+(82, 'DevOps Solutions', 'devops-solutions', NULL, NULL, NULL, NULL, 22, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:45:39', '2024-10-29 10:45:39'),
+(83, 'Cybersecurity Services', 'cybersecurity-services', NULL, NULL, NULL, NULL, 22, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:45:51', '2024-10-29 10:45:51'),
+(84, 'ML Solutions', 'ml-solutions', NULL, NULL, NULL, NULL, 23, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:46:06', '2024-10-29 10:46:06'),
+(85, 'Computer-Based Vision', 'computer-based-vision', NULL, NULL, NULL, NULL, 23, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:46:26', '2024-10-29 10:46:26'),
+(91, 'Computer-Based Visions', 'computer-based-visions', NULL, NULL, NULL, NULL, 23, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:46:57', '2024-10-29 10:46:57'),
+(92, 'Deep Learning Models', 'deep-learning-models', NULL, NULL, NULL, NULL, 23, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:47:14', '2024-10-29 10:47:14'),
+(93, 'Web App Solutions', 'web-app-solutions', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:47:27', '2024-10-29 10:47:27'),
+(94, 'PC Applications', 'pc-applications', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:47:44', '2024-10-29 10:47:44'),
+(95, 'API Solutions and Integration', 'api-solutions-and-integration', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:47:55', '2024-10-29 10:47:55'),
+(96, 'Database Systems', 'database-systems', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:48:07', '2024-10-29 10:48:07'),
+(97, 'Script Development', 'script-development', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:48:20', '2024-10-29 10:48:20'),
+(98, 'Browser Modules', 'browser-modules', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:48:30', '2024-10-29 10:48:30'),
+(99, 'Quality Control and Review', 'quality-control-and-review', NULL, NULL, NULL, NULL, 24, NULL, NULL, NULL, NULL, 0, '', 1, NULL, NULL, NULL, NULL, '2024-10-29 10:48:49', '2024-10-29 10:48:49');
 
 -- --------------------------------------------------------
 
@@ -238,7 +493,11 @@ INSERT INTO `certificates` (`id`, `user_id`, `year`, `course_name`, `institute_n
 (3, 2, '2023', 'Blockchain Expert', 'Blockchain Academy', 'Expert-level certification in blockchain development and smart contracts.', '2024-09-30 16:38:20', '2024-09-30 16:38:20'),
 (4, 2, '2020', 'AI & Machine Learning Specialist', 'Tech Institute', 'Specialized in artificial intelligence and machine learning algorithms.', '2024-09-30 16:38:20', '2024-09-30 16:38:20'),
 (5, 2, '2019', 'Cyber Security Analyst', 'SecureTech Institute', 'Certification focused on cybersecurity fundamentals, network security, and threat analysis.', '2024-09-30 16:38:20', '2024-09-30 16:38:20'),
-(6, 37, '2020', 'AWS Certified Solutions Architect – Associate', 'Amazon Web Services (AWS)', 'Earned certification in designing and deploying scalable, highly available, and fault-tolerant systems on AWS. Demonstrated expertise in cloud architecture, security best practices, and cost-optimized infrastructure solutions. Utilized AWS services like EC2, S3, RDS, and Lambda in real-world cloud applications.', '2024-10-01 02:56:15', '2024-10-01 02:56:15');
+(6, 37, '2020', 'AWS Certified Solutions Architect – Associate', 'Amazon Web Services (AWS)', 'Earned certification in designing and deploying scalable, highly available, and fault-tolerant systems on AWS. Demonstrated expertise in cloud architecture, security best practices, and cost-optimized infrastructure solutions. Utilized AWS services like EC2, S3, RDS, and Lambda in real-world cloud applications.', '2024-10-01 02:56:15', '2024-10-01 02:56:15'),
+(8, 11, '2018', 'Developing International Software', 'edx', 'In today’s global economy, there are clear advantages to developing applications that can meet the needs of users across a wide variety of languages, countries, and cultures. ...', '2025-02-11 00:40:26', '2025-02-11 00:40:26'),
+(10, 11, '2019', 'UML Class Diagrams for Software Engineering', 'edx', 'Unified Modeling Language (UML) is a general-purpose modeling language. The main aim of UML is to define a standard way to visualize the way a system has been designed.', '2025-02-11 00:43:34', '2025-02-11 00:43:34'),
+(11, 11, '2020', 'Javascript Algorithms and Data Structure', 'edx', 'JavaScript is a scripting language you can use to make web pages interactive. It is one of the core technologies of the web, along with HTML and CSS, and is supported by all modern browsers.', '2025-02-11 00:45:30', '2025-02-11 00:45:30'),
+(12, 11, '2021', 'PHP', 'Sololearn', 'PHP is a server scripting language, and a powerful tool for making dynamic and interactive Web pages.', '2025-02-11 00:47:09', '2025-02-11 00:47:09');
 
 -- --------------------------------------------------------
 
@@ -310,7 +569,7 @@ CREATE TABLE `country` (
   `countryname` varchar(200) NOT NULL,
   `code` char(2) DEFAULT NULL,
   `status` int(1) NOT NULL DEFAULT 1
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `country`
@@ -681,10 +940,15 @@ CREATE TABLE `customer` (
 CREATE TABLE `deposit` (
   `id` int(11) NOT NULL,
   `depositID` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `product` varchar(255) DEFAULT NULL,
+  `currency` varchar(100) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
   `deposit_amount` double(10,2) DEFAULT NULL,
   `receivable_amount` double(10,2) DEFAULT NULL,
   `payment_method` varchar(255) DEFAULT NULL,
+  `payment_id` varchar(255) DEFAULT NULL,
+  `payment_status` varchar(100) DEFAULT NULL,
   `frm_wallet_address` varchar(255) DEFAULT NULL,
   `to_crypto_wallet_address` varchar(255) DEFAULT NULL,
   `trxId` varchar(255) DEFAULT NULL,
@@ -700,15 +964,22 @@ CREATE TABLE `deposit` (
 -- Dumping data for table `deposit`
 --
 
-INSERT INTO `deposit` (`id`, `depositID`, `user_id`, `deposit_amount`, `receivable_amount`, `payment_method`, `frm_wallet_address`, `to_crypto_wallet_address`, `trxId`, `depscription`, `wallet_address`, `status`, `approved_by`, `created_at`, `updated_at`) VALUES
-(1, 'DEP000001', 3, 50000.00, 50000.00, 'TRX(TRC20)', 'easypaisa', NULL, NULL, NULL, NULL, 1, 1, '2024-10-08 11:23:17', '2024-10-08 11:25:43'),
-(2, 'DEP000002', 8, 5000.00, 5000.00, 'TRX(TRC20)', 'retyguhijko,l.;/\'', NULL, NULL, NULL, NULL, 1, 1, '2024-10-08 13:32:34', '2024-10-08 13:34:27'),
-(3, 'DEP000003', 8, 10.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-12 08:35:35', '2024-10-12 08:35:35'),
-(4, 'DEP000004', 10, 40000.00, 40000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, 4, '2024-10-14 10:06:23', '2024-10-14 10:08:58'),
-(5, 'DEP000005', 12, 500.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-15 16:12:47', '2024-10-15 16:12:47'),
-(6, 'DEP000006', 8, 100.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-15 16:55:41', '2024-10-15 16:55:41'),
-(7, 'DEP000007', 13, 5000.00, 5000.00, 'paypal', '', NULL, NULL, NULL, NULL, 1, NULL, '2024-10-21 11:47:08', '2024-10-21 11:47:08'),
-(8, 'DEP000008', 5, 40000.00, NULL, 'paypal', '', NULL, NULL, NULL, NULL, 0, NULL, '2024-10-21 12:54:21', '2024-10-21 12:54:21');
+INSERT INTO `deposit` (`id`, `depositID`, `email`, `product`, `currency`, `user_id`, `deposit_amount`, `receivable_amount`, `payment_method`, `payment_id`, `payment_status`, `frm_wallet_address`, `to_crypto_wallet_address`, `trxId`, `depscription`, `wallet_address`, `status`, `approved_by`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 13900.00, NULL, NULL, 'pi_3QtaU52NiQK26ALV0aioaqp8', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:00:06', '2025-02-17 20:00:06'),
+(2, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 11100.00, NULL, NULL, 'pi_3QtamJ2NiQK26ALV0Mnlm2Y5', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:19:00', '2025-02-17 20:19:00'),
+(3, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 11200.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:20:51', '2025-02-17 20:20:51'),
+(4, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 14500.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:32:44', '2025-02-17 20:32:44'),
+(5, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 16800.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:35:20', '2025-02-17 20:35:20'),
+(6, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 19900.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:47:10', '2025-02-17 20:47:10'),
+(7, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 19700.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:49:53', '2025-02-17 20:49:53'),
+(8, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 5900.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:54:52', '2025-02-17 20:54:52'),
+(9, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 6800.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 20:57:21', '2025-02-17 20:57:21'),
+(10, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 9900.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:07:44', '2025-02-17 21:07:44'),
+(11, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 66200.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:43:56', '2025-02-17 21:43:56'),
+(12, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 6900.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:48:54', '2025-02-17 21:48:54'),
+(13, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 66800.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:53:05', '2025-02-17 21:53:05'),
+(14, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 7800.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:55:18', '2025-02-17 21:55:18'),
+(15, NULL, 'buyer1@gmail.com', 'Custom Payment', 'USD', NULL, 8800.00, NULL, NULL, '', 'pending', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-17 21:56:33', '2025-02-17 21:56:33');
 
 -- --------------------------------------------------------
 
@@ -739,7 +1010,10 @@ INSERT INTO `education` (`id`, `user_id`, `year`, `subject`, `college`, `descrip
 (5, 2, '2019 - 2020', 'Full Stack Web Development', 'Harvard Extension School', 'Studied full stack web development with a focus on modern JavaScript frameworks, back-end services, and databases.', '2024-09-30 14:59:12', '2024-09-30 14:59:12'),
 (7, 37, '2018', 'Computer Science', 'Stanford University', 'Completed a comprehensive program in computer science, focusing on full-stack development, algorithms, and cloud computing. Led various team projects, including building a scalable e-commerce platform and developing machine learning models for predictive analytics. Graduated with honors and multiple academic distinctions.', '2024-10-01 02:52:24', '2024-10-01 02:52:24'),
 (8, 37, '2020', 'Diploma in Web Development', 'Coursera (via University of Michigan)', 'Specialized in front-end and back-end web technologies, including HTML, CSS, JavaScript, and PHP. Developed dynamic, responsive websites as part of the curriculum and gained hands-on experience with frameworks like Laravel and React. Completed with a focus on modern web development practices and industry standards.', '2024-10-01 02:52:54', '2024-10-01 02:52:54'),
-(9, 37, '2019', 'Master of Science in Information Technology', 'Massachusetts Institute of Technology (MIT)', 'Focused on advanced IT infrastructure, cybersecurity, and cloud solutions. Research-based projects in AI and data science, with a thesis on enhancing cybersecurity protocols for modern cloud environments. Developed enterprise-level IT solutions for coursework and received recognition for academic excellence.', '2024-10-01 02:53:18', '2024-10-01 02:53:18');
+(9, 37, '2019', 'Master of Science in Information Technology', 'Massachusetts Institute of Technology (MIT)', 'Focused on advanced IT infrastructure, cybersecurity, and cloud solutions. Research-based projects in AI and data science, with a thesis on enhancing cybersecurity protocols for modern cloud environments. Developed enterprise-level IT solutions for coursework and received recognition for academic excellence.', '2024-10-01 02:53:18', '2024-10-01 02:53:18'),
+(10, 11, '2020', 'CSE', 'Bangladesh University of Engineering and Technology', 'Bangladesh University of Engineering and TechnologyBangladesh University of Engineering and Technology', '2025-02-11 00:22:19', '2025-02-11 00:22:19'),
+(11, 11, '2021', 'Science', 'Dhaka College', 'informally known as DC, is a public educational institution of Bangladesh located in Dhanmondi, Dhaka. It is one of the oldest educational institutions in the subcontinent. It offers honours and master\'s programs. It also has higher secondary', '2025-02-11 00:28:54', '2025-02-11 00:28:54'),
+(13, 11, '2018', 'SSC', 'Sahbazpur high school and college', 'Leading a small team on a variety of development Government projects. (BGB, Government ministries of Bangladesh)', '2025-02-11 00:32:11', '2025-02-11 00:32:11');
 
 -- --------------------------------------------------------
 
@@ -767,7 +1041,11 @@ INSERT INTO `experience` (`id`, `user_id`, `year`, `role`, `company`, `descripti
 (2, 2, '2015 - 2017', 'Front-end Developer', 'Google', 'Developed front-end interfaces using HTML, CSS, and JavaScript for Google applications and services.', '2024-09-30 14:56:34', '2024-09-30 14:57:10'),
 (3, 2, '2018 - 2020', 'Project Manager', 'Facebook', 'Managed cross-functional teams and projects for Facebook’s new product development initiatives.', '2024-09-30 14:56:34', '2024-09-30 14:57:12'),
 (4, 37, '2012 - 2014', 'Senior Full-Stack Developer', 'FutureGen IT Solutions', 'Led the development of enterprise-level web applications using modern frameworks like Nuxt.js, Laravel, and React.js. Managed a team of developers, ensuring code quality and performance optimization. Successfully deployed cloud-based applications and improved system scalability by 30%. Key projects included an e-commerce platform and custom CRM software for business clients.', '2024-10-01 02:55:01', '2024-10-01 02:55:01'),
-(5, 37, '2019 – 2021', 'Front-End Developer', 'CreativeWeb Agency', 'Designed and implemented interactive and responsive web interfaces using HTML, CSS, JavaScript, and Vue.js. Collaborated with designers and backend developers to deliver user-friendly websites and applications. Improved website performance by optimizing code and implementing SEO best practices, increasing user engagement by 25%.', '2024-10-01 02:55:27', '2024-10-01 02:55:27');
+(5, 37, '2019 – 2021', 'Front-End Developer', 'CreativeWeb Agency', 'Designed and implemented interactive and responsive web interfaces using HTML, CSS, JavaScript, and Vue.js. Collaborated with designers and backend developers to deliver user-friendly websites and applications. Improved website performance by optimizing code and implementing SEO best practices, increasing user engagement by 25%.', '2024-10-01 02:55:27', '2024-10-01 02:55:27'),
+(6, 11, '2018-2015', 'Junior Programmer', 'Delta Hospital', 'Web application Development Lab Report Management & Lab Inventory Management.', '2025-02-11 00:34:08', '2025-02-11 00:34:08'),
+(7, 11, '2015-2018', 'Programmer', 'Meritstec Ltd.', 'Leading a small team on a variety of development Government projects. (BGB, Government ministries of Bangladesh)', '2025-02-11 00:34:46', '2025-02-11 00:34:46'),
+(8, 11, '2010-2015', 'Programmer', 'RapidInfosys', 'Leading a small team on a variety of development projects and delivering solutions to meet and exceed clients’ briefs. (TOM - Total Office Management) and Multiple Project', '2025-02-11 00:36:09', '2025-02-11 00:36:09'),
+(9, 11, '2023-2025', 'Programmer', 'Swisstex Group', 'Designed and developed user-friendly website, Software Design & development, Maintaining Database. (Germents ERP Software)', '2025-02-11 00:36:38', '2025-02-11 00:36:38');
 
 -- --------------------------------------------------------
 
@@ -829,11 +1107,41 @@ CREATE TABLE `gig` (
 --
 
 INSERT INTO `gig` (`id`, `user_id`, `category_id`, `subcategory_id`, `insubcategory_Id`, `name`, `gig_slug`, `thumbnail_images`, `types`, `language_name`, `language_type`, `gig_description`, `price`, `delivery_day`, `basic_price`, `basic_description`, `basic_delivery_days`, `source_file`, `standard_price`, `stn_descrition`, `stn_delivery_days`, `order_rules`, `stn_source_file`, `premium_price`, `premium_description`, `premium_delivery_days`, `premium_source_file`, `status`, `created_at`, `updated_at`) VALUES
-(1, 6, 1, 2, NULL, 'i will custumize all of your site in 5 minut', 'i-will-custumize-all-of-your-site-in-5-minut', '/backend/gig/5TcjdJjCBPwiRnkYeBvT.jpg', '2', NULL, NULL, 'i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;i will custumize all of your site in 5 minut&nbsp;', NULL, NULL, 10.00, 'i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all of your site in 5 minut i will custumize all', 3, NULL, 20.00, NULL, 5, NULL, 'Yes', 30.00, 'i will custumize all of your site in 5 minut', 7, 'Yes', 1, '2024-10-17 11:17:41', '2024-10-17 11:17:41'),
-(2, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website', '/backend/gig/isqMD1kpG6WbtGRhXvrx.jpg', '2', NULL, NULL, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh', NULL, NULL, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, NULL, 400.00, NULL, 4, NULL, 'Yes', 67899.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
-(3, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website-1', '/backend/gig/6mhTTMqvVOrX6sEenhYh.jpg', '2', NULL, NULL, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh', NULL, NULL, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, NULL, 400.00, NULL, 4, NULL, 'Yes', 67899.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
-(4, 6, 1, 7, NULL, 'i will make an luxury website', 'i-will-make-an-luxury-website-2', '/backend/gig/eKfHBmR1jQsLY6o0D6QX.jpg', '2', NULL, NULL, '<p>i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjh</p>', 0.00, 0, 200.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 2, 'null', 400.00, 'null', 4, 'null', 'Yes', 600.00, 'i wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajhdkjhi wanv to jkaksdhsahhhhhhhhhhhhhhhhhhhhhhhhkhakdsjhkahjkdjhksajh', 4, 'Yes', 1, '2024-10-19 07:41:40', '2024-10-19 13:41:59'),
-(5, 2, 1, 12, NULL, 'I will create a minimalist logo design for your business', 'i-will-create-a-minimalist-logo-design-for-your-business', '/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', '1', NULL, NULL, '<p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\">My strategy is to combine my skill and ever-thriving creativity with your design needs and inputs. Having worked for an advertising agency in India for 17 long years, I am accustomed to grasping the needs of my clients and delivering amazing logo designs in no time.&nbsp;</p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\">My services come with an assurance of great responsiveness, availability, on-time delivery, and most importantly,<span>&nbsp;</span><strong style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\">QUALITY</strong>.</p><p style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\"><br style=\"color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: normal; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;\"><br></p>', 100.00, 15, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', NULL, NULL, NULL, 'Yes', 1, '2024-10-21 12:31:27', '2024-10-21 12:31:27');
+(1, 11, 1, 12, NULL, 'I will design and develop a perfect business website', 'i-will-design-and-develop-a-perfect-business-website', '/backend/gig/9SnThWigDFCcbyX46qw9.jpg', '2', NULL, NULL, '<p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\">&nbsp;If you are looking for&nbsp;<span style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\"><span style=\"background: rgb(255, 236, 209);\">a RESPONSIVE</span>,<span style=\"background: rgb(255, 236, 209);\">&nbsp;EXCEPTIONAL&nbsp;</span>&amp;&nbsp;<span style=\"background: rgb(255, 236, 209);\">CLEAN&nbsp;</span></span>website then this is the right Gig for you! I guarantee that your website will stand out from the crowd!</p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><span style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\">WHAT WILL YOU GET?</span></p><ol style=\"border: 0px; margin-right: 5px; margin-bottom: 0px; margin-left: 5px; outline: 0px; padding: 0px; list-style: none none;\"><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">Unlimited Revisions.</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">100% Trust Worthiness</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">Speed Optimized website.</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">SEO Friendly website</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\"><span style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\"><span style=\"background: rgb(255, 236, 209);\">Premium WordPress Theme</span></span>&nbsp;with lifetime updates(in case of WordPress web)</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\"><span style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\"><span style=\"background: rgb(255, 236, 209);\">Premium WordPress Plugins</span></span>(in case of WordPress web)</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">Fully responsive and professional looking.</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">The end product will be mobile and tablet friendly and it will pass the google test.</li><li style=\"border: 0px; margin: 0px 0px 0px 24px; outline: 0px; padding: 0px; list-style: outside none decimal;\">100% Satisfaction.</li></ol><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><span style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 700;\">WHY HIRE ME?</span></p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\">8 years+&nbsp;experience&nbsp;in WordPress design and development</p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><br></p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\">I provide a free consultation and open to any advice</p><p style=\"border: 0px; margin-bottom: 0px; outline: 0px; padding: 0px;\"><br style=\"color: rgb(98, 100, 106); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);\"></p>', NULL, NULL, 150.00, 'SILVER I will create up to 1 page full fledged responsive website with Professional End result.', 1, NULL, 400.00, NULL, 1, NULL, 'Yes', 900.00, 'DIAMOND I will create website having Upto 10 pages, SEO, SPEED, Security, E-Commerce included + 1 month supp', 4, 'Yes', 1, '2024-10-25 12:37:52', '2024-10-25 12:37:52'),
+(2, 13, 2, NULL, NULL, 'I will create amazon affiliate marketing autopilot website with autoblog', 'i-will-create-amazon-affiliate-marketing-autopilot-website-with-autoblog', '/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', '2', NULL, NULL, '<span style=\"color: rgb(64, 65, 69); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);\">Sahil J. has provided an excellent service. Very fast delivery and the website looks great! Being a newbie in the ecommerce field, I have asked a lot of questions...&nbsp;</span><span class=\"expand-description-wrapper\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; color: rgb(64, 65, 69); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 16px; background-color: rgb(255, 255, 255);\"><span class=\"expand-button\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px;\"><button class=\"sPdE5j4 zUvc8Si co-white expand-description expand-button-text bg-co-green-700\" data-impression-collected=\"true\" style=\"padding: 0px; background-image: initial; background-position: initial; background-size: initial; background-repeat: initial; background-attachment: initial; background-origin: initial; background-clip: initial; border-width: initial; border-style: none; border-color: initial; font-style: inherit; font-variant: inherit; font-weight: 600; font-stretch: inherit; font-size: 16px; line-height: 16px; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; color: rgb(64, 65, 69); border-radius: 4px; position: relative; transition-duration: 70ms; transition-timing-function: cubic-bezier(0.75, 0, 0.25, 1); transition-property: all;\"><span class=\"text-normal\" style=\"border: 0px; margin: 0px; outline: 0px; padding: 0px; font-weight: 400;\"><u>See more</u></span></button></span></span>', NULL, NULL, 300.00, '30+ Categories with 3000+ Products [ AMAZON BEST SELLER ] + Autoblog', 2, NULL, 400.00, NULL, 4, NULL, 'Yes', 700.00, 'Unlimited Categories/Products + Marketing Guide + Logo + Autoblog + Speed + SEO + Lifetime Support', 4, 'Yes', 1, '2024-10-26 10:31:40', '2024-10-26 10:31:40'),
+(3, 14, 3, NULL, NULL, 'i will do digital Marketing', 'i-will-do-digital-marketing', '/backend/gig/Mh1pVvJpdXOm4BjoGPcX.jpg', '1', NULL, NULL, 'i will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketingi will do digital Marketing', 500.00, 2, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Yes', NULL, NULL, NULL, 'Yes', 1, '2024-10-26 11:25:10', '2024-10-26 11:25:10'),
+(4, 15, 4, NULL, NULL, 'I will do custom software development saas web application as software developer', 'i-will-do-custom-software-development-saas-web-application-as-software-developer', '/backend/gig/MLx055PQexaUwvDSKC00.jpg', '2', NULL, NULL, '<h1 class=\"text-display-3\" style=\"border: 0px; margin-right: 0px; margin-bottom: 0px; margin-left: 0px; outline: 0px; padding: 0px 0px 16px; color: rgb(64, 65, 69); font-family: Macan, &quot;Helvetica Neue&quot;, Helvetica, Arial, sans-serif; font-size: 28px; line-height: 36.4px; overflow-wrap: break-word;\">I will do custom software development saas web application as software developer<span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span><span style=\"text-align: var(--bs-body-text-align);\">I will do custom software development saas web application as software developer</span></h1>', NULL, NULL, 200.00, 'I will do custom software development saas web application as software developerI will do custom software development saas web application as software developerI will do custom software development sa', 1, NULL, 400.00, NULL, 2, NULL, 'Yes', 600.00, 'I will do custom software development saas web application as software developerI will do custom software development saas web application as software developerI will do custom software development sa', 3, 'Yes', 1, '2024-10-28 09:42:53', '2024-10-28 09:42:53'),
+(5, 11, 1, 16, NULL, 'i Will design and devlop a website', 'i-will-design-and-devlop-a-website', '/backend/gig/xBnEQdB8Dua6IypQ4Ixi.jpg', '1', NULL, NULL, '<p>i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;i Will design and devlop a website&nbsp;</p>', 100.00, 1, 0.00, 'null', 0, 'null', 0.00, 'null', 0, 'and devlop a website i Will design and devlop a website i Will design and devlop a website i Will design and devlop a website i Will design and devlop a website', 'Yes', 0.00, 'null', 0, 'Yes', 1, '2024-10-29 11:17:58', '2024-10-29 11:19:35'),
+(6, 11, 1, 20, NULL, 'i Will Design and Develop a new Game from scratch', 'i-will-design-and-develop-a-new-game-from-scratch', '/backend/gig/evwMlCI9soVuBWX7J59g.jpg', '2', NULL, NULL, '<div>1. added direct msg button to notification&nbsp; Fix</div><div>2. buyer main categories should have small arrow icon to see full categories bar pending</div><div>3. 3.&nbsp; &nbsp;dispute is now in the admin users can see the details Fix</div><div>4. i added gigs to insub but its not showing in the insub category while filtering it Fix5.&nbsp; show more button&nbsp; for order statements after 15 days</div><div>6.admin mlm section and users section Add team and income reporting&nbsp; also add the upline name to rows and made levels button in the top as i make the skech&nbsp; working on&nbsp;</div><div>7. the external pages ? pending&nbsp;</div><div>8. for the adding bank withdraw method&nbsp; i am sending you the form so buyer seller will added info in the form to save it not fix</div>', NULL, NULL, 300.00, '1. added direct msg button to notification  Fix\r\n2. buyer main categories should have small arrow icon to see full categories bar pending\r\n3. 3.   dispute is now in the admin users can see the details F', 1, 'Yes', 600.00, NULL, 1, NULL, 'Yes', 900.00, '1. added direct msg button to notification  Fix\r\n2. buyer main categories should have small arrow icon to see full categories bar pending\r\n3. 3.   dispute is now in the admin users can see the details F', 1, 'Yes', 1, '2024-11-04 10:08:14', '2024-11-04 10:08:14'),
+(7, 11, 1, 16, NULL, 'Will Design and Develop a new Game from scratch your website and IOS apps', 'will-design-and-develop-a-new-game-from-scratch-your-website-and-ios-apps', '/backend/gig/b454aID3yVH7qnc6NjiG.jpeg', '1', NULL, NULL, '<p>&nbsp;</p><p>1. added direct msg button to notification&nbsp; Fix</p><p>2. buyer main categories should have small arrow icon to see full categories bar pending</p><p>3. 3.&nbsp; &nbsp;dispute is now in the admin users can see the details Fix</p><p>4. i added gigs to insub but its not showing in the insub category while filtering it Fix5.&nbsp; show more button&nbsp; for order statements after 15 days</p><p>6.admin mlm section and users section Add team and income reporting&nbsp; also add the upline name to rows and made levels button in the top as i make the skech&nbsp; working on&nbsp;</p><p>7. the external pages ? pending&nbsp;</p><p>8. for the adding bank withdraw method&nbsp; i am sending you the form so buyer seller will added info in the form to save it not fix</p><p>&nbsp;</p>', 200.00, 1, 0.00, 'null', 0, 'null', 0.00, 'null', 0, 'null', 'Yes', 0.00, 'null', 0, 'Yes', 1, '2025-02-11 10:33:49', '2025-02-11 11:08:35'),
+(8, 11, 2, 12, NULL, 'I will write engaging SEO articles for your brand or blog', 'i-will-write-engaging-seo-articles-for-your-brand-or-blog', '/backend/gig/CGt7ul4EIWXZL4jPZAkA.jpeg', '2', NULL, NULL, '<p data-v-75b9b14f=\"\" class=\"text mb30 text-justify\" style=\"text-align: justify;\"></p><div>1. added direct msg button to notification&nbsp; Fix</div><div>2. buyer main categories should have small arrow icon to see full categories bar pending</div><div>3. 3.&nbsp; &nbsp;dispute is now in the admin users can see the details Fix</div><div>4.\r\n i added gigs to insub but its not showing in the insub category while \r\nfiltering it Fix5.&nbsp; show more button&nbsp; for order statements after 15 days</div><div>6.admin\r\n mlm section and users section Add team and income reporting&nbsp; also add \r\nthe upline name to rows and made levels button in the top as i make the \r\nskech&nbsp; working on&nbsp;</div><div>7. the external pages ? pending&nbsp;</div><div>8. for the adding bank withdraw method&nbsp; i am sending you the form so buyer seller will added info in the form to save it not fix</div><p><br></p>', NULL, 1, 100.00, 'I am a seasoned American copywriter, editor, and ghostwriter with over five years of experience. I have been featured on Virgin Australia, Pillow, BE Media, Viapu, and H&R Block.', 1, NULL, 150.00, NULL, 1, NULL, 'Yes', 500.00, 'I am a seasoned American copywriter, editor, and ghostwriter with over five years of experience. I have been featured on Virgin Australia, Pillow, BE Media, Viapu, and H&R Block.', 1, 'Yes', 1, '2025-02-11 10:54:07', '2025-02-11 10:54:07'),
+(9, 11, 1, 16, NULL, 'sfsdf', 'sfsdf', '/backend/gig/qeoyzcnYEbAK1XcIFsOA.jpeg', '2', NULL, NULL, '<p data-v-75b9b14f=\"\" class=\"text mb30 text-justify\" style=\"text-align: justify;\"></p><div>1. added direct msg button to notification&nbsp; Fix</div><div>2. buyer main categories should have small arrow icon to see full categories bar pending</div><div>3. 3.&nbsp; &nbsp;dispute is now in the admin users can see the details Fix</div><div>4.\r\n i added gigs to insub but its not showing in the insub category while \r\nfiltering it Fix5.&nbsp; show more button&nbsp; for order statements after 15 days</div><div>6.admin\r\n mlm section and users section Add team and income reporting&nbsp; also add \r\nthe upline name to rows and made levels button in the top as i make the \r\nskech&nbsp; working on&nbsp;</div><div>7. the external pages ? pending&nbsp;</div><div>8. for the adding bank withdraw method&nbsp; i am sending you the form so buyer seller will added info in the form to save it not fix</div><p><br></p>', NULL, NULL, 100.00, 'sasdasd', 12, 'Yes', 11.00, NULL, 2, NULL, 'Yes', 222.00, 'sdfsdf', 2, 'Yes', 1, '2025-02-11 10:56:51', '2025-02-11 10:56:51');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `gigwish_list`
+--
+
+CREATE TABLE `gigwish_list` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `gig_id` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `gigwish_list`
+--
+
+INSERT INTO `gigwish_list` (`id`, `user_id`, `gig_id`, `created_at`, `updated_at`) VALUES
+(5, 4, 1, '2024-10-28 11:09:39', '2024-10-28 11:09:39'),
+(7, 9, 4, '2024-10-28 13:28:40', '2024-10-28 13:28:40'),
+(12, 7, 1, '2024-10-28 15:59:08', '2024-10-28 15:59:08'),
+(14, 11, 1, '2024-10-31 15:10:50', '2024-10-31 15:10:50'),
+(15, 6, 1, '2024-11-04 15:20:15', '2024-11-04 15:20:15'),
+(16, 6, 5, '2024-11-04 15:20:20', '2024-11-04 15:20:20');
 
 -- --------------------------------------------------------
 
@@ -854,13 +1162,18 @@ CREATE TABLE `gig_images_history` (
 --
 
 INSERT INTO `gig_images_history` (`id`, `gig_id`, `image_path`, `created_at`, `updated_at`) VALUES
-(1, 1, '/backend/gig/5TcjdJjCBPwiRnkYeBvT.jpg', '2024-10-17 11:17:41', '2024-10-17 11:17:41'),
-(2, 2, '/backend/gig/isqMD1kpG6WbtGRhXvrx.jpg', '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
-(3, 3, '/backend/gig/6mhTTMqvVOrX6sEenhYh.jpg', '2024-10-19 07:41:39', '2024-10-19 07:41:39'),
-(4, 4, '/backend/gig/eKfHBmR1jQsLY6o0D6QX.jpg', '2024-10-19 07:41:40', '2024-10-19 07:41:40'),
-(5, 5, '/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27'),
-(6, 5, '/backend/gig/Fywh33qWisax7J2x04nw.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27'),
-(7, 5, '/backend/gig/B7dN8DerG0Np4JOCzX8I.jpg', '2024-10-21 12:31:27', '2024-10-21 12:31:27');
+(1, 1, '/backend/gig/9SnThWigDFCcbyX46qw9.jpg', '2024-10-25 12:37:52', '2024-10-25 12:37:52'),
+(2, 2, '/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', '2024-10-26 10:31:40', '2024-10-26 10:31:40'),
+(3, 3, '/backend/gig/Mh1pVvJpdXOm4BjoGPcX.jpg', '2024-10-26 11:25:10', '2024-10-26 11:25:10'),
+(4, 4, '/backend/gig/MLx055PQexaUwvDSKC00.jpg', '2024-10-28 09:42:53', '2024-10-28 09:42:53'),
+(5, 5, '/backend/gig/xBnEQdB8Dua6IypQ4Ixi.jpg', '2024-10-29 11:17:58', '2024-10-29 11:17:58'),
+(6, 6, '/backend/gig/evwMlCI9soVuBWX7J59g.jpg', '2024-11-04 10:08:14', '2024-11-04 10:08:14'),
+(7, 7, '/backend/gig/b454aID3yVH7qnc6NjiG.jpeg', '2025-02-11 10:33:49', '2025-02-11 10:33:49'),
+(8, 7, '/backend/gig/qAX0Vk6CGGh9q3PtKzro.jpg', '2025-02-11 10:33:49', '2025-02-11 10:33:49'),
+(9, 7, '/backend/gig/qLxGlmYoJ8E5wx1CqCnh.jpg', '2025-02-11 10:33:49', '2025-02-11 10:33:49'),
+(10, 8, '/backend/gig/CGt7ul4EIWXZL4jPZAkA.jpeg', '2025-02-11 10:54:07', '2025-02-11 10:54:07'),
+(11, 9, '/backend/gig/qeoyzcnYEbAK1XcIFsOA.jpeg', '2025-02-11 10:56:51', '2025-02-11 10:56:51'),
+(12, 9, '/backend/gig/hUoVSuioWqfFhJ71gUb6.jpeg', '2025-02-11 10:56:51', '2025-02-11 10:56:51');
 
 -- --------------------------------------------------------
 
@@ -880,6 +1193,76 @@ CREATE TABLE `level_commission` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `level_commission`
+--
+
+INSERT INTO `level_commission` (`id`, `orderId`, `buyerId`, `buyer_name`, `level`, `amount`, `commission_recev_frm`, `commission_recv_frm_name`, `created_at`, `updated_at`) VALUES
+(1, '736042-24', 6, 'amir3', 1, 0.80, 7, 'amir4', '2024-10-25 13:11:11', '2024-10-25 13:11:11'),
+(2, '736042-24', 5, 'amir2', 2, 0.60, 7, 'amir4', '2024-10-25 13:11:11', '2024-10-25 13:11:11'),
+(3, '736042-24', 4, 'amir1', 3, 0.40, 7, 'amir4', '2024-10-25 13:11:11', '2024-10-25 13:11:11'),
+(4, '736042-24', 3, 'buyer1', 4, 0.10, 7, 'amir4', '2024-10-25 13:11:11', '2024-10-25 13:11:11'),
+(5, '930775-24', 7, 'amir4', 1, 0.80, 9, 'amir5', '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(6, '930775-24', 6, 'amir3', 2, 0.60, 9, 'amir5', '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(7, '930775-24', 5, 'amir2', 3, 0.40, 9, 'amir5', '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(8, '930775-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(9, '930775-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(10, '413187-24', 3, 'buyer1', 1, 0.80, 4, 'amir1', '2024-10-28 10:11:47', '2024-10-28 10:11:47'),
+(11, '410977-24', 3, 'buyer1', 1, 0.40, 4, 'amir1', '2024-10-28 11:00:33', '2024-10-28 11:00:33'),
+(12, '478943-24', 3, 'buyer1', 1, 0.40, 4, 'amir1', '2024-10-28 11:01:16', '2024-10-28 11:01:16'),
+(13, '418060-24', 3, 'buyer1', 1, 0.40, 4, 'amir1', '2024-10-28 11:02:15', '2024-10-28 11:02:15'),
+(14, '943016-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(15, '943016-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(16, '943016-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(17, '943016-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(18, '943016-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(19, '980766-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(20, '980766-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(21, '980766-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(22, '980766-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(23, '980766-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(24, '924688-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:11:04', '2024-10-28 11:11:04'),
+(25, '924688-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:11:04', '2024-10-28 11:11:04'),
+(26, '924688-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:11:04', '2024-10-28 11:11:04'),
+(27, '924688-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:11:04', '2024-10-28 11:11:04'),
+(28, '924688-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:11:04', '2024-10-28 11:11:04'),
+(29, '938158-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(30, '938158-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(31, '938158-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(32, '938158-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(33, '938158-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(34, '917028-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(35, '917028-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(36, '917028-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(37, '917028-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(38, '917028-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(39, '929097-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(40, '929097-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(41, '929097-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(42, '929097-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(43, '929097-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(44, '917249-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(45, '917249-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(46, '917249-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(47, '917249-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(48, '917249-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(49, '962693-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(50, '962693-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(51, '962693-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(52, '962693-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(53, '962693-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(54, '942000-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(55, '942000-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(56, '942000-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(57, '942000-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(58, '942000-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(59, '910999-24', 7, 'amir4', 1, 0.40, 9, 'amir5', '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(60, '910999-24', 6, 'amir3', 2, 0.30, 9, 'amir5', '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(61, '910999-24', 5, 'amir2', 3, 0.20, 9, 'amir5', '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(62, '910999-24', 4, 'amir1', 4, 0.10, 9, 'amir5', '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(63, '910999-24', 3, 'buyer1', 5, 0.10, 9, 'amir5', '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(64, '450134-24', 3, 'buyer1', 1, 0.40, 4, 'amir1', '2024-10-31 13:42:56', '2024-10-31 13:42:56');
 
 -- --------------------------------------------------------
 
@@ -908,10 +1291,194 @@ CREATE TABLE `messages` (
   `to_id` int(11) DEFAULT NULL,
   `sender_id` int(11) DEFAULT NULL,
   `message` text DEFAULT NULL,
+  `is_read` int(1) NOT NULL DEFAULT 0 COMMENT '1=read,0=unread',
   `files` varchar(255) DEFAULT NULL,
+  `time_sent` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `messages`
+--
+
+INSERT INTO `messages` (`id`, `user_id`, `to_id`, `sender_id`, `message`, `is_read`, `files`, `time_sent`, `created_at`, `updated_at`) VALUES
+(1, 8, 13, 8, 'you can give me an source ode for this software', 1, '', NULL, '2024-10-22 11:48:46', '2024-10-26 10:52:28'),
+(2, 13, 8, 13, 'ok i will', 1, '', NULL, '2024-10-22 11:49:55', '2025-02-16 07:28:01'),
+(3, 28, 2, 28, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 06:00:58', '2024-10-23 06:00:58'),
+(4, 28, 2, 28, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 06:01:33', '2024-10-23 06:01:33'),
+(5, 28, 2, 28, 'Congratulations on your new gig: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 06:11:34', '2024-10-23 06:11:34'),
+(6, 2, 28, 2, 'Yes', 1, '', NULL, '2024-10-23 06:21:26', '2024-10-24 05:12:57'),
+(7, 28, 2, 28, 'kkk', 1, '', NULL, '2024-10-23 06:22:03', '2024-10-23 06:22:03'),
+(8, 2, 28, 2, '6985989', 1, '/backend/files/h8U8cQsHoETxHKlJ7Cfl.jpg', NULL, '2024-10-23 06:22:15', '2024-10-24 05:12:57'),
+(9, 2, 28, 2, 'fgggg', 1, '', NULL, '2024-10-23 06:22:29', '2024-10-24 05:12:57'),
+(10, 2, 28, 2, 'bgffgh', 1, '/backend/files/tfqW7eu5sKSbSc93QOUH.jpg', NULL, '2024-10-23 06:22:39', '2024-10-24 05:12:57'),
+(11, 2, 28, 2, 'dfgdfgdfg', 1, '/backend/files/TOxVb34wbidRRXy9cof0.rar', NULL, '2024-10-23 06:23:00', '2024-10-24 05:12:57'),
+(12, 2, 28, 2, 'fffff', 1, '/backend/files/tAAGf9xJCFTSgqQ3aItL.svg', NULL, '2024-10-23 06:24:52', '2024-10-24 05:12:57'),
+(13, 28, 2, 28, 'gratulations on your new gig: \"\"! 🎉. We wish you great success! gratulations on your new gig: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 06:51:33', '2024-10-23 06:51:33'),
+(14, 30, 24, 30, 'Thank you, and I look forward to your response. \n: This message relates to: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 10:25:09', '2024-10-23 10:25:09'),
+(15, 30, 24, 30, 'Thank you, and I look forward to your response. \n: This message relates to: \"\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 10:25:40', '2024-10-23 10:25:40'),
+(16, 30, 24, 30, 'sdvsdfsdfsdf', 1, '', NULL, '2024-10-23 10:25:53', '2024-10-23 10:25:53'),
+(17, 24, 30, 24, 'yes please', 1, '', NULL, '2024-10-23 10:28:37', '2024-10-25 12:05:12'),
+(18, 24, 30, 24, 'yes please', 1, '', NULL, '2024-10-23 10:28:43', '2024-10-25 12:05:12'),
+(19, 24, 30, 24, 'yes please', 1, '', NULL, '2024-10-23 10:28:43', '2024-10-25 12:05:12'),
+(20, 24, 30, 24, 'yes please', 1, '', NULL, '2024-10-23 10:28:45', '2024-10-25 12:05:12'),
+(21, 24, 30, 24, 'yes please', 1, '', NULL, '2024-10-23 10:28:45', '2024-10-25 12:05:12'),
+(22, 24, 30, 24, 'hello', 1, '', NULL, '2024-10-23 10:33:54', '2024-10-25 12:05:12'),
+(23, 30, 24, 30, 'yes i want an developer', 1, '', NULL, '2024-10-23 10:34:29', '2024-10-23 10:34:29'),
+(24, 28, 2, 28, 'Thank you, and I look forward to your response. \n: This message relates to: \"<b>I will create a minimalist logo design for your business</b>\"! 🎉. We wish you great success!', 1, '', NULL, '2024-10-23 12:25:39', '2024-10-23 12:25:39'),
+(25, 28, 2, 28, 'Thank you, and I look forward to your response. \n: This message relates to: \"<b>I will create a minimalist logo design for your business</b>\"! 🎉. We wish you great success!', 0, '', NULL, '2024-10-24 02:57:57', '2024-10-24 02:57:57'),
+(26, 21, 2, 21, '', 0, '$strippedMessage', NULL, '2024-10-24 04:48:26', '2024-10-24 04:48:26'),
+(27, 21, 2, 21, '', 0, 'Thank you, and I look forward to your response. \n: This message relates to: \"<b>I will create a minimalist logo design for your business</b>', NULL, '2024-10-24 04:52:21', '2024-10-24 04:52:21'),
+(28, 21, 2, 21, 'Thank you, and I look forward to your response. \n: This message relates to: \"<b>I will create a minimalist logo design for your business</b>\"! 🎉. We wish you great success!', 0, '', NULL, '2024-10-24 04:54:42', '2024-10-24 04:54:42'),
+(29, 21, 2, 21, 'Thank you, and I look forward to your response. <br />\n: This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, '', NULL, '2024-10-24 05:00:14', '2024-10-24 05:00:14'),
+(30, 21, 2, 21, 'Thank you, and I look forward to your response.: <br />\n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, '', NULL, '2024-10-24 05:01:17', '2024-10-24 05:01:17'),
+(31, 21, 2, 21, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, '', NULL, '2024-10-24 05:02:03', '2024-10-24 05:02:03'),
+(32, 21, 2, 21, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, '<img src=\"https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg\">', NULL, '2024-10-24 05:04:04', '2024-10-24 05:04:04'),
+(33, 28, 2, 28, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, '<img src=\"https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg\">', NULL, '2024-10-24 05:05:30', '2024-10-24 05:05:30'),
+(34, 21, 2, 21, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', NULL, '2024-10-24 05:06:11', '2024-10-24 05:06:11'),
+(35, 28, 2, 28, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', NULL, '2024-10-24 05:06:38', '2024-10-24 05:06:38'),
+(36, 28, 2, 28, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', NULL, '2024-10-24 05:07:03', '2024-10-24 05:07:03'),
+(38, 28, 2, 28, 'Hello', 0, '', NULL, '2024-10-24 10:54:46', '2024-10-24 10:54:46'),
+(42, 2, 2, 2, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will create a minimalist logo design for your business\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/316DDrtFwcsWoGDr2yPa.jpg', NULL, '2024-10-24 12:48:57', '2024-10-24 12:48:57'),
+(43, 31, 24, 31, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create ai chatbot custom gpt using chatgpt api and integrate in website\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/K2PkLJIfWOnKGBmua2ca.jpg', NULL, '2024-10-25 11:51:27', '2024-10-25 11:51:27'),
+(44, 31, 24, 31, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create ai chatbot custom gpt using chatgpt api and integrate in website\"! We wish you great success!', 0, 'https://api.isumax.com/backend/gig/K2PkLJIfWOnKGBmua2ca.jpg', NULL, '2024-10-25 12:05:06', '2024-10-25 12:05:06'),
+(45, 31, 24, 31, 'hiii', 0, '', NULL, '2024-10-25 12:05:20', '2024-10-25 12:05:20'),
+(46, 9, 11, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-25 13:20:52', '2025-02-12 11:31:51'),
+(47, 9, 11, 9, 'hello', 1, '', NULL, '2024-10-25 13:21:02', '2025-02-12 11:31:51'),
+(48, 11, 9, 11, 'hiiiiiiiii', 1, '', NULL, '2024-10-25 13:22:00', '2025-02-16 07:19:29'),
+(49, 11, 9, 11, 'hello', 1, '/backend/files/GyDnlqmIEP36tX7rECag.jpeg', NULL, '2024-10-25 13:22:56', '2025-02-16 07:19:29'),
+(50, 9, 11, 9, 'this is buyer', 1, '', NULL, '2024-10-25 13:31:26', '2025-02-12 11:31:51'),
+(51, 11, 9, 11, 'i am seller', 1, '', NULL, '2024-10-25 13:32:33', '2025-02-16 07:19:29'),
+(52, 9, 11, 9, 'seller11111', 1, '', NULL, '2024-10-25 13:33:33', '2025-02-12 11:31:51'),
+(53, 11, 9, 11, 'amir5', 1, '', NULL, '2024-10-25 13:33:45', '2025-02-16 07:19:29'),
+(54, 9, 11, 9, 'Hellow', 1, '', NULL, '2024-10-25 13:33:57', '2025-02-12 11:31:51'),
+(55, 11, 9, 11, 'working right', 1, '', NULL, '2024-10-25 13:34:10', '2025-02-16 07:19:29'),
+(56, 9, 11, 9, 'do you need any help?', 1, '', NULL, '2024-10-25 13:35:09', '2025-02-12 11:31:51'),
+(57, 11, 9, 11, 'Yes help me.....', 1, '', NULL, '2024-10-25 13:35:30', '2025-02-16 07:19:29'),
+(58, 9, 11, 9, 'are you here??', 1, '', NULL, '2024-10-25 13:41:03', '2025-02-12 11:31:51'),
+(59, 11, 9, 11, 'Yes', 1, '', NULL, '2024-10-25 13:41:12', '2025-02-16 07:19:29'),
+(60, 11, 9, 11, 'have you got the point??', 1, '', NULL, '2024-10-25 13:43:24', '2025-02-16 07:19:29'),
+(61, 11, 9, 11, 'hii', 1, '', NULL, '2024-10-26 07:33:44', '2025-02-16 07:19:29'),
+(62, 9, 11, 9, 'hiiiiiiiii', 1, '', NULL, '2024-10-26 08:24:10', '2025-02-12 11:31:51'),
+(63, 11, 9, 11, 'hello', 1, '', NULL, '2024-10-26 08:26:17', '2025-02-16 07:19:29'),
+(64, 11, 9, 11, 'hello', 1, '', NULL, '2024-10-26 08:26:18', '2025-02-16 07:19:29'),
+(65, 11, 9, 11, 'hello', 1, '', NULL, '2024-10-26 08:26:18', '2025-02-16 07:19:29'),
+(66, 9, 11, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-26 10:02:46', '2025-02-12 11:31:51'),
+(67, 9, 11, 9, 'i am an buyer and i want to talk with you', 1, '', NULL, '2024-10-26 10:03:14', '2025-02-12 11:31:51'),
+(68, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 10:32:21', '2025-02-12 11:31:51'),
+(69, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 10:33:50', '2025-02-12 11:31:51'),
+(70, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 10:36:51', '2025-02-12 11:31:51'),
+(71, 13, 8, 13, 'hello', 1, '', NULL, '2024-10-26 10:46:19', '2025-02-16 07:28:01'),
+(72, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 10:57:21', '2025-02-12 11:31:51'),
+(73, 9, 11, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-26 10:57:54', '2025-02-12 11:31:51'),
+(74, 9, 11, 9, 'ergvsgdfd', 1, '', NULL, '2024-10-26 10:58:00', '2025-02-12 11:31:51'),
+(75, 9, 11, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-26 11:01:31', '2025-02-12 11:31:51'),
+(76, 9, 11, 9, 'hello', 1, '', NULL, '2024-10-26 11:01:42', '2025-02-12 11:31:51'),
+(77, 9, 11, 9, 'this is seller one text box', 1, '', NULL, '2024-10-26 11:01:55', '2025-02-12 11:31:51'),
+(78, 9, 11, 9, NULL, 1, '', NULL, '2024-10-26 11:01:58', '2025-02-12 11:31:51'),
+(79, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 11:02:10', '2025-02-12 11:31:51'),
+(80, 9, 11, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-26 11:06:02', '2025-02-12 11:31:51'),
+(81, 9, 11, 9, 'helloew34334', 1, '', NULL, '2024-10-26 11:06:18', '2025-02-12 11:31:51'),
+(82, 9, 11, 9, 'ssssssssssssssssssss', 1, '', NULL, '2024-10-26 11:06:26', '2025-02-12 11:31:51'),
+(83, 9, 11, 9, 'sdfsdfsdfsdfsdf', 1, '', NULL, '2024-10-26 11:08:13', '2025-02-12 11:31:51'),
+(84, 9, 11, 9, 'Okay working', 1, '', NULL, '2024-10-26 11:08:24', '2025-02-12 11:31:51'),
+(85, 9, 11, 9, 'cck whatsApp', 1, '', NULL, '2024-10-26 11:08:30', '2025-02-12 11:31:51'),
+(86, 9, 11, 9, 'brother we have 2 gigs one is seller one and the otherone is seller 2', 1, '', NULL, '2024-10-26 11:09:19', '2025-02-12 11:31:51'),
+(87, 9, 11, 9, 'messages sending to selller one but not sending to seller 2', 1, '', NULL, '2024-10-26 11:09:59', '2025-02-12 11:31:51'),
+(88, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 11:10:23', '2025-02-12 11:31:51'),
+(89, 13, 13, 13, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 11:12:07', '2025-02-16 07:28:01'),
+(90, 9, 13, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2024-10-26 11:14:54', '2025-02-12 11:31:51'),
+(91, 9, 13, 9, 'hello', 1, '', NULL, '2024-10-26 11:22:09', '2025-02-12 11:31:51'),
+(92, 9, 11, 9, 'aaa', 1, '', NULL, '2024-10-26 11:22:20', '2025-02-12 11:31:51'),
+(93, 9, 13, 9, 'zzz', 1, '', NULL, '2024-10-26 11:22:24', '2025-02-12 11:31:51'),
+(94, 9, 14, 9, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"i will do digital Marketing\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/Mh1pVvJpdXOm4BjoGPcX.jpg', NULL, '2024-10-26 11:25:28', '2025-02-12 11:31:51'),
+(95, 9, 14, 9, 'hello its amir', 1, '', NULL, '2024-10-26 11:25:37', '2025-02-12 11:31:51'),
+(96, 14, 9, 14, 'ok', 1, '', NULL, '2024-10-26 11:26:03', '2024-11-04 14:23:10'),
+(97, 3, 11, 3, 'Thank you, and I look forward to your response.: \n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-27 12:47:40', '2025-02-16 07:42:41'),
+(98, 11, 3, 11, 'ok boss', 1, '', NULL, '2024-10-27 12:48:56', '2025-02-16 07:19:29'),
+(99, 11, 3, 11, 'Hello', 1, '', '7:08 PM', '2024-10-27 13:08:43', '2025-02-16 07:19:29'),
+(100, 11, 3, 11, 'Ami', 1, '', '7:08 PM', '2024-10-27 13:08:46', '2025-02-16 07:19:29'),
+(101, 11, 3, 11, 'Hello job', 1, '', '7:09 PM', '2024-10-27 13:09:28', '2025-02-16 07:19:29'),
+(102, 3, 11, 3, 'k', 1, '', '12:09 PM', '2024-10-28 07:09:52', '2025-02-16 07:42:41'),
+(103, 3, 11, 3, '3', 1, '', '12:10 PM', '2024-10-28 07:10:01', '2025-02-16 07:42:41'),
+(104, 13, 13, 13, 'seller11111', 1, '', '12:15 PM', '2024-10-28 07:15:51', '2025-02-16 07:28:01'),
+(105, 13, 9, 13, 'hiii', 1, '', '12:35 PM', '2024-10-28 07:35:07', '2025-02-16 07:28:01'),
+(106, 5, 11, 5, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will design and develop a perfect business website\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/9SnThWigDFCcbyX46qw9.jpg', NULL, '2024-10-28 08:48:34', '2025-02-15 05:07:23'),
+(107, 5, 11, 5, 'tgvrdwrfvg', 1, '', '1:48 PM', '2024-10-28 08:48:42', '2025-02-15 05:07:23'),
+(108, 5, 11, 5, 'efsddsfdf', 1, '', '1:58 PM', '2024-10-28 08:58:20', '2025-02-15 05:07:23'),
+(109, 5, 11, 5, 'fbfgb', 1, '', '1:58 PM', '2024-10-28 08:58:38', '2025-02-15 05:07:23'),
+(110, 3, 11, 3, 'sdfsdfsdfsdfsdf', 1, '', '2:24 PM', '2024-10-28 09:24:55', '2025-02-16 07:42:41'),
+(111, 3, 11, 3, 'ddd', 1, '', '2:25 PM', '2024-10-28 09:25:23', '2025-02-16 07:42:41'),
+(112, 3, 11, 3, 'database working perfecttly', 1, '', '2:27 PM', '2024-10-28 09:27:14', '2025-02-16 07:42:41'),
+(113, 3, 11, 3, 'sdfsdfsdf', 1, '', '2:34 PM', '2024-10-28 09:34:47', '2025-02-16 07:42:41'),
+(114, 3, 11, 3, 'Okay done', 1, '', '2:34 PM', '2024-10-28 09:34:57', '2025-02-16 07:42:41'),
+(115, 3, 11, 3, 'brother see this error', 1, '', '2:35 PM', '2024-10-28 09:35:06', '2025-02-16 07:42:41'),
+(116, 9, 11, 9, 'hiiiiiiiii', 1, '', '2:35 PM', '2024-10-28 09:35:14', '2025-02-12 11:31:51'),
+(117, 3, 11, 3, 'i show u wait', 1, '', '2:35 PM', '2024-10-28 09:35:14', '2025-02-16 07:42:41'),
+(118, 4, 15, 4, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will do custom software development saas web application as software developer\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/MLx055PQexaUwvDSKC00.jpg', NULL, '2024-10-28 10:00:33', '2025-01-04 10:41:54'),
+(119, 4, 15, 4, 'hii  i am applying', 1, '', '3:02 PM', '2024-10-28 10:02:07', '2025-01-04 10:41:54'),
+(120, 11, 9, 11, 'hhhhhhhhh', 1, '', '7:55 PM', '2024-10-28 14:55:19', '2025-02-16 07:19:29'),
+(121, 3, 11, 3, 'yes', 1, '', '12:55 PM', '2024-10-31 07:55:03', '2025-02-16 07:42:41'),
+(122, 9, 14, 9, 'dfadsfadf', 1, '', '4:15 PM', '2024-10-31 11:15:26', '2025-02-12 11:31:51'),
+(123, 11, 5, 11, 'hii', 1, '', '7:13 PM', '2024-11-04 14:13:02', '2025-02-16 07:19:29'),
+(124, 11, 5, 11, 'hii', 1, '', '7:13 PM', '2024-11-04 14:13:02', '2025-02-16 07:19:29'),
+(125, 11, 9, 11, 'hii', 1, '', '7:14 PM', '2024-11-04 14:14:37', '2025-02-16 07:19:29'),
+(126, 11, 5, 11, 'ffff', 1, '', '7:15 PM', '2024-11-04 14:15:46', '2025-02-16 07:19:29'),
+(127, 3, 11, 3, 'ff', 1, '', '3:35 PM', '2025-01-04 10:35:44', '2025-02-16 07:42:41'),
+(128, 3, 11, 3, NULL, 1, '/backend/files/lbzE2pahH1KOqUKWXO9C.png', '3:36 PM', '2025-01-04 10:36:03', '2025-02-16 07:42:41'),
+(129, 15, 4, 15, 'gfgdhjmk', 0, '', '3:41 PM', '2025-01-04 10:41:53', '2025-01-04 10:41:53'),
+(130, 3, 11, 3, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"i Will Design and Develop a new Game from scratch\"! We wish you great success!', 1, 'https://api.isumax.com/backend/gig/evwMlCI9soVuBWX7J59g.jpg', NULL, '2025-01-08 03:46:08', '2025-02-16 07:42:41'),
+(131, 3, 11, 3, 'Yecc', 1, '', '8:46 AM', '2025-01-08 03:46:36', '2025-02-16 07:42:41'),
+(132, 11, 3, 11, 'ssd', 1, '', '4:03 AM', '2025-02-10 22:03:50', '2025-02-16 07:19:29'),
+(133, 11, 3, 11, '+696+99+', 1, '', '4:18 AM', '2025-02-10 22:18:05', '2025-02-16 07:19:29'),
+(134, 11, 9, 11, 'kkkk', 1, '/backend/files/lTZ0PTA3vu4dZvkXc2Uw.jpg', '4:21 AM', '2025-02-10 22:21:31', '2025-02-16 07:19:29'),
+(135, 11, 9, 11, 'kkkk', 1, '/backend/files/SNDEfva9Bsfbo6qcpdBc.jpg', '4:21 AM', '2025-02-10 22:21:34', '2025-02-16 07:19:29'),
+(136, 3, 11, 3, 'Hello', 1, '', '9:01 PM', '2025-02-11 15:01:09', '2025-02-16 07:42:41'),
+(137, 3, 11, 3, 'BIjon how are you', 1, '', '9:01 PM', '2025-02-11 15:01:41', '2025-02-16 07:42:41'),
+(138, 5, 11, 5, '554898888', 1, '', '9:05 PM', '2025-02-11 15:05:30', '2025-02-15 05:07:23'),
+(139, 3, 11, 3, 'Hello Bijon how are you', 1, '', '7:39 AM', '2025-02-12 01:39:11', '2025-02-16 07:42:41'),
+(140, 11, 3, 11, 'are you okay', 1, '', '7:39 AM', '2025-02-12 01:39:44', '2025-02-16 07:19:29'),
+(141, 3, 11, 3, 'Thanks', 1, '', '7:39 AM', '2025-02-12 01:39:55', '2025-02-16 07:42:41'),
+(142, 11, 3, 11, 'ssssss', 1, '/backend/files/YXxAsoWGvPpwL50UlRLl.jpeg', '7:41 AM', '2025-02-12 01:41:15', '2025-02-16 07:19:29'),
+(143, 11, 3, 11, 'd', 1, '/backend/files/WheK5lBAz9KYUonQZkOG.jpeg', '7:59 AM', '2025-02-12 01:59:18', '2025-02-16 07:19:29'),
+(144, 11, 3, 11, 'test', 1, '/backend/files/S8jjY2N47ske4HCVCpTo.zip', '7:59 AM', '2025-02-12 01:59:51', '2025-02-16 07:19:29'),
+(145, 11, 3, 11, '[object FormData]', 1, '', '8:47 AM', '2025-02-12 02:47:21', '2025-02-16 07:19:29'),
+(146, 11, 3, 11, '[object FormData]', 1, '/backend/files/8rkojxWXT0ZWhUf25q2o.zip', '8:47 AM', '2025-02-12 02:47:29', '2025-02-16 07:19:29'),
+(147, 11, 3, 11, '[object FormData]', 1, '', '8:47 AM', '2025-02-12 02:47:47', '2025-02-16 07:19:29'),
+(148, 11, 3, 11, 'dsfsdfsfsdfsdfsdfsdfsdf', 1, '', '8:49 AM', '2025-02-12 02:49:05', '2025-02-16 07:19:29'),
+(149, 11, 3, 11, 'File send', 1, '/backend/files/NkrGAPBt8YJVj7RFWZwh.jpeg', '8:49 AM', '2025-02-12 02:49:13', '2025-02-16 07:19:29'),
+(150, 11, 3, 11, 'File send', 1, '/backend/files/qda8o7DMKGOo06eak44g.zip', '8:49 AM', '2025-02-12 02:49:55', '2025-02-16 07:19:29'),
+(151, 11, 3, 11, 'File send', 1, '/backend/files/ukAUf48PfMWdH2iO6Zyx.zip', '9:01 AM', '2025-02-12 03:01:17', '2025-02-16 07:19:29'),
+(152, 11, 3, 11, 'ddddddddddddddddddd', 1, '', '10:07 AM', '2025-02-12 04:07:24', '2025-02-16 07:19:29'),
+(153, 11, 3, 11, 'File send', 1, '/backend/files/jQSZpvQ2Ei0KH7NfwIQM.zip', '10:07 AM', '2025-02-12 04:07:30', '2025-02-16 07:19:29'),
+(154, 11, 3, 11, 'File send', 1, '/backend/files/oDWhlBBE6y7WgC22Lkqi.zip', '10:09 AM', '2025-02-12 04:09:29', '2025-02-16 07:19:29'),
+(155, 11, 3, 11, 'File send', 1, '', '10:12 AM', '2025-02-12 04:12:25', '2025-02-16 07:19:29'),
+(156, 11, 3, 11, 'File send', 1, '/backend/files/DZvl7eLPBbsCrTN4D9e3.zip', '10:12 AM', '2025-02-12 04:12:38', '2025-02-16 07:19:29'),
+(157, 11, 3, 11, 'File send', 1, '/backend/files/D0bnfWfK4Z7sarcT750w.jpeg', '10:42 AM', '2025-02-12 04:42:13', '2025-02-16 07:19:29'),
+(158, 11, 3, 11, 'File send', 1, '/backend/files/KcsnXdAdTlLxTdoI3LEG.pdf', '10:47 AM', '2025-02-12 04:48:00', '2025-02-16 07:19:29'),
+(159, 3, 11, 3, 'Hello', 1, '', '10:59 AM', '2025-02-12 04:59:39', '2025-02-16 07:42:41'),
+(160, 11, 3, 11, 'Yes Im good you', 1, '', '11:00 AM', '2025-02-12 05:00:27', '2025-02-16 07:19:29'),
+(161, 11, 3, 11, 'ddddsssss', 1, '/backend/files/kHxHy2ci7s0Jgh7MdYHE.zip', '11:01 AM', '2025-02-12 05:01:42', '2025-02-16 07:19:29'),
+(162, 11, 3, 11, 'File send', 1, '/backend/files/7tRDdmcWq6qL326plVfX.zip', '11:01 AM', '2025-02-12 05:01:56', '2025-02-16 07:19:29'),
+(163, 11, 3, 11, '5985989999999', 1, '', '11:02 AM', '2025-02-12 05:02:33', '2025-02-16 07:19:29'),
+(164, 3, 11, 3, 'Bijon lession to me', 1, '', '10:59 AM', '2025-02-12 04:59:39', '2025-02-16 07:42:41'),
+(165, 11, 5, 11, 'Hello boss', 1, '', '10:19 PM', '2025-02-12 16:19:26', '2025-02-16 07:19:29'),
+(166, 11, 3, 11, 'Hello boss', 1, '', '10:19 PM', '2025-02-12 16:19:32', '2025-02-16 07:19:29'),
+(167, 11, 9, 11, 'Hello boss', 1, '', '10:19 PM', '2025-02-12 16:19:37', '2025-02-16 07:19:29'),
+(168, 11, 9, 11, 'Hello', 1, '', '11:32 PM', '2025-02-12 17:32:20', '2025-02-16 07:19:29'),
+(169, 11, 9, 11, 'File send', 1, '/backend/files/56FBA4NPSNmfnWvhsXYc.jpg', '11:32 PM', '2025-02-12 17:32:41', '2025-02-16 07:19:29'),
+(170, 11, 9, 11, 'File send', 1, '/backend/files/fPOMUlZ6OF5kN1z2FFce.zip', '11:33 PM', '2025-02-12 17:33:02', '2025-02-16 07:19:29'),
+(171, 11, 9, 11, 'File send', 1, '/backend/files/df5QzczvxlOzH4kR6dPu.pdf', '11:33 PM', '2025-02-12 17:33:28', '2025-02-16 07:19:29'),
+(172, 3, 11, 3, 'HI', 1, '', NULL, '2025-02-14 21:13:03', '2025-02-16 07:42:41'),
+(173, 11, 3, 11, 'Hello boss', 1, '', '6:36 PM', '2025-02-15 12:36:46', '2025-02-16 07:19:29'),
+(174, 11, 3, 11, 'boss come to me...', 1, '', '6:37 PM', '2025-02-15 12:37:15', '2025-02-16 07:19:29'),
+(175, 3, 11, 3, 'Okay coming', 1, '', '6:44 PM', '2025-02-15 12:44:12', '2025-02-16 07:42:41'),
+(176, 3, 13, 3, 'Thank you, and I look forward to your response.: \r\n                    This message relates to: \"I will create amazon affiliate marketing autopilot website with autoblog\"! We wish you great success!', 1, 'http://127.0.0.1:8000/backend/gig/2fCWJLOtNGrxIrN20eMU.jpg', NULL, '2025-02-16 03:41:37', '2025-02-16 07:42:41'),
+(177, 3, 13, 3, 'Hello brother seller 2', 1, '', '9:42 AM', '2025-02-16 03:42:01', '2025-02-16 07:42:41'),
+(178, 13, 3, 13, 'Brother are you okay.....', 1, '', '9:44 AM', '2025-02-16 03:44:02', '2025-02-16 07:28:01'),
+(179, 11, 3, 11, 'Hello brother', 1, '', '6:26 PM', '2025-02-16 12:26:51', '2025-02-16 07:19:29'),
+(180, 3, 13, 3, 'Okay boss', 1, '', '7:26 PM', '2025-02-16 13:26:20', '2025-02-16 07:42:41');
 
 -- --------------------------------------------------------
 
@@ -943,9 +1510,12 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `notification` (
   `id` int(11) NOT NULL,
+  `seller_id` int(11) DEFAULT NULL,
+  `buyer_id` int(11) DEFAULT NULL,
   `name` mediumtext DEFAULT NULL,
   `type` int(11) DEFAULT NULL COMMENT '2=Seller,3=buyer',
   `messages` text DEFAULT NULL,
+  `seen` tinyint(1) DEFAULT NULL,
   `status` int(1) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT current_timestamp()
@@ -955,11 +1525,48 @@ CREATE TABLE `notification` (
 -- Dumping data for table `notification`
 --
 
-INSERT INTO `notification` (`id`, `name`, `type`, `messages`, `status`, `created_at`, `updated_at`) VALUES
-(3, 'Cancelled Orde', 2, 'You can easily add more buttons and methods to display other notifications as needed.', 1, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
-(4, 'Great Speed Notify ', 3, 'Feel free to modify the messages or add more scenarios based on your experiences!', 1, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
-(9, 'Cancelled Orde', 2, 'You can easily add more buttons and methods to display other notifications as needed.', 0, '2024-06-27 15:17:28', '2024-06-27 15:17:28'),
-(14, 'messages', 2, 'messagesmessagesmessages', 1, '2024-10-21 05:14:37', '2024-10-21 05:14:37');
+INSERT INTO `notification` (`id`, `seller_id`, `buyer_id`, `name`, `type`, `messages`, `seen`, `status`, `created_at`, `updated_at`) VALUES
+(1, 2, NULL, 'Hello Bijon', 2, 'How are you', 1, 1, '2024-11-02 06:22:31', '2025-02-12 05:20:44'),
+(2, NULL, 3, 'Dear client', 3, 'Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client Dear client', 1, 1, '2024-11-04 09:58:04', '2025-02-15 05:35:13'),
+(3, 11, NULL, 'Website Development', 2, 'Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-12 05:20:46'),
+(4, 11, NULL, 'Network Development', 2, 'Network Development. Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(5, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(6, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(7, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(8, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(9, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(10, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(11, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(12, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(13, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(14, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(15, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(16, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(17, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(18, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(19, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(20, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(21, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(22, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(23, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(24, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(25, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(26, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(27, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:34:05'),
+(28, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(29, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(30, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(31, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', NULL, 1, '2024-11-04 09:58:40', '2024-11-04 09:58:40'),
+(32, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:32:20'),
+(33, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:32:19'),
+(34, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-15 05:32:22'),
+(35, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-15 05:32:21'),
+(36, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:48:07'),
+(37, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:46:46'),
+(38, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:32:27'),
+(39, 11, NULL, 'Game Deveploment', 2, 'Game Deveploment Why you cancel ALot of orders your Acounnt might b in risk', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:48:05'),
+(40, 11, NULL, 'Game Deveploment', 2, 'This Last notifications ', 1, 1, '2024-11-04 09:58:40', '2025-02-11 05:31:44'),
+(41, NULL, 3, 'Hello client', 3, 'Hello clientHello clientHello client', 1, 1, '2024-11-04 09:58:04', '2025-02-16 05:31:10');
 
 -- --------------------------------------------------------
 
@@ -1004,8 +1611,34 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `orderId`, `gig_id`, `buyerId`, `sellerId`, `selected_packages`, `selected_price`, `tips`, `service_fee`, `sub_total`, `delivery_day`, `order_status`, `company_commission`, `l_one_buyer`, `lev_1`, `l_two_buyer`, `lev_2`, `l_three_buyer`, `lev_3`, `l_four_buyer`, `lev_4`, `l_five_buyer`, `lev_5`, `seller_review_sts`, `return_status`, `cancel_resion`, `updated_at`, `created_at`, `delivery_day_convert_date`) VALUES
-(1, '392777-24', 5, 3, 2, 'Single', '100', 0, 2.00, 102.00, 15, '5', NULL, NULL, 0.06, NULL, 0.04, NULL, 0.02, NULL, 0.02, NULL, 0.04, 0, '', NULL, '2024-10-21 12:52:30', '2024-10-21 12:43:03', '2024-11-05 12:43:03'),
-(2, '390875-24', 5, 3, 2, 'Single', '100', 0, 2.00, 102.00, 15, '5', NULL, NULL, 0.06, NULL, 0.04, NULL, 0.02, NULL, 0.02, NULL, 0.04, 0, '', NULL, '2024-10-21 12:58:04', '2024-10-21 12:57:16', '2024-11-05 12:57:16');
+(1, '736042-24', 1, 7, 11, 'Premium', '900', 0, 2.00, 902.00, 4, '5', 20, 6, 0.80, 5, 0.60, 4, 0.40, 3, 0.20, NULL, 0.10, 1, '', NULL, '2024-10-26 03:05:35', '2024-10-25 13:02:50', '2024-10-29 13:02:50'),
+(2, '930775-24', 1, 9, 11, 'Standart', '400', 0, 2.00, 402.00, 1, '5', 20, 7, 0.80, 6, 0.60, 5, 0.40, 4, 0.20, 3, 0.10, 1, '', NULL, '2024-10-26 08:36:14', '2024-10-25 13:19:19', '2024-10-26 13:19:19'),
+(3, '956993-24', 1, 9, 11, 'Standart', '400', 0, 2.00, 402.00, 1, '3', 20, 7, 0.80, 6, 0.60, 5, 0.40, 4, 0.20, 3, 0.10, 0, '', NULL, '2024-10-25 13:20:23', '2024-10-25 13:19:26', '2024-10-26 13:19:26'),
+(4, '994644-24', 2, 9, 13, 'Basic', '300', 0, 2.00, 302.00, 2, '1', 20, 7, 0.80, 6, 0.60, 5, 0.40, 4, 0.20, 3, 0.10, 0, '', NULL, '2024-10-26 10:32:16', '2024-10-26 10:32:16', '2024-10-28 10:32:16'),
+(5, '913111-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 7, 0.80, 6, 0.60, 5, 0.40, 4, 0.20, 3, 0.10, 0, '', NULL, '2024-10-28 08:27:50', '2024-10-28 08:01:26', '2024-10-29 08:01:26'),
+(6, '925890-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 7, 0.80, 6, 0.60, 5, 0.40, 4, 0.20, 3, 0.10, 0, '', NULL, '2024-10-28 08:28:54', '2024-10-28 08:03:32', '2024-10-29 08:03:32'),
+(7, '765127-24', 1, 7, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 6, 0.80, 5, 0.60, 4, 0.40, 3, 0.20, NULL, 0.10, 0, '', NULL, '2024-10-28 08:28:49', '2024-10-28 08:27:01', '2024-10-29 08:27:01'),
+(8, '413187-24', 4, 4, 15, 'Standart', '400', 0, 2.00, 402.00, 2, '5', 20, 3, 0.80, NULL, 0.60, NULL, 0.40, NULL, 0.20, NULL, 0.10, 1, '', NULL, '2024-10-28 10:40:22', '2024-10-28 10:00:14', '2024-10-30 10:00:14'),
+(9, '410977-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', NULL, '2024-10-28 11:00:33', '2024-10-28 10:51:03', '2024-10-29 10:51:03'),
+(10, '478943-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', NULL, '2024-10-28 11:01:16', '2024-10-28 10:51:09', '2024-10-29 10:51:09'),
+(11, '418060-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', NULL, '2024-10-28 11:02:15', '2024-10-28 10:51:13', '2024-10-29 10:51:13'),
+(12, '943016-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:07:22', '2024-10-28 11:05:25', '2024-10-29 11:05:25'),
+(13, '980766-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:07:33', '2024-10-28 11:05:29', '2024-10-29 11:05:29'),
+(14, '924688-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:11:04', '2024-10-28 11:05:33', '2024-10-29 11:05:33'),
+(15, '961497-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', 'i have an personal essue', '2024-10-28 11:33:37', '2024-10-28 11:11:54', '2024-10-29 11:11:54'),
+(16, '917249-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:20:46', '2024-10-28 11:11:58', '2024-10-29 11:11:58'),
+(17, '962693-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:20:58', '2024-10-28 11:12:01', '2024-10-29 11:12:01'),
+(18, '942000-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:21:13', '2024-10-28 11:12:05', '2024-10-29 11:12:05'),
+(19, '910999-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:21:25', '2024-10-28 11:12:09', '2024-10-29 11:12:09'),
+(20, '938158-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:17:08', '2024-10-28 11:12:13', '2024-10-29 11:12:13'),
+(21, '917028-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:17:21', '2024-10-28 11:12:17', '2024-10-29 11:12:17'),
+(22, '929097-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', NULL, '2024-10-28 11:18:29', '2024-10-28 11:12:22', '2024-10-29 11:12:22'),
+(23, '422266-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', 'abc', '2024-10-28 11:39:52', '2024-10-28 11:36:57', '2024-10-29 11:36:57'),
+(24, '488559-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', 'rtfghjnk', '2024-10-28 11:50:40', '2024-10-28 11:49:25', '2024-10-29 11:49:25'),
+(25, '450134-24', 1, 4, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '5', 20, 3, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', NULL, '2024-10-31 13:42:56', '2024-10-28 11:51:41', '2024-10-29 11:51:41'),
+(26, '953286-24', 1, 9, 11, 'Basic', '150', 0, 2.00, 152.00, 1, '3', 20, 7, 0.40, 6, 0.30, 5, 0.20, 4, 0.10, 3, 0.10, 0, '', 'due too', '2024-10-28 13:29:34', '2024-10-28 13:14:52', '2024-10-29 13:14:52'),
+(27, '356338-25', 6, 3, 11, 'Basic', '300', 0, 2.00, 302.00, 1, '1', 20, NULL, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 1, '', NULL, '2025-02-14 21:53:04', '2025-02-11 10:34:43', '2025-02-12 16:34:43'),
+(28, '386643-25', 9, 3, 11, 'Basic', '100', 0, 2.00, 102.00, 12, '5', 20, NULL, 0.40, NULL, 0.30, NULL, 0.20, NULL, 0.10, NULL, 0.10, 0, '', NULL, '2025-02-14 21:15:30', '2025-02-14 15:11:51', '2025-02-26 21:11:51');
 
 -- --------------------------------------------------------
 
@@ -1029,6 +1662,30 @@ CREATE TABLE `orders_product` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `orders_strip`
+--
+
+CREATE TABLE `orders_strip` (
+  `id` int(11) NOT NULL,
+  `order_id` varchar(255) DEFAULT NULL,
+  `total_amount` decimal(10,2) NOT NULL,
+  `payment_id` varchar(255) DEFAULT NULL,
+  `payment_status` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders_strip`
+--
+
+INSERT INTO `orders_strip` (`id`, `order_id`, `total_amount`, `payment_id`, `payment_status`, `created_at`, `updated_at`) VALUES
+(1, '9779490', 0.00, NULL, 'pending', '2025-02-17 12:37:11', '2025-02-17 12:37:12'),
+(2, '9779490', 0.00, NULL, 'pending', '2025-02-17 12:56:26', '2025-02-17 12:56:26');
 
 -- --------------------------------------------------------
 
@@ -1186,16 +1843,15 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `name`, `slug`, `description_short`, `description_full`, `question`, `answer`, `likeCount`, `categoryId`, `entry_by`, `thumnail_img`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Automation Testing', 'automation-testing', '', '<p>Automation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation TestingAutomation Testing<br></p>', '', '', 5, 0, 1, '/backend/files/SaEQDSXlk5pEwqoScDnV.jpg', 1, '2024-06-24 12:12:27', '2024-08-15 07:16:56'),
-(2, 'Active Directory', 'active-directory', '', '<p>Active DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive DirectoryActive Directory<br></p>', '', '', 1, 0, 1, '/backend/files/ck7bBb8CRZcnPdbbiaaX.jpeg', 1, '2024-06-24 12:15:50', '2024-08-15 07:16:40'),
-(3, 'Adobe Photoshop', 'adobe-photoshop', '', '<p>Adobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe Photoshop<br></p>', '', '', 1, 0, 1, '/backend/files/m8S1QuWsgtCfI65tBhqV.jpeg', 1, '2024-06-24 12:19:02', '2024-08-15 07:15:01'),
-(4, 'sss', 'sss', '', '<p>Adobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe Photoshop<br></p>', '', '', 158, 0, 1, NULL, 1, '2024-06-27 02:11:36', '2024-08-15 07:14:54'),
-(5, 'xxx', 'xxx', '', '<p>Adobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe PhotoshopAdobe Photoshop<br></p>', '', '', NULL, 0, 3, NULL, 0, '2024-06-27 02:11:53', '2024-06-27 02:11:53'),
-(6, 'Gazi', 'gazi', NULL, 'I am Mohammad Hasan Ejaz and i was designed this movie cover poster, I have designed this poster on photoshop and if you want', NULL, NULL, NULL, NULL, 1, '/backend/files/o0iO1GQqBmIZzgqo3g7Y.png', 0, '2024-06-27 02:19:18', '2024-06-27 04:22:36'),
-(7, 'Gazi', 'gazi', NULL, 'I am Mohammad Hasan Ejaz and i was designed this movie cover poster, I have designed this poster on photoshop and if you want I am Mohammad Hasan Ejaz and i was designed this movie cover poster, I have designed this poster on photoshop and if you want I am Mohammad Hasan Ejaz and i was designed this movie cover poster, I have designed this poster on photoshop and if you want I am Mohammad Hasan Ejaz and i was designed this movie cover poster, I have designed this poster on photoshop and if you want', NULL, NULL, NULL, NULL, 3, '/backend/files/BBX7qnVcTjqwyuGhFFgL.png', 0, '2024-06-27 02:20:52', '2024-06-27 02:20:52'),
-(8, 'Gazi', 'gazi', NULL, 'Your post is pending. Your post will be published if the admin approves it', NULL, NULL, NULL, NULL, 1, NULL, 0, '2024-06-27 02:22:10', '2024-06-27 04:09:16'),
-(9, 'test1', 'test1', NULL, 'BIJONS', NULL, NULL, NULL, NULL, 2, NULL, 0, '2024-09-25 10:21:31', '2024-09-25 10:21:31'),
-(10, 'ujkkkk', 'ujkkkk', NULL, '<p>sdfsdfsdf<br></p>', NULL, NULL, NULL, NULL, 1, '/backend/files/lIKgQGWLbDTkJDvvS0gx.png', 1, '2024-10-04 10:33:00', '2024-10-04 10:33:00');
+(1, 'About us Isumax', 'about-us-isumax', NULL, '<div align=\"justify\"><ul><li><b>Welcome to Isumax</b>, your ultimate destination for freelance services! We are dedicated to connecting talented freelancers with clients seeking high-quality services across various fields. Our platform empowers professionals to showcase their skills and expertise while offering clients a diverse range of services tailored to their needs.<br><br>At Isumax, we believe in the power of creativity and innovation. Whether you\'re a small business looking for design work, a startup in need of marketing strategies, or an individual seeking custom writing services, we have the right freelancer for you. Our mission is to foster collaboration between clients and freelancers, creating a thriving community that benefits everyone involved.<br><br>We take pride in our rigorous vetting process, ensuring that every freelancer on our platform meets our high standards for quality and professionalism. Our freelancers are experts in their respective fields, bringing years of experience and a passion for their craft. With Isumax, you can trust that you\'re working with some of the best talent available.<br><br>Our user-friendly interface makes it easy to navigate through the wide array of services we offer. You can browse freelancer profiles, view portfolios, and read reviews from previous clients to help you make informed decisions. Finding the perfect freelancer for your project has never been easier!<br><br>At Isumax, we prioritize your satisfaction. We are committed to delivering exceptional customer service and support throughout your experience with us. If you have any questions or need assistance, our dedicated support team is here to help you every step of the way.<br><br>We understand that every project is unique. That\'s why we encourage open communication between clients and freelancers. Our platform facilitates seamless interactions, allowing you to discuss your project requirements, set deadlines, and provide feedback directly. This collaborative approach ensures that your vision is brought to life precisely as you envision it.<br><br>As a forward-thinking platform, we are constantly innovating and improving our services to meet the evolving needs of our users. We stay updated with the latest industry trends and technologies, enabling us to provide relevant solutions that drive success for both freelancers and clients.<br><br>At Isumax, we value diversity and inclusion. We welcome freelancers from all backgrounds, cultures, and experiences. This diversity enriches our community, fostering creativity and enabling us to cater to a wide range of client needs.<br><br>Join Isumax today and become part of a vibrant community that celebrates talent and creativity. Whether you’re a freelancer looking to showcase your skills or a client in search of exceptional services, Isumax is here to help you succeed.<br><br>Together, we can build a future where creativity knows no bounds. Experience the power of freelance services with Isumax and discover the endless possibilities that await you!<br><br>---<br><br>Feel free to adjust any parts of this content to better fit your brand\'s voice and mission!<br></li></ul></div>', NULL, NULL, NULL, 3, 1, NULL, 1, '2024-10-24 10:43:18', '2024-10-24 10:43:18'),
+(2, 'Privacy & Policy', 'privacy-policy', NULL, '<p>Privacy Policy for Isumax<br><br>At Isumax, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, disclose, and safeguard your information when you visit our website, use our services, or interact with us. By accessing or using Isumax, you agree to the terms of this Privacy Policy.<br><br>1. Information We Collect<br><br>We collect various types of information to provide and improve our services, including:<br><br>Personal Information:** When you create an account, we may collect personal information such as your name, email address, phone number, and payment details.<br>Profile Information:** Information you provide to create your freelancer or client profile, including skills, experience, and portfolio.<br>Transaction Information:** Details of services you purchase or provide through Isumax, including payment information and service history.<br>Usage Data:** Information about how you use our website, including your IP address, browser type, and pages visited.<br><br>2. How We Use Your Information<br><br>We may use the information we collect for various purposes, including:<br><br>- To provide and maintain our services.<br>- To notify you about changes to our services or your account.<br>- To facilitate transactions between freelancers and clients.<br>- To provide customer support and respond to inquiries.<br>- To monitor the usage of our website and analyze trends.<br>- To detect, prevent, and address technical issues.<br>- To communicate with you about promotions, offers, and updates.<br><br>3. Disclosure of Your Information<br><br>We may share your information in the following situations:<br><br>With Service Providers:** We may employ third-party companies and individuals to facilitate our services, provide the service on our behalf, or assist us in analyzing how our services are used. These third parties will have access to your personal information only to perform specific tasks on our behalf.<br></p><p>For Business Transfers:** If Isumax is involved in a merger, acquisition, or asset sale, your personal information may be transferred. We will provide notice before your personal information is transferred and becomes subject to a different Privacy Policy.<br></p><p>Legal Requirements:** We may disclose your personal information if required to do so by law or in response to valid requests by public authorities.<br><br>4. Data Security<br><br>The security of your data is important to us, and we strive to implement and maintain reasonable security procedures and practices to protect your personal information from unauthorized access, use, or disclosure. However, please be aware that no method of transmission over the internet or method of electronic storage is 100% secure.<br><br>5. Your Rights<br><br>You have the following rights regarding your personal information:<br><br>Access:** You can request copies of your personal information.<br>Rectification:** You can request to correct any inaccurate or incomplete personal information.<br>Erasure:** You can request the deletion of your personal information under certain conditions.<br>Objection:** You can object to the processing of your personal information under certain conditions.<br><br>To exercise these rights, please contact us using the information provided below.<br></p><p>6. Cookies<br><br>Isumax uses cookies to improve your experience on our website. Cookies are small files stored on your device that help us remember your preferences and understand how you interact with our site. You can choose to accept or decline cookies, but this may prevent you from taking full advantage of our services.<br><br>7. Links to Other Websites<br><br>Our website may contain links to third-party websites. We have no control over and assume no responsibility for the content, privacy policies, or practices of any third-party sites or services. We encourage you to review the privacy policies of any third-party websites you visit.<br><br>8. Changes to This Privacy Policy<br><br>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the \"Effective Date\" at the top. You are advised to review this Privacy Policy periodically for any changes.<br><br>9. Contact Us<br><br>If you have any questions about this Privacy Policy, please contact us:<br><br><b>Email:** isumax@gmail.com<br>Phone:** +97165549999<br>Address:** Pakistan , India.</b><br><br>By using Isumax, you consent to the terms of this Privacy Policy.<br><br>&nbsp;<br></p>', NULL, NULL, NULL, 1, 1, NULL, 1, '2024-10-24 10:49:10', '2024-10-24 10:49:10'),
+(3, 'Terms of Services', 'terms-of-services', NULL, '<p><br></p><p><br></p><p>Welcome to Isumax! These Terms and Services govern your access to and use of our website and services. By accessing or using Isumax, you agree to be bound by these terms. If you do not agree with any part of these terms, you must not use our services.<br><br>1. Definitions<br><br>- **\"Isumax,\" \"we,\" \"us,\" or \"our\":** Refers to the Isumax platform and all associated services.<br>- **\"User,\" \"you,\" or \"your\":** Refers to any individual or entity that accesses or uses the Isumax platform.<br>- **\"Services\":** Refers to all features, functionalities, and content offered on the Isumax platform, including but not limited to freelance job listings, profiles, messaging, and payment services.<br><br>### 2. Acceptance of Terms<br><br>By accessing or using Isumax, you confirm that you are at least 18 years old, or if you are under 18, you have parental or guardian consent to use our services. You agree to comply with all applicable laws and regulations while using Isumax.<br><br>3. Account Registration<br><br>To access certain features of Isumax, you may be required to create an account. You agree to:<br><br>- Provide accurate, current, and complete information during the registration process.<br>- Maintain the security of your password and account.<br>- Notify us immediately of any unauthorized use of your account or any other breach of security.<br>- Be responsible for all activities that occur under your account.<br><br>4. User Conduct<br><br>You agree not to:<br><br>- Use Isumax for any unlawful purpose or in violation of any local, state, national, or international law.<br>- Post or transmit any content that is defamatory, obscene, abusive, harassing, or otherwise objectionable.<br>- Attempt to gain unauthorized access to any portion or feature of Isumax or any other systems or networks connected to Isumax.<br>- Impersonate any person or entity or misrepresent your affiliation with any person or entity.<br><br>5. Freelance Services<br><br>Isumax provides a platform for freelancers and clients to connect and engage in freelance services. We do not guarantee the quality, safety, or legality of any services offered or obtained through Isumax. Users are responsible for verifying the qualifications and reputation of other users before entering into any agreement.<br><br>### 6. Payments and Fees<br><br>Users may be required to pay fees to access certain services on Isumax. All fees are non-refundable. You agree to provide accurate payment information and authorize us to charge your chosen payment method for any services purchased.<br><br>### 7. Intellectual Property<br><br>All content and materials on Isumax, including but not limited to text, graphics, logos, and software, are the property of Isumax or its licensors and are protected by copyright, trademark, and other intellectual property laws. You may not use, reproduce, or distribute any content without our prior written consent.<br><br>8. Termination<br><br>We reserve the right to suspend or terminate your access to Isumax at our discretion, without notice, for conduct that we believe violates these Terms and Services or is harmful to other users or the platform.<br><br>&nbsp;9. Disclaimers<br><br>Isumax provides the services on an \"as-is\" and \"as-available\" basis. We do not warrant that the services will be uninterrupted or error-free. We are not responsible for any loss or damage resulting from your use of Isumax.<br><br>10. Limitation of Liability<br><br>To the fullest extent permitted by law, Isumax shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of Isumax, including but not limited to loss of profits, data, or goodwill.<br><br>11. Governing Law<br><br>These Terms and Services shall be governed by and construed in accordance with the laws of [Your Jurisdiction]. Any disputes arising out of or relating to these terms shall be subject to the exclusive jurisdiction of the courts located in [Your Jurisdiction].<br><br>12. Changes to Terms<br><br>We may update these Terms and Services from time to time. We will notify you of any changes by posting the new Terms on this page and updating the \"Effective Date\" at the top. Your continued use of Isumax after any changes signifies your acceptance of the new Terms.<br><br>&nbsp;13. Contact Us<br><br>If you have any questions about these Terms and Services, please contact us:<br><br>Email:** [insert email address]<br>Phone:** [insert phone number]<br>Address:** [insert address]<br><br>By using Isumax, you acknowledge that you have read, understood, and agree to be bound by these Terms and Services.<br><br>---<br><br>Please replace placeholders (like the effective date, jurisdiction, and contact details) with the appropriate information for Isumax.</p>', NULL, NULL, NULL, 2, 12, NULL, 0, '2024-10-24 10:52:16', '2024-10-28 08:53:20'),
+(4, 'Trist & Safety', 'trist-safety', NULL, '<p><br><b>Trust &amp; Safety</b><br><br>At Isumax, your safety and satisfaction are our top priorities. We are dedicated to creating a trustworthy platform where freelancers and clients can connect and collaborate with confidence. Here are the key measures we take to ensure a safe experience for all users:<br><br>1. **User Verification:** We implement stringent verification processes for all users, ensuring that freelancers and clients are genuine and trustworthy.<br><br>2. **Secure Transactions:** Our platform utilizes secure payment methods and encryption technologies to protect your financial information and ensure safe transactions.<br><br>3. **Reporting Mechanism:** We encourage users to report any suspicious activities or content. Our dedicated support team promptly investigates all reports to maintain a safe community.<br><br>4. **Privacy Protection:** Your personal information is safeguarded in accordance with our privacy policy. We do not share your data with third parties without your consent.<br><br>5. **Guidelines and Policies:** We enforce strict community guidelines and policies to prevent harassment, fraud, and other harmful behaviors. Violators will face appropriate actions, including account suspension.<br><br>6. **Educational Resources:** Isumax offers resources and tips to help users navigate the platform safely and make informed decisions while hiring or providing services.<br><br>7. **Customer Support:** Our customer support team is available to assist you with any concerns or inquiries. We are committed to resolving issues swiftly and effectively.<br><br>8. **Transparency:** We maintain transparency regarding our policies and practices, ensuring that you are well-informed about your rights and responsibilities while using Isumax.<br><br>9. **Continuous Improvement:** We regularly update our security measures and practices to adapt to new challenges and threats, ensuring a continually safe environment for our users.<br><br>10. **Community Commitment:** We believe in fostering a respectful and professional community. Together, we can create a positive experience for all users on Isumax.<br><br>At Isumax, your trust is paramount, and we are here to support you every step of the way. <br><br>Feel free to modify any parts to better fit your platform\'s vision and policies!<br></p>', NULL, NULL, NULL, 6, 1, NULL, 1, '2024-10-24 10:57:26', '2024-10-24 10:57:26'),
+(5, 'trust & Safety', 'trust-safety', NULL, '<p>Selling your services on Isumax is a straightforward process designed to help freelancers showcase their skills and connect with clients effectively. Follow these steps to maximize your success on the platform:<br><br>1. **Create a Professional Profile:** Begin by setting up a compelling profile that highlights your skills, experience, and services. Include a professional photo and a detailed bio to make a strong first impression.<br><br>2. **Define Your Services:** Clearly outline the services you offer. Be specific about what clients can expect, and include various packages or pricing tiers to cater to different needs.<br><br>3. **Showcase Your Portfolio:** Upload samples of your previous work to demonstrate your expertise. A well-curated portfolio can significantly enhance your credibility and attract potential clients.<br><br>4. **Set Competitive Pricing:** Research similar services on Isumax to determine competitive pricing for your offerings. Consider starting with lower rates to build your reputation and gather positive reviews.<br><br>5. **Optimize Your Listings:** Use relevant keywords in your service titles and descriptions to improve your visibility in search results. A well-optimized listing increases the chances of being discovered by potential clients.<br><br>6. **Engage with Clients:** Respond promptly to inquiries and messages from clients. Clear and open communication builds trust and can lead to successful collaborations.<br><br>7. **Maintain Quality Standards:** Deliver high-quality work that meets or exceeds client expectations. Satisfied clients are more likely to leave positive feedback and recommend you to others.<br><br>8. **Collect Feedback:** Encourage clients to leave reviews after the completion of projects. Positive feedback enhances your reputation and can help you attract more business.<br><br>9. **Stay Active on the Platform:** Regularly update your profile and service offerings, and actively participate in the Isumax community. Engaging with other users can lead to networking opportunities and collaborations.<br><br>10. **Leverage Promotional Tools:** Take advantage of any promotional tools or features offered by Isumax to increase your visibility. Participate in platform events or promotions to reach a wider audience.<br><br>By following these steps, you can successfully sell your services on Isumax and build a thriving freelance career. We are here to support you in your journey, providing a platform that connects talented freelancers with clients seeking quality work.<br><br>---<br><br>Feel free to adjust any points or add specific features unique to Isumax to enhance this section!<br></p>', NULL, NULL, NULL, 4, 1, NULL, 1, '2024-10-24 11:00:18', '2024-10-24 11:00:18'),
+(6, 'Selellin on ISUMAAX', 'selellin-on-isumaax', NULL, '<p>Help &amp; Support<br><br>At Isumax, we are committed to providing exceptional support to our users. Whether you’re a freelancer looking for guidance or a client seeking assistance, our Help &amp; Support section is here to address your needs.<br><br>1. **Knowledge Base**<br>Explore our comprehensive knowledge base, where you can find articles, tutorials, and FAQs covering various topics related to using Isumax. This resource is designed to help you navigate the platform efficiently and answer common questions.<br><br>2. **Contact Support**<br>If you can’t find the answers you’re looking for in our knowledge base, our dedicated support team is here to help. You can reach us through the following channels:<br>- **Email Support:** Send us an email at support@isumax.com for inquiries or assistance.<br>- **Live Chat:** Use our live chat feature on the website for real-time assistance during business hours.<br><br>&nbsp;3. **Submit a Ticket**<br>For more complex issues, you can submit a support ticket through our Help Center. Provide detailed information about your concern, and our team will respond promptly to resolve your issue.<br><br>&nbsp;4. **Community Forum**<br>Join our community forum to connect with other Isumax users. Share tips, ask questions, and engage in discussions about freelancing and the services offered on our platform. Our community is a great resource for finding support and networking with fellow users.<br><br>5. **Feedback and Suggestions**<br>We value your input! If you have any feedback or suggestions on how we can improve our services or platform, please let us know. Your insights help us enhance the user experience for everyone on Isumax.<br><br>&nbsp;6. **Updates and Announcements**<br>Stay informed about the latest updates, features, and announcements from Isumax. Follow our blog and social media channels to receive news and tips on how to maximize your experience on the platform.<br><br>&nbsp;7. **Safety and Security**<br>We prioritize the safety and security of our users. If you encounter any suspicious activity or have concerns regarding your account, please contact our support team immediately. We take all reports seriously and will investigate any issues promptly.<br><br>&nbsp;8. **Help Center Accessibility**<br>Our Help Center is accessible 24/7, ensuring that you can find assistance whenever you need it. We are dedicated to ensuring that your experience on Isumax is seamless and enjoyable.<br><br>At Isumax, we are here to support you every step of the way. Your success is our priority, and we look forward to helping you achieve your goals!<br><br>---<br><br>Feel free to modify any sections or add specific contact details that are relevant to Isumax!<br></p>', NULL, NULL, NULL, 5, 1, NULL, 1, '2024-10-24 11:03:16', '2024-10-24 11:03:16'),
+(9, 'Buyers on Isumax', 'buyers-on-isumax', NULL, '<p><br></p><p><b>Buyers on Isumax</b><br><br>Welcome to Isumax! As a buyer, you have access to a diverse pool of talented freelancers ready to help you achieve your project goals. Here’s everything you need to know to make the most of your experience on our platform:<br><br>1. **Finding the Right Freelancer**<br>&nbsp;&nbsp; - **Search Functionality:** Utilize our advanced search feature to filter freelancers by skills, experience, ratings, and price range. This helps you find the best match for your specific project needs.<br>&nbsp;&nbsp; - **Categories and Tags:** Browse through various categories and tags to discover freelancers who specialize in areas relevant to your project, from graphic design to web development.<br><br>&nbsp;2. **Review Profiles and Portfolios**<br>&nbsp;&nbsp; - **Freelancer Profiles:** Each freelancer has a detailed profile showcasing their skills, experience, and previous work. Take the time to read their bios and review their portfolios to ensure they align with your expectations.<br>&nbsp;&nbsp; - **Ratings and Reviews:** Check out feedback from previous clients. Ratings and reviews provide insights into a freelancer\'s reliability and quality of work, helping you make informed decisions.<br><br>&nbsp;3. **Communicate Effectively**<br>&nbsp;&nbsp; - **Direct Messaging:** Use Isumax’s messaging feature to communicate directly with freelancers. Discuss project details, clarify requirements, and gauge their responsiveness before hiring.<br>&nbsp;&nbsp; - **Set Clear Expectations:** Clearly outline your project goals, timelines, and budget to ensure that both you and the freelancer are on the same page.<br><br>&nbsp;4. **Making an Order**<br>&nbsp;&nbsp; - **Custom Offers:** If you have a unique project in mind, request a custom offer from a freelancer. This allows you to negotiate terms and ensure the freelancer understands your specific requirements.<br>&nbsp;&nbsp; - **Order Confirmation:** Once you agree on the project details, confirm the order through Isumax to protect both parties and ensure a smooth transaction.<br><br>&nbsp;5. **Payment Security**<br>&nbsp;&nbsp; - **Secure Payments:** Isumax offers secure payment options to protect your financial information. Funds are held in escrow until the project is completed to your satisfaction, ensuring peace of mind.<br>&nbsp;&nbsp; - **Refund Policy:** Familiarize yourself with our refund policy in case the project does not meet your expectations or if there are issues with delivery.<br><br>&nbsp;6. **Providing Feedback**<br>&nbsp;&nbsp; - **Rate Your Experience:** After the project is completed, take a moment to leave feedback for the freelancer. Your insights help others make informed decisions and contribute to the overall quality of the Isumax community.<br>&nbsp;&nbsp; - **Dispute Resolution:** If you encounter any issues with a freelancer, reach out to our support team for assistance. We have processes in place to help resolve disputes fairly.<br><br>&nbsp;7. **Stay Informed**<br>&nbsp;&nbsp; - **Updates and Notifications:** Keep an eye on your notifications for updates about your orders and any messages from freelancers. Staying engaged ensures timely communication throughout your projects.<br><br>&nbsp;8. **Explore Resources**<br>&nbsp;&nbsp; - **Help Center:** Visit our Help Center for articles, guides, and tips on how to navigate the Isumax platform effectively. We are committed to supporting you in your buying journey.<br><br>At Isumax, we strive to provide a seamless experience for buyers seeking quality freelance services. Whether you\'re launching a new project or looking to enhance your existing business, you’ll find the right talent here. Happy hiring!<br><br>---<br><br>Feel free to adjust any sections to better fit the specific features and policies of Isumax!<br></p>', NULL, NULL, NULL, 7, 12, NULL, 1, '2024-10-24 11:06:57', '2024-10-28 13:37:02'),
+(10, 'Help and Support', 'help-and-support', NULL, '<p><b>&nbsp;Help and Support</b><br><br>### Welcome to Our Help and Support Center!<br><br>We understand that sometimes you may need assistance while using our services. Our dedicated team is here to help you with any questions or issues you may encounter. Below, you’ll find a variety of resources designed to provide you with the support you need.<br><br>### Frequently Asked Questions (FAQ)<br><br>**Q: How can I reset my password?** &nbsp;<br>A: To reset your password, go to the login page and click on \"Forgot Password?\" Follow the prompts to reset your password via email.<br><br>**Q: How can I contact customer support?** &nbsp;<br>A: You can reach our customer support team via email at support@example.com or by filling out the contact form on our website. Our team is available 24/7 to assist you.<br><br>**Q: What should I do if I encounter a technical issue?** &nbsp;<br>A: If you experience any technical issues, please check our [Troubleshooting Guide](#) for common solutions. If the problem persists, contact our support team for further assistance.<br><br>### Live Chat Support<br><br>Need immediate assistance? Our live chat support is available from 9 AM to 9 PM (GMT). Click the chat icon in the bottom right corner of your screen to get started.<br><br>### Contact Us<br><br>If you have any questions or need further assistance, please don’t hesitate to reach out to us:<br><br>- **Email:** support@example.com<br>- **Phone:** +1 (800) 123-4567<br>- **Business Hours:** Monday - Friday, 9 AM - 5 PM (GMT)<br><br>### Community Forum<br><br>Join our community forum to connect with other users and share your experiences. You can ask questions, provide feedback, and receive tips from fellow users and our support team.<br><br>### Thank You!<br><br>We appreciate your patience and understanding as we work to provide you with the best support possible. Your satisfaction is our top priority, and we’re here to help you every step of the way.<br><br></p>', NULL, NULL, NULL, 8, 1, NULL, 1, '2024-10-25 10:52:07', '2024-10-25 10:52:07'),
+(12, 'Affiliate', 'affiliate', NULL, '<p>If you\'re interested in affiliate marketing and programs that can help maximize your earnings, a range of affiliate platforms offer great opportunities. For example, **Amazon Associates** provides access to millions of products with commission rates of up to 20%, making it ideal if you\'re targeting a broad audience or consumer-driven content. Alternatively, **Shopify\'s Affiliate Program** is well-suited for promoting e-commerce and entrepreneurial content, offering up to $150 per referral and a 30-day cookie duration for tracking conversions.</p><p><br></p><p>For a more niche approach, **Semrush** (focused on SEO tools) provides substantial commissions, including $200 per paid subscription, making it a great option if your audience is in digital marketing or SEO. Similarly, **Fiverr** offers multiple commission structures that include both flat rates and revenue-sharing options, which can be profitable if you\'re targeting freelancers or businesses in need of services like graphic design, copywriting, and more.</p><p><br></p><p>Programs like **ClickFunnels** and **Leadpages** are also popular among affiliates looking to promote digital marketing tools, as they provide recurring commissions on subscriptions. They’re beneficial if your audience includes small businesses and marketers looking for conversion optimization solutions.</p><p><br></p><p>Each program varies in commission rates, payout thresholds, and cookie durations, so it\'s worth considering which program best aligns with your audience and content style. For more details on these and other top programs, you can check resources like Shopify\'s affiliate marketing guide and others.</p>', NULL, NULL, NULL, 9, 1, NULL, 1, '2024-10-26 03:44:02', '2024-10-26 03:44:02');
 
 -- --------------------------------------------------------
 
@@ -2453,7 +3109,29 @@ CREATE TABLE `seller_review` (
 
 INSERT INTO `seller_review` (`id`, `orderId`, `review`, `rating`, `seller_id`, `buyer_id`, `created_at`, `updated_at`) VALUES
 (1, '392777-24', 'Your ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour ReviewYour Review', 3, 2, 3, '2024-10-21 12:52:30', '2024-10-21 12:52:30'),
-(2, '390875-24', '.l..', 5, 2, 3, '2024-10-21 12:58:04', '2024-10-21 12:58:04');
+(2, '390875-24', '.l..', 5, 2, 3, '2024-10-21 12:58:04', '2024-10-21 12:58:04'),
+(3, '877073-24', 'very good services', 5, 13, 8, '2024-10-22 11:34:06', '2024-10-22 11:34:06'),
+(4, '2119709-24', 'good', 5, 24, 21, '2024-10-22 15:31:16', '2024-10-22 15:31:16'),
+(5, '3336996-24', 'woicuasiohjas', 5, 24, 33, '2024-10-23 14:03:30', '2024-10-23 14:03:30'),
+(6, '736042-24', 'very good services project timing is 5 days but this guy will complete it in one days he is very nivvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personvery good services project timing is 5 days but this guy will complete it in one days he is very niv\nce ]]\nand nice personv\nce ]]\nand nice person', 5, 11, 7, '2024-10-25 13:11:11', '2024-10-25 13:11:11'),
+(7, '930775-24', 'well', 5, 11, 9, '2024-10-26 08:35:36', '2024-10-26 08:35:36'),
+(8, '413187-24', 'asdf', 5, 15, 4, '2024-10-28 10:11:47', '2024-10-28 10:11:47'),
+(9, '410977-24', 'asdfgh', 5, 11, 4, '2024-10-28 11:00:33', '2024-10-28 11:00:33'),
+(10, '478943-24', 'asdfghjkl', 5, 11, 4, '2024-10-28 11:01:16', '2024-10-28 11:01:16'),
+(11, '418060-24', 'rgnbvc', 5, 11, 4, '2024-10-28 11:02:15', '2024-10-28 11:02:15'),
+(12, '943016-24', 'asxc', 5, 11, 9, '2024-10-28 11:07:22', '2024-10-28 11:07:22'),
+(13, '980766-24', 'ascxz', 5, 11, 9, '2024-10-28 11:07:33', '2024-10-28 11:07:33'),
+(14, '924688-24', 'sdfghjk', 5, 11, 9, '2024-10-28 11:11:05', '2024-10-28 11:11:05'),
+(15, '938158-24', 'qwfg', 5, 11, 9, '2024-10-28 11:17:08', '2024-10-28 11:17:08'),
+(16, '917028-24', 'SADFVB', 5, 11, 9, '2024-10-28 11:17:21', '2024-10-28 11:17:21'),
+(17, '929097-24', 'WERGHGRFEDWCS', 5, 11, 9, '2024-10-28 11:18:29', '2024-10-28 11:18:29'),
+(18, '917249-24', 'asxccxc', 5, 11, 9, '2024-10-28 11:20:46', '2024-10-28 11:20:46'),
+(19, '962693-24', 'szx', 5, 11, 9, '2024-10-28 11:20:58', '2024-10-28 11:20:58'),
+(20, '942000-24', 'xxcxcvcv cv cv c', 5, 11, 9, '2024-10-28 11:21:13', '2024-10-28 11:21:13'),
+(21, '910999-24', 'dcfv', 5, 11, 9, '2024-10-28 11:21:25', '2024-10-28 11:21:25'),
+(22, '450134-24', 'asdfg', 5, 11, 4, '2024-10-31 13:42:56', '2024-10-31 13:42:56'),
+(23, '356338-25', 'He gave me clear instructions. very good experience.', 5, 11, 3, '2025-02-14 15:14:36', '2025-02-14 15:14:36'),
+(24, '386643-25', 'It\'s been a pleasure collaborating with mdbijonahmed. Looking forward to working with him again. Highly recommended!', 4, 11, 3, '2025-02-14 15:15:30', '2025-02-14 15:15:30');
 
 -- --------------------------------------------------------
 
@@ -2522,7 +3200,18 @@ INSERT INTO `skills` (`id`, `user_id`, `name`, `created_at`, `updated_at`) VALUE
 (15, 2, 'TypeScript', '2024-09-30 15:01:41', '2024-09-30 15:01:41'),
 (19, 37, 'HTML', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
 (20, 37, 'JS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
-(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52');
+(21, 37, 'CS', '2024-10-01 02:50:52', '2024-10-01 02:50:52'),
+(22, 11, 'NUXTJ3', '2025-02-11 00:13:54', '2025-02-11 00:13:54'),
+(23, 11, 'JAVASCRIPT', '2025-02-11 00:14:12', '2025-02-11 00:14:12'),
+(24, 11, 'HTML5', '2025-02-11 00:14:12', '2025-02-11 00:14:12'),
+(25, 11, 'BOOTSTRAP 5', '2025-02-11 00:15:07', '2025-02-11 00:15:07'),
+(26, 11, 'REACTJS', '2025-02-11 00:15:07', '2025-02-11 00:15:07'),
+(27, 11, 'NUXTJS3', '2025-02-11 00:15:07', '2025-02-11 00:15:07'),
+(29, 11, 'MYSQL', '2025-02-11 00:15:43', '2025-02-11 00:15:43'),
+(30, 11, 'JAVA', '2025-02-11 00:16:54', '2025-02-11 00:16:54'),
+(31, 11, 'C++', '2025-02-11 00:16:54', '2025-02-11 00:16:54'),
+(32, 11, 'C#', '2025-02-11 00:16:54', '2025-02-11 00:16:54'),
+(33, 11, 'NODEJS', '2025-02-11 00:16:54', '2025-02-11 00:16:54');
 
 -- --------------------------------------------------------
 
@@ -2642,14 +3331,14 @@ CREATE TABLE `tbl_setting` (
   `maximum_transfer_amount_to_other_user` int(11) DEFAULT NULL,
   `transfer_fee_fixed_amount` int(11) DEFAULT NULL,
   `traansfer_fee_on_percentage` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `tbl_setting`
 --
 
 INSERT INTO `tbl_setting` (`id`, `name`, `forSellerCommission`, `forBuyerCommission`, `deposit_service_charge`, `convert_php_amt`, `withdraw_service_charge`, `withdraw_minimum_amount`, `minimum_trade_amount`, `minimum_deposit_amount`, `level_1_bonus`, `level_2_bonus`, `level_3_bonus`, `level_4_bonus`, `level_5_bonus`, `trade_fee`, `first_up_lin_com`, `second_up_lin_com`, `third_up_lin_com`, `trade_percent`, `tel`, `email`, `address`, `hotline`, `emergency`, `photo`, `description`, `copyright`, `status`, `admin_photo`, `admin_name`, `admin_email`, `admin_phone`, `meta_keywords`, `meta_description`, `pphoto`, `bg_color`, `currency`, `openinig_balance_date`, `reffer_bonus`, `openinig_balance_comments`, `fblink`, `twitterlink`, `linkdinlink`, `instragramlink`, `store_policy`, `crypto_wallet_address`, `master_pass_acc_no`, `whatsApp`, `website`, `telegram`, `register_bonus`, `setting_id`, `mininmum_deposit_amount`, `maximum_deposit_amount`, `daily_max_withdraw_request`, `withdrawal_free_amount`, `service_fee`, `withdrawal_free_on_percentage`, `minimum_withdrawal`, `maximum_withdrawal`, `mimumun_transfer_amount_to_other_user`, `maximum_transfer_amount_to_other_user`, `transfer_fee_fixed_amount`, `traansfer_fee_on_percentage`) VALUES
-(1, 'TRADING', 20, 10, 0, 64, 6, 10, 5, 10, 3, 2, 1, 1, 2, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2020 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '£', '2020-05-13', 5, NULL, 'https://www.fiverr.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 5, 1, '5200', 3333, 4544, 45, 2, 4, 34, 333, 22, 22, 22, 2);
+(1, 'TRADING', 20, 10, 0, 64, 6, 10, 5, 10, 20, 15, 10, 5, 5, 6, 9, 4, 3, 10, '+44245454545', 'info@abcd.com', 'Addres', '000000', '+000000', 'pic/2tAjiUpJ0X8GziIrKJJJ.png', 'Business Description', 'Copyright © 1995-2024 abc Inc. All Rights Reserved', 1, 'pic/ZOdc8nsWAMY1YELkp9zH.jpg', 'admin', 'info@admin.com', '+44245454545', NULL, NULL, '', '#ffffff', '$', '2020-05-13', 5, NULL, 'isumax.com', 'https://www.facebook.com', 'https://web.whatsapp.com/', '#', '', 'TPpMvdKfhENfJqYZsDJQLgEopMRBy15jeU', '225588996633', '5989899', '22', '222', 0, 1, '5200', 3333, 4544, 45, 2, 4, 34, 333, 22, 22, 22, 2);
 
 -- --------------------------------------------------------
 
@@ -2683,6 +3372,8 @@ CREATE TABLE `users` (
   `twitter` varchar(225) DEFAULT NULL,
   `instagram` varchar(225) DEFAULT NULL,
   `facebook` varchar(225) DEFAULT NULL,
+  `linkdin` varchar(255) DEFAULT NULL,
+  `whatsapp` varchar(255) DEFAULT NULL,
   `business_owner_name` varchar(255) DEFAULT NULL,
   `business_name` varchar(255) DEFAULT NULL,
   `business_name_slug` varchar(255) DEFAULT NULL,
@@ -2704,11 +3395,15 @@ CREATE TABLE `users` (
   `business_return_address` varchar(255) DEFAULT NULL,
   `business_return_phone` varchar(255) DEFAULT NULL,
   `business_logo` varchar(255) DEFAULT NULL,
+  `verification_code` int(11) DEFAULT NULL,
+  `verification_code_expires_at` varchar(255) DEFAULT NULL,
+  `verification_status` int(1) DEFAULT 0,
   `show_password` varchar(225) DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `remember_token` varchar(255) DEFAULT NULL,
   `entry_by` int(11) DEFAULT NULL,
+  `login_in_time` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `status` int(11) DEFAULT 1,
@@ -2722,13 +3417,29 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `slug`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `business_return_email`, `landmark_2`, `landmark_1`, `introduce_yourself`, `business_return_address`, `business_return_phone`, `business_logo`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
-(1, 1, NULL, NULL, NULL, 75, 2, 'BIjon1', 'admin', '', '', 'dev1@mail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', '01915728982', '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, 'dev1@mail.com', NULL, '$2a$12$mfR8IIUFgQAWxN52iXB./ezTrEsA3IsXBg8Ts2bKygT4HmQhLKU/y', NULL, NULL, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 0, NULL, '', ''),
-(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/kyaoSq4OMyro3VS156tT.jpeg', '019999999', '', '', '23', 'Bangladesh', '', 'null', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, '2023-12-17 02:13:10', '2023-12-17 02:13:10', 1, 1, NULL, 'Dhaka', 'Dhaka'),
-(3, 3, NULL, '1729512518', 3, NULL, 0, 'Md. Gazi Giash Uddin Bijon', 'buyer', NULL, NULL, 'buyer@gmail.com', '/backend/files/nGWG9QNvD63e3D77kCeC.png', '01915728982', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '4', NULL, NULL, NULL, NULL, NULL, 'Introduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce YourselfIntroduce Yourself', NULL, NULL, NULL, 'buyer@gmail.com', NULL, '$2y$10$s/k3X7FOFJgcva8kB4BK2OSoBqU2pxXcnpV7cwl/9Jn2TuysQ43m2', NULL, NULL, '2024-10-21 12:08:38', '2024-10-21 12:08:38', 1, 1, NULL, NULL, NULL),
-(4, 3, NULL, '1729515025', 3, 5, 0, 'buyer1', 'buyer1', NULL, NULL, 'buyer1@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'aertyhj', NULL, NULL, NULL, 'buyer1@gmail.com', NULL, '$2y$10$bvjBHuzgpv3nXjbBdnMdhedlbzi67ji5C52e4HyerzNb9nk63DAZu', NULL, NULL, '2024-10-21 12:50:25', '2024-10-21 12:50:25', 1, 1, NULL, NULL, NULL),
-(5, 3, NULL, '1729515121', 3, NULL, 4, 'buyer2', 'buyer2', NULL, NULL, 'buyer2@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '7', NULL, NULL, NULL, NULL, NULL, 'i am an graphics desginger', NULL, NULL, NULL, 'buyer2@gmail.com', NULL, '$2y$10$W1/DrVQVBPXAEXO.k2QhgOqxU5OmMnTOLPvmefXlXaUtu75HfwmWS', NULL, NULL, '2024-10-21 12:52:01', '2024-10-21 12:52:01', 1, 1, NULL, NULL, NULL),
-(6, 2, NULL, '1729515163', 2, NULL, 0, 'seller1', 'seller1', NULL, NULL, 'Seller1@gmail.com', NULL, 'null', NULL, NULL, '173', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'a\\szdfghj', NULL, NULL, NULL, 'Seller1@gmail.com', NULL, '$2y$10$7dH3.HAbA0JQ4sd98ysLx.APiCuMSUYBu1Udh15ySjvAI.7EA4DVu', NULL, NULL, '2024-10-21 12:52:43', '2024-10-21 12:52:43', 1, 1, NULL, NULL, NULL);
+INSERT INTO `users` (`id`, `role_id`, `employee_id`, `invite_code`, `userType`, `reffer_bonus`, `join_id`, `name`, `slug`, `first_name`, `last_name`, `email`, `image`, `phone_number`, `address`, `address_1`, `country_1`, `country_2`, `address_2`, `address_3`, `website`, `github`, `twitter`, `instagram`, `facebook`, `linkdin`, `whatsapp`, `business_owner_name`, `business_name`, `business_name_slug`, `business_register_num`, `business_address`, `business_warehouse_address`, `phone_1`, `phone_2`, `gender`, `business_email`, `business_phone`, `profession_name`, `business_return_name`, `birthdate`, `business_return_email`, `landmark_2`, `landmark_1`, `introduce_yourself`, `business_return_address`, `business_return_phone`, `business_logo`, `verification_code`, `verification_code_expires_at`, `verification_status`, `show_password`, `email_verified_at`, `password`, `remember_token`, `entry_by`, `login_in_time`, `created_at`, `updated_at`, `status`, `profile_status`, `home_status`, `city_1`, `city_2`) VALUES
+(1, 1, NULL, NULL, NULL, 75, 2, 'Developer', 'developer', '', '', 'mdbijon@gmail.com1', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', NULL, '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, 0, '', 1, 'mdbijon@gmail.com', NULL, '$2a$12$YecXV3ZcmAft0YbhDlIsjuB2s9ZrWZK5k1vyn.5Z7SuVIaOy9vk6W', NULL, NULL, '2024-11-03 10:41:30', '2023-12-17 02:13:10', '2024-11-05 05:37:03', 1, 0, NULL, '', ''),
+(2, 2, NULL, '1702800790', NULL, 90, 2, 'Bijon', 'bijon', '', '', 'bijon@gmail.com', '/backend/files/kyaoSq4OMyro3VS156tT.jpeg', '019999999', '', '', '23', 'Bangladesh', '', 'null', '', '', '', '', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '01915728982', '01915728983', '1', '', '', '16', '', '2024-09-09', '', 'DHK', 'Dhaka', 'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English.<br />\r\n<br />\r\nMany desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).....', '', '', NULL, NULL, NULL, 0, 'bijon@gmail.com', NULL, '$2a$12$G2IY/mLjxQdKJrdjVSZp..k3l2iqfbaIyRTyG1MkiHfGVsdfCYVh.', NULL, 1, NULL, '2023-12-17 02:13:10', '2024-11-05 05:54:13', 1, 1, NULL, 'Dhaka', 'Dhaka'),
+(3, 3, NULL, '1729858625', 3, 10, 0, 'buyer1', 'buyer1', NULL, NULL, 'buyer1@gmail.com', '/backend/files/1kdMmsZeZSh2TyJgw2m4.png', '019157287982', NULL, NULL, '173', NULL, NULL, NULL, 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', 'http://localhost:3000/dashboard/buyer/myprofile', NULL, NULL, 'LinkedInLinkedIn', '878888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, 'I\'m Bijon Ahmed, a dedicated buyer who frequently hires professionals for website development and POS software projects. I value expertise, innovation, and timely delivery, ensuring every project meets high standards. My focus is on building efficient, user-friendly systems that enhance business operations. If you\'re skilled in web development or POS solutions, let\'s collaborate to create outstanding digital experiences!', NULL, NULL, NULL, NULL, NULL, 0, 'buyer1@gmail.com', NULL, '$2y$10$RgynVq9bT04xsKPae9RNOeJ/6a6FX0Qu6Tfg3lMZ2ue7IJg4AdVYe', NULL, NULL, '2025-02-18 01:51:57', '2024-10-25 12:17:05', '2025-02-17 13:51:58', 1, 1, NULL, NULL, NULL),
+(4, 3, NULL, '1729858752', 3, 5, 3, 'amir1', 'amir1', NULL, NULL, 'amir1@gmail.com', NULL, 'null', NULL, NULL, '17', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '5', NULL, NULL, NULL, NULL, NULL, 'qwbgfvdsaz', NULL, NULL, NULL, NULL, NULL, 0, 'amir1@gmail.com', NULL, '$2y$10$Piy3SWh1TfjeS0Fq00ziguyEbwQPyL53p2hgC8f438ZleytNQ37Ua', NULL, NULL, '2025-01-06 18:32:11', '2024-10-25 12:19:12', '2025-01-06 13:32:14', 1, 1, NULL, NULL, NULL),
+(5, 3, NULL, '1729858849', 3, 5, 4, 'amir2', 'amir2', NULL, NULL, 'amir2@gmail.com', NULL, 'null', NULL, NULL, '3', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'sdfgbfvsa', NULL, NULL, NULL, NULL, NULL, 0, 'amir2@gmail.com', NULL, '$2y$10$4WmwJyLn4U15uiYSTqbD7ui4yQiXgAO0DT5lY8LygCkGlq3.Zeaau', NULL, NULL, '2025-02-11 21:02:49', '2024-10-25 12:20:49', '2025-02-11 09:02:49', 1, 1, NULL, NULL, NULL),
+(6, 3, NULL, '1729858921', 3, 5, 5, 'amir3', 'amir3', NULL, NULL, 'amir3@gmail.com', NULL, 'null', NULL, NULL, '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdasx', NULL, NULL, NULL, NULL, NULL, 0, 'amir3@gmail.com', NULL, '$2y$10$XpXMMzK52TFW9AoS8W8weObbKXnboRiQDMZIK276.f2N2mtsMMLl2', NULL, NULL, '2025-01-06 18:42:50', '2024-10-25 12:22:01', '2025-01-06 13:42:56', 1, 1, NULL, NULL, NULL),
+(7, 3, NULL, '1729858994', 3, 5, 6, 'amir4', 'amir4', NULL, NULL, 'amir4@gmail.com', NULL, 'null', NULL, NULL, '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'weffhngbfvsxa', NULL, NULL, NULL, NULL, NULL, 0, 'amir4@gmail.com', NULL, '$2y$10$c1sw/So0.JDoaKoIzW6RgeR37ilDgB7pSvRLncH8Z/bbMidys3FwW', NULL, NULL, NULL, '2024-10-25 12:23:15', '2024-10-28 08:14:21', 1, 1, NULL, NULL, NULL),
+(8, 3, NULL, '1729859030', 3, NULL, 0, 'Giash uddin', 'giash-uddin', NULL, NULL, 'Giashuddin@gmail.com', NULL, 'null', NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdfghjmk,.', NULL, NULL, NULL, NULL, NULL, 0, 'Giashuddin@gmail.com', NULL, '$2y$10$QOqtJOixzhTwtj8heXr0RufnNmIgPziTPmxIT6CQIpTQ1zsJ7EINa', NULL, NULL, NULL, '2024-10-25 12:23:51', '2024-10-25 12:23:51', 1, 1, NULL, NULL, NULL),
+(9, 3, NULL, '1729859071', 3, 5, 7, 'amir5', 'amir5', NULL, NULL, 'amir5@gmail.com', NULL, 'null', NULL, NULL, '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'lkmlkm', NULL, NULL, NULL, NULL, NULL, 0, 'amir5@gmail.com', NULL, '$2y$10$EW9lv6cr1RibhHPa57IPqeAbOMs99ok2vplTCxc5avAVnqLQ.pS6.', NULL, NULL, '2025-01-10 09:20:14', '2024-10-25 12:24:31', '2025-01-10 04:20:15', 1, 1, NULL, NULL, NULL),
+(10, 3, NULL, '1729859296', 3, NULL, 0, 'amir6', 'amir6', NULL, NULL, 'amir6@gmail.com', NULL, 'null', NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdfg', NULL, NULL, NULL, NULL, NULL, 0, 'amir6@gmail.com', NULL, '$2y$10$bjd138dgHcpPce97.wpSzeHN6SZNhfx5H4v5ehil6VDeBll7PRuvK', NULL, NULL, NULL, '2024-10-25 12:28:16', '2024-10-25 12:28:16', 1, 1, NULL, NULL, NULL),
+(11, 2, NULL, '1729859692', 2, NULL, 0, 'seller1', 'seller1', NULL, NULL, 'seller1@gmail.com', '/backend/files/U1byYcc8DJeI2nfe6uHl.png', '12488', NULL, NULL, '16', NULL, NULL, NULL, 'Website', 'Github', 'Twitter', NULL, NULL, 'LinkedIn', 'Whatsapp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, '8', NULL, NULL, NULL, NULL, NULL, 'I am doing any kind of Web & Software Development. I currently work as a part time Remote Web & Software Developer for www.fiverr.com/mdbijonahmed & www.upwork.com I am looking to take on more work and to increase my skills as a Programmer.', NULL, NULL, NULL, NULL, NULL, 0, 'seller1@gmail.com', NULL, '$2y$10$OX/biLtpnyTfJIx47WBp0e5K5TwVnFmLwnmVO3FEP4/ZcyySbT4iS', NULL, NULL, '2025-02-16 23:32:50', '2024-10-25 12:34:52', '2025-02-16 11:32:50', 1, 1, NULL, NULL, NULL),
+(12, 1, NULL, NULL, NULL, 75, 2, 'Admin', 'admin', '', '', 'pkadmin@mail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', NULL, '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, NULL, NULL, 0, 'pkadmin@mail.com', NULL, '$2a$12$LmWF.MBywQHoD59uIw0nIOxnwoR2o/d.gRFwMyG/luKE0N2ApJRzO', NULL, NULL, '2024-11-04 18:38:05', '2023-12-17 02:13:10', '2024-11-04 13:38:06', 1, 0, NULL, '', ''),
+(13, 2, NULL, '1729938472', 2, NULL, 0, 'seller2', 'seller2', NULL, NULL, 'seller2@gmail.com', '/backend/files/UnqwyEC4IaL12cfCerOF.jpeg', 'null', NULL, NULL, '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'ASDFG', NULL, NULL, NULL, NULL, NULL, 0, 'seller2@gmail.com', NULL, '$2y$10$cCfj7hznrr7Mvyq2DhGqLOyc36DM/jlFo3m3/rN6T1Msj0y6wZ4cy', NULL, NULL, '2025-02-16 09:39:39', '2024-10-26 10:27:53', '2025-02-15 21:39:40', 1, 1, NULL, NULL, NULL),
+(14, 2, NULL, '1729941816', 2, NULL, 0, 'seller3', 'seller3', NULL, NULL, 'seller3@gmail.com', '/backend/files/XRtDCnmoTxAC8fIKyvcE.jpeg', 'null', NULL, NULL, '10', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'XCgxnsdaC VC', NULL, NULL, NULL, NULL, NULL, 0, 'seller3@gmail.com', NULL, '$2y$10$aKGjWvSKGMuHy38AQ9ScE.m..O6HqTMF55YGk3Ro8CufJX48uX/e.', NULL, NULL, NULL, '2024-10-26 11:23:36', '2024-10-26 14:02:26', 1, 1, NULL, NULL, NULL),
+(15, 2, NULL, '1730108380', 2, NULL, 0, 'seller5', 'seller5', NULL, NULL, 'seller5@gmail.com', '/backend/files/AUSPrieWL2qnxSVZNwAR.jpeg', 'null', NULL, NULL, '12', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'this is web developer', NULL, NULL, NULL, NULL, NULL, 0, 'seller5@gmail.com', NULL, '$2y$10$YnogEZvFd3OEj9dJRJCNcOk5DLhK22UlV4DCb3salyegQYOHUH33C', NULL, NULL, '2025-01-04 15:41:31', '2024-10-28 09:39:40', '2025-01-04 10:41:32', 1, 1, NULL, NULL, NULL),
+(16, 3, NULL, '1730108761', 3, NULL, 0, 'amir7', 'amir7', NULL, NULL, 'amir7@gmail.com', NULL, 'null', NULL, NULL, '11', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'asdvb', NULL, NULL, NULL, NULL, NULL, 0, 'amir7@gmail.com', NULL, '$2y$10$mf/jQwwZMa5kqe60I6psseFyFiS2TA/jnKxhc.uRFeq1mJ59IzwPy', NULL, NULL, NULL, '2024-10-28 09:46:01', '2024-10-28 09:46:01', 1, 1, NULL, NULL, NULL),
+(17, 3, NULL, '1730199804', 3, NULL, 9, 'amir8', 'amir8', NULL, NULL, 'amir8@gmail.com', NULL, 'null', NULL, NULL, '14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'null', NULL, NULL, NULL, NULL, NULL, 'sdcfdwsd', NULL, NULL, NULL, NULL, NULL, 0, 'amir8@gmail.com', NULL, '$2y$10$iOfZXAc26/MOfgJJIejLmOdVnUfgBmTx4vf/lCs8fJFlP0gv.HWV6', NULL, NULL, NULL, '2024-10-29 11:03:24', '2024-10-29 11:03:24', 1, 1, NULL, NULL, NULL),
+(18, 3, NULL, '1730227941', 3, NULL, 3, 'M. NAWAZ', 'm-nawaz', NULL, NULL, 'nawaznyc@yahoo.com', NULL, '15166616654', NULL, NULL, '235', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1', NULL, NULL, NULL, NULL, NULL, 'Abc', NULL, NULL, NULL, NULL, NULL, 0, 'Abcd1234', NULL, '$2y$10$JWDDBBmp.O.8GsYi074/zuh8zOWQV54XRJH5iBCID/cIOo1s4RCgm', NULL, NULL, '2025-01-19 21:28:43', '2024-10-29 18:52:22', '2025-01-19 16:28:44', 1, 1, NULL, NULL, NULL),
+(19, 3, NULL, '1730282060', 3, NULL, 0, 'user2', 'user2', NULL, NULL, 'user2@mail.com', NULL, '12345', NULL, NULL, '23', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2', NULL, NULL, NULL, NULL, NULL, 'asdfasd', NULL, NULL, NULL, NULL, NULL, 0, 'user2@mail.com', NULL, '$2y$10$UeJkU38nb802hmHiKSWI9.LSHLUD.ledjIrK/m3wjU4J2qr6jo4O6', NULL, NULL, NULL, '2024-10-30 09:54:20', '2024-10-30 09:54:20', 1, 1, NULL, NULL, NULL),
+(20, 3, NULL, NULL, NULL, NULL, NULL, 'amir9', NULL, NULL, NULL, 'amir9@gmail.com', '/backend/files/qilJnpRWWwmbAfQTrX6L.jpeg', '03440761564', '', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, NULL, '$2y$10$t4/yVSD.O4bxMXiKuGlkouwbgLatciP6HV2vSSI0QjbqusuIoVfd2', NULL, 12, NULL, NULL, NULL, 1, 0, NULL, NULL, NULL),
+(21, 1, NULL, NULL, NULL, 75, 2, 'Supper Admin', 'Supper Admin', '', '', 'mmdmamun@mail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', NULL, '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Supper Admin', '', '', '', '', '', NULL, '', '', NULL, NULL, NULL, 0, 'mmdmamun@mail.com', NULL, '$2a$12$T7QV140CHT5rs78H3B.PuuKPhPh2FAWAfIhgA6kAQhZD.i5dod56q', NULL, NULL, '2024-11-03 10:41:30', '2023-12-17 02:13:10', '2024-11-03 04:41:30', 1, 0, NULL, '', ''),
+(23, 1, NULL, NULL, NULL, 75, 2, 'Admin', 'ahmed-admin', '', '', 'rakpak2020@gmail.com', '/backend/files/QghrRIJF2QIUpvBdeuQj.png', NULL, '', '', '', '', '', '', 'Web', 'git', 'Twitter', 'instgr', 'face', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '', '', '', '', '', '', 'Web Developer', '', '', '', '', '', NULL, '', '', NULL, 0, '', 1, 'rakpak2020@gmail.com', NULL, '$2a$12$Z32tCnsRN0i2Zk7UnZ5VVO1qQDbuiw998bd1WHPSFh.ZhRyf/43PS', NULL, NULL, '2024-11-03 10:41:30', '2023-12-17 02:13:10', '2025-01-04 10:29:04', 1, 0, NULL, '', '');
 
 -- --------------------------------------------------------
 
@@ -2763,12 +3474,21 @@ INSERT INTO `wishlist` (`id`, `customer_id`, `product_id`, `created_at`, `update
 
 CREATE TABLE `withdraw` (
   `id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `withdrawID` varchar(255) DEFAULT NULL,
   `depscription` text DEFAULT NULL,
-  `payment_method` varchar(255) DEFAULT NULL,
   `withdrawal_amount` varchar(255) DEFAULT NULL,
-  `user_id` int(11) DEFAULT NULL,
+  `selected_type` int(11) DEFAULT NULL COMMENT '1=Crypto\r\n2=Paypal\r\n3=Payooner\r\n4=Bank',
+  `type` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL,
+  `account_name` varchar(255) DEFAULT NULL,
+  `account_num` varchar(255) DEFAULT NULL,
+  `ibn_no` varchar(255) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `method_id` int(11) DEFAULT NULL,
   `receivable_amount` int(11) DEFAULT NULL,
+  `crypto_wallet_type` varchar(255) DEFAULT NULL,
   `wallet_address` varchar(255) DEFAULT NULL,
   `withdrawal_pin` varchar(255) DEFAULT NULL,
   `remarks` text DEFAULT NULL,
@@ -2784,9 +3504,33 @@ CREATE TABLE `withdraw` (
 -- Dumping data for table `withdraw`
 --
 
-INSERT INTO `withdraw` (`id`, `withdrawID`, `depscription`, `payment_method`, `withdrawal_amount`, `user_id`, `receivable_amount`, `wallet_address`, `withdrawal_pin`, `remarks`, `approved_by`, `transection_fee`, `payable_amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'W.1f34004ebcb05f9acda6016d5cc52d5e', 'W.1f34004ebcb05f9acda6016d5cc52d5e', 'USDTTRC-20', '200', 6, NULL, '03440761564', NULL, 'due too un regesterd wallet adress', 4, 0, NULL, 2, '2024-10-19 13:49:56', '2024-10-19 14:20:27'),
-(2, 'W.5505712229fb1eb500efadddc0353264', 'W.5505712229fb1eb500efadddc0353264', 'USDTTRC-20', '200', 6, NULL, '03440761564', NULL, NULL, NULL, 0, NULL, 0, '2024-10-19 13:54:18', '2024-10-19 13:54:18');
+INSERT INTO `withdraw` (`id`, `user_id`, `withdrawID`, `depscription`, `withdrawal_amount`, `selected_type`, `type`, `email`, `account_name`, `account_num`, `ibn_no`, `bank_id`, `branch_id`, `method_id`, `receivable_amount`, `crypto_wallet_type`, `wallet_address`, `withdrawal_pin`, `remarks`, `approved_by`, `transection_fee`, `payable_amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 18, 'W.6624b6d8217cf71640993409df58204f', 'W.6624b6d8217cf71640993409df58204f', '10', 2, 'paypal', '', NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:15:52', '2024-10-29 06:15:52'),
+(2, 18, 'W.4b85256c4881edb6c0776df5d81f6236', 'W.4b85256c4881edb6c0776df5d81f6236', '10', 2, 'paypal', '', NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:16:05', '2024-10-29 06:16:05'),
+(3, 18, 'W.07c4b1fdd1ef8da2d7e9393071204b71', 'W.07c4b1fdd1ef8da2d7e9393071204b71', '10', 2, 'paypal', '', NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:17:21', '2024-10-29 06:17:21'),
+(4, 18, 'W.bc7f621451b4f5df308a8e098112185d', 'W.bc7f621451b4f5df308a8e098112185d', '10', 2, 'paypal', 'mdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, 4, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:20:10', '2024-10-29 06:20:10'),
+(5, 18, 'W.8c01d2fefd69916d9137cc813fcb5400', 'W.8c01d2fefd69916d9137cc813fcb5400', '20', 2, 'paypal', 'gazimdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, 5, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:20:29', '2024-10-29 06:20:29'),
+(6, 18, 'W.9ed017d7372360c256add7a8fe35a0a6', 'W.9ed017d7372360c256add7a8fe35a0a6', '20', 3, 'payooner', 'mdbijon', NULL, NULL, NULL, NULL, NULL, 7, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:21:28', '2024-10-29 06:21:28'),
+(8, 18, 'W.0e095e054ee94774d6a496099eb1cf6a', 'W.0e095e054ee94774d6a496099eb1cf6a', '10', 1, 'crypto', '', NULL, NULL, NULL, NULL, NULL, 1, NULL, 'USDT TRC-20', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:29:33', '2024-10-29 06:29:33'),
+(9, 18, 'W.e0b0f9051084fd476926501af19e1e96', 'W.e0b0f9051084fd476926501af19e1e96', '10', 1, 'crypto', '', NULL, NULL, NULL, NULL, NULL, 1, NULL, 'USDT TRC-20', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:30:07', '2024-10-29 06:30:07'),
+(10, 18, 'W.4d386d01419c083e8df5de53eb5a0254', 'W.4d386d01419c083e8df5de53eb5a0254', '10', 1, 'crypto', '', NULL, NULL, NULL, NULL, NULL, 1, NULL, 'USDT TRC-20', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:30:12', '2024-10-29 06:30:12'),
+(11, 18, 'W.894db62f7b7a6ed2f2a277dae56a017c', 'W.894db62f7b7a6ed2f2a277dae56a017c', '20', 4, 'bank', '', 'Gazi', '156454855888', '115556', 1, 1, 8, NULL, '', '', NULL, 'due twofake earning', 12, 0, NULL, 2, '2024-10-29 06:37:45', '2024-10-31 11:30:23'),
+(12, 18, 'W.02ebef8c56a7ada3f1ed5e900e3143c0', 'W.02ebef8c56a7ada3f1ed5e900e3143c0', '10', 4, 'bank', '', 'Ibraheem', '216598999', '234234', 2, 5, 9, NULL, '', '', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 06:38:16', '2024-10-29 06:38:16'),
+(13, 2, 'W.09eb27dec1a45d92f229228204ea7201', 'W.09eb27dec1a45d92f229228204ea7201', '120', 1, 'crypto', '', '', '', '', 0, 0, 10, NULL, 'USDT TRC-20', 'ssssssweASDF', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 08:01:24', '2024-10-29 08:01:24'),
+(14, 2, 'W.64a7157cf3932bf74755aa3cf586f2ec', 'W.64a7157cf3932bf74755aa3cf586f2ec', '600', 2, 'paypal', 'selell@paypal', '', '', '', 0, 0, 11, NULL, '', '', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 08:01:38', '2024-10-29 08:01:38'),
+(15, 2, 'W.5fd513e89cc656d9c7ab2bca4168a4f2', 'W.5fd513e89cc656d9c7ab2bca4168a4f2', '10', 3, 'payooner', 'seller@payooner', '', '', '', 0, 0, 12, NULL, '', '', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 08:01:52', '2024-10-29 08:01:52'),
+(16, 2, 'W.b66dc44cd9882859d84670604ae276e6', 'W.b66dc44cd9882859d84670604ae276e6', '0', 4, 'bank', '', 'Seller AC', '157458788', '54485', 1, 1, 13, NULL, '', '', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 08:02:00', '2024-10-29 08:02:00'),
+(17, 3, 'W.2fe2a9d4c06124698de449b12aeb6249', 'W.2fe2a9d4c06124698de449b12aeb6249', '35', 1, 'crypto', '', '', '', '', 0, 0, 15, NULL, 'USDT TRC-20', '659698sfadfadsf', NULL, NULL, NULL, 0, NULL, 0, '2024-10-29 08:40:15', '2024-10-29 08:40:15'),
+(18, 7, 'W.7296d81c3d5e425bc1785994bea8a0d2', 'W.7296d81c3d5e425bc1785994bea8a0d2', '100', 3, 'payooner', 'paypal@gmail.com', '', '', '', 0, 0, 21, NULL, '', '', NULL, 'due two fake earning', 12, 0, NULL, 2, '2024-10-29 15:51:09', '2024-10-31 11:31:24'),
+(19, 7, 'W.9a96a2c73c0d477ff2a6da3bf538f4f4', 'W.9a96a2c73c0d477ff2a6da3bf538f4f4', '100', 1, 'crypto', '', '', '', '', 0, 0, 19, NULL, 'USDT TRC-20', '123347crp', NULL, 'due to break policy', 12, 0, NULL, 2, '2024-10-29 15:51:17', '2024-10-31 11:32:09'),
+(20, 7, 'W.f4a331b7a22d1b237565d8813a34d8ac', 'W.f4a331b7a22d1b237565d8813a34d8ac', '100', 3, 'payooner', 'paypal@gmail.com', '', '', '', 0, 0, 21, NULL, '', '', NULL, 'fake earning', 12, 0, NULL, 2, '2024-10-29 15:51:25', '2024-10-31 11:30:44'),
+(21, 11, 'W.09853c7fb1d3f8ee67a61b6bf4a7f8e6', 'W.09853c7fb1d3f8ee67a61b6bf4a7f8e6', '1000', 4, 'bank', '', 'Amir', '03440727823723', '03440727823723', 5, 8, 71, NULL, '', '', NULL, 'abccccc', 12, 0, NULL, 2, '2024-11-04 13:31:35', '2024-11-04 13:35:08'),
+(22, 11, 'W.769c3bce651ce5feaa01ce3b75986420', 'W.769c3bce651ce5feaa01ce3b75986420', '1000', 4, 'bank', '', 'Amir', '03440727823723', '03440727823723', 5, 8, 71, NULL, '', '', NULL, NULL, NULL, 0, NULL, 1, '2024-11-04 13:35:35', '2024-11-04 13:36:06'),
+(23, 11, 'W.bcc0d400288793e8bdcd7c19a8ac0c2b', 'W.bcc0d400288793e8bdcd7c19a8ac0c2b', '1000', 2, 'paypal', 'Amir@mail.com', '', '', '', 0, 0, 62, NULL, '', '', NULL, NULL, NULL, 0, NULL, 0, '2024-11-04 13:43:32', '2024-11-04 13:43:32'),
+(24, 11, 'W.f8f235136f525e39e94f401424954c3a', 'W.f8f235136f525e39e94f401424954c3a', '1000', 2, 'paypal', 'Amir@mail.com', '', '', '', 0, 0, 62, NULL, '', '', NULL, NULL, NULL, 0, NULL, 1, '2024-11-04 13:43:33', '2024-11-04 13:44:09'),
+(25, 11, 'W.c559da2ba967eb820766939a658022c8', 'W.c559da2ba967eb820766939a658022c8', '100', 1, 'crypto', '', '', '', '', 0, 0, 16, NULL, 'USDT TRC-20', '9798889', NULL, NULL, NULL, 0, NULL, 1, '2024-11-04 13:44:10', '2024-11-04 13:45:07'),
+(26, 11, 'W.17ed8abedc255908be746d245e50263a', 'W.17ed8abedc255908be746d245e50263a', '220', 1, 'crypto', '', '', '', '', 0, 0, 16, NULL, 'USDT TRC-20', '9798889', NULL, NULL, NULL, 0, NULL, 1, '2025-01-06 14:01:49', '2025-01-06 14:02:19'),
+(27, 11, 'W.fe2b952bd6b9030970b3866b328bd9c7', 'W.fe2b952bd6b9030970b3866b328bd9c7', '100', 1, 'crypto', '', '', '', '', 0, 0, 106, NULL, 'USDT TRC-20', 'SLm1A1zP1eP5QGefi2DMPTfTL5SLm', NULL, NULL, NULL, 0, NULL, 0, '2025-02-11 09:02:40', '2025-02-11 09:02:40');
 
 -- --------------------------------------------------------
 
@@ -2798,28 +3542,86 @@ CREATE TABLE `withdrawal_method` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `account_number` varchar(255) DEFAULT NULL,
-  `currency_type_id` int(11) DEFAULT NULL,
+  `type` varchar(255) DEFAULT NULL,
   `wallet_address` varchar(255) DEFAULT NULL,
+  `countryName` varchar(255) DEFAULT NULL,
+  `bank_name` varchar(255) DEFAULT NULL,
+  `email` varchar(255) DEFAULT NULL COMMENT 'Paypal or Payoneer email id use ',
+  `account_name` varchar(255) DEFAULT NULL,
+  `account_num` varchar(255) DEFAULT NULL,
+  `ibn_no` varchar(255) DEFAULT NULL,
+  `bank_id` int(11) DEFAULT NULL,
+  `branch_id` int(11) DEFAULT NULL,
+  `swift_bic` varchar(255) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT current_timestamp()
+  `updated_at` timestamp NULL DEFAULT current_timestamp(),
+  `created_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `withdrawal_method`
 --
 
-INSERT INTO `withdrawal_method` (`id`, `user_id`, `name`, `account_number`, `currency_type_id`, `wallet_address`, `remarks`, `created_at`, `updated_at`) VALUES
-(1, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy', NULL, NULL, NULL, '2024-10-09 02:56:12', '2024-10-09 02:56:12'),
-(5, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy1', NULL, NULL, NULL, '2024-10-09 03:20:02', '2024-10-09 03:20:02'),
-(6, 2, 'USDT TRC-20', '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy2', NULL, NULL, NULL, '2024-10-09 03:31:28', '2024-10-09 03:31:28'),
-(7, 8, 'USDT TRC-20', 'zdsxfcgbhjnmk', NULL, NULL, NULL, '2024-10-15 12:52:17', '2024-10-15 12:52:17'),
-(8, 6, 'USDT TRC-20', '03440761564', NULL, NULL, NULL, '2024-10-19 08:40:58', '2024-10-19 08:40:58');
+INSERT INTO `withdrawal_method` (`id`, `user_id`, `name`, `type`, `wallet_address`, `countryName`, `bank_name`, `email`, `account_name`, `account_num`, `ibn_no`, `bank_id`, `branch_id`, `swift_bic`, `remarks`, `updated_at`, `created_at`) VALUES
+(1, 18, 'USDT TRC-20', 'crypto', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:41:34', '2024-10-29 03:41:34'),
+(2, 18, 'USDT TRC-20', 'crypto', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa2', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:41:46', '2024-10-29 03:41:46'),
+(3, 18, 'USDT TRC-20', 'crypto', '1A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa2242354', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:42:40', '2024-10-29 03:42:40'),
+(4, 18, NULL, 'paypal', NULL, NULL, NULL, 'mdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:51:19', '2024-10-29 03:51:19'),
+(5, 18, NULL, 'paypal', NULL, NULL, NULL, 'gazimdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:52:27', '2024-10-29 03:52:27'),
+(6, 18, 'USDT TRC-20', 'crypto', '131A1zP1eP5QGefi2DMPTfTL5SLmv7DivfNa', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 03:54:04', '2024-10-29 03:54:04'),
+(7, 18, NULL, 'payooner', NULL, NULL, NULL, 'mdbijon', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 04:13:02', '2024-10-29 04:13:02'),
+(8, 18, NULL, 'bank', NULL, NULL, NULL, NULL, 'Gazi', '156454855888', '115556', 1, 1, NULL, NULL, '2024-10-29 04:34:27', '2024-10-29 04:34:27'),
+(9, 18, NULL, 'bank', NULL, NULL, NULL, NULL, 'Ibraheem', '216598999', '234234', 2, 5, NULL, NULL, '2024-10-29 04:36:16', '2024-10-29 04:36:16'),
+(10, 2, 'USDT TRC-20', 'crypto', 'ssssssweASDF', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 07:38:49', '2024-10-29 07:38:49'),
+(11, 2, NULL, 'paypal', NULL, NULL, NULL, 'selell@paypal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 07:39:01', '2024-10-29 07:39:01'),
+(12, 2, NULL, 'payooner', NULL, NULL, NULL, 'seller@payooner', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 07:39:11', '2024-10-29 07:39:11'),
+(13, 2, NULL, 'bank', NULL, NULL, NULL, NULL, 'Seller AC', '157458788', '54485', 1, 1, NULL, NULL, '2024-10-29 07:39:24', '2024-10-29 07:39:24'),
+(14, 2, 'USDT TRC-20', 'crypto', 'gfghfghfgh', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 08:37:26', '2024-10-29 08:37:26'),
+(15, 3, 'USDT TRC-20', 'crypto', '659698sfadfadsf', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 08:39:37', '2024-10-29 08:39:37'),
+(17, 11, NULL, 'paypal', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 10:09:09', '2024-10-29 10:09:09'),
+(18, 11, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 10:09:44', '2024-10-29 10:09:44'),
+(19, 7, 'USDT TRC-20', 'crypto', '123347crp', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 15:50:06', '2024-10-29 15:50:06'),
+(20, 7, NULL, 'paypal', NULL, NULL, NULL, 'paypal@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 15:50:25', '2024-10-29 15:50:25'),
+(21, 7, NULL, 'payooner', NULL, NULL, NULL, 'paypal@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-10-29 15:50:38', '2024-10-29 15:50:38'),
+(22, 9, NULL, 'bank', NULL, NULL, NULL, NULL, 'Amir', '03440761564', '03440761564', 5, 8, NULL, NULL, '2024-11-04 13:24:51', '2024-11-04 13:24:51'),
+(61, 11, NULL, 'payooner', NULL, NULL, NULL, 'Amir', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:27:58', '2024-11-04 13:27:58'),
+(62, 11, NULL, 'paypal', NULL, NULL, NULL, 'Amir@mail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:28:12', '2024-11-04 13:28:12'),
+(71, 11, NULL, 'bank', NULL, NULL, NULL, NULL, 'Amir', '03440727823723', '03440727823723', 5, 8, NULL, NULL, '2024-11-04 13:31:18', '2024-11-04 13:31:18'),
+(72, 3, NULL, 'paypal', NULL, NULL, NULL, 'abc@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:41:59', '2024-11-04 13:41:59'),
+(73, 9, 'USDT TRC-20', 'crypto', '16', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:58:28', '2024-11-04 13:58:28'),
+(74, 9, NULL, 'paypal', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:59:01', '2024-11-04 13:59:01'),
+(75, 9, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 13:59:09', '2024-11-04 13:59:09'),
+(76, 6, 'USDT TRC-20', 'crypto', '500', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:39:20', '2024-11-04 14:39:20'),
+(95, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:00', '2024-11-04 14:43:00'),
+(96, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:05', '2024-11-04 14:43:05'),
+(97, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:09', '2024-11-04 14:43:09'),
+(98, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:09', '2024-11-04 14:43:09'),
+(99, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:09', '2024-11-04 14:43:09'),
+(100, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:09', '2024-11-04 14:43:09'),
+(101, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:10', '2024-11-04 14:43:10'),
+(102, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:10', '2024-11-04 14:43:10'),
+(103, 6, NULL, 'payooner', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:11', '2024-11-04 14:43:11'),
+(104, 6, NULL, 'paypal', NULL, NULL, NULL, 'amir6453@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2024-11-04 14:43:24', '2024-11-04 14:43:24'),
+(105, 11, 'USDT TRC-20', 'crypto', '1A1zP1eP5QGefi2DMPTfTL5SLm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-11 08:49:19', '2025-02-11 08:49:19'),
+(106, 11, 'USDT TRC-20', 'crypto', 'SLm1A1zP1eP5QGefi2DMPTfTL5SLm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-11 08:52:13', '2025-02-11 08:52:13'),
+(107, 11, NULL, 'bank', NULL, NULL, NULL, NULL, 'Gazi', '487878888', '4888', 1, 1, NULL, NULL, '2025-02-11 09:01:45', '2025-02-11 09:01:45'),
+(108, 11, NULL, 'payooner', NULL, NULL, NULL, 'mdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-11 09:01:58', '2025-02-11 09:01:58'),
+(109, 11, NULL, 'paypal', NULL, NULL, NULL, 'mdbijon@gmail.com', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-11 09:02:10', '2025-02-11 09:02:10'),
+(110, 11, 'USDT TRC-20', 'crypto', 'eP5QGefi2DMPTfTL5SLm', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-02-11 09:02:22', '2025-02-11 09:02:22'),
+(111, 11, NULL, 'bank', NULL, NULL, NULL, NULL, 'Test', '234343434', 'sadfsdfs35454', 1, NULL, 'asdq423', NULL, '2025-02-14 17:52:20', '2025-02-14 17:52:20'),
+(112, 3, NULL, 'bank', NULL, NULL, 'DBBL', NULL, 'Md.Gazi Giash Uddin', '478/7878', 'IBN', NULL, NULL, 'Swift', NULL, '2025-02-15 05:43:52', '2025-02-15 05:43:52'),
+(113, 3, NULL, 'bank', NULL, NULL, 'ABC Bank', NULL, 'MD.GAZI', '5989899', 'IBN48978', NULL, NULL, 'SWIFT878', NULL, '2025-02-15 12:54:47', '2025-02-15 12:54:47'),
+(114, 3, NULL, 'bank', NULL, 'Pakistan', 'PK Bank', NULL, 'MD.GAZI GIASH UDDIN', '48787888', 'IBN4878', NULL, NULL, 'SWIFT', NULL, '2025-02-15 13:20:26', '2025-02-15 13:20:26');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bank_info`
+--
+ALTER TABLE `bank_info`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `blogcategorys`
@@ -2835,9 +3637,21 @@ ALTER TABLE `blog_posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `branch`
+--
+ALTER TABLE `branch`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `brands`
 --
 ALTER TABLE `brands`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `buyer_review`
+--
+ALTER TABLE `buyer_review`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -2847,9 +3661,22 @@ ALTER TABLE `buy_token`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `cancel_orders`
+--
+ALTER TABLE `cancel_orders`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `categorys`
 --
 ALTER TABLE `categorys`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `slug` (`slug`);
+
+--
+-- Indexes for table `categorys_backup`
+--
+ALTER TABLE `categorys_backup`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `slug` (`slug`);
 
@@ -2919,6 +3746,12 @@ ALTER TABLE `gig`
   ADD UNIQUE KEY `gig_slug` (`gig_slug`);
 
 --
+-- Indexes for table `gigwish_list`
+--
+ALTER TABLE `gigwish_list`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `gig_images_history`
 --
 ALTER TABLE `gig_images_history`
@@ -2964,6 +3797,12 @@ ALTER TABLE `orders`
 -- Indexes for table `orders_product`
 --
 ALTER TABLE `orders_product`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `orders_strip`
+--
+ALTER TABLE `orders_strip`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -3109,11 +3948,17 @@ ALTER TABLE `withdraw`
 --
 ALTER TABLE `withdrawal_method`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `account_number` (`account_number`);
+  ADD UNIQUE KEY `account_number` (`account_num`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
+
+--
+-- AUTO_INCREMENT for table `bank_info`
+--
+ALTER TABLE `bank_info`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `blogcategorys`
@@ -3128,10 +3973,22 @@ ALTER TABLE `blog_posts`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `branch`
+--
+ALTER TABLE `branch`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
 -- AUTO_INCREMENT for table `brands`
 --
 ALTER TABLE `brands`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `buyer_review`
+--
+ALTER TABLE `buyer_review`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `buy_token`
@@ -3140,16 +3997,28 @@ ALTER TABLE `buy_token`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `cancel_orders`
+--
+ALTER TABLE `cancel_orders`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `categorys`
 --
 ALTER TABLE `categorys`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+
+--
+-- AUTO_INCREMENT for table `categorys_backup`
+--
+ALTER TABLE `categorys_backup`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 
 --
 -- AUTO_INCREMENT for table `certificates`
 --
 ALTER TABLE `certificates`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `chat_messages`
@@ -3179,19 +4048,19 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT for table `deposit`
 --
 ALTER TABLE `deposit`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `education`
 --
 ALTER TABLE `education`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `experience`
 --
 ALTER TABLE `experience`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -3203,19 +4072,25 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `gig`
 --
 ALTER TABLE `gig`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `gigwish_list`
+--
+ALTER TABLE `gigwish_list`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `gig_images_history`
 --
 ALTER TABLE `gig_images_history`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `level_commission`
 --
 ALTER TABLE `level_commission`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `manufacturers`
@@ -3227,7 +4102,7 @@ ALTER TABLE `manufacturers`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT for table `migrations`
@@ -3239,19 +4114,25 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `notification`
 --
 ALTER TABLE `notification`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `orders_product`
 --
 ALTER TABLE `orders_product`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `orders_strip`
+--
+ALTER TABLE `orders_strip`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `order_history`
@@ -3287,7 +4168,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -3329,7 +4210,7 @@ ALTER TABLE `seller_ads`
 -- AUTO_INCREMENT for table `seller_review`
 --
 ALTER TABLE `seller_review`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `send_message`
@@ -3341,7 +4222,7 @@ ALTER TABLE `send_message`
 -- AUTO_INCREMENT for table `skills`
 --
 ALTER TABLE `skills`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- AUTO_INCREMENT for table `sliders`
@@ -3365,7 +4246,7 @@ ALTER TABLE `tbl_setting`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `wishlist`
@@ -3377,13 +4258,13 @@ ALTER TABLE `wishlist`
 -- AUTO_INCREMENT for table `withdraw`
 --
 ALTER TABLE `withdraw`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `withdrawal_method`
 --
 ALTER TABLE `withdrawal_method`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

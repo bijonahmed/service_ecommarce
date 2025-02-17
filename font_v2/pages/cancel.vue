@@ -1,10 +1,9 @@
 <template>
-  <title>Success Payment</title>
-    <div class="payment-success-container">
-      <div class="payment-success-message">
-        <h1>Payment Successful! 🎉</h1>
-        <p>Thank you for your payment. Your transaction was successful.</p>
-        <router-link to="/" class="go-home-btn">Go back home</router-link>
+    <div class="payment-failed-container">
+      <div class="payment-failed-message">
+        <h1>Payment Failed ❌</h1>
+        <p>Your payment could not be completed or was canceled.</p>
+        <router-link to="/" class="retry-btn">Try Again</router-link>
       </div>
     </div>
   </template>
@@ -12,21 +11,21 @@
   <script>
   export default {
     mounted() {
-      localStorage.setItem("payment_status", "success"); // ✅ Update status
+      localStorage.setItem("payment_status", "failed"); // ✅ Update status
     }
   }
   </script>
   
   <style scoped>
-  .payment-success-container {
+  .payment-failed-container {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(135deg, #56ccf2, #6e7dff);
+    background: linear-gradient(135deg, #ff7675, #d63031);
   }
   
-  .payment-success-message {
+  .payment-failed-message {
     text-align: center;
     background-color: #fff;
     border-radius: 10px;
@@ -40,7 +39,7 @@
   
   h1 {
     font-size: 2.5rem;
-    color: #2d3436;
+    color: #e74c3c;
     margin-bottom: 20px;
     font-family: 'Poppins', sans-serif;
   }
@@ -52,10 +51,10 @@
     font-family: 'Roboto', sans-serif;
   }
   
-  .go-home-btn {
+  .retry-btn {
     display: inline-block;
     padding: 12px 25px;
-    background-color: #2d3436;
+    background-color: #e74c3c;
     color: #fff;
     text-decoration: none;
     border-radius: 50px;
@@ -64,8 +63,8 @@
     transition: all 0.3s ease;
   }
   
-  .go-home-btn:hover {
-    background-color: #56ccf2;
+  .retry-btn:hover {
+    background-color: #ff6b6b;
     transform: translateY(-5px);
   }
   

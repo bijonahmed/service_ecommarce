@@ -853,17 +853,6 @@ const getBuyerUserId = async () => {
   }
 };
 
-
-const getSellerList = async () => {
-
-  console.log("=====" + txtSearch.value);
-
-
-
-
-
-
-}
 const fetchChatHistory = async () => {
 
   try {

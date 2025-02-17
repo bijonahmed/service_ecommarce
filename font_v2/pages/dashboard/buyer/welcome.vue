@@ -6,50 +6,12 @@
             <Header />
             <MobileMenu />
             <div class="body_content">
-
-<section class="categories_list_section overflow-hidden">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="position-relative">
-
-                    <!-- Left navigation button -->
-                    <button class="btn btn-default btn_l position-absolute left-0"
-                        @click="goToPrevSlide">
-                        <i class="fa-solid fa-chevron-left"></i>
-                    </button>
-
-                    <!-- Swiper container -->
-                    <div class="swiper-container">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
-                                <nuxt-link :to="`/category/${data.slug}`">
-                                    {{ data.name }}
-                                </nuxt-link>
-                            </div>
-                        </div>
-
-                    </div>
-
-                    <!-- Right navigation button -->
-                    <button class="btn btn-default btn_r position-absolute right-0"
-                        @click="goToNextSlide">
-                        <i class="fa-solid fa-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
                 <!-- Breadcumb Sections -->
                 <DashboardMainConentTabsBuyer />
                 <div />
             </div>
         </div>
-        <div class="loading-indicator" v-if="loading" style="text-align: center;">
-            <Loader />
-        </div>
-
+    
         <!-- Modal Template -->
         <div class="modal fade" id="profileUpdateModal" tabindex="-1" aria-labelledby="profileUpdateModalLabel"
             aria-hidden="true">
@@ -116,26 +78,7 @@
                                 </div>
 
                             </div>
-                            <div class="row d-none">
-                                <div class="col-md-12 mb-3">
-                                    <label for="skills" class="form-label">Skills</label>
-                                    <div class="d-flex flex-wrap" id="skillsContainer">
-                                        <div v-for="(skill, index) in skills" :key="index"
-                                            class="badge bg-primary me-2 mb-2">
-                                            {{ skill }}
-                                            <button type="button" class="btn-close btn-close-white"
-                                                @click="removeSkill(index)" aria-label="Remove"></button>
-                                        </div>
-                                    </div>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" v-model="skillInput"
-                                            @keyup.enter="addSkill" placeholder="Add a skill and press Enter" />
-                                        <button class="btn btn-outline-secondary" type="button"
-                                            @click="addSkill">Add</button>
-                                    </div>
-                                    <span class="text-danger" v-if="skillsError">{{ skillsError }}</span>
-                                </div>
-                            </div>
+                           
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -159,6 +102,7 @@ import axios from 'axios';
 
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
+import ProgressbarLoader from '~/components/ProgressbarLoader.vue';
 
 const router = useRouter();
 const categoryData = ref([]);
@@ -295,17 +239,6 @@ const chkUserrow = async () => {
     }
 };
 
-const getCatList = async () => {
-    try {
-        loading.value = true;
-        const response = await axios.get(`/unauthenticate/getFindCategorys`);
-        categoryData.value = response.data;
-    } catch (error) {
-        // Handle error
-    } finally {
-        loading.value = false;
-    }
-};
 
 const professionlist = async () => {
     try {
@@ -315,58 +248,13 @@ const professionlist = async () => {
         // Handle error
     }
 };
-
-
-const swiper = ref(null);
+ 
 
 onMounted(() => {
     getCountrys();
     professionlist();
     chkUserrow();
-    getCatList();
-
-swiper.value = new Swiper('.swiper-container', {
-    slidesPerView: 'auto',
-    spaceBetween: 10,
-    navigation: {
-        nextEl: '.btn_r',
-        prevEl: '.btn_l'
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-    },
-    breakpoints: {
-        1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 5,
-            spaceBetween: 15,
-        },
-        576: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        320: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        }
-    }
-})
-const goToPrevSlide = () => {
-    if (swiper.value) {
-        swiper.value.slidePrev()  // Go to previous slide
-    }
-}
-
-const goToNextSlide = () => {
-    if (swiper.value) {
-        swiper.value.slideNext()  // Go to next slide
-    }
-}
-
+   // getCatList();
 });
 
 </script>

@@ -147,6 +147,7 @@ class ChatController extends Controller
                 'country'        => !empty($chkCountry) ? $chkCountry->countryname : "",
                 'professionName' => !empty($chkProfession) ? $chkProfession->name : "",
                 'slug'           => $v->slug,
+                'to_id'          => $v->to_id,
                 'profilePicture' => !empty($v->profile_picture) ? url($v->profile_picture) : "",
                 'sellerOrder'    => $sellerOrder,
                 'join_date'      => date("Y-m-d", strtotime($ujoin->created_at)),
@@ -472,12 +473,6 @@ class ChatController extends Controller
         ];
         return response()->json($data);
     }
-
-
-
-
-
-
 
 
     public function userrowCheck(Request $request)

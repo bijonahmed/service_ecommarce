@@ -5,163 +5,73 @@
         <div class="wrapper ovh">
             <Header />
             <MobileMenu />
+            <br />
             <div class="body_content">
-
-                <section class="categories_list_section overflow-hidden">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="position-relative">
-
-                                    <!-- Left navigation button -->
-                                    <button class="btn btn-default btn_l position-absolute left-0"
-                                        @click="goToPrevSlide">
-                                        <i class="fa-solid fa-chevron-left"></i>
-                                    </button>
-
-                                    <!-- Swiper container -->
-                                    <div class="swiper-container">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
-                                                <nuxt-link :to="`/category/${data.slug}`">
-                                                    {{ data.name }}
-                                                </nuxt-link>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                                    <!-- Right navigation button -->
-                                    <button class="btn btn-default btn_r position-absolute right-0"
-                                        @click="goToNextSlide">
-                                        <i class="fa-solid fa-chevron-right"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-                <!-- Breadcumb Sections -->
-
-                <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
-                </div>
-                <section class="breadcumb-section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-sm-8 col-lg-10">
-                                <div class="breadcumb-style1 mb10-xs">
-                                    <div class="breadcumb-list">
-                                        <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
-                                        <a href="#">Deposit</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-4 col-lg-2">
-                                <div class="d-flex align-items-center justify-content-sm-end">
-                                    <div class="share-save-widget d-flex align-items-center">
-                                        <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
                 <div class="container my-5">
-                    <form action="">
-                        <div class="row">
-                            <div class="col-md-5">
-                                
-                                <div class="mb-3">
-                                    <label for="name" class="form-label">Amount <span class="text-danger">*</span> </label>
-                                    <input type="number" placeholder="00.00" class="form-control" name="name">
-                                </div>
-                                <div class="button_list">
-                                    <button class="btn_card active">
-                                        <span>Creadit Card</span>
-                                        <img src="/cards1.png" alt="" class="img-fluid">
-                                    </button>
-                                    <a href="" class="btn_card">
-                                        <span>Paypal</span>
-                                        <img src="/paypal.webp" alt="" class="img-fluid">
-                                    </a>
-                                    <a href="" class="btn_card">
-                                        <span>Stripe</span>
-                                        <img src="/stripe.png" alt="" class="img-fluid">
-                                    </a>
-                                    <a href="" class="btn_card">
-                                        <span>USDT(TRC-20)</span>
-                                    </a>
-                                </div>
+                    <section class="breadcrumb-section">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
+                            <div class="breadcrumb-list">
+                                <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link> /
+                                <span>Deposit</span>
                             </div>
-                            <div class="col-md-7">
-                                <div class="card_form">
-                                    <h6 class="mb-3">Amount being paid now: <strong>$115.50</strong></h6>
-                                    <img src="/cards1.png" alt="" class="img-fluid mb-2">
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Card Holder Name</label>
-                                        <input type="text" class="form-control" name="name">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="number" class="form-label">Card number</label>
-                                        <input type="text" class="form-control" id="number" name="number">
-                                    </div>
-                                    <div class="d-flex align-items-center">
-                                        <div class="mb-6 me-3">
-                                            <label for="exdate" class="form-label">Expiration Date</label>
-                                            <input type="text" class="form-control" id="exdate" name="exdate">
-                                        </div>
-                                        <div class="mb-6">
-                                            <label for="cvv" class="form-label">CVV Code</label>
-                                            <input type="text" class="form-control" id="cvv" name="cvv">
-                                        </div>
-                                    </div>
-                                    <button type="submit" class="btn btn-primary mt-2">Submit</button>
-                                </div>
-                            </div>
+                            <nuxt-link to="/dashboard/buyer/welcome" class="back-link">Back</nuxt-link>
                         </div>
-                    </form>
+                    </section>
+
+                    <!-- Tab Navigation -->
+                    <ul class="nav nav-pills mt-4" id="paymentTabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe"
+                                role="tab">Stripe</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="usdt-tab" data-bs-toggle="pill" href="#usdt" role="tab">USDT</a>
+                        </li>
+                    </ul>
+
+                    <div class="loading-indicator" v-if="processing" style="text-align: center;">
+                        <ProgressbarLoader />
+                    </div>
+                    <!-- Tab Content -->
+                    <div class="tab-content mt-3">
+                        <!-- Stripe Payment -->
+
+
+                        <div class="tab-pane fade show active" id="stripe">
+                            <form @submit.prevent="handlePayment">
+                                <label for="stripeAmount">Deposit Amount</label>
+                                <input type="number" id="stripeAmount" v-model="amount" class="form-control"
+                                    placeholder="Enter amount" />
+                                <button type="submit" class="btn btn-primary w-100 mt-3">
+                                    Pay with Stripe
+                                </button>
+
+
+                            </form>
+                            <!-- Modal for Error Message -->
+                            <div v-if="showModal" class="modal-overlay">
+                                <div class="modal-content">
+                                    <p>{{ errorMessage }}</p>
+                                    <button @click="showModal = false">Close</button>
+                                </div>
+                            </div>
+
+                            <!-- Pay by card -->
+
+                        </div>
+
+                        <!-- USDT Payment -->
+                        <div class="tab-pane fade" id="usdt">
+                            <form>
+                                <label for="usdtAmount">Deposit Amount</label>
+                                <input type="number" id="usdtAmount" class="form-control" placeholder="Enter amount">
+                                <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <!-- <div class="container mt-5">
-                    <form @submit.prevent="handleSubmit" class="shadow p-4 rounded bg-light">
-                        <div class="mb-3">
-                            <label for="amount" class="form-label">Enter Amount</label>
-                            <input type="text" class="form-control" v-model="amount" @input="validateInput"
-                                placeholder="0.00" />
-                            <span class="text-danger" v-if="errors.amount">{{ errors.amount[0] }}</span>
-                        </div>
-
-                        <h5 class="mb-3">Select Payment Method</h5>
-                        <div class="row mb-4">
-                            <div class="col-md-6 d-grid mb-3">
-                                <div class="payment-option" :class="{ selected: selectedPayment === 'paypal' }"
-                                    @click="selectPaymentOption('paypal')">
-                                    <img src="https://www.paypalobjects.com/webstatic/icon/pp258.png"
-                                        alt="Pay with PayPal" class="payment-image" />
-                                    <span class="payment-label">PayPal</span>
-                                </div>
-                            </div>
-                            <div class="col-md-6 d-grid mb-3">
-                                <div class="payment-option" :class="{ selected: selectedPayment === 'visa' }"
-                                    @click="selectPaymentOption('visa')">
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png"
-                                        alt="Pay with Visa" class="payment-image" />
-                                    <span class="payment-label">Visa</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn btn-primary text-white">Proceed to Pay</button>
-                        </div>
-                    </form>
-                </div> -->
-
-
             </div>
+
             <!-- Modal Template -->
         </div>
         <Footer />
@@ -171,7 +81,7 @@
 <script setup>
 import { useRoute } from 'vue-router';
 import axios from 'axios';
-
+import { loadStripe } from '@stripe/stripe-js';
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
 
@@ -187,20 +97,104 @@ definePageMeta({
 const errors = ref({});
 const DepositData = ref([]);
 
-//Add education 
-const depositArr = ref({
-    amount: '',
-    frm_wallet_address: ''
-});
-
-
-
+const stripe = ref(null);
 const amount = ref(0);
-const selectedPayment = ref(null);
+const showModal = ref(false);
+const errorMessage = ref('');
 
-const selectPaymentOption = (option) => {
-    selectedPayment.value = option;
+//const stripePromise = loadStripe('pk_test_51QtCfx2NiQK26ALV6xsuIWwSRB8Fv5oewtOHwcQL9irvDL5U2kTryDxLtbnSE73dimjgVQGKUB1aUhMKGal4O96k00QZMyKfJm'); // Replace with your actual key
+const processing = ref(false);
+// Function to show modal with error message
+function showErrorModal(message) {
+    errorMessage.value = message;
+    showModal.value = true;
+}
+
+
+const sendHandleWebhook = async () => {
+
+    try {
+        const response = await axios.post('/deposit/handleWebhook', {
+
+            product: 'Custom Payment', // You can change this dynamically
+        }, {
+            headers: { 'Content-Type': 'application/json' } // Headers are optional in Axios
+        });
+
+        console.log("Response:" + response.data);
+
+    } catch (error) {
+        console.error(error);
+        alert('Payment failed. Please try again.');
+    }
+
+
 };
+
+const handlePayment = async () => {
+    const amountValue = parseFloat(amount.value); // Convert input to a number
+    // Check if the value is not a number or less than the minimum amount
+    if (isNaN(amountValue) || amountValue < 0.50) {
+        // Show modal with error message
+        showErrorModal("Minimum amount required is $0.50 and it cannot be zero or a string.");
+        return;
+    }
+    processing.value = true;
+
+    try {
+        const response = await axios.post('/deposit/create-payment-intent', {
+            amount: parseFloat(amount.value),
+            product: 'Custom Payment', // You can change this dynamically
+            success_url: window.location.origin + "/success", // ✅ Redirect frontend
+            cancel_url: window.location.origin + "/cancel", // ✅ Redirect frontend
+        }, {
+            headers: { 'Content-Type': 'application/json' } // Headers are optional in Axios
+        });
+
+        if (response.data.checkout_url) {
+            window.location.href = response.data.checkout_url; // Redirect to Stripe checkout
+        } else {
+            alert('Failed to initiate checkout.');
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert('Payment failed. Please try again.');
+    }
+
+    processing.value = false;
+};
+
+
+/*
+const handlePayment = async () => {
+    if (!amount.value || amount.value < 0.50) { // Ensure at least $0.50 for USD
+    alert('Minimum amount required is $0.50');
+    return;
+  }
+
+    processing.value = true;
+
+    const response = await axios.post('/deposit/create-payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: amount.value }),
+    });
+
+    const { clientSecret } = await response.json();
+
+    const stripe = await stripePromise;
+    const result = await stripe.redirectToCheckout({
+        sessionId: clientSecret,
+    });
+
+    if (result.error) {
+        console.error(result.error.message);
+    }
+
+    processing.value = false;
+};
+*/
 
 const handleSubmit = async () => {
     if (!selectedPayment.value) {
@@ -256,22 +250,6 @@ const validateInput = () => {
     }
 };
 
-const getStatus = (status) => {
-    return status === 0 ? 'Pending' :
-        status === 1 ? 'Approved' :
-            status === 2 ? 'Rejected' :
-                'Unknown';
-};
-
-
-const getCatList = async () => {
-    try {
-        const response = await axios.get(`/unauthenticate/getFindCategorys`);
-        categoryData.value = response.data;
-    } catch (error) {
-        // Handle error
-    }
-};
 
 
 const submitFrm = () => {
@@ -317,110 +295,156 @@ const getDeposit = async () => {
 
 const swiper = ref(null)
 
-onMounted(() => {
-    getCatList();
+onMounted(async () => {
     getDeposit();
-
-    swiper.value = new Swiper('.swiper-container', {
-        slidesPerView: 'auto',
-        spaceBetween: 10,
-        navigation: {
-            nextEl: '.btn_r',
-            prevEl: '.btn_l'
-        },
-        pagination: {
-            el: '.swiper-pagination',
-            clickable: true
-        },
-        breakpoints: {
-            1024: {
-                slidesPerView: 7,
-                spaceBetween: 20,
-            },
-            768: {
-                slidesPerView: 5,
-                spaceBetween: 15,
-            },
-            576: {
-                slidesPerView: 3,
-                spaceBetween: 10,
-            },
-            320: {
-                slidesPerView: 2,
-                spaceBetween: 10,
-            }
-        }
-    })
-    const goToPrevSlide = () => {
-        if (swiper.value) {
-            swiper.value.slidePrev()  // Go to previous slide
-        }
-    }
-
-    const goToNextSlide = () => {
-        if (swiper.value) {
-            swiper.value.slideNext()  // Go to next slide
-        }
-    }
 });
+
 
 </script>
 
 <style scoped>
-.payment-option {
-    cursor: pointer;
-    border: 2px solid transparent;
-    padding: 15px;
-    text-align: center;
-    transition: border-color 0.3s;
+form {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+input {
     border-radius: 8px;
-    background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
 }
 
-.payment-option:hover {
-    border-color: #007bff;
+button {
+    border-radius: 8px;
 }
 
-.payment-option.selected {
-    border-color: #007bff;
-    background-color: #f0f9ff;
-    /* Light blue background when selected */
+@media (max-width: 576px) {
+    .breadcrumb-section {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: -50px;
+    }
+
+    .breadcrumb-list {
+        margin-bottom: 5px;
+    }
 }
 
-.payment-image {
+/* Breadcrumb Styling */
+.breadcrumb-section {
+    padding: 20px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.breadcrumb-list a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.breadcrumb-list span {
+    color: #555;
+}
+
+.back-link {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+/* Tab Styling */
+.nav-pills {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.nav-pills .nav-link {
+    padding: 10px 20px;
+    font-weight: 500;
+    border-radius: 8px;
+    color: #007bff;
+    background: #f8f9fa;
+}
+
+.nav-pills .nav-link.active {
+    background: #007bff;
+    color: white;
+}
+
+/* Form Styling */
+form {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.form-control {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+.btn-primary {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 6px;
+    background: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
-    max-width: 120px;
-    margin-bottom: 10px;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    /* Horizontally center the modal */
+    align-items: center;
+    /* Vertically center the modal */
+    z-index: 9999;
+    /* Ensure modal stays above other content */
 }
 
-.payment-label {
-    display: block;
-    font-weight: bold;
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    /* Set a fixed width for modal */
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    /* Add some shadow for depth */
 }
 
-.body_content {
-    padding: 100px;
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
-@media (max-width: 991.98px) {
-    .body_content {
-        padding: 20px 20px 150px;
-    }
-}
-
-@media (max-width: 575.98px) {
-    .body_content {
-        padding: 20px 10px;
-    }
-}
-
-.categories_list_section {
-    border-bottom: 1px solid #E9E9E9;
-    padding: 7px 0 3px;
-    position: relative;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+button:hover {
+    background-color: #0056b3;
 }
 </style>

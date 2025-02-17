@@ -130,7 +130,7 @@ class UserController extends Controller
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->first();
-        $data['name']           = $notificationMsg->name;
+        $data['name']           = !empty($notificationMsg->name) ? $notificationMsg->name : "";
         $data['messages']       = $notificationMsg->messages;
         $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
 
@@ -145,7 +145,7 @@ class UserController extends Controller
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->first();
-        $data['name']           = $notificationMsg->name;
+        $data['name']           = !empty($notificationMsg->name) ? $notificationMsg->name : "";//$notificationMsg->name;
         $data['messages']       = $notificationMsg->messages;
         $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
 
@@ -244,8 +244,8 @@ class UserController extends Controller
 
     public function pendingCountNotification()
     {
-        $roleid = $this->role_id; 
-    
+        $roleid = $this->role_id;
+
         if ($roleid == 3) {
             $countData = Notification::where('buyer_id', $this->userid)
                 ->where(function ($query) {
@@ -259,10 +259,10 @@ class UserController extends Controller
                 })
                 ->count();
         }
-    
+
         return response()->json(['unseen_notifications' => $countData]);
     }
-    
+
 
     public function getNotifications(Request $request)
     {

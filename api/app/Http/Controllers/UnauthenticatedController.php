@@ -10,7 +10,6 @@ use Validator;
 use App\Models\Gig;
 use App\Models\Post;
 use App\Models\User;
-
 use App\Models\Order;
 use App\Models\Skills;
 use App\Models\Country;
@@ -29,11 +28,50 @@ use App\Models\AttributeValues;
 use App\Models\GigImagesHistory;
 use PhpParser\Node\Stmt\TryCatch;
 use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Stripe\Stripe;
+use Stripe\Webhook;
+use Stripe\PaymentIntent;
+use Illuminate\Support\Facades\Log;
+
 
 class UnauthenticatedController extends Controller
 {
     protected $frontend_url;
     protected $userid;
+
+
+    public function handleWebhook(Request $request)
+    {
+        Log::info('handleWebhook method calling.');
+
+        // Set Stripe API key
+        Stripe::setApiKey(config('services.stripe.secret'));
+
+        // Get raw payload and signature from the request
+        $payload = $request->getContent();
+        $sigHeader = $request->header('Stripe-Signature');
+        $endpointSecret = config('services.stripe.webhook_secret');
+
+        try {
+            // Verify the webhook signature
+            $event = Webhook::constructEvent($payload, $sigHeader, $endpointSecret);
+
+            if ($event->type === 'checkout.session.completed') {
+                $session = $event->data->object;
+                $paymentIntent = PaymentIntent::retrieve($session->payment_intent);
+
+                Log::info('Payment successful. Payment Intent ID: ' . $paymentIntent->id);
+            }
+
+            return response()->json(['message' => 'Webhook received'], 200);
+        } catch (\Exception $e) {
+            Log::error('Webhook error: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
+        }
+    }
+
+
+
 
     public function allCategorys(Request $request)
     {
@@ -51,7 +89,7 @@ class UnauthenticatedController extends Controller
     }
 
 
- public function allCategoryActiveStatus(Request $request)
+    public function allCategoryActiveStatus(Request $request)
     {
         try {
             $categories = Categorys::where('status', 1)->orderBy('id', 'desc')->get();
@@ -123,7 +161,7 @@ class UnauthenticatedController extends Controller
 
     public function getPublic(Request $request)
     {
-        $row            =  User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself','profession_name')->first();
+        $row            =  User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself', 'profession_name')->first();
         $professionId   =  !empty($row->profession_name) ? (int)$row->profession_name : "";
         $professionRow  =  Profession::where('id', $professionId)->first();
         $professionName =  $professionRow->name ?? "";
@@ -165,7 +203,7 @@ class UnauthenticatedController extends Controller
 
         $row                = User::where('slug', $request->slug)->select('name', 'id', 'slug', 'email', 'image', 'created_at', 'country_1', 'introduce_yourself')->first();
         $chkCountry         = Country::where('id', $row->country_1)->first();
-       
+
 
         $review             = BuyerReview::where('buyer_id', $row->id)->get();
         $result             = BuyerReview::where('buyer_id', $row->id)
@@ -345,7 +383,7 @@ class UnauthenticatedController extends Controller
         try {
             $rows = Gig::where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
-                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images','users.slug as sellerSlug')
+                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images', 'users.slug as sellerSlug')
                 ->where(function ($query) use ($categoryID) {
                     $query->where('category_id', $categoryID)
                         ->orWhere('subcategory_id', $categoryID)
@@ -360,9 +398,9 @@ class UnauthenticatedController extends Controller
             $data = [];
             foreach ($rows as $v) {
 
-                $completeOrder =  Order::where('sellerId',$v->user_id)->where('order_status',5)->count('order_status');
-                $seller_review =  SellerReview::where('seller_id',$v->user_id)->count('id');
-                $totaStar      =  SellerReview::where('seller_id',$v->user_id)->sum('rating');  
+                $completeOrder =  Order::where('sellerId', $v->user_id)->where('order_status', 5)->count('order_status');
+                $seller_review =  SellerReview::where('seller_id', $v->user_id)->count('id');
+                $totaStar      =  SellerReview::where('seller_id', $v->user_id)->sum('rating');
                 if ($seller_review > 0) {
                     // Calculate the average rating and round up to the next whole number
                     $calculatedReview = $totaStar / $seller_review;

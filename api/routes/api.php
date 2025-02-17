@@ -21,6 +21,9 @@ use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Deposits\DepositController;
 use App\Http\Controllers\Deposits\DropUserController;
 use App\Http\Controllers\Post\PostController;
+use App\Http\Controllers\Payment\PaymentController;
+use App\Http\Controllers\Payment\PaymentIntentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -89,7 +92,7 @@ Route::group(
         //For Admin Login
         Route::post('adminLogin', [AdminAuthController::class, 'adminLogin']);
         Route::post('admin-logout', [AdminAuthController::class, 'adminLogout']);
-        Route::post('/adminVertificationCode', [AdminAuthController::class, 'verifyCode']); 
+        Route::post('/adminVertificationCode', [AdminAuthController::class, 'verifyCode']);
         Route::post('adminMe', [AdminAuthController::class, 'me']);
 
         //END
@@ -248,6 +251,8 @@ Route::group(
         Route::post('updateWithDrawRequest', [DepositController::class, 'updateWithDrawRequest']);
         Route::post('addWithDrawMethod', [DepositController::class, 'addWithDrawMethod']);
         Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
+        //api 
+        Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
     },
 );
 
@@ -354,6 +359,9 @@ Route::group(
 );
 
 Route::group(['prefix' => 'unauthenticate'], function () {
+
+    //strip
+    Route::get('/stripe/payment-intent/{id}', [PaymentIntentController::class, 'retrievePaymentIntent']);
 
     Route::get('allCategory', [UnauthenticatedController::class, 'allCategoryActiveStatus']);
     Route::get('allActiveCategory', [UnauthenticatedController::class, 'allActiveCategory']);

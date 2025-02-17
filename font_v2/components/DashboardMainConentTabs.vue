@@ -4,53 +4,42 @@
     <div class="col-lg-12" style="margin-top: 10px;;">
       <div class="ui-content container">
         <div class="navpill-style1">
-          <ul class="nav nav-pills overflow-auto mb-3" id="pills-tab" role="tablist">
-            <li class="nav-item" role="presentation">
-              <button class="nav-link active fw500 dark-color" id="pills-home-tab" data-bs-toggle="pill"
-                data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
-                <i class="fa fa-grid" aria-hidden="true"></i>&nbsp;Dashboard
-              </button>
-            </li>
+          <div class="nav nav-pills overflow-auto mb-3" id="pills-tab" role="tablist">
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="chatbox">
-                <i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Messages
-              </button>
-            </li>
+            <button class="nav-link active fw500 dark-color" id="pills-home-tab" data-bs-toggle="pill"
+              data-bs-target="#pills-home" type="button" role="tab" aria-controls="pills-home" aria-selected="true">
+              <i class="fa fa-grid" aria-hidden="true"></i>&nbsp;Dashboard
+            </button>
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="myprofile">
-                <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Profile
-              </button>
-            </li>
+            <button class="nav-link fw500 dark-color" @click="chatbox">
+              <i class="fa fa-commenting" aria-hidden="true"></i>&nbsp;Messages
+            </button>
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="mygig">
-                <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;My GIGs
-              </button>
-            </li>
+            <button class="nav-link fw500 dark-color" @click="myprofile">
+              <i class="fa fa-user" aria-hidden="true"></i>&nbsp;Profile
+            </button>
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="myorders">
-                <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders
-              </button>
-            </li>
+            <button class="nav-link fw500 dark-color" @click="mygig">
+              <i class="fa fa-tasks" aria-hidden="true"></i>&nbsp;My GIGs
+            </button>
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="mywithdraw">
-                <i class="fas fa-dollar-sign" aria-hidden="true"></i>&nbsp;Withdraw
-              </button>
-            </li>
+            <button class="nav-link fw500 dark-color" @click="myorders">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>&nbsp;Orders
+            </button>
 
-            <li class="nav-item" role="presentation">
-              <button class="nav-link fw500 dark-color" @click="mysetting">
-                <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Setting
-              </button>
-            </li>
-          </ul>
+            <button class="nav-link fw500 dark-color" @click="mywithdraw">
+              <i class="fas fa-dollar-sign" aria-hidden="true"></i>&nbsp;Withdraw
+            </button>
+
+            <button class="nav-link fw500 dark-color" @click="mysetting">
+              <i class="fa fa-cogs" aria-hidden="true"></i>&nbsp;Setting
+            </button>
+
+          </div>
 
 
-      
+
+
           <section class="breadcumb-section pt-2 pb">
             <div
               class="cta-service-v1 freelancer-single-style mx-auto maxw1700 pt120 pt60-sm pb120 pb60-sm bdrs16 position-relative overflow-hidden d-flex align-items-center mx20-lg px30-lg">
@@ -232,5 +221,4 @@ onMounted(() => {
   gap: 10px;
   white-space: nowrap;
 }
-
 </style>

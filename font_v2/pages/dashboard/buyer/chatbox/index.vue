@@ -102,8 +102,9 @@ const getChatusersList = async () => {
 
 
 const setSellerUserId = (user) => {
+
     const userId = user.user_id;
-    const to_id = user.to_id;
+    const to_id = user.user_id;
     localStorage.setItem('seller_user_id', userId);
     localStorage.setItem('to_id', to_id);
 };

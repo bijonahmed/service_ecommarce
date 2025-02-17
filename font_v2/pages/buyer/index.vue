@@ -50,7 +50,7 @@
                         </a>
                         <div class="ml20 ml0-xs">
                           <h5 class="title mb-1">{{ name || 'Loading...' }}</h5>
-                          <p class="mb-0">{{ profName || 'Loading...' }}</p>
+                          <p class="mb-0">{{ profName || 'Profession' }}</p>
                           <!-- <p class="mb-0 dark-color fz15 fw500 list-inline-item mb5-sm d-none">
                                 <i class="fas fa-star vam fz10 review-color me-2"></i>
                                 0

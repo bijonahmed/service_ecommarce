@@ -27,5 +27,10 @@ class Deposit extends Authenticatable
     'to_crypto_wallet_address',
     'frm_wallet_address',
     'status',
+    'email',
+    'product',
+    'currency',
+    'payment_status',
+    'payment_id'
   ];
 }

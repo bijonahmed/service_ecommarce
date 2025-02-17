@@ -165,14 +165,7 @@
                       <th>InsubCategory</th>
                       <td>{{ inSubCategoryName }}</td>
                     </tr>
-                    <tr>
-                      <th>Type</th>
-                      <td>
-                        <span v-if="types == 1">Single GIG</span>
-                        <span v-if="types == 2">Multiple GIG</span>
-
-                      </td>
-                    </tr>
+                  
                     <tr v-if="types == 1">
                       <th>Regular Price</th>
                       <td>${{ selected_price }}</td>
@@ -192,7 +185,7 @@
                   </tbody>
                 </table>
 
-                <span v-if="types == 2">
+                <span v-if="selected_packages === 'Basic'">
                   <h3><u>Basic Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>
@@ -217,7 +210,7 @@
                   </table>
                 </span>
 
-                <span v-if="types == 2">
+                <span v-else-if="selected_packages === 'Standart'">
                   <h3><u>Standard Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>
@@ -241,7 +234,7 @@
                     </tbody>
                   </table>
                 </span>
-                <span v-if="types == 2">
+                <span v-else-if="selected_packages === 'Premium'">
                   <h3><u>Premimum Packages</u></h3>
                   <table class="table table-striped table-hover">
                     <tbody>

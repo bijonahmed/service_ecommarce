@@ -6,31 +6,17 @@
       <Header />
       <MobileMenu />
       <div class="body_content">
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="listings_category_nav_list_menu">
-                  <ul class="mb0 d-flex ps-0">
-                    <li v-for="data in categoryData" :key="data.id">
-                      <nuxt-link :to="`/category/${data.slug}`">
-                        {{ data.name }}
-                      </nuxt-link>
-                    </li>
-                    <!-- {{categoryData}} -->
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-        <!-- Breadcumb Sections -->
+       
+
+        <center class="d-none"><button @click="fetchChatHistory" id="clickstorageId">Get Local Storage
+            UserIds</button></center>
+
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
-          <Loader />
+          <ProgressbarLoader />
         </div>
         <section class="breadcumb-section">
-          <div class="container">
+          <div class="container-fluid">
             <div class="row">
               <div class="col-sm-8 col-lg-10">
                 <div class="breadcumb-style1 mb10-xs">
@@ -51,8 +37,12 @@
             </div>
           </div>
         </section>
+
+        <!-- <div class="container">
+          senderId: {{ senderId }}, recipientId: {{ recipientId }}
+        </div> -->
         <!-- <DashboardMainConentTabs /> -->
-         <!-- ================================================== Message for pc ======================= -->
+        <!-- ================================================== Message for pc ======================= -->
         <!-- Start Chatbox -->
         <div class="dashboard__content content pcMessage">
           <div class="row">
@@ -87,9 +77,7 @@
                   <span style="font-size: 12px;">Last seen: {{ lastSeen }}</span>
                 </div>
                 <div class="chatbox" id="" ref="chatContainer">
-                  <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                    <Loader />
-                  </div>
+
                   <div class="" ref="chatContainer" v-if="chatMessages.length">
                     <div class="message" v-for="message in chatMessages" :key="message.id"
                       :class="{ 'sender-message': message.sender_id === senderId, 'recipient-message': message.sender_id !== senderId }">
@@ -108,10 +96,10 @@
                           </div>
                           <div v-else>
                             <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
-                              }}</a>
+                            }}</a>
                           </div>
                         </div>
-                        <span class="timestamp">{{ message.time_sent}}</span>
+                        <span class="timestamp">{{ message.time_sent }}</span>
                       </div>
                     </div>
                   </div>
@@ -236,7 +224,8 @@
                 <div class="card-header d-flex">
                   <button type="button" style="background: transparent; border: none; color: #fff;" @click="change()"><i
                       class="fa-solid fa-arrow-left me-2"></i></button>
-                  <div class="justify-content-between align-items-center d-flex p-2" @click="profile" style="cursor: pointer;">
+                  <div class="justify-content-between align-items-center d-flex p-2" @click="profile"
+                    style="cursor: pointer;">
                     <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
                   </div>
                   <span style="font-size: 12px;"></span>
@@ -260,7 +249,7 @@
                           </div>
                           <div v-else>
                             <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
-                              }}</a>
+                            }}</a>
                           </div>
                         </div>
                         <span class="timestamp">{{ message.time_sent }}</span>
@@ -366,9 +355,6 @@
                     </div>
                   </div>
 
-
-
-
                 </div>
               </div>
               <!-- ======================================== End ===========================================  -->
@@ -376,7 +362,9 @@
 
               <div class="bg-white h-100 p-4" v-if="activeDiv === 'profile'">
                 <div class="w-100 d-flex">
-                  <button type="button" @click="backProfile" style="background-color: transparent;border: none;"><i class="fa-solid fa-arrow-left mx-2"></i></button></div>
+                  <button type="button" @click="backProfile" style="background-color: transparent;border: none;"><i
+                      class="fa-solid fa-arrow-left mx-2"></i></button>
+                </div>
 
                 <img :src="profilePicture || '/blank_user.jpg'" alt="" class="img-fluid rounded-circle bg-red"
                   style="height: 80px;width: 80px;">
@@ -528,7 +516,7 @@ async function sendMessage() {
   formData.append("recipientId", recipientId.value);
   formData.append("message", messageContent.value);
   const currentTime = getFormattedTime();
-    formData.append("time_sent", currentTime); // Adds time in "hh:mm:ss AM/PM" format
+  formData.append("time_sent", currentTime); // Adds time in "hh:mm:ss AM/PM" format
 
   if (uploadedFile.value) {
     formData.append("files", uploadedFile.value);
@@ -570,7 +558,7 @@ const fetchChatHistory = async () => {
       }
     });
   } catch (error) {
-    console.error('Error fetching chat history:', error);
+    //console.error('Error fetching chat history:', error);
   }
 };
 
@@ -581,17 +569,7 @@ const handleScroll = () => {
   }
 };
 
-
-const getCatList = async () => {
-  try {
-    const response = await axios.get(`/unauthenticate/getFindCategorys`);
-    categoryData.value = response.data;
-  } catch (error) {
-    // Handle error
-  }
-};
-
-
+ 
 const getChatusersList = async () => {
   try {
     const response = await axios.get(`/chat/getChatUsers`);
@@ -670,18 +648,20 @@ const defaultLoadingUser = async () => {
 
 let intervalId;
 onMounted(() => {
+  setTimeout(() => {
+    $("#clickstorageId").click();
+  }, 0); // This gives Vue time to render the button
   lastSeen.value = formatCurrentTime();
   defaultLoadingUser();
   getParticularData();
   fetchChatHistory();
-  intervalId = setInterval(fetchChatHistory, 5000); // Set interval to reload every 5 seconds
+  intervalId = setInterval(fetchChatHistory, 30000); // Set interval to reload every 30 seconds
   if (chatContainer.value) {
     chatContainer.value.addEventListener('scroll', handleScroll);
     handleScroll();
   }
   getChatusersList();
   fetchChatHistory();
-  getCatList();
 
 });
 
@@ -697,7 +677,6 @@ onBeforeUnmount(() => {
 
 
 <style scoped>
-
 .MobileMessage {
   display: none;
   min-height: 80vh;
@@ -720,6 +699,7 @@ onBeforeUnmount(() => {
     display: none;
   }
 }
+
 .message_container {
   background-color: #ffffff;
   border-right: 1px solid #e0e0e0;
@@ -825,6 +805,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   max-height: 650px;
   flex: 1;
+  width: 100%;
   /* Takes the remaining height */
 
 }

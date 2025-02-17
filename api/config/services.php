@@ -30,5 +30,10 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'stripe' => [
+    'secret' => env('STRIPE_SECRET'),
+    'key' => env('STRIPE_KEY'),       // Publishable key
+    'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+],
 
 ];

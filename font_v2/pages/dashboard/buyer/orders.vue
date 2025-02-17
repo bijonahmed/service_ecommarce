@@ -198,16 +198,6 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString(undefined, options);
 };
 
-const getCatList = async () => {
-  try {
-
-    const response = await axios.get(`/unauthenticate/getFindCategorys`);
-    categoryData.value = response.data;
-  } catch (error) {
-    // Handle error
-  }
-};
-
 const getAllOrdersList = async () => {
   try {
     loading.value = true;

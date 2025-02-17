@@ -757,18 +757,7 @@ const getBankList = async () => {
   }
 };
 
-const getCatList = async () => {
-  try {
-    loading.value = true;
-    const response = await axios.get(`/unauthenticate/getFindCategorys`);
-    categoryData.value = response.data;
-  } catch (error) {
-    // Handle error
-  } finally {
-    loading.value = false;
-  }
-};
-
+ 
 const getWithdrawalMethod = async (type) => {
   console.log("===" + type);
   try {
@@ -826,56 +815,13 @@ const withdrawList = async () => {
   }
 };
 
-const swiper = ref(null);
 // Call the loadeditor function when the component is mounted
 onMounted(async () => {
   getBankList();
   withdrawList();
-  getCatList();
   getWithdrawalMethod();
   getEarning();
 
-swiper.value = new Swiper('.swiper-container', {
-    slidesPerView: 'auto',
-    spaceBetween: 10,
-    navigation: {
-        nextEl: '.btn_r',
-        prevEl: '.btn_l'
-    },
-    pagination: {
-        el: '.swiper-pagination',
-        clickable: true
-    },
-    breakpoints: {
-        1024: {
-            slidesPerView: 7,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 5,
-            spaceBetween: 15,
-        },
-        576: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        320: {
-            slidesPerView: 2,
-            spaceBetween: 10,
-        }
-    }
-})
-const goToPrevSlide = () => {
-    if (swiper.value) {
-        swiper.value.slidePrev()  // Go to previous slide
-    }
-}
-
-const goToNextSlide = () => {
-    if (swiper.value) {
-        swiper.value.slideNext()  // Go to next slide
-    }
-}
 });
 
 </script>

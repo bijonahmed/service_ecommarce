@@ -7,38 +7,6 @@
       <MobileMenu />
       <div class="body_content">
 
-        <section class="categories_list_section overflow-hidden">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="position-relative">
-
-                  <!-- Left navigation button -->
-                  <button class="btn btn-default btn_l position-absolute left-0" @click="goToPrevSlide">
-                    <i class="fa-solid fa-chevron-left"></i>
-                  </button>
-
-                  <!-- Swiper container -->
-                  <div class="swiper-container">
-                    <div class="swiper-wrapper">
-                      <div class="swiper-slide" v-for="data in categoryData" :key="data.id">
-                        <nuxt-link :to="`/category/${data.slug}`">
-                          {{ data.name }}
-                        </nuxt-link>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  <!-- Right navigation button -->
-                  <button class="btn btn-default btn_r position-absolute right-0" @click="goToNextSlide">
-                    <i class="fa-solid fa-chevron-right"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
         <!-- Breadcumb Sections -->
 
         <div class="loading-indicator" v-if="loading" style="text-align: center;">

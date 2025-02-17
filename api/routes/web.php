@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\Stripe\CheckOutController;
+use App\Http\Controllers\UnauthenticatedController;
 
 
 /*
@@ -15,12 +16,15 @@ use App\Http\Controllers\Cart\CartController;
 |
 */
 
-Route::post('add-to-cart', [CartController::class, 'addToCart']);
-Route::post('/remove-from-cart', 'CartController@removeFromCart');
-Route::get('cart', [CartController::class, 'index']);
-Route::get('clearCart', [CartController::class, 'clearCart']);
-
+Route::post('/create-checkout-session', [CheckOutController::class, 'createCheckoutSession']);
+Route::get('/checkout/success', [CheckOutController::class, 'checkoutSuccess'])->name('checkout.success'); // Success URL
+Route::get('/checkout/cancel', [CheckOutController::class, 'checkoutCancel'])->name('checkout.cancel'); // Cancel URL
+Route::post('/stripe_webhook', [CheckOutController::class, 'handleStripeWebhook']);
+//Route::post('/stripe_webhook', [UnauthenticatedController::class, 'handleWebhook']);
 Route::get('/', function () {
     return view('welcome');
-   
+});
+
+Route::get('/pay', function () {
+    return view('checkout');
 });

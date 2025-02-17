@@ -233,258 +233,78 @@
 
             <!-- Modal -->
             <div class="modal fade" id="myModal_cancel" tabindex="-1" aria-labelledby="myModal_cancelLabel"
-              aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="myModal_cancelLabel">Cancel Order</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Cancel Order Form -->
-                    <form @submit.prevent="submitCancelOrder">
-                      <div class="mb-3">
-                        <label for="cancelReason" class="form-label">Reason for
-                          Cancellation</label>
-                        <textarea v-model="cancelReason" id="cancelReason" class="form-control" rows="4"
-                          placeholder="Please explain why you want to cancel the order"></textarea>
-                      </div>
-                      <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
-                    </form>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary text-white" @click="submitCancelOrder">Submit
-                      Cancellation</button>
-                  </div>
+                aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="myModal_cancelLabel">Cancel Order</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Cancel Order Form -->
+                            <form @submit.prevent="submitCancelOrder">
+                                <div class="mb-3">
+                                    <label for="cancelReason" class="form-label">Reason for
+                                        Cancellation</label>
+                                    <textarea v-model="cancelReason" id="cancelReason" class="form-control" rows="4"
+                                        placeholder="Please explain why you want to cancel the order"></textarea>
+                                </div>
+                                <p v-if="errorMessage" class="text-danger">{{ errorMessage }}</p>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary text-white" @click="submitCancelOrder">Submit
+                                Cancellation</button>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
 
 
             <div class="modal fade" id="review_modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-              aria-labelledby="staticBackdropLabel" aria-hidden="true">
-              <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title" id="review_modalBackdropLabel">Buyer Review</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                  </div>
-                  <div class="modal-body">
-                    <!-- Rating field -->
-                    <div class="mb-3">
-                      <label for="rating" class="form-label">Rating</label>
-                      <select class="form-select" id="rating" v-model="rating">
-                        <option selected disabled>Choose a rating</option>
-                        <option value="1">1 Star</option>
-                        <option value="2">2 Stars</option>
-                        <option value="3">3 Stars</option>
-                        <option value="4">4 Stars</option>
-                        <option value="5">5 Stars</option>
-                      </select>
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="review_modalBackdropLabel">Buyer Review</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Rating field -->
+                            <div class="mb-3">
+                                <label for="rating" class="form-label">Rating</label>
+                                <select class="form-select" id="rating" v-model="rating">
+                                    <option selected disabled>Choose a rating</option>
+                                    <option value="1">1 Star</option>
+                                    <option value="2">2 Stars</option>
+                                    <option value="3">3 Stars</option>
+                                    <option value="4">4 Stars</option>
+                                    <option value="5">5 Stars</option>
+                                </select>
+                            </div>
+
+                            <!-- Review field -->
+                            <div class="mb-3">
+                                <label for="review" class="form-label">Your Review</label>
+                                <textarea class="form-control" id="review" rows="4"
+                                    placeholder="Write your review here..." v-model="review"></textarea>
+                                <!-- <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span> -->
+                            </div>
+
+                            <!-- Submit button -->
+                            <button type="submit" class="btn btn-primary text-white w-100" @click="reviewOrder">Submit
+                                Review</button>
+                        </div>
+
                     </div>
-
-                    <!-- Review field -->
-                    <div class="mb-3">
-                      <label for="review" class="form-label">Your Review</label>
-                      <textarea class="form-control" id="review" rows="4" placeholder="Write your review here..."
-                        v-model="review"></textarea>
-                      <!-- <span class="text-danger" v-if="errors.review">{{ errors.review[0] }}</span> -->
-                    </div>
-
-                    <!-- Submit button -->
-                    <button type="submit" class="btn btn-primary text-white w-100" @click="reviewOrder">Submit
-                      Review</button>
-                  </div>
-
                 </div>
-              </div>
             </div>
         </div>
     </div>
 </template>
 
-<style scoped>
-.order-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 20px;
-}
 
-.card {
-  width: calc(50% - 15px);
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s, box-shadow 0.3s;
-  background-color: #ffffff;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  /* Lift the card on hover */
-  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
-  /* Deeper shadow on hover */
-}
-
-.card-header {
-  font-weight: bold;
-  /* Bold text for order ID */
-  background-color: #f8f9fa;
-  /* Light gray background for header */
-  border-top-left-radius: 10px;
-  /* Round top left corner */
-  border-top-right-radius: 10px;
-  /* Round top right corner */
-}
-
-.card-body {
-  padding: 15px;
-  /* Add padding inside the card body */
-}
-
-.card-title {
-  font-size: 1.2em;
-  /* Increase font size for title */
-  color: #007bff;
-  /* Primary color for title */
-}
-
-.card-text {
-  font-size: 0.9em;
-  /* Slightly smaller text for details */
-  color: #555;
-  /* Darker gray for text */
-}
-
-.card-footer {
-  background-color: #f8f9fa;
-  /* Light gray background for footer */
-  border-bottom-left-radius: 10px;
-  /* Round bottom left corner */
-  border-bottom-right-radius: 10px;
-  /* Round bottom right corner */
-}
-
-.btn-primary {
-  background-color: #007bff;
-  border: none;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  /* Darker blue on hover */
-}
-
-.categories_list_section {
-  border-bottom: 1px solid #E9E9E9;
-  padding: 7px 0 3px;
-  position: relative;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Custom Tab Container */
-.custom-tab-container {
-  background-color: #f9f9f9;
-  border-radius: 10px;
-  width: 100%
-}
-
-/* Custom Tab Links */
-.custom-nav-tabs {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-  padding: 0;
-  list-style: none;
-  border-bottom: 2px solid #ccc;
-}
-
-.custom-tab-item {
-  flex: 1;
-  text-align: center;
-}
-
-.custom-tab-link {
-  display: block;
-  padding: 10px 0;
-  font-size: 16px;
-  font-weight: 500;
-  color: #555;
-  background-color: #e9ecef;
-  text-decoration: none;
-  border-radius: 5px 5px 0 0;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.custom-tab-link:hover,
-.custom-tab-link:focus {
-  background-color: #185a48;
-  color: #333;
-}
-
-.custom-tab-link.active {
-  background-color: #1f4b3f;
-  color: white;
-  border-bottom: 3px solid #fff;
-}
-
-/* Custom Tab Content */
-.tab-pane {
-  padding: 10px;
-  background-color: white;
-  border-radius: 0 0 5px 5px;
-  box-shadow: 0 2px 4px rgba(119, 118, 118, 0.1);
-}
-
-/* Responsive Tabs */
-@media (max-width: 767px) {
-  .custom-nav-tabs {
-    display: grid;
-    grid-template-columns: repeat(3, 3fr);
-  }
-
-  .custom-tab-item {
-    margin-bottom: 10px;
-  }
-}
-
-.custom-tab-link {
-  position: relative;
-  /* Add relative positioning to the link */
-}
-
-.badge {
-  position: absolute;
-  /* Position the badge absolutely */
-  top: 0;
-  /* Adjust the vertical position */
-  right: 0;
-  /* Adjust the horizontal position */
-}
-
-.table-responsive {
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.no-hover:hover {
-  background-color: inherit !important;
-  /* Retain original background color */
-  color: inherit !important;
-  /* Retain original text color */
-}
-
-@media(max-width: 576px) {
-
-  .custom-tab-link {
-    font-size: 12px;
-  }
-}
-</style>
 
 <script setup>
 import { ref } from 'vue';
@@ -510,14 +330,14 @@ const sellerId = ref('');
 const orderId = ref('');
 
 const setReview = async (orders) => {
-  sellerId.value = orders.sellerId;
-  orderId.value = orders.orderId;
-  $('#review_modal').modal('show');
+    sellerId.value = orders.sellerId;
+    orderId.value = orders.orderId;
+    $('#review_modal').modal('show');
 }
 
 
 const reviewOrder = () => {
-  
+
 
     Swal.fire({
         title: 'Are you sure?',
@@ -691,47 +511,236 @@ const getOrderCounting = async () => {
     }
 };
 
-
 const getOrderStatus = async (orderStatusId = 1) => {
     try {
         const response = await axios.get(`/order/getOrderPlaceForSeller`, {
             params: { orderStatusId } // Passing orderStatusId as a query parameter
         });
 
-        if (orderStatusId = 1) {
+        // Use '===' for comparison instead of '=' (assignment)
+        if (orderStatusId === 1) {
             orderData.value = response.data.placeOrders;
         }
 
-        if (orderStatusId = 2) {
+        if (orderStatusId === 2) {
             inprogressData.value = response.data.inprogressOrders;
-
         }
-        if (orderStatusId = 3) {
+
+        if (orderStatusId === 3) {
             cancelData.value = response.data.cancelOrders;
         }
 
-        if (orderStatusId = 4) {
+        if (orderStatusId === 4) {
             deliveryData.value = response.data.deliveryOrders;
         }
 
-        if (orderStatusId = 5) {
+        if (orderStatusId === 5) {
             completeData.value = response.data.completeOrders;
         }
 
         getOrderCounting();
 
     } catch (error) {
-        console.log(error);
+        console.error("Error fetching order status:", error);
     }
 };
 
+let intervalId = null;
+
 onMounted(() => {
     getOrderCounting();
-    getOrderStatus();
+    getOrderStatus(1); // Ensure you call getOrderStatus with an argument
 
+    // Start the interval after mounting
+    intervalId = setInterval(() => getOrderStatus(1), 30000);
+});
 
+onBeforeUnmount(() => {
+    clearInterval(intervalId); // Clear interval when component is unmounted
 });
 
 
 
 </script>
+
+<style scoped>
+.order-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.card {
+    width: calc(50% - 15px);
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    background-color: #ffffff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    /* Lift the card on hover */
+    box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+    /* Deeper shadow on hover */
+}
+
+.card-header {
+    font-weight: bold;
+    /* Bold text for order ID */
+    background-color: #f8f9fa;
+    /* Light gray background for header */
+    border-top-left-radius: 10px;
+    /* Round top left corner */
+    border-top-right-radius: 10px;
+    /* Round top right corner */
+}
+
+.card-body {
+    padding: 15px;
+    /* Add padding inside the card body */
+}
+
+.card-title {
+    font-size: 1.2em;
+    /* Increase font size for title */
+    color: #007bff;
+    /* Primary color for title */
+}
+
+.card-text {
+    font-size: 0.9em;
+    /* Slightly smaller text for details */
+    color: #555;
+    /* Darker gray for text */
+}
+
+.card-footer {
+    background-color: #f8f9fa;
+    /* Light gray background for footer */
+    border-bottom-left-radius: 10px;
+    /* Round bottom left corner */
+    border-bottom-right-radius: 10px;
+    /* Round bottom right corner */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+.categories_list_section {
+    border-bottom: 1px solid #E9E9E9;
+    padding: 7px 0 3px;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* Custom Tab Container */
+.custom-tab-container {
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    width: 100%
+}
+
+/* Custom Tab Links */
+.custom-nav-tabs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding: 0;
+    list-style: none;
+    border-bottom: 2px solid #ccc;
+}
+
+.custom-tab-item {
+    flex: 1;
+    text-align: center;
+}
+
+.custom-tab-link {
+    display: block;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+    background-color: #e9ecef;
+    text-decoration: none;
+    border-radius: 5px 5px 0 0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.custom-tab-link:hover,
+.custom-tab-link:focus {
+    background-color: #185a48;
+    color: #333;
+}
+
+.custom-tab-link.active {
+    background-color: #1f4b3f;
+    color: white;
+    border-bottom: 3px solid #fff;
+}
+
+/* Custom Tab Content */
+.tab-pane {
+    padding: 10px;
+    background-color: white;
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0 2px 4px rgba(119, 118, 118, 0.1);
+}
+
+/* Responsive Tabs */
+@media (max-width: 767px) {
+    .custom-nav-tabs {
+        display: grid;
+        grid-template-columns: repeat(3, 3fr);
+    }
+
+    .custom-tab-item {
+        margin-bottom: 10px;
+    }
+}
+
+.custom-tab-link {
+    position: relative;
+    /* Add relative positioning to the link */
+}
+
+.badge {
+    position: absolute;
+    /* Position the badge absolutely */
+    top: 0;
+    /* Adjust the vertical position */
+    right: 0;
+    /* Adjust the horizontal position */
+}
+
+.table-responsive {
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.no-hover:hover {
+    background-color: inherit !important;
+    /* Retain original background color */
+    color: inherit !important;
+    /* Retain original text color */
+}
+
+@media(max-width: 576px) {
+
+    .custom-tab-link {
+        font-size: 12px;
+    }
+}
+</style>
