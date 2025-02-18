@@ -11,6 +11,7 @@ use Stripe\Checkout\Session;
 use App\Models\User;
 use Validator;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PaymentController extends Controller
 
@@ -55,22 +56,6 @@ class PaymentController extends Controller
             $amount = intval($amountVal * 100); // Convert USD to cents
             $currency = 'USD';
             $cusEmail = $this->email; // FIX: Ensure email comes from the request
-
-            // ✅ Check if an existing deposit exists
-            $existingDeposit = Deposit::where('email', $cusEmail)
-                ->where('deposit_amount', $amount)
-                ->where('currency', $currency)
-                ->where('payment_status', 'pending') // FIX: Check only pending payments
-                ->latest()
-                ->first();
-
-            if ($existingDeposit) {
-                return response()->json([
-                    'payment_id'   => $existingDeposit->payment_id,
-                    'checkout_url' => $existingDeposit->checkout_url
-                ]);
-            }
-
             // ✅ Create Stripe Checkout Session
             $frontendSuccessUrl = $request->input('success_url') ?? env('FRONTEND_URL') . "/success";
             $frontendCancelUrl  = $request->input('cancel_url') ?? env('FRONTEND_URL') . "/cancel";
@@ -79,7 +64,7 @@ class PaymentController extends Controller
                 'success_url'    => $frontendSuccessUrl,
                 'cancel_url'     => $frontendCancelUrl,
                 'customer_email' => $cusEmail,
-                'payment_method_types' => ['card','link'],
+                'payment_method_types' => ['card', 'link', 'alipay'],
                 'line_items'     => [[
                     'price_data' => [
                         'product_data' => [
@@ -94,17 +79,42 @@ class PaymentController extends Controller
                 'allow_promotion_codes' => true,
 
             ]);
-
+            $amountVal     = $request->amount;
+            $uniqueID      = 'D.' . $this->generateUnique4DigitNumber();
             // ✅ Insert deposit into the database
-            $deposit = Deposit::create([
+            $logData = Deposit::create([
+                'depositID'      => $uniqueID,
                 'email'          => $cusEmail,
                 'product'        => $request->input('product') ?? 'Deposit Payment',
-                'deposit_amount' => $amount,
+                'deposit_amount' => $amountVal,
                 'currency'       => $currency,
+                'user_id'        => $this->userid,
+                'payment_method' => 'Stripe',
                 'payment_status' => 'pending',
-                'payment_id'     => "",
                 'checkout_url'   => $checkoutSession->url,
             ]);
+            // Save to 'public/deposits/{uniqueID}.log'
+            $logPath = public_path("deposits/{$uniqueID}.log");
+            $logData = json_encode([
+                'depositID'      => $uniqueID,
+                'email'          => $cusEmail,
+                'product'        => $request->input('product') ?? 'Deposit Payment',
+                'deposit_amount' => $amountVal,
+                'currency'       => $currency,
+                'payment_method' => 'Strip',
+                'user_id'        => $this->userid,
+                'payment_status' => 'pending',
+                'checkout_url'   => $checkoutSession->url,
+            ], JSON_PRETTY_PRINT);
+
+            // ✅ Ensure the 'deposits' folder exists inside 'public/'
+            if (!file_exists(public_path('deposits'))) {
+                mkdir(public_path('deposits'), 0777, true); // Create folder with full permissions
+            }
+            // ✅ Write log file
+            if (file_put_contents($logPath, $logData) === false) {
+                \Log::error("Failed to write log file: {$logPath}");
+            }
 
             return response()->json([
                 'checkout_url' => $checkoutSession->url
@@ -114,74 +124,13 @@ class PaymentController extends Controller
             return response()->json(['error' => 'Something went wrong! ' . $e->getMessage()], 500);
         }
     }
-    // public function createPaymentIntent(Request $request)
-    // {
-    //     try {
-    //         // Set the Stripe API key
-    //         Stripe::setApiKey(env('STRIPE_SECRET'));
 
-    //         // Retrieve the amount and currency from the request
-    //         $amountVal = $request->json('amount');
-    //         $amount    = intval($amountVal * 100); // Convert USD to cents
-    //         $currency  = 'USD'; // You can change this to the required currency
+    function generateUnique4DigitNumber($existingNumbers = [])
+    {
+        do {
+            $uniqueNumber = str_pad(mt_rand(0, 9999), 4, '0', STR_PAD_LEFT);
+        } while (in_array($uniqueNumber, $existingNumbers));
 
-    //         // Validate the amount
-    //         $validator = Validator::make($request->all(), [
-    //             'amount' => 'required|numeric',
-    //         ]);
-
-    //         if ($validator->fails()) {
-    //             return response()->json(['errors' => $validator->errors()], 422);
-    //         }
-
-    //         // Define the customer email (if provided)
-    //         $cusEmail = $this->email; // Get email from request
-
-    //         // **Create Stripe Checkout Session**
-    //         $frontendSuccessUrl = $request->json('success_url') ?? env('FRONTEND_URL') . "/success";
-    //         $frontendCancelUrl  = $request->json('cancel_url') ?? env('FRONTEND_URL') . "/cancel";
-
-    //         // Create a Stripe Checkout Session
-    //         $checkoutSession = Session::create([
-    //             'success_url'         => $frontendSuccessUrl,
-    //             'cancel_url'          => $frontendCancelUrl,
-    //             'customer_email'     => $cusEmail,
-    //             'payment_method_types' => ['card', 'link'], // Add other payment methods as needed
-    //             'line_items'         => [[
-    //                 'price_data' => [
-    //                     'product_data' => [
-    //                         'name' => $request->json('product') ?? 'Deposit Payment',
-    //                     ],
-    //                     'unit_amount' => $amount, // Stripe requires amount in cents
-    //                     'currency'    => $currency,
-    //                 ],
-    //                 'quantity' => 1,
-    //             ]],
-    //             'mode'               => 'payment',
-    //             'allow_promotion_codes' => true,
-    //         ]);
-
-
-
-
-    //         // Insert deposit record into the database
-    //         Deposit::create([
-    //             'email'           => $cusEmail,
-    //             'product'         => $request->json('product') ?? 'Deposit Payment',
-    //             'deposit_amount'  => $amountVal * 100, // Convert to cents
-    //             'currency'        => $currency,
-    //             'payment_status'  => 'pending', // Initially set to 'pending'
-    //             'client_secret'   => $clientSecret, // Store the client_secret
-    //             'checkout_url'    => $checkoutSession->url, // Store the checkout URL
-    //         ]);
-
-    //         // Return the checkout URL and client secret in the response
-    //         return response()->json([
-    //             'checkout_url'    => $checkoutSession->url,
-
-    //         ]);
-    //     } catch (\Exception $e) {
-    //         return response()->json(['error' => $e->getMessage()], 500);
-    //     }
-    // }
+        return md5($uniqueNumber);
+    }
 }

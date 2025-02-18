@@ -116,8 +116,8 @@ class UserController extends Controller
             ->where('status', 1)
             ->orderBy('id', 'desc')
             ->first();
-        $data['name']           = $notificationMsg->name;
-        $data['messages']       = $notificationMsg->messages;
+        $data['name']           = !empty($notificationMsg->name) ? $notificationMsg->name : "";
+        $data['messages']       = !empty($notificationMsg->messages) ? $notificationMsg->messages : "";
         $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
 
         return response()->json($data);
@@ -131,7 +131,7 @@ class UserController extends Controller
             ->orderBy('id', 'desc')
             ->first();
         $data['name']           = !empty($notificationMsg->name) ? $notificationMsg->name : "";
-        $data['messages']       = $notificationMsg->messages;
+        $data['messages']       = !empty($notificationMsg->messages) ? $notificationMsg->messages : "";
         $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
 
         return response()->json($data);
@@ -146,7 +146,7 @@ class UserController extends Controller
             ->orderBy('id', 'desc')
             ->first();
         $data['name']           = !empty($notificationMsg->name) ? $notificationMsg->name : "";//$notificationMsg->name;
-        $data['messages']       = $notificationMsg->messages;
+        $data['messages']       = !empty($notificationMsg->messages) ? $notificationMsg->messages : "";
         $data['created_at']     = date("Y-m-d", strtotime($notificationMsg->created_at));
 
         return response()->json($data);

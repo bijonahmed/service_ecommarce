@@ -230,6 +230,8 @@ Route::group(
         'prefix' => 'deposit',
     ],
     function () {
+        
+        Route::get('getUserStripDepositList', [DepositController::class, 'getUserStripDepositList']);
         Route::post('saveWithdrawalSeller', [UserController::class, 'saveWithdrawalSeller']);
         Route::post('saveWithdrawal', [UserController::class, 'saveWithdrawal']);
         Route::post('addwithdrawal', [DepositController::class, 'getWithdrwalfetchdata']);

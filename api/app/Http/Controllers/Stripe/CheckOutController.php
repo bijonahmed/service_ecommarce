@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Log;
 use Cart;
 use App\Models\User;
 use App\Models\Deposit;
+use Stripe\Charge;
+
 class CheckOutController extends Controller
 {
 
@@ -58,9 +60,7 @@ class CheckOutController extends Controller
         return response()->json(['status' => 'Webhook received']);
     }
 
-    /**
-     * Handle successful payment
-     */
+    // Handle successful payment
     private function handlePaymentSuccess(PaymentIntent $paymentIntent)
     {
         $paymentId = $paymentIntent->id;
@@ -68,28 +68,43 @@ class CheckOutController extends Controller
         $currency = strtoupper($paymentIntent->currency);
         $status = $paymentIntent->status; // should be "succeeded"
         $receiptUrl = $paymentIntent->charges->data[0]->receipt_url ?? null;
+        // Retrieve the latest charge to get billing details
+        if (!empty($paymentIntent->latest_charge)) {
+            $charge = Charge::retrieve($paymentIntent->latest_charge);
+            $receiptUrl = $charge->receipt_url ?? null;
+            $email = $charge->billing_details->email ?? null;
+        }
 
-        // Logging Payment Success
-        Log::info("✅ Payment Success: ID: $paymentId, Amount: $amount $currency, Status: $status");
-        // // ✅ Update database
-        $deposit = Deposit::where('payment_id', $paymentId)->first();
+        Log::info("✅ Payment Success: ID: $paymentId, Amount: $amount $currency, Status: $status, Email: $email");
+        // ✅ Update database
+        $deposit =  Deposit::where('email', $email)->orderBy('id', 'desc')->first();
         if ($deposit) {
-            $deposit->update(['payment_status' => $status]);
+            $deposit->update([
+                'payment_status' => $status,
+                'payment_id' => $paymentId
+            ]);
         }
     }
 
-    /**
-     * Handle failed payment
-     */
+    //Handle failed payment
     private function handlePaymentFailure(PaymentIntent $paymentIntent)
     {
         $paymentId = $paymentIntent->id;
+        $status = $paymentIntent->status; // should be "failed"
+        if (!empty($paymentIntent->latest_charge)) {
+            $charge = Charge::retrieve($paymentIntent->latest_charge);
+            $receiptUrl = $charge->receipt_url ?? null;
+            $email = $charge->billing_details->email ?? null;
+        }
 
         Log::warning("Payment Failed: ID: $paymentId");
         // ✅ Update database
-        $deposit = Deposit::where('payment_id', $paymentId)->first();
+        $deposit =  Deposit::where('email', $email)->orderBy('id', 'desc')->first();
         if ($deposit) {
-            $deposit->update(['payment_status' => 'failed']);
+            $deposit->update([
+                'payment_status' => $status,
+                'payment_id' => $paymentId
+            ]);
         }
     }
 }

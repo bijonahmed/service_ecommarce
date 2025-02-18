@@ -8,7 +8,6 @@ use Auth;
 use Helper;
 use Session;
 use Validator;
-use Carbon\Carbon;
 use App\Models\User;
 use App\Models\Deposit;
 use App\Models\Holiday;
@@ -40,6 +39,8 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\ProductAttributeValue;
 use App\Models\ProductVarrientHistory;
 use App\Models\MiningServicesBuyHistory;
+use Carbon\Carbon;
+
 
 class DepositController extends Controller
 {
@@ -718,6 +719,25 @@ class DepositController extends Controller
 
         return response()->json([
             'withdrwalData'        => $data,
+        ]);
+    }
+
+    public function getUserStripDepositList(Request $request)
+    {
+        $userId     = $this->userid;
+
+        $data       = Deposit::where('user_id', $userId)
+        ->select('depositID', 'currency', 'deposit_amount', 'payment_status', 
+            DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as createdate'))
+        ->where('payment_method', 'Stripe')
+        ->orderBy('created_at', 'desc')  // Order by 'created_at' in descending order (latest first)
+        ->get();
+
+
+        return response()->json([
+            'data'          => $data,
+            'trans_count'   => count($data),
+
         ]);
     }
 

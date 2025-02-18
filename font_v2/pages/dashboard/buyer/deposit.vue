@@ -19,7 +19,7 @@
                     </section>
 
                     <!-- Tab Navigation -->
-                    <ul class="nav nav-pills mt-4" id="paymentTabs" role="tablist">
+                    <ul class="nav nav-pills mt-4" id="paymentTabs" role="tablist" @click="getStripPaymentList">
                         <li class="nav-item">
                             <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe"
                                 role="tab">Stripe</a>
@@ -35,19 +35,18 @@
                     <!-- Tab Content -->
                     <div class="tab-content mt-3">
                         <!-- Stripe Payment -->
-
-
                         <div class="tab-pane fade show active" id="stripe">
                             <form @submit.prevent="handlePayment">
                                 <label for="stripeAmount">Deposit Amount</label>
                                 <input type="number" id="stripeAmount" v-model="amount" class="form-control"
-                                    placeholder="Enter amount" />
+                                    placeholder="Enter amount" @keypress="validateKeyPress" />
                                 <button type="submit" class="btn btn-primary w-100 mt-3">
                                     Pay with Stripe
                                 </button>
 
 
                             </form>
+
                             <!-- Modal for Error Message -->
                             <div v-if="showModal" class="modal-overlay">
                                 <div class="modal-content">
@@ -57,6 +56,44 @@
                             </div>
 
                             <!-- Pay by card -->
+
+                            <!-- Strip table  -->
+
+                            <div class="container">
+                                <center> <div v-if="loading" class="loader">Loading...</div></center>
+                                <h4 class="mb-3">Payment List ({{ depositstripeDataCount }})</h4>
+                                <div class="table-responsive" v-if="!loading">
+                                    <table class="table table-bordered table-striped table-hover">
+                                        <thead class="table-dark">
+                                            <tr>
+                                                <th>Deposit ID</th>
+                                                <th class="text-center">Currency</th>
+                                                <th class="text-center">Deposit Amount</th>
+                                                <th class="text-center">Payment Status</th>
+                                                <th class="text-center">Created Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="(deposit, index) in depositstripeData" :key="index">
+                                                <td>{{ deposit.depositID }}</td>
+                                                <td class="text-center">{{ deposit.currency }}</td>
+                                                <td class="text-center">{{ deposit.deposit_amount }}</td>
+                                                <td :class="{
+                                                    'text-success': deposit.payment_status === 'succeeded',
+                                                    'text-danger': deposit.payment_status === 'failed',
+                                                    'text-warning': deposit.payment_status === 'pending'
+                                                }" class="text-center">
+                                                    {{ deposit.payment_status }}</td>
+                                                <td class="text-center">{{ deposit.createdate }}</td>
+
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                            </div>
+
+                            <!-- End Table -->
 
                         </div>
 
@@ -95,10 +132,10 @@ definePageMeta({
 });
 
 const errors = ref({});
-const DepositData = ref([]);
+const depositstripeData = ref([]);
 
-const stripe = ref(null);
 const amount = ref(0);
+const depositstripeDataCount = ref(0);
 const showModal = ref(false);
 const errorMessage = ref('');
 
@@ -111,25 +148,27 @@ function showErrorModal(message) {
 }
 
 
-const sendHandleWebhook = async () => {
-
+const getStripPaymentList = async () => {
+   
     try {
-        const response = await axios.post('/deposit/handleWebhook', {
-
-            product: 'Custom Payment', // You can change this dynamically
-        }, {
-            headers: { 'Content-Type': 'application/json' } // Headers are optional in Axios
-        });
-
-        console.log("Response:" + response.data);
-
+        loading.value = true;
+        const response = await axios.get(`/deposit/getUserStripDepositList`);
+        depositstripeData.value = response.data.data;
+        depositstripeDataCount.value = response.data.trans_count;
     } catch (error) {
-        console.error(error);
-        alert('Payment failed. Please try again.');
+        console.log(error);
+    } finally{
+        loading.value = false; // Hide the loader once data is fetched
     }
-
-
 };
+
+const validateKeyPress = (event) => {
+    // Allow only numeric input (key codes for 0-9)
+    if (event.charCode < 48 || event.charCode > 57) {
+        event.preventDefault(); // Prevent any non-numeric character
+    }
+};
+
 
 const handlePayment = async () => {
     const amountValue = parseFloat(amount.value); // Convert input to a number
@@ -284,10 +323,10 @@ const submitFrm = () => {
         });
 };
 
-const getDeposit = async () => {
+const getusdtDeposit = async () => {
     try {
         const response = await axios.get(`/user/getDeposit`);
-        DepositData.value = response.data.data;
+        // DepositData.value = response.data.data;
     } catch (error) {
         console.log(error);
     }
@@ -296,13 +335,19 @@ const getDeposit = async () => {
 const swiper = ref(null)
 
 onMounted(async () => {
-    getDeposit();
+    getusdtDeposit();
+    getStripPaymentList();
 });
 
 
 </script>
 
 <style scoped>
+.loader {
+  text-align: center;
+  font-size: 20px;
+  color: #007bff;
+}
 form {
     max-width: 800px;
     margin: auto;

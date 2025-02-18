@@ -31,6 +31,7 @@ class Deposit extends Authenticatable
     'product',
     'currency',
     'payment_status',
-    'payment_id'
+    'payment_id',
+    'created_at'
   ];
 }
