@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Dashboard</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="plugins/jqvmap/jqvmap.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="plugins/daterangepicker/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="plugins/summernote/summernote-bs4.min.css">
+    <!-- styles css  -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <img class="animation__shake" src="dist/img/AdminLTELogo.png" alt="AdminLTELogo" height="60" width="60">
+        </div>
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="index3.html" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Contact</a>
+                </li>
+            </ul>
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Search"
+                                    aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="dist/img/user1-128x128.jpg" alt="User Avatar"
+                                    class="img-size-50 mr-3 img-circle">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Brad Diesel
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">Call me whenever you can...</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="dist/img/user8-128x128.jpg" alt="User Avatar"
+                                    class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        John Pierce
+                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">I got your message bro</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="dist/img/user3-128x128.jpg" alt="User Avatar"
+                                    class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Nora Silvester
+                                        <span class="float-right text-sm text-warning"><i
+                                                class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">The subject goes here</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-controlsidebar-slide="true" href="#"
+                        role="button">
+                        <i class="fas fa-th-large"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Sidebar -->
+            <div class="sidebar">
+
+
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                        data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+               with font-awesome or any other icon font library -->
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    System settings
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="system_config.html" class="nav-link">
+                                        <p>System Configaration</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="store_information.html" class="nav-link">
+                                        <p>Store Information </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-sliders-h"></i>
+                                <p>
+                                    Site Configaration
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="site_settings.html" class="nav-link">
+                                        <p>Site settings </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="sms_settings.html" class="nav-link">
+                                        <p>SMS settings</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="seo_settings.html" class="nav-link">
+                                        <p>SEO settings</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="protocal_management.html" class="nav-link">
+                                        <p>Protocal Management</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="index.html" class="nav-link">
+                                <i class="nav-icon fas fa-user"></i>
+                                <p>
+                                    Permission Control
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="administrator_list.html" class="nav-link">
+                                        <p>Administrator List </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="role_management.html" class="nav-link">
+                                        <p>Role Management </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="permission_assignment.html" class="nav-link">
+                                        <p>Permission Assignment </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Website management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="multilangual_management.html" class="nav-link">
+                                        <p>Multi Langual management</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="national_area_code.html" class="nav-link">
+                                        <p>national area code management</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="Popup_announcement.html" class="nav-link">
+                                        <p>Popup announcement</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="Navigation.html" class="nav-link">
+                                        <p>Navigation </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="home_carousel.html" class="nav-link">
+                                        <p>Home Page Carousel</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="payment_method.html" class="nav-link">
+                                        <p>Payment Methods</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Fund Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="Fund Products.html" class="nav-link">
+                                        <p>Fund Products</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="Fund Orders.html" class="nav-link">
+                                        <p>Fund Orders </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Article Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="commutity_center.html" class="nav-link">
+                                        <p>Community Center</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="article_management.html" class="nav-link">
+                                        <p>Artcle management</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="article_classification.html" class="nav-link">
+                                        <p>Artcle Classifications</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Products Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="product_management.html" class="nav-link">
+                                        <p>Products Management</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="categories.html" class="nav-link">
+                                        <p>Categories</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="product_browsing.html" class="nav-link">
+                                        <p>Products browsing</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Wallet Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="Recipient_bank.html" class="nav-link">
+                                        <p>Recipient bank management </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="wallet.html" class="nav-link">
+                                        <p>Wallet </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="manual_adjustment.html" class="nav-link">
+                                        <p>Manual adjustment remarks </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="user_wallet.html" class="nav-link">
+                                        <p>User wallet </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="withdrawal_management.html" class="nav-link">
+                                        <p>Withdrawal management </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="recharge_mangement.html" class="nav-link">
+                                        <p>Recharge management </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="account_details.html" class="nav-link">
+                                        <p>Account details </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>
+                                    User Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="incentive_activities.html" class="nav-link">
+                                        <p>Incentive activities</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="user_list.html" class="nav-link">
+                                        <p>User list </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="order_management.html" class="nav-link">
+                                        <p>Order management </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="manual_dispatch.html" class="nav-link">
+                                        <p>Manual dispatch </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item menu-open">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-database"></i>
+                                <p>
+                                    Data Management
+                                    <i class="right fas fa-angle-left"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="dispatch_report.html" class="nav-link">
+                                        <p>Dispatch report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="background_operation_log.html" class="nav-link">
+                                        <p>Background operation log </p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="operational_report.html" class="nav-link">
+                                        <p>Operational report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="withdrawal_report.html" class="nav-link">
+                                        <p>Withdrawal report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="recharge_report.html" class="nav-link">
+                                        <p>Recharge report</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="message_management.html" class="nav-link">
+                                        <p>Message management </p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0">Administrator List </h1>
+                        </div><!-- /.col -->
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                <li class="breadcrumb-item active">Administrator List</li>
+                            </ol>
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </div>
+            <!-- /.content-header -->
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="page_top  my-2">
+                        <div class="row justify-content-between align-items-center my-2">
+                            <div class="col-md-6">
+                                <form action="">
+                                    <table class="table mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th class="border-0  p-0 " style="padding-right: 5px !important;">
+                                                    <input type="text" class="form-control"
+                                                        placeholder="search by name ">
+                                                </th>
+                                                <th class="border-0 p-0 me-1" style="padding-right: 5px !important;">
+                                                    <select name="" id="" class="form-control">
+                                                        <option value="" selected disabled>Select status</option>
+                                                        <option value="">Active</option>
+                                                        <option value="">Inactive</option>
+                                                        <option value="">Draft</option>
+                                                    </select>
+                                                </th>
+                                                <th class="border-0  p-0 h-100">
+                                                    <button type="button" style="min-width: 90px;" class="btn btn-primary btn-fla"><i
+                                                            class="fas fa-search"></i>Search</button>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="col-md-6 ">
+                                <div class="buttonList">
+                                    <a href="add_admin.html" type="button" class="btn btn-primary btn-flat btn-sm"><i
+                                            class="fas fa-plus"></i>Add</a>
+                                    <button type="button" class="btn btn-danger btn-flat btn-sm"><i
+                                            class="fas fa-trash-alt"></i>Delete</button>
+                                    <button type="button" class="btn btn-warning btn-flat btn-sm"><i
+                                            class="fas fa-trash-alt"></i>Reset</button>
+        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- table section start here  -->
+                    <div class="card">
+                        <div class="card-body table-responsive p-0">
+                            <div class="filter_options">
+
+                            </div>
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" id="checkAll"></th>
+                                        <th>Administrator</th>
+                                        <th>Status</th>
+                                        <th>Gender </th>
+                                        <th>Phone</th>
+                                        <th>Mail</th>
+                                        <th>Role Group</th>
+                                        <th>Number of logins</th>
+                                        <th>Last login</th>
+                                        <th>Cration time </th>
+                                        <th>Update time </th>
+                                        <th>Action</th>
+                                    </tr>
+
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="checkBox">
+                                        </td>
+                                        <td>Admin</td>
+                                        <td>Active</td>
+                                        <td>Confidential</td>
+                                        <td>0245225455645</td>
+                                        <td>Admin@mail.com</td>
+                                        <td>Super admin </td>
+                                        <td>15441</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>11-7-2014 12:00</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button class="btn btn-default btn-sm btn-flat"><i
+                                                        class="fas fa-eye"></i>Details</button>
+                                                <button class="btn btn-warning btn-sm btn-flat"><i
+                                                        class="fas fa-pen"></i>Edit</button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.card-body -->
+                    </div>
+                    <!-- table section end here  -->
+                </div>
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2024</strong>
+            All rights reserved.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+    <!-- ./wrapper -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="plugins/jquery-ui/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="plugins/sparklines/sparkline.js"></script>
+    <!-- JQVMap -->
+    <script src="plugins/jqvmap/jquery.vmap.min.js"></script>
+    <script src="plugins/jqvmap/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="plugins/moment/moment.min.js"></script>
+    <script src="plugins/daterangepicker/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="plugins/summernote/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="dist/js/adminlte.js"></script>
+
+    
+    <script>
+
+        $(document).ready(function () {
+            $('#checkAll').click(function () {
+                if ($(this).is(':checked')) {
+                    $('.checkBox').prop('checked', true);
+                } else {
+                    $('.checkBox').prop('checked', false);
+                }
+            });
+
+            $('.checkBox').click(function () {
+                if ($('.checkBox:checked').length !== $('.checkBox').length) {
+                    $('#checkAll').prop('checked', false);
+                } else {
+                    $('#checkAll').prop('checked', true);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

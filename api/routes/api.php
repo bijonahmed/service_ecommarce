@@ -232,7 +232,10 @@ Route::group(
     function () {
         
         Route::get('getUserStripDepositList', [DepositController::class, 'getUserStripDepositList']);
+        Route::get('getUserUsdtDepositList', [DepositController::class, 'getUserUsdtDepositList']);
         Route::post('saveWithdrawalSeller', [UserController::class, 'saveWithdrawalSeller']);
+        Route::post('sendRequesUsdtPayment', [DepositController::class, 'sendRequesUsdtPayment']);
+
         Route::post('saveWithdrawal', [UserController::class, 'saveWithdrawal']);
         Route::post('addwithdrawal', [DepositController::class, 'getWithdrwalfetchdata']);
         Route::get('getWithdrwalfetchdata', [DepositController::class, 'getWithdrwalfetchdata']);

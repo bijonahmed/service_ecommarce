@@ -80,6 +80,7 @@ class CheckOutController extends Controller
         $deposit =  Deposit::where('email', $email)->orderBy('id', 'desc')->first();
         if ($deposit) {
             $deposit->update([
+                'status' => 1,
                 'payment_status' => $status,
                 'payment_id' => $paymentId
             ]);
@@ -102,6 +103,7 @@ class CheckOutController extends Controller
         $deposit =  Deposit::where('email', $email)->orderBy('id', 'desc')->first();
         if ($deposit) {
             $deposit->update([
+                'status' => 0,
                 'payment_status' => $status,
                 'payment_id' => $paymentId
             ]);

@@ -24,7 +24,7 @@
                             <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe"
                                 role="tab">Stripe</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" @click="getusdtDeposit">
                             <a class="nav-link" id="usdt-tab" data-bs-toggle="pill" href="#usdt" role="tab">USDT</a>
                         </li>
                     </ul>
@@ -60,7 +60,9 @@
                             <!-- Strip table  -->
 
                             <div class="container">
-                                <center> <div v-if="loading" class="loader">Loading...</div></center>
+                                <center>
+                                    <div v-if="loading" class="loader">Loading...</div>
+                                </center>
                                 <h4 class="mb-3">Payment List ({{ depositstripeDataCount }})</h4>
                                 <div class="table-responsive" v-if="!loading">
                                     <table class="table table-bordered table-striped table-hover">
@@ -99,11 +101,46 @@
 
                         <!-- USDT Payment -->
                         <div class="tab-pane fade" id="usdt">
-                            <form>
+                            <form @submit.prevent="usdthandlePayment">
                                 <label for="usdtAmount">Deposit Amount</label>
-                                <input type="number" id="usdtAmount" class="form-control" placeholder="Enter amount">
-                                <button type="submit" class="btn btn-primary w-100 mt-3">Submit</button>
+                                <input type="number" id="usdtAmount" class="form-control" v-model="amount"
+                                    placeholder="Enter amount" @keypress="validateKeyPress">
+                                <small v-if="errors.deposit_amount" class="text-danger">
+                                    {{ errors.deposit_amount[0] }}
+                                </small>
+                                <button type="submit" class="btn btn-primary w-100 mt-3"> Pay with USDT</button>
                             </form>
+                            <h4 class="mb-3">USDT List ({{ depositusdtDataCount }})</h4>
+                            <div class="table-responsive" v-if="!loading">
+                                <table class="table table-bordered table-striped table-hover">
+                                    <thead class="table-dark">
+                                        <tr>
+                                            <th>Deposit ID</th>
+                                            <th class="text-center">Currency</th>
+                                            <th class="text-center">Deposit Amount</th>
+                                            <th class="text-center">Payment Status</th>
+                                            <th class="text-center">Created Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(deposit, index) in depositusdtData" :key="index">
+                                            <td>{{ deposit.depositID }}</td>
+                                            <td class="text-center">{{ deposit.currency }}</td>
+                                            <td class="text-center">{{ deposit.deposit_amount }}</td>
+                                            <td :class="{
+                                                'text-success': deposit.status == '1',
+                                                'text-danger': deposit.status == '2',
+                                                'text-warning': deposit.status == '0'
+                                            }" class="text-center">
+                                                {{ getStatusText(deposit.status) }}
+                                            </td>
+                                            <td class="text-center">{{ deposit.createdate }}</td>
+
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -132,35 +169,23 @@ definePageMeta({
 });
 
 const errors = ref({});
+
 const depositstripeData = ref([]);
+const depositusdtData = ref([]);
 
 const amount = ref(0);
 const depositstripeDataCount = ref(0);
+const depositusdtDataCount = ref(0);
+
 const showModal = ref(false);
 const errorMessage = ref('');
 
-//const stripePromise = loadStripe('pk_test_51QtCfx2NiQK26ALV6xsuIWwSRB8Fv5oewtOHwcQL9irvDL5U2kTryDxLtbnSE73dimjgVQGKUB1aUhMKGal4O96k00QZMyKfJm'); // Replace with your actual key
 const processing = ref(false);
 // Function to show modal with error message
 function showErrorModal(message) {
     errorMessage.value = message;
     showModal.value = true;
 }
-
-
-const getStripPaymentList = async () => {
-   
-    try {
-        loading.value = true;
-        const response = await axios.get(`/deposit/getUserStripDepositList`);
-        depositstripeData.value = response.data.data;
-        depositstripeDataCount.value = response.data.trans_count;
-    } catch (error) {
-        console.log(error);
-    } finally{
-        loading.value = false; // Hide the loader once data is fetched
-    }
-};
 
 const validateKeyPress = (event) => {
     // Allow only numeric input (key codes for 0-9)
@@ -205,134 +230,72 @@ const handlePayment = async () => {
 };
 
 
-/*
-const handlePayment = async () => {
-    if (!amount.value || amount.value < 0.50) { // Ensure at least $0.50 for USD
-    alert('Minimum amount required is $0.50');
-    return;
-  }
 
-    processing.value = true;
+const usdthandlePayment = async () => {
+    errors.value = {}; // Clear previous errors
 
-    const response = await axios.post('/deposit/create-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ amount: amount.value }),
-    });
-
-    const { clientSecret } = await response.json();
-
-    const stripe = await stripePromise;
-    const result = await stripe.redirectToCheckout({
-        sessionId: clientSecret,
-    });
-
-    if (result.error) {
-        console.error(result.error.message);
-    }
-
-    processing.value = false;
-};
-*/
-
-const handleSubmit = async () => {
-    if (!selectedPayment.value) {
-        alert('Please select a payment option.');
-        return;
-    }
-
-    const numericAmount = parseFloat(amount.value);
-    if (isNaN(numericAmount) || numericAmount <= 0) {
-        alert('Please enter a valid amount.');
-        return;
-    }
-
-    // alert(`You have selected ${selectedPayment.value} and entered an amount of ${numericAmount}`);
     try {
-        const response = await axios.post('/user/getWaypaymentConfirm', {
-            paymentMethod: selectedPayment.value,
-            amount: numericAmount
-
-        }).catch((error) => {
-            if (error.response && error.response.status === 422) {
-                errors.value = error.response.data.errors;
-            } else {
-                // Handle other types of errors here
-                console.error("An error occurred:", error);
-            }
-        });;
+        const response = await axios.post("/deposit/sendRequesUsdtPayment", {
+            deposit_amount: amount.value, // Ensure correct key name matches Laravel validation
+        });
 
         Swal.fire({
-            title: 'Success!',
-            text: 'Payment successful.',
-            icon: 'success',
-            confirmButtonText: 'OK'
+            title: "Success!",
+            text: "Payment successful.",
+            icon: "success",
+            confirmButtonText: "OK",
         });
 
-        // Handle the response as needed
-        //alert(`Payment successful: ${response.data.message}`);
+        amount.value = ""; // Reset input field on success
+        getusdtDeposit();
+
     } catch (error) {
-        console.error('Error during payment:', error);
-        alert('There was an error processing your payment. Please try again.');
-    }
-
-
-};
-
-const validateInput = () => {
-    // Replace any non-numeric characters
-    amount.value = amount.value.replace(/[^0-9.]/g, '');
-    // Ensure that only one decimal point can be present
-    const parts = amount.value.split('.');
-    if (parts.length > 2) {
-        amount.value = parts[0] + '.' + parts[1].slice(0, 1); // Keep only the first decimal
-    }
-};
-
-
-
-const submitFrm = () => {
-    const formData = new FormData();
-    formData.append("amount", depositArr.value.amount);
-    formData.append("frm_wallet_address", depositArr.value.frm_wallet_address);
-    const headers = {
-        "Content-Type": "multipart/form-data",
-    };
-    axios.post("/user/saveDeposit", formData, { headers })
-        .then((res) => {
-            getDeposit();
-
-            depositArr.value.amount == '';
-            depositArr.value.frm_wallet_address == '';
-            document.getElementById("formrest").reset();
+        if (error.response && error.response.status === 422) {
+            errors.value = error.response.data.errors; // Store validation errors
+        } else {
+            console.error("An error occurred:", error);
             Swal.fire({
-                title: 'Success!',
-                text: 'Your Deposit Successfully Done.',
-                icon: 'success',
-                confirmButtonText: 'OK'
+                title: "Error!",
+                text: "There was an error processing your payment. Please try again.",
+                icon: "error",
+                confirmButtonText: "OK",
             });
-            //router.push("/dashboard/buyer/welcome");
-        })
-        .catch((error) => {
-            if (error.response && error.response.status === 422) {
-                errors.value = error.response.data.errors;
-            } else {
-                // Handle other types of errors here
-                console.error("An error occurred:", error);
-            }
-        });
+        }
+    }
+};
+
+const getStatusText = (status) => {
+        if (status == '1') return "succeeded";
+        if (status == 2) return "cancel";
+        if (status == 0) return "Pending";
+        return "Pending"; // Default for status == 0
+    }
+const getStripPaymentList = async () => {
+
+    try {
+        loading.value = true;
+        const response = await axios.get(`/deposit/getUserStripDepositList`);
+        depositstripeData.value = response.data.data;
+        depositstripeDataCount.value = response.data.trans_count;
+    } catch (error) {
+        console.log(error);
+    } finally {
+        loading.value = false; // Hide the loader once data is fetched
+    }
 };
 
 const getusdtDeposit = async () => {
     try {
-        const response = await axios.get(`/user/getDeposit`);
-        // DepositData.value = response.data.data;
+        loading.value = true;
+        const response = await axios.get(`/deposit/getUserUsdtDepositList`);
+        depositusdtData.value = response.data.data;
+        depositusdtDataCount.value = response.data.trans_count;
     } catch (error) {
         console.log(error);
+    } finally {
+        loading.value = false; // Hide the loader once data is fetched
     }
 };
-
-const swiper = ref(null)
 
 onMounted(async () => {
     getusdtDeposit();
@@ -343,11 +306,17 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-.loader {
-  text-align: center;
-  font-size: 20px;
-  color: #007bff;
+.text-danger {
+    color: red;
+    font-size: 14px;
 }
+
+.loader {
+    text-align: center;
+    font-size: 20px;
+    color: #007bff;
+}
+
 form {
     max-width: 800px;
     margin: auto;

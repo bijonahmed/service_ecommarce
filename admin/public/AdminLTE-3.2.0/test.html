@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Form</title>
+    <!-- Bootstrap 4 CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="my-4">Product Form</h1>
+        
+        <!-- Card component -->
+        <div class="card">
+            <div class="card-body">
+                <!-- Form -->
+                <form id="productForm">
+                    <!-- First Row -->
+                    <div class="form-row" id="formRow">
+                        <!-- Price -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="price">Price</label>
+                                <input type="number" class="form-control" name="price" placeholder="Price" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- Cost Price -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="costPrice">Cost Price</label>
+                                <input type="number" class="form-control" name="costPrice" placeholder="Cost Price" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- Weight -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="weight">Weight (kg)</label>
+                                <input type="number" class="form-control" name="weight" placeholder="Weight" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- Volume -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="volume">Volume (L)</label>
+                                <input type="number" class="form-control" name="volume" placeholder="Volume" step="0.01">
+                            </div>
+                        </div>
+                        
+                        <!-- Coding -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="coding">Coding</label>
+                                <input type="text" class="form-control" name="coding" placeholder="Coding">
+                            </div>
+                        </div>
+                        
+                        <!-- Barcode -->
+                        <div class="col-md">
+                            <div class="form-group">
+                                <label for="barcode">Barcode</label>
+                                <input type="text" class="form-control" name="barcode" placeholder="Barcode">
+                            </div>
+                        </div>
+                        
+                        <!-- Add/Remove Button -->
+                        <div class="col-md-auto align-self-center">
+                            <button type="button" class="btn btn-primary add-remove-btn" onclick="addRow(this)">
+                                Add Row
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Submit Button -->
+            <div class="card-footer text-right">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 4 JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- JavaScript to handle add/remove rows -->
+    <script>
+        function addRow(button) {
+            // Get the parent form row
+            const formRow = button.closest('.form-row');
+
+            // Clone the form row
+            const newRow = formRow.cloneNode(true);
+
+            // Replace the "Add Row" button with a "Remove Row" button
+            const addButton = newRow.querySelector('.add-remove-btn');
+            addButton.textContent = 'Remove Row';
+            addButton.classList.replace('btn-primary', 'btn-danger');
+            addButton.onclick = function() {
+                removeRow(this);
+            };
+
+            // Clear the input fields in the new row
+            const inputFields = newRow.querySelectorAll('input');
+            inputFields.forEach(input => input.value = '');
+
+            // Append the new row to the form
+            document.getElementById('productForm').appendChild(newRow);
+        }
+
+        function removeRow(button) {
+            // Remove the parent form row
+            const formRow = button.closest('.form-row');
+            formRow.remove();
+        }
+    </script>
+</body>
+
+</html>

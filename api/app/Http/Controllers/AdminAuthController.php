@@ -92,7 +92,7 @@ class AdminAuthController extends Controller
             }
 
 
-            Mail::to($user->email)->queue(new VerificationCodeMail($verificationCode));
+           // Mail::to($user->email)->queue(new VerificationCodeMail($verificationCode));
 
             // try {
             //     Mail::raw("Your verification code is: $verificationCode", function ($message) use ($user) {

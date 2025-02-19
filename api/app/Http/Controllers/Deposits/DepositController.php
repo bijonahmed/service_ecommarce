@@ -36,7 +36,6 @@ use App\Models\UserPaymentAddress;
 use App\Http\Controllers\Controller;
 use App\Models\ProductAdditionalImg;
 use Illuminate\Support\Facades\Hash;
-use App\Models\ProductAttributeValue;
 use App\Models\ProductVarrientHistory;
 use App\Models\MiningServicesBuyHistory;
 use Carbon\Carbon;
@@ -45,6 +44,7 @@ use Carbon\Carbon;
 class DepositController extends Controller
 {
     protected $userid;
+    protected $email;
     public function __construct()
     {
         $this->middleware('auth:api');
@@ -52,6 +52,7 @@ class DepositController extends Controller
         if (!empty($id)) {
             $user = User::find($id->id);
             $this->userid = $user->id;
+            $this->email = $user->email;
         }
     }
 
@@ -408,15 +409,13 @@ class DepositController extends Controller
         return response()->json(['data' => 'Successfully send your request.'], 200);
     }
 
-    public function depositRequest(Request $request)
+    public function sendRequesUsdtPayment(Request $request)
     {
+        // dd($request->all());
+
         try {
             $validator = Validator::make($request->all(), [
-                'crypto_wallet_address'  => 'required',
-                'network'                => 'required',
-                'trxId'                  => 'required',
                 'deposit_amount'         => 'required',
-                'frm_wallet_address'     => 'required',
             ]);
             if ($validator->fails()) {
                 return response()->json(['errors' => $validator->errors()], 422);
@@ -424,33 +423,26 @@ class DepositController extends Controller
 
             $setting = Setting::find(1);
             $checkSetting = $setting->minimum_deposit_amount;
-
+            //dd($checkSetting);
             if ($request->deposit_amount <= $checkSetting) {
-                return response()->json(['errors' => ['deposit_amount' => ['Your deposit amount is low']]], 422);
+                return response()->json(['errors' => ['deposit_amount' => ["Your deposit amount is low. Minimum deposit amount: $$checkSetting"]]], 422);
             }
 
-            $uniqueID = 'DEPOSIT.' . $this->generateUnique4DigitNumber();
+            $uniqueID = 'D.' . $this->generateUnique4DigitNumber();
             $data = array(
                 'depositID'      => $uniqueID,
                 'depscription'   => $uniqueID,
                 'deposit_amount' => $request->deposit_amount,
-                'payment_method' => $request->network,
-                'trxId'          => $request->trxId,
-                'to_crypto_wallet_address'   => $request->crypto_wallet_address,
-                'frm_wallet_address'         => $request->frm_wallet_address,
-
+                'payment_method' => 'USDT',
+                'currency'       => 'USDT',
+                'email'          => $this->email,
+                'product'        => "Customer Payment",
+                // 'to_crypto_wallet_address'   => $request->crypto_wallet_address,
+                // 'frm_wallet_address'         => $request->frm_wallet_address,
                 'status'         => 0,
                 'user_id'        => $this->userid
             );
             $last_Id = Deposit::insertGetId($data);
-
-            $tran['user_id']     = $this->userid;
-            $tran['type']        = 1; //Deposit 
-            $tran['last_Id']     = $last_Id;
-            $tran['amount']      = $request->deposit_amount;
-            $tran['description'] = 'Deposit';
-            TransactionHistory::insert($tran);
-
             return response()->json($last_Id);
         } catch (QueryException $e) {
             // Log the error or handle it as needed
@@ -727,12 +719,16 @@ class DepositController extends Controller
         $userId     = $this->userid;
 
         $data       = Deposit::where('user_id', $userId)
-        ->select('depositID', 'currency', 'deposit_amount', 'payment_status', 
-            DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as createdate'))
-        ->where('payment_method', 'Stripe')
-        ->orderBy('created_at', 'desc')  // Order by 'created_at' in descending order (latest first)
-        ->get();
-
+            ->select(
+                'depositID',
+                'currency',
+                'deposit_amount',
+                'payment_status',
+                DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as createdate')
+            )
+            ->where('payment_method', 'Stripe')
+            ->orderBy('created_at', 'desc')  // Order by 'created_at' in descending order (latest first)
+            ->get();
 
         return response()->json([
             'data'          => $data,
@@ -740,6 +736,32 @@ class DepositController extends Controller
 
         ]);
     }
+
+
+
+
+    public function getUserUsdtDepositList(Request $request)
+    {
+        $userId     = $this->userid;
+        $data       = Deposit::where('user_id', $userId)
+            ->select(
+                'depositID',
+                'currency',
+                'deposit_amount',
+                'status',
+                DB::raw('DATE_FORMAT(created_at, "%Y-%m-%d") as createdate')
+            )
+            ->where('payment_method', 'USDT')
+            ->orderBy('created_at', 'desc')  // Order by 'created_at' in descending order (latest first)
+            ->get();
+
+        return response()->json([
+            'data'          => $data,
+            'trans_count'   => count($data),
+
+        ]);
+    }
+
 
     public function getDepositfetchdata(Request $request)
     {
@@ -783,8 +805,6 @@ class DepositController extends Controller
 
     public function getDepositList(Request $request)
     {
-
-
 
         $page           = $request->input('page', 1);
         $pageSize       = $request->input('pageSize', 10);
@@ -850,6 +870,8 @@ class DepositController extends Controller
             return [
                 'id'                => $item->id,
                 'depositID'         => $item->depositID,
+                'currency'          => $item->currency,
+                'payment_id'        => $item->payment_id,
                 'user_info_name'    => !empty($userrow->name) ?  $userrow->name : "N/A",
                 'user_info_email'   => !empty($userrow->email) ?  $userrow->email : "N/A",
                 'user_info_phone'   => !empty($userrow->phone_number) ?  $userrow->phone_number : "N/A",

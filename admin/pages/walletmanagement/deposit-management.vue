@@ -68,11 +68,12 @@
                                                 <th class="text-left">ID</th>
                                                 <th class="text-left">User Info</th>
                                                 <th class="text-left">Date</th>
-                                                <th class="text-center">Status</th>
+                                                
                                                 <th class="text-center">Recharge Amount ($)</th>
-                                                <th class="text-center">Receivable Amount ($)</th>
-                                                <!-- <th class="text-center">Payment Type</th> -->
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center">Currency/PaymentId</th>
+                                                  <th class="text-center">Payment Method</th>  
+                                                <th class="text-center d-none">Action</th>
+                                                <th class="text-center">Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -82,25 +83,17 @@
                                                         {{ pro.user_info_email }}<br />Phone: {{ pro.user_info_phone
                                                         }}</small></td>
                                                 <td class="text-left">{{ pro.created_at }}</td>   
-                                                <td class="text-center">
-                                                    <span v-if="pro.sts == 0" class="badge rounded-pill bg-secondary w-100"> {{ pro.status }}</span>
-                                                    <span class="badge rounded-pill bg-success w-100" v-if="pro.sts == 1">{{ pro.status }}</span>
-                                                    <span class="badge rounded-pill bg-danger w-100" v-if="pro.sts == 2">{{ pro.status }}</span>
-                                                </td>
+                                               
                                                 <td class="text-center">{{ pro.deposit_amount }}</td>
                                                 <td class="text-center">
-                                                    <span v-if="pro.receivable_amount == 'Payment not received'">
-                                                        <span style="color:red;">{{ pro.receivable_amount }}</span>
-                                                    </span>
+                                                    <span style="color:red;">{{ pro.currency }}</span>
 
-                                                    <span v-else>
-                                                        <span style="color:green;">{{ pro.receivable_amount }}</span>
-                                                    </span>
+                                                    <span style="color:red;" v-if="pro.payment_id">&nbsp;[{{ pro.payment_id }}]</span>
 
                                                 </td>
-                                                <!-- <td class="text-center"><small><b>USDT payment</b></small></td> -->
+                                               <td class="text-center"><small><b>{{ pro.payment_method }}</b></small></td>
                                                
-                                                <td>
+                                                <td class="d-none">
                                                     <center>
                                                         <button class="btn btn-default btn-sm btn-flat"
                                                             @click="preview(pro.id)"><i
@@ -109,6 +102,11 @@
                                                                         class="fas fa-edit btnSize"></i></button></span> -->
                                                     </center>
                                                 </td>
+                                                <td class="text-center">
+                                                    <span v-if="pro.sts == 0" class="badge rounded-pill bg-secondary w-100"> {{ pro.status }}</span>
+                                                    <span class="badge rounded-pill bg-success w-100" v-if="pro.sts == 1">{{ pro.status }}</span>
+                                                    <span class="badge rounded-pill bg-danger w-100" v-if="pro.sts == 2">{{ pro.status }}</span>
+                                                </td>
                                             </tr>
                                         </tbody>
                                         <tfoot>
@@ -116,11 +114,12 @@
                                                 <th class="text-left">ID</th>
                                                 <th class="text-left">User Info</th>
                                                 <th class="text-left">Date</th>
-                                                <th class="text-center">Status</th>
+                                             
                                                 <th class="text-center">Recharge Amount ($)</th>
                                                 <th class="text-center">Receivable Amount ($)</th>
-                                                <!-- <th class="text-center">Payment Type</th> -->
-                                                <th class="text-center">Action</th>
+                                                <th class="text-center">Payment Method</th>  
+                                                <th class="text-center d-none">Action</th>
+                                                <th class="text-center">Status</th>
                                             </tr>
                                         </tfoot>
                                     </table>
