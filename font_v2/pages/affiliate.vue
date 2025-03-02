@@ -37,94 +37,102 @@
                                 <div class="col-md-12">
 
                                     <div class="section_title ">
-                                        <h3 class="title_css"><span>Six great programs</span> to choose from</h3>
+                                        <h3 class="title_css"><span>SIX Great Program </span> To create Passive Source
+                                            of Income</h3>
                                     </div>
                                     <div class="pograme_container">
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Recurring program</h1>
-                                            <h4>Continuous Commsissions</h4>
-                                            <h2>50%</h2>
+                                            <h1>Affiliate <br> Starter program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$25</h2>
                                             <p>Every month</p>
                                             <ul>
-                                                <li>33% - default commsission</li>
-                                                <li>40% - Boost 1(25+ sales in 6 months)</li>
-                                                <li>50% - Boost 2(50+ sales in 6 months)</li>
+                                                <li>1K - Community</li>
+                                                <li>20 - Orders Completed in the Community</li>
+                                                <li>$0.36 - Commission Per order In the community</li>
                                             </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto  d-none"
                                                 style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Bounty Program</h1>
-                                            <h4>upfont Commsissions</h4>
-                                            <h2>$150</h2>
-                                            <p>per sale</p>
-                                            <ul>
-                                                <li>$100 for Email marketing products</li>
-                                                <li>$150 for content Monetization Products</li>
-                                            </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
-                                                style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
-                                        </div>
-                                        <div class="programe_box">
-                                            <h1>Affiliate <br> Bounty Program</h1>
-                                            <h4>upfont Commsissions</h4>
-                                            <h2>$150</h2>
-                                            <p>per sale</p>
-                                            <ul>
-                                                <li>$100 for Email marketing products</li>
-                                                <li>$150 for content Monetization Products</li>
-                                            </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
-                                                style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
-                                        </div>
-                                        <div class="programe_box">
-                                            <h1>Affiliate <br> Recurring program</h1>
-                                            <h4>Continuous Commsissions</h4>
-                                            <h2>50%</h2>
+                                            <h1>Affiliate <br> Business Program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$100</h2>
                                             <p>Every month</p>
                                             <ul>
-                                                <li>33% - default commsission</li>
-                                                <li>40% - Boost 1(25+ sales in 6 months)</li>
-                                                <li>50% - Boost 2(50+ sales in 6 months)</li>
+                                                <li>5K - Community</li>
+                                                <li>100 - Orders Completed in the Community</li>
+                                                <li>$0.36 - Commission Per order In the community</li>
                                             </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto d-none"
                                                 style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Bounty Program</h1>
-                                            <h4>upfont Commsissions</h4>
-                                            <h2>$150</h2>
-                                            <p>per sale</p>
+                                            <h1>Affiliate <br> Boss Program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$300</h2>
+                                            <p>Every month</p>
                                             <ul>
-                                                <li>$100 for Email marketing products</li>
-                                                <li>$150 for content Monetization Products</li>
+                                                <li>25K - Community</li>
+                                                <li>300 - Orders Completed in the Community</li>
+                                                <li>$0.36 - Commission Per order In the community</li>
                                             </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto d-none"
                                                 style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Bounty Program</h1>
-                                            <h4>upfont Commsissions</h4>
-                                            <h2>$150</h2>
-                                            <p>per sale</p>
+                                            <h1>Affiliate <br> Influencer program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$100</h2>
+                                            <p>Every month</p>
                                             <ul>
-                                                <li>$100 for Email marketing products</li>
-                                                <li>$150 for content Monetization Products</li>
+                                                <li>100k Followers</li>
+                                                <li>10% Post Engagement</li>
+                                                <li>20k Community</li>
+                                                <li>$0.36 Commission Per order In the community</li>
                                             </ul>
-                                            <a href="#" class="d-block btn btn-primary text-white mx-auto "
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto d-none"
                                                 style="width: fit-content;">Signup</a>
-                                            <h6 class="mt-2"><a href="#" class="text-primary">Login</a> if you already
-                                                have an account.</h6>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
+                                        </div>
+                                        <div class="programe_box">
+                                            <h1>Affiliate <br> Star program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$300</h2>
+                                            <p>Every month</p>
+                                            <ul>
+                                                <li>1M Followers</li>
+                                                <li>20% Post Engagement</li>
+                                                <li>50k Community</li>
+                                                <li>$0.36 Commission Per order In the community</li>
+                                            </ul>
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto d-none"
+                                                style="width: fit-content;">Signup</a>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
+                                        </div>
+                                        <div class="programe_box">
+                                            <h1>Affiliate <br> Creator Program</h1>
+                                            <h4>Isumax StarX</h4>
+                                            <h2>$50</h2>
+                                            <p>Every month</p>
+                                            <ul>
+                                                <li>25K Followers</li>
+                                                <li>25% Post Engagement</li>
+                                                <li>25k Community</li>
+                                                <li>$0.36 Commission Per order In the community</li>
+                                            </ul>
+                                            <a href="#" class="d-block btn btn-primary text-white mx-auto d-none"
+                                                style="width: fit-content;">Signup</a>
+                                            <h6 class="mt-2"><a href="#" class="text-primary d-none">Login</a> For
+                                                Details Contact Isumax</h6>
                                         </div>
                                     </div>
                                 </div>
@@ -176,7 +184,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center sec_title">
-                                        <h2><span>How to signup </span>for the Isumax affiliate Program</h2>
+                                        <h2><span>How to signup </span>for the Isumax Starx Program</h2>
                                         <p>It’s easy to become an Affiliate</p>
                                     </div>
                                 </div>
@@ -184,19 +192,21 @@
                             <div class="row">
                                 <div class="col-md-8 m-auto">
                                     <div class="row">
-                                        <div class="col-md-6"><img src="/frontend/Screenshot_2.png" alt="" class="img-fluid"></div>
+                                        <div class="col-md-6"><img src="/frontend/Screenshot_2.png" alt=""
+                                                class="img-fluid"></div>
                                         <div class="col-md-6">
-                                            <div class="text-center">
-                                                <p>Choose one of our programs and signup with your email address. you
-                                                    can add other program later from your dashboard.</p>
-                                                <p>After your complete your registration. you will receive login details
-                                                    and affiliate links via email.</p>
-                                                <p>Log into your affiliate portal. review promotional materials and
-                                                    start promoting isumax via all of your available marketing channels.
-                                                </p>
-                                                <p>use your affiliate dashboard and find an overview of all your
-                                                    affiliate activities and commissions. Keep an eye on for welcome
-                                                    emails and our monthlay newsletters.</p>
+                                            <div class="text-start">
+                                                <p>Becoming a Starx Partner is simple and rewarding! Choose the right
+                                                    program for your business or promotional goals and sign up using
+                                                    your email address. Once you complete your registration, you will
+                                                    receive your login details, and your Starx referral link will be
+                                                    available in your community page inside the dashboard.</p>
+                                                <p>To help you succeed, we provide marketing materials such as ads,
+                                                    posts, videos, and content. You can also request training and
+                                                    support to maximize your earnings. Use your affiliate dashboard to
+                                                    track your referrals, activities, and commissions in real time. Stay
+                                                    updated with our welcome emails and newsletters, featuring the
+                                                    latest promotions and strategies.</p>
                                             </div>
                                         </div>
                                     </div>
@@ -232,7 +242,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="mkt_agency_container">
-                                        <h3>Ready to join?</h3>
+                                        <h3>Join Starx Today & Start Earning!</h3>
                                         <p>Become a affiliate.</p>
                                         <a href="#" class="d-block btn btn-primary text-white mx-auto"
                                             style="width: fit-content;">Join now</a>
@@ -250,97 +260,129 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center sec_title">
-                                        <h2>Isumax Affiliate Program FAQs</h2>
+                                        <h2>Isumax Creator Program - FAQs</h2>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="ui-content" bis_skin_checked="1">
-                                        <div class="accordion-style1 faq-page mb90" bis_skin_checked="1">
-                                            <div class="accordion" id="accordionExample" bis_skin_checked="1">
-                                                <div class="accordion-item active" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingOne">
-                                                        <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne" style=" text-align: center; ">What methods of payments are supported?</button>
-                                                    </h2>
-                                                    <div id="collapseOne" class="accordion-collapse collapse show"
-                                                        aria-labelledby="headingOne" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
-                                                    </div>
-                                                </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingTwo">
+                                    <div class="ui-content">
+                                        <div class="accordion-style1 faq-page mb90">
+                                            <div class="accordion" id="accordionExample">
+
+                                                
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="head">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                            aria-expanded="false" aria-controls="collapseTwo">Can I
-                                                            cancel at anytime?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item1"
+                                                            aria-expanded="false" aria-controls="head">What is the Isumax Creator
+                                                            Program?</button>
                                                     </h2>
-                                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                                    <div id="item1" class="accordion-collapse collapse"
                                                         aria-labelledby="headingTwo" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                       >
+                                                        <div class="accordion-body">The Isumax
+                                                            Creator Program is designed for influencers, digital
+                                                            marketing agencies, marketing professionals, and community
+                                                            leaders who want to earn passive income by promoting Isumax.
+                                                            If you have a strong social media presence with followers or
+                                                            subscribers, this program is for you!</div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingThree">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="head">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                            aria-expanded="false" aria-controls="collapseThree">How do I
-                                                            get a receipt for my purchase?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item2"
+                                                            aria-expanded="false" aria-controls="item2">How can I
+                                                            earn money with the Isumax Creator Program?</button>
                                                     </h2>
-                                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingThree" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                    <div id="item2" class="accordion-collapse collapse"
+                                                        aria-labelledby="item2" data-parent="#accordionExample"
+                                                       >
+                                                        <div class="accordion-body">Creators earn
+                                                            through referrals and engagement. Every time someone signs
+                                                            up, hires, or sells on Isumax using your unique referral
+                                                            link, you receive a share of the revenue. The more traffic
+                                                            and users you bring, the more you earn!</div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingFour">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                                            aria-expanded="false" aria-controls="collapseFour">Which
-                                                            license do I need?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item3"
+                                                            aria-expanded="false" aria-controls="item3"> Who can
+                                                            join the Isumax Creator Program?</button>
                                                     </h2>
-                                                    <div id="collapseFour" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingFour" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                    <div id="item3" class="accordion-collapse collapse"
+                                                        aria-labelledby="item3" data-parent="#item3"
+                                                       >
+                                                        <div class="accordion-body">We welcome:
+                                                            <ul>
+                                                                <li>Influencers (YouTubers, TikTokers, Instagram
+                                                                    creators, etc.)</li>
+                                                                <li>Digital marketing agencies</li>
+                                                                <li>Social media marketers</li>
+                                                                <li>Community managers and group owners</li>
+                                                                <li>Bloggers and website owners</li>
+                                                                <li></li>
+                                                            </ul>
+                                                            If you have an engaged audience, you can qualify!
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingFive">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingheading">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                                            aria-expanded="false" aria-controls="collapseFive">How do I
-                                                            get access to a theme I purchased?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item4"
+                                                            aria-expanded="false" aria-controls="item4">How do I
+                                                            get started?</button>
                                                     </h2>
-                                                    <div id="collapseFive" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingFive" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                    <div id="item4" class="accordion-collapse collapse"
+                                                        aria-labelledby="item4" data-parent="#item4"
+                                                       >
+                                                        <div class="accordion-body">Simply sign up
+                                                            for free on Isumax, get your unique referral link, and start
+                                                            promoting. You can share it on your social media, website,
+                                                            or community groups.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading1">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#item5"
+                                                            aria-expanded="false" aria-controls="item5">What are
+                                                            the benefits of joining?
+                                                        </button>
+                                                    </h2>
+                                                    <div id="item5" class="accordion-collapse collapse"
+                                                        aria-labelledby="item5" data-parent="#item5"
+                                                       >
+                                                        <div class="accordion-body">
+                                                            <ul>
+                                                                <li>Passive Income – Earn a commission for every user
+                                                                    you bring.</li>
+                                                                <li>Long-Term Earnings – Continue earning as long as
+                                                                    your referrals stay active.</li>
+                                                                <li>Exclusive Bonuses – High-performing creators get
+                                                                    extra incentives and rewards.</li>
+                                                                <li>No Investment Needed – It’s 100% free to join!</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading6">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#item7"
+                                                            aria-expanded="false" aria-controls="item7">How do I contact support?</button>
+                                                    </h2>
+                                                    <div id="item7" class="accordion-collapse collapse"
+                                                        aria-labelledby="item7" data-parent="headingss"
+                                                       >
+                                                        <div class="accordion-body">
+                                                            For any questions or help, reach out to our support team via email. We’re here to assist you! <a href="mailto:Help@isumax.com">Help@isumax.com</a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -348,91 +390,115 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="ui-content" bis_skin_checked="1">
-                                        <div class="accordion-style1 faq-page mb90" bis_skin_checked="1">
-                                            <div class="accordion" id="accordionExample" bis_skin_checked="1">
-                                                <div class="accordion-item active" bis_skin_checked="1">
+                                    <div class="ui-content">
+                                        <div class="accordion-style1 faq-page mb90">
+                                            <div class="accordion" id="accordionExample">
+                                                <div class="accordion-item active">
                                                     <h2 class="accordion-header" id="headingOne1">
                                                         <button class="accordion-button" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne" style="text-align: center; ">What methods of payments are supported?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item1"
+                                                            aria-expanded="true" aria-controls="collapseOne"
+                                                            style="text-align: center; "> How much can I earn?</button>
                                                     </h2>
-                                                    <div id="collapseOne" class="accordion-collapse collapse show"
+                                                    <div id="item1" class="accordion-collapse collapse show"
                                                         aria-labelledby="headingOne1" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                       >
+                                                        <div class="accordion-body">Your earnings
+                                                            depend on the number of referrals, their activity, and
+                                                            engagement levels. Top performers can unlock higher
+                                                            commissions, bonuses, and even special partnership deals!
+                                                            $25 to $5,000 Plus</div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
+                                                <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingTwo2">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                            aria-expanded="false" aria-controls="collapseTwo">Can I
-                                                            cancel at anytime?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item2"
+                                                            aria-expanded="false" aria-controls="collapseTwo">How and
+                                                            when do I get paid?</button>
                                                     </h2>
-                                                    <div id="collapseTwo" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingTwo2" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                    <div id="item2" class="accordion-collapse collapse"
+                                                        aria-labelledby="heading" data-parent="#accordionExample"
+                                                       >
+                                                        <div class="accordion-body">Payments are
+                                                            made monthly through secure payment methods. You can choose
+                                                            to withdraw your earnings via bank transfer, PayPal, crypto,
+                                                            or other available options.</div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingThree3">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingheading">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                            aria-expanded="false" aria-controls="collapseThree">How do I
-                                                            get a receipt for my purchase?</button>
+                                                            data-bs-toggle="collapse" data-bs-target="#item3"
+                                                            aria-expanded="false" aria-controls="collapseThree">Can I
+                                                            track my referrals and earnings?</button>
                                                     </h2>
-                                                    <div id="collapseThree" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingThree3" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                    <div id="item3" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingheading" data-parent="#accordionExample"
+                                                       >
+                                                        <div class="accordion-body">Yes! You will
+                                                            have access to a dashboard where you can see your referral
+                                                            statistics,commission, sign-ups, and earnings in real time.
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingFour4">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingheadingheading">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                                            aria-expanded="false" aria-controls="collapseFour">Which
-                                                            license do I need?</button>
+                                                            aria-expanded="false" aria-controls="collapseFour">What kind
+                                                            of content should I create to promote Isumax?</button>
                                                     </h2>
                                                     <div id="collapseFour" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingFour4" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                        aria-labelledby="headingheadingheading" data-parent="#accordionExample"
+                                                       >
+                                                        <div class="accordion-body">
+                                                            You can make:
+                                                            <ul>
+                                                                <li>Video reviews & tutorials on YouTube or TikTok.</li>
+                                                                <li>Social media posts explaining Isumax benefits.</li>
+                                                                <li>Blog articles or website content.</li>
+                                                                <li>Email campaigns and community promotions.
+                                                                    - We also provide promotional materials to help you
+                                                                    succeed! -</li>
+                                                                <li></li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="accordion-item" bis_skin_checked="1">
-                                                    <h2 class="accordion-header" id="headingFive5">
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="heading">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseFive"
                                                             aria-expanded="false" aria-controls="collapseFive">How do I
-                                                            get access to a theme I purchased?</button>
+                                                            increase my earnings?</button>
+                                                    </h2>
+                                                    <div id="collapseFive" class="accordion-collapse collapse"
+                                                        aria-labelledby="heading" data-parent="#accordionExample"
+                                                       >
+                                                        <div class="accordion-body">
+                                                            <ul>
+                                                                <li>Share your referral link consistently.</li>
+                                                                <li>Engage with your audience and answer their
+                                                                    questions.</li>
+                                                                <li>Promote Isumax on multiple platforms.</li>
+                                                                <li>Leverage paid ads or collaborations for more reach.</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingFive5">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                                            aria-expanded="false" aria-controls="collapseFive">Can agencies and teams join?</button>
                                                     </h2>
                                                     <div id="collapseFive" class="accordion-collapse collapse"
                                                         aria-labelledby="headingFive5" data-parent="#accordionExample"
-                                                        bis_skin_checked="1">
-                                                        <div class="accordion-body" bis_skin_checked="1">Cras vitae ac
-                                                            nunc orci. Purus amet tortor non at phasellus ultricies
-                                                            hendrerit. Eget a, sit morbi nunc sit id massa. Metus,
-                                                            scelerisque volutpat nec sit vel donec. Sagittis, id
-                                                            volutpat erat vel.</div>
+                                                       >
+                                                        <div class="accordion-body">
+                                                            Absolutely! If you run a digital marketing agency, you can onboard multiple clients and maximize your profits through bulk referrals.
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>

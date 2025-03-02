@@ -83,13 +83,27 @@
                           <!-- Password Fields (Common for both) -->
                           <div class="mb15">
                             <label class="form-label fw500 dark-color">Password</label>
-                            <input type="password" class="form-control" placeholder="*******" v-model="password">
+                            <div class="position-relative">
+                              <input :type="isPasswordVisible ? 'text' : 'password'" class="form-control"
+                                placeholder="*******" v-model="password">
+                              <i class="fa-solid position-absolute"
+                                :class="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
+                                style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);"
+                                @click="togglePassword"></i>
+                            </div>
                             <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
                           </div>
 
                           <div class="mb15">
                             <label class="form-label fw500 dark-color">Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                            <div class="position-relative">
+                              <input :type="isrePasswordVisible ? 'text' : 'password'" class="form-control"
+                                placeholder="*******" v-model="confirmPassword">
+                              <i class="fa-solid position-absolute"
+                                :class="isrePasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
+                                style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);"
+                                @click="togglerePassword"></i>
+                            </div>
                             <span class="text-danger" v-if="errors.password_confirmation">{{
                               errors.password_confirmation[0]
                             }}</span>
@@ -116,7 +130,7 @@
                             <input type="text" class="form-control" placeholder="Your Name" v-model="name"
                               @blur="validateName">
 
-                            
+
                             <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
                           </div>
 
@@ -142,13 +156,31 @@
 
                           <div class="mb15">
                             <label class="form-label fw500 dark-color">Password</label>
-                            <input type="password" class="form-control" placeholder="*******" v-model="password">
+                            <div class="position-relative">
+                              <input :type="issellPasswordVisible ? 'text' : 'password'" class="form-control"
+                                placeholder="*******" v-model="password">
+                              <i class="fa-solid position-absolute"
+                                :class="issellPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
+                                style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);"
+                                @click="togglesellPassword"></i>
+                            </div>
+
                             <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
                           </div>
 
                           <div class="mb15">
                             <label class="form-label fw500 dark-color">Confirm Password</label>
-                            <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
+                            <div class="position-relative">
+                              <input :type="issellrePasswordVisible ? 'text' : 'password'" class="form-control" placeholder="*******"
+                                v-model="confirmPassword">
+
+                              <i class="fa-solid position-absolute"
+                                :class="issellrePasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
+                                style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);"
+                                @click="togglesellrePassword"></i>
+                            </div>
+
+
                             <span class="text-danger" v-if="errors.password_confirmation">{{
                               errors.password_confirmation[0]
                             }}</span>
@@ -288,8 +320,26 @@ let slug_error = ref('');
 let nameError = ref('');
 const errorMessage = ref();
 
+const isPasswordVisible = ref(false);
+const isrePasswordVisible = ref(false);
+const issellPasswordVisible = ref(false);
+const issellrePasswordVisible = ref(false);
+const passwordId = 'password';
 
- 
+const togglePassword = () => {
+  isPasswordVisible.value = !isPasswordVisible.value;
+};
+const togglerePassword = () => {
+  isrePasswordVisible.value = !isrePasswordVisible.value;
+};
+
+const togglesellPassword = () => {
+  issellPasswordVisible.value = !issellPasswordVisible.value;
+};
+const togglesellrePassword = () => {
+  issellrePasswordVisible.value = !issellrePasswordVisible.value;
+};
+
 // Computed property to check if name is in email format
 const isEmailFormat = computed(() => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -472,7 +522,7 @@ const registerForBuyer = async () => {
     }
   }
 };
- 
+
 </script>
 <style scoped>
 .error {

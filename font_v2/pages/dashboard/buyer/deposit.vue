@@ -22,7 +22,12 @@
                     <ul class="nav nav-pills mt-4" id="paymentTabs" role="tablist" @click="getStripPaymentList">
                         <li class="nav-item">
                             <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe"
-                                role="tab">Stripe</a>
+                                role="tab">Fiat</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" id="stripe-tab" data-bs-toggle="pill" href="#paypal"
+                                role="tab">Paypal</a>
                         </li>
                         <li class="nav-item" @click="getusdtDeposit">
                             <a class="nav-link" id="usdt-tab" data-bs-toggle="pill" href="#usdt" role="tab">USDT</a>
@@ -99,6 +104,12 @@
 
                         </div>
 
+                        <div class="tab-pane fade" id="paypal">
+                                <h1>Paypal....</h1>
+
+
+                        </div>
+
                         <!-- USDT Payment -->
                         <div class="tab-pane fade" id="usdt">
                             <form @submit.prevent="usdthandlePayment">
@@ -116,7 +127,7 @@
                                     <thead class="table-dark">
                                         <tr>
                                             <th>Deposit ID</th>
-                                            <th class="text-center">Currency</th>
+                                            <th class="text-center">Payment Type</th>
                                             <th class="text-center">Deposit Amount</th>
                                             <th class="text-center">Payment Status</th>
                                             <th class="text-center">Created Date</th>
@@ -125,7 +136,7 @@
                                     <tbody>
                                         <tr v-for="(deposit, index) in depositusdtData" :key="index">
                                             <td>{{ deposit.depositID }}</td>
-                                            <td class="text-center">{{ deposit.currency }}</td>
+                                            <td class="text-center">Crypto</td>
                                             <td class="text-center">{{ deposit.deposit_amount }}</td>
                                             <td :class="{
                                                 'text-success': deposit.status == '1',
@@ -173,7 +184,7 @@ const errors = ref({});
 const depositstripeData = ref([]);
 const depositusdtData = ref([]);
 
-const amount = ref(0);
+const amount = ref("");
 const depositstripeDataCount = ref(0);
 const depositusdtDataCount = ref(0);
 

@@ -454,7 +454,11 @@ const fetchData = async (page = 1) => {
         page: page, // Pass the page number
       },
     });
-    responseData.value.push(...response.data.data);
+    //responseData.value.push(...response.data.data);
+     // Shuffle the fetched data before adding it
+     const shuffledData = response.data.data.sort(() => Math.random() - 0.5);
+     // Add shuffled data to responseData
+     responseData.value.push(...shuffledData);
     currentPage.value = response.data.pagination.current_page;
     totalPages.value = response.data.pagination.last_page;
   } catch (error) {

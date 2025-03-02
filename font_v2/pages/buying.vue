@@ -63,19 +63,23 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="sign_contain">
-                                        <h1 class="mb-2">Signup with isumax</h1>
-                                        <h4>Affliate Program</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque itaque illum
-                                            corporis repudiandae nemo, veritatis voluptates nesciunt nam quia non quam
-                                            ratione porro dolor! Voluptatum sit totam id adipisci ratione explicabo eos
-                                            porro aspernatur quis omnis neque atque harum iste molestiae expedita,
-                                            deleniti quae ipsa? Incidunt mollitia fugiat aperiam doloribus?</p>
-                                        <h4>Freelancer</h4>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque itaque illum
-                                            corporis repudiandae nemo, veritatis voluptates nesciunt nam quia non quam
-                                            ratione porro dolor! Voluptatum sit totam id adipisci ratione explicabo eos
-                                            porro aspernatur quis omnis neque atque harum iste molestiae expedita,
-                                            deleniti quae ipsa? Incidunt mollitia fugiat aperiam doloribus?</p>
+                                        <!-- <h1 class="mb-2">Signup with isumax</h1> -->
+                                        <h4>Hire Top Talent on Isumax</h4>
+                                        <p>
+                                            Need to get a project done? Isumax connects you with skilled freelancers who
+                                            can bring your ideas to life. Whether you're looking for website
+                                            development, graphic design, content
+                                        </p>
+                                        <h4>Secure Your Deals with Confidence on Isumax!</h4>
+                                        <p>At Isumax, we redefine online transactions by ensuring a secure, seamless,
+                                            and trustworthy experience for every buyer. Whether you're hiring skilled
+                                            freelancers or making transactions through our Yes-Deal service, you can
+                                            rest assured that your payments are protected until you receive exactly what
+                                            you paid for. Our escrow-style system guarantees transparency, minimizing
+                                            risks and disputes. With a diverse marketplace offering top-quality services
+                                            and a strong community-driven approach, Isumax empowers buyers to connect
+                                            with reliable sellers, ensuring every deal is a success. Elevate your online
+                                            trading experience today—because security and trust matter!</p>
                                     </div>
                                 </div>
                             </div>
@@ -102,7 +106,7 @@
                                                     class="fa-solid fa-star"></i>
                                             </div>
                                             <h2>Editor</h2>
-                                            <h4>$49.00</h4>
+                                            <h4>$100.00</h4>
                                         </div>
                                         <div class="top_content">
                                             <img src="/frontend/item-2.png" alt="" class="img-fluid">
@@ -111,8 +115,8 @@
                                                     class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
                                                     class="fa-solid fa-star"></i>
                                             </div>
-                                            <h2>Editor</h2>
-                                            <h4>$49.00</h4>
+                                            <h2>Designer</h2>
+                                            <h4>$149.00</h4>
                                         </div>
                                         <div class="top_content">
                                             <img src="/frontend/item-3.png" alt="" class="img-fluid">
@@ -121,8 +125,8 @@
                                                     class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
                                                     class="fa-solid fa-star"></i>
                                             </div>
-                                            <h2>Editor</h2>
-                                            <h4>$49.00</h4>
+                                            <h2>Developer</h2>
+                                            <h4>$250.00</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -140,30 +144,23 @@
                                 <div class="col-md-4">
 
                                     <div class="sign_contain">
-                                        <h1 class="mb-2" style="text-transform: capitalize;">We're Ready to make a great
-                                            experience</h1>
-                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque itaque illum
-                                            corporis repudiandae nemo, veritatis voluptates nesciunt nam quia non quam
-                                            ratione porro dolor! Voluptatum sit totam id adipisci ratione explicabo eos
-                                            porro aspernatur quis omnis neque atque harum iste molestiae expedita,
-                                            deleniti quae ipsa? Incidunt mollitia fugiat aperiam doloribus?</p>
-                                    </div>
-                                    <div class="row ex_sec">
-                                        <div class="col-md-6">
-                                            <div class="d-flex">
-                                                <i class="fa-regular fa-house"></i>
-                                                <h2>17</h2>
-                                            </div>
-                                            <p>We have many years of experience</p>
-                                        </div>
-                                        <div class="col-md-6">
-
-                                            <div class="d-flex">
-                                                <i class="fa-regular fa-star"></i>
-                                                <h2>17</h2>
-                                            </div>
-                                            <p>We have many years of experience</p>
-                                        </div>
+                                        <h1 class="mb-2" style="text-transform: capitalize;">Earn While You Hire on
+                                            Isumax!</h1>
+                                        <p>
+                                            At Isumax, buyers don’t just spend—they earn! When you sign up as a buyer,
+                                            you’re not paying for every project separately. Instead, you get the
+                                            opportunity to complete your next project for free or even withdraw a
+                                            salary!
+                                            Isumax isn’t just for freelancers—it’s for anyone who wants to make money
+                                            online. Simply by using social media, you can earn and withdraw real income.
+                                            Every referral from your link, including those brought in by your referrals,
+                                            contributes to your community earnings.
+                                            Whenever someone in your community makes a sale, you earn a share of the
+                                            profits. Our affiliate and community program isn’t just about
+                                            commissions—it’s designed like a basic salary package. Instead of spending
+                                            heavily on marketing, Isumax invests in its users, ensuring our community
+                                            grows while you benefit!
+                                        </p>
                                     </div>
                                 </div>
                             </div>
@@ -185,30 +182,38 @@
                                 <div class="col-4">
                                     <div class="left_list">
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>How do I hire freelancers on Isumax?</h6>
+                                            <p>- You can browse freelancers, post a job, or directly hire based on their
+                                                service listings.</p>
                                         </div>
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                     </div>
                                     <div class="left_list">
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>What payment methods are supported?</h6>
+                                            <p>- We offer secure payment options, ensuring a safe transaction process
+                                                for both clients and freelancers.</p>
                                         </div>
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                     </div>
                                     <div class="left_list">
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>What is the StarX Hiring Program?</h6>
+                                            <p>- Starx is the affiliate and community program of Isumax, designed to
+                                                help users earn passive income by referring others to the isumax. Unlike
+                                                traditional affiliate programs that only offer commissions, Starx works
+                                                like a basic salary package, where users can earn continuously based on
+                                                the activity and sales within their referred community.</p>
                                         </div>
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
+                                    </div>
+                                    <div class="left_list">
+                                        <div>
+                                            <h6>How do I ensure quality work from freelancers?</h6>
+                                            <p>- You can review freelancer ratings, check past work, and set clear
+                                                project requirements before hiring.</p>
+                                        </div>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                     </div>
                                 </div>
                                 <div class="col-4">
@@ -217,30 +222,36 @@
                                 <div class="col-4">
 
                                     <div class="right_list">
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>Vast Talent Pool</h6>
+                                            <p> – Access top freelancers from around the globe.</p>
                                         </div>
                                     </div>
                                     <div class="right_list">
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>Easy & Secure Hiring </h6>
+                                            <p>– Contact a Freelancer and receive offers instantly, with secure payment
+                                                processing
+                                            </p>
                                         </div>
                                     </div>
                                     <div class="right_list">
-                                        <i class="fa-solid fa-users"></i>
+                                        <!-- <i class="fa-solid fa-users"></i> -->
                                         <div>
-                                            <h6>Creadibility</h6>
-                                            <p>We verify freelancers, publish their feedback scores and all-time
-                                                transection data to help you identify their trusted professionals
-                                                accross the globals</p>
+                                            <h6>Flexible Budget Options </h6>
+                                            <p>– Find professionals that fit your budget, from affordable to premium
+                                                services.
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="right_list">
+                                        <!-- <i class="fa-solid fa-users"></i> -->
+                                        <div>
+                                            <h6>Custom Salary Packages </h6>
+                                            <p> – Choose between per-project, hourly, or long-term hiring with
+                                                structured salary plans.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -276,10 +287,12 @@
                                                             <img src="/images/about/about-7.jpg" alt=""
                                                                 class="img-fluid">
                                                             <div>
-                                                                <p>Our goal is to make our clients feel speacial and to
-                                                                    give then the unique design experience they deserve.
+                                                                <p>"A Game-Changer for Hiring!"
+                                                                    "Isumax made hiring freelancers easy and secure!
+                                                                    Every project was delivered on time, and the quality
+                                                                    exceeded my expectations. Highly recommend!".
                                                                 </p>
-                                                                <h4>Donna Stoupe</h4>
+                                                                <h4>— James R., Startup Founder</h4>
                                                                 <div class="d-flex align-item-center"><i
                                                                         class="fa-solid fa-star"></i><i
                                                                         class="fa-solid fa-star"></i><i
@@ -296,10 +309,13 @@
                                                             <img src="/images/about/about-8.jpg" alt=""
                                                                 class="img-fluid">
                                                             <div>
-                                                                <p>Our goal is to make our clients feel speacial and to
-                                                                    give then the unique design experience they deserve.
+                                                                <p>
+                                                                    "Best Platform for Freelancers!"
+                                                                    "Isumax stands out from other platforms! Genuine
+                                                                    clients, smooth payments, and great support. A
+                                                                    must-join for freelancers!".
                                                                 </p>
-                                                                <h4>Donna Stoupe</h4>
+                                                                <h4>— Aisha M., Graphic Designer</h4>
                                                                 <div class="d-flex align-item-center"><i
                                                                         class="fa-solid fa-star"></i><i
                                                                         class="fa-solid fa-star"></i><i
@@ -316,10 +332,13 @@
                                                             <img src="/images/about/about-13.jpg" alt=""
                                                                 class="img-fluid">
                                                             <div>
-                                                                <p>Our goal is to make our clients feel speacial and to
-                                                                    give then the unique design experience they deserve.
+                                                                <p>
+                                                                    "Safe & Secure Transactions!"
+                                                                    "Yes-Deal made my online purchase stress-free! Funds
+                                                                    were held securely until I got exactly what I paid
+                                                                    for. No risks, just a smooth deal!".
                                                                 </p>
-                                                                <h4>Donna Stoupe</h4>
+                                                                <h4>— David K., Verified Buyer</h4>
                                                                 <div class="d-flex align-item-center"><i
                                                                         class="fa-solid fa-star"></i><i
                                                                         class="fa-solid fa-star"></i><i

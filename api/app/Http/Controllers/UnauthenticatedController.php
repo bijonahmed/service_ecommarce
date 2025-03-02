@@ -320,13 +320,16 @@ class UnauthenticatedController extends Controller
 
         $search = $request->slug;
         $page = $request->page;
+        $keywords = explode(' ', $search); // Split search input into keywords
 
-        $filterData = Gig::where(function ($query) use ($search) {
-            $query->where('gig.name', 'LIKE', '%' . $search . '%')
-                ->orWhere('gig.gig_description', 'LIKE', '%' . $search . '%')
-                ->orWhere('gig.basic_description', 'LIKE', '%' . $search . '%')
-                ->orWhere('gig.stn_descrition', 'LIKE', '%' . $search . '%')
-                ->orWhere('gig.premium_description', 'LIKE', '%' . $search . '%');
+        $filterData = Gig::where(function ($query) use ($keywords) {
+            foreach ($keywords as $keyword) {
+                $query->orWhere('gig.name', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('gig.gig_description', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('gig.basic_description', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('gig.stn_descrition', 'LIKE', '%' . $keyword . '%')
+                    ->orWhere('gig.premium_description', 'LIKE', '%' . $keyword . '%');
+            }
         })
             ->join('users', 'gig.user_id', '=', 'users.id')
             ->join('categorys', 'gig.category_id', '=', 'categorys.id')
@@ -344,6 +347,7 @@ class UnauthenticatedController extends Controller
                 'country.countryname as countryname'
             )
             ->paginate(12);
+
 
         $data = [];
         foreach ($filterData as $v) {
@@ -383,32 +387,29 @@ class UnauthenticatedController extends Controller
         try {
             $rows = Gig::where('gig.status', 1)
                 ->join('users', 'gig.user_id', '=', 'users.id')
-                ->select('gig.*', 'users.name as user_name', 'users.email as user_email', 'types', 'users.image as freelancer_images', 'users.slug as sellerSlug')
+                ->select(
+                    'gig.*',
+                    'users.name as user_name',
+                    'users.email as user_email',
+                    'types',
+                    'users.image as freelancer_images',
+                    'users.slug as sellerSlug'
+                )
                 ->where(function ($query) use ($categoryID) {
                     $query->where('category_id', $categoryID)
                         ->orWhere('subcategory_id', $categoryID)
                         ->orWhere('insubcategory_id', $categoryID);
                 })
-                ->orderBy('gig.id', 'desc')
+                ->inRandomOrder() // ✅ Ensure this is before paginate()
                 ->paginate(20);
-
-
-
 
             $data = [];
             foreach ($rows as $v) {
-
                 $completeOrder =  Order::where('sellerId', $v->user_id)->where('order_status', 5)->count('order_status');
                 $seller_review =  SellerReview::where('seller_id', $v->user_id)->count('id');
                 $totaStar      =  SellerReview::where('seller_id', $v->user_id)->sum('rating');
-                if ($seller_review > 0) {
-                    // Calculate the average rating and round up to the next whole number
-                    $calculatedReview = $totaStar / $seller_review;
-                } else {
-                    // Handle the case where there are no reviews to avoid division by zero
-                    $calculatedReview = 0;
-                }
 
+                $calculatedReview = ($seller_review > 0) ? ($totaStar / $seller_review) : 0;
 
                 $data[] = [
                     'id'                => $v->id,
@@ -424,9 +425,9 @@ class UnauthenticatedController extends Controller
                     'calculatedReview'  => $calculatedReview,
                     'thumbnail_images'  => !empty($v->thumbnail_images) ? url($v->thumbnail_images) : "",
                     'freelancer_images' => !empty($v->freelancer_images) ? url($v->freelancer_images) : "",
-
                 ];
             }
+
 
             // dd($data);
 

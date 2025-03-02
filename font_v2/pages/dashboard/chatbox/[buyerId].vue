@@ -4,7 +4,7 @@
   <body class="bgc-thm1">
     <div class="wrapper ovh">
       <Header />
-      <MobileMenu />
+      <!-- <MobileMenu /> -->
       <div class="body_content">
 
         <!-- Breadcumb Sections -->
@@ -12,24 +12,21 @@
         <div class="loading-indicator d-none" v-if="loading" style="text-align: center;">
           <ChatLoader />
         </div>
-        <section class="breadcumb-section">
+        <section class="breadcumb-section d-none d-lg-block">
           <center style="display: none;"><button @click="getBuyerUserId" id="clickstorageId">Get Local Storage
               UserIds</button></center>
           <div class="container-fluid">
             <div class="row">
-              <div class="col-sm-8 col-lg-10">
-                <div class="breadcumb-style1 mb10-xs">
-                  <div class="breadcumb-list">
-                    <nuxt-link to="/dashboard/welcome">Dashboards</nuxt-link>
-                    <a href="#">Messages</a>
+              <div class="col-md-12">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="breadcumb-style1  ">
+                    <div class="breadcumb-list">
+                      <nuxt-link to="/dashboard/welcome">Dashboards</nuxt-link>
+                      <a href="#">Messages</a>
+                    </div>
                   </div>
-                </div>
-              </div>
-              <div class="col-sm-4 col-lg-2">
-                <div class="d-flex align-items-center justify-content-sm-end">
-                  <div class="share-save-widget d-flex align-items-center">
-                    <div class="h6 mb-0"><nuxt-link to="/dashboard/chatbox">Back</nuxt-link></div>
-                  </div>
+
+                  <nuxt-link to="/dashboard/chatbox">Back</nuxt-link>
                 </div>
               </div>
             </div>
@@ -96,7 +93,7 @@
                           </div>
                           <div v-else>
                             <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
-                              }}</a>
+                            }}</a>
                           </div>
                         </div>
                         <span class="timestamp">{{ message.time_sent }}</span>
@@ -281,6 +278,8 @@
             <div class="col-md-12">
               <!-- user list  -->
               <div class="message_container" v-if="activeDiv === 'list'">
+                <div class="d-flex px-2 d-lg-none">
+                  <nuxt-link to="/dashboard/chatbox"><i class="fa-solid fa-arrow-left"></i></nuxt-link></div>
                 <div class="m-4 d-flex align-items-center justify-content-center">
                   <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch"
                     @keyup="getChatusersList">
@@ -310,7 +309,8 @@
                 <div class="card-header d-flex">
                   <button type="button" style="background: transparent; border: none; color: #fff;" @click="change()"><i
                       class="fa-solid fa-arrow-left me-2"></i></button>
-                  <div class="justify-content-between align-items-center d-flex p-2" @click="profile" style="cursor: pointer;">
+                  <div class="justify-content-between align-items-center d-flex p-2" @click="profile"
+                    style="cursor: pointer;">
                     <span class="text-white text-start" v-if="user_name">{{ user_name }}</span>
                   </div>
                   <span style="font-size: 12px;"></span>
@@ -334,7 +334,7 @@
                           </div>
                           <div v-else>
                             <a :href="message.files" target="_blank" class="file-link">{{ getFileName(message.files)
-                              }}</a>
+                            }}</a>
                           </div>
                         </div>
                         <span class="timestamp">{{ message.time_sent }}</span>
@@ -393,7 +393,7 @@
 
                     </div>
 
-                    <small style="display: block; margin-top: 5px; color: #888;">Max File Size: 1GB</small>
+                    <!-- <small style="display: block; margin-top: 5px; color: #888;">Max File Size: 1GB</small> -->
                   </form>
 
                   <!-- File Preview Modal -->
@@ -450,7 +450,9 @@
 
               <div class="bg-white h-100 p-4" v-if="activeDiv === 'profile'">
                 <div class="w-100 d-flex">
-                  <button type="button" @click="backProfile" style="background-color: transparent;border: none;"><i class="fa-solid fa-arrow-left mx-2"></i></button></div>
+                  <button type="button" @click="backProfile" style="background-color: transparent;border: none;"><i
+                      class="fa-solid fa-arrow-left mx-2"></i></button>
+                </div>
 
                 <img :src="profilePicture || '/blank_user.jpg'" alt="" class="img-fluid rounded-circle bg-red"
                   style="height: 80px;width: 80px;">
@@ -515,7 +517,7 @@
 
     <!-- Modal Template -->
 
-    <Footer />
+    <!-- <Footer /> -->
   </body>
 </template>
 
@@ -1215,7 +1217,7 @@ input[type="file"]+label {
 
 @media (max-width: 575.98px) {
   .body_content {
-    padding: 20px 10px;
+    padding: 0px 10px;
   }
 }
 
@@ -1293,5 +1295,17 @@ input[type="file"]+label {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+}
+
+@media(max-width: 992px) {
+  .dashboard__content {
+    padding: 0;
+  }
+  .MobileMessage .col-md-12{
+    padding: 0;
+  }
+  .body_content {
+    padding: 0px 10px;
+  }
 }
 </style>

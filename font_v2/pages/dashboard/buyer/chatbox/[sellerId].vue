@@ -4,7 +4,7 @@
   <body class="bgc-thm1">
     <div class="wrapper ovh">
       <Header />
-      <MobileMenu />
+      <!-- <MobileMenu /> -->
       <div class="body_content">
        
 
@@ -15,23 +15,20 @@
         <div class="loading-indicator" v-if="loading" style="text-align: center;">
           <ProgressbarLoader />
         </div>
-        <section class="breadcumb-section">
+        <section class="breadcumb-section d-none d-lg-block">
           <div class="container-fluid">
             <div class="row">
-              <div class="col-sm-8 col-lg-10">
-                <div class="breadcumb-style1 mb10-xs">
-                  <div class="breadcumb-list">
-                    <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
-                    <a href="#">Messages</a>
-                  </div>
-                </div>
-              </div>
-              <div class="col-sm-4 col-lg-2">
-                <div class="d-flex align-items-center justify-content-sm-end">
-                  <div class="share-save-widget d-flex align-items-center">
-                    <div class="h6 mb-0"><nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link></div>
+              <div class="col-sm-12 col-lg-12">
+                
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                  <div class="breadcumb-style1  ">
+                    <div class="breadcumb-list">
+                      <nuxt-link to="/dashboard/buyer/welcome">Dashboard</nuxt-link>
+                      <a href="#">Messages</a>
+                    </div>
                   </div>
 
+                  <nuxt-link to="/dashboard/buyer/welcome">Back</nuxt-link>
                 </div>
               </div>
             </div>
@@ -195,6 +192,8 @@
             <div class="col-md-12">
               <!-- user list  -->
               <div class="message_container" v-if="activeDiv === 'list'">
+                <div class="d-flex px-2 d-lg-none">
+                  <nuxt-link to="/dashboard/chatbox"><i class="fa-solid fa-arrow-left"></i></nuxt-link></div>
                 <div class="m-4 d-flex align-items-center justify-content-center">
                   <input type="text" placeholder="Search" class="form-control search_form" v-model="txtSearch"
                     @keyup="getChatusersList">
@@ -430,7 +429,7 @@
 
     <!-- Modal Template -->
 
-    <Footer />
+    <!-- <Footer /> -->
   </body>
 </template>
 
@@ -979,5 +978,17 @@ input[type="file"]+label {
 .send_button {
   background: #1f4b3f !important;
   color: #fff;
+}
+
+@media(max-width: 992px) {
+  .dashboard__content {
+    padding: 0;
+  }
+  .MobileMessage .col-md-12{
+    padding: 0;
+  }
+  .body_content {
+    padding: 0px 10px;
+  }
 }
 </style>

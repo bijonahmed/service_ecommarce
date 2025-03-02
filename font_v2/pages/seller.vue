@@ -62,16 +62,7 @@
                                             aria-labelledby="nav-accountpayment-tab">
                                             <div class="for-hire">
                                                 <h4>For Hiring</h4>
-                                                <p class="text mb30">It is a long established fact that a reader will be
-                                                    distracted by the readable content of a page when looking at its
-                                                    layout. The point of using Lorem Ipsum is that it has a more-or-less
-                                                    normal distribution of letters, as opposed to using 'Content here,
-                                                    content here', making it look like readable English.</p>
-                                                <p class="text mb40">Many desktop publishing packages and web page
-                                                    editors now use Lorem Ipsum as their default model text, and a
-                                                    search for 'lorem ipsum' will uncover many web sites still in their
-                                                    infancy. Various versions have evolved over the years, sometimes by
-                                                    accident, sometimes on purpose (injected humour and the like).</p>
+                                                <p class="text mb30">Are you ready to turn your skills into earnings? At Isumax, we empower talented freelancers like you to showcase your expertise, connect with global clients, and get paid for doing what you love. Whether you're a designer, developer, writer, marketer, or offer any other digital service, Isumax is your platform to grow and succeed.</p>
                                                 <nuxt-link to="/sign-up" class="ud-btn btn-thm-border mb25 me-4">Get Started<i
                                                         class="fal fa-arrow-right-long"></i></nuxt-link>
                                             </div>
@@ -116,9 +107,9 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-cv"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Post a job</h4>
-                                            <p class="text">It’s free and easy to post a job. Simply fill <br
-                                                    class="d-none d-xxl-block"> in a title, description.</p>
+                                            <h4 class="title mt10 mb-3">Sign Up for Free</h4>
+                                            <p class="text">Create a compelling profile showcasing your <br
+                                                    class="d-none d-xxl-block"> skills and expertise.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -126,9 +117,8 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-web-design"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Choose freelancers</h4>
-                                            <p class="text">It’s free and easy to post a job. Simply fill <br
-                                                    class="d-none d-xxl-block"> in a title, description.</p>
+                                            <h4 class="title mt10 mb-3">List Your Services</h4>
+                                            <p class="text">Add gigs detailing what you offer and set your price</p>
                                         </div>
                                     </div>
                                 </div>
@@ -136,9 +126,8 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-secure"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Pay safely</h4>
-                                            <p class="text">It’s free and easy to post a job. Simply fill <br
-                                                    class="d-none d-xxl-block"> in a title, description.</p>
+                                            <h4 class="title mt10 mb-3">Get Hired & Deliver</h4>
+                                            <p class="text">Start receiving orders, complete work, and satisfy your clients.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -147,9 +136,9 @@
                                         <div class="icon before-none"><span class="flaticon-customer-service"></span>
                                         </div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">We’re here to help</h4>
-                                            <p class="text">It’s free and easy to post a job. Simply fill <br
-                                                    class="d-none d-xxl-block"> in a title, description.</p>
+                                            <h4 class="title mt10 mb-3">Get Paid & Grow</h4>
+                                            <p class="text">Receive payments securely and grow your freelancing career.
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -166,36 +155,44 @@
                                     <div class="col-xl-5">
                                         <div class="mb30">
                                             <div class="main-title">
-                                                <h2 class="title">A whole world of freelance <br
-                                                        class="d-none d-md-block"> talent at your fingertips</h2>
+                                                <h2 class="title">Why Sell on Isumax?</h2>
                                             </div>
                                         </div>
                                         <div class="why-chose-list">
                                             <div class="list-one d-flex align-items-start mb30">
-                                                <span class="list-icon flex-shrink-0 flaticon-badge"></span>
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-badge"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Proof of quality</h4>
-                                                    <p class="text mb-0 fz15">Check any pro’s work samples, client
-                                                        reviews, and identity <br class="d-none d-lg-block">
-                                                        verification.</p>
+                                                    <h4 class="mb-1">Zero Upfront Investment</h4>
+                                                    <p class="text mb-0 fz15">Start earning without any registration fees.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
-                                                <span class="list-icon flex-shrink-0 flaticon-money"></span>
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-money"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">No cost until you hire</h4>
-                                                    <p class="text mb-0 fz15">Interview potential fits for your job,
-                                                        negotiate rates, and only pay <br class="d-none d-lg-block"> for
-                                                        work you approve.</p>
+                                                    <h4 class="mb-1">Global Exposure</h4>
+                                                    <p class="text mb-0 fz15">Reach clients from around the world looking for your skills.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
-                                                <span class="list-icon flex-shrink-0 flaticon-security"></span>
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Safe and secure</h4>
-                                                    <p class="text mb-0 fz15">Focus on your work knowing we help protect
-                                                        your data and privacy. We’re here with 24/7 support if you need
-                                                        it.</p>
+                                                    <h4 class="mb-1">Secure Payments</h4>
+                                                    <p class="text mb-0 fz15">Get paid fairly and on time with our secure payment system.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <div class="list-one d-flex align-items-start mb30">
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
+                                                <div class="list-content flex-grow-1 ml20">
+                                                    <h4 class="mb-1">Flexible Work</h4>
+                                                    <p class="text mb-0 fz15">Be your own boss, set your own rates, and choose projects that fit your expertise.</p>
+                                                </div>
+                                            </div>
+                                            <div class="list-one d-flex align-items-start mb30">
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
+                                                <div class="list-content flex-grow-1 ml20">
+                                                    <h4 class="mb-1">Exclusive Rewards</h4>
+                                                    <p class="text mb-0 fz15"> – Earn extra through our seller achievements and performance-based bonuses</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -281,7 +278,7 @@
                                 <div class="col-lg-6 m-auto">
                                     <div class="main-title text-center">
                                         <h2 class="title">Frequently Asked Questions</h2>
-                                        <p class="paragraph mt10">Lorem ipsum dolor sit amet, consectetur.</p>
+                                        <!-- <p class="paragraph mt10">Lorem ipsum dolor sit amet, consectetur.</p> -->
                                     </div>
                                 </div>
                             </div>
@@ -294,75 +291,78 @@
                                                     <h2 class="accordion-header" id="headingOne">
                                                         <button class="accordion-button" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseOne"
-                                                            aria-expanded="true" aria-controls="collapseOne">What
-                                                            methods of payments are supported?</button>
+                                                            aria-expanded="true" aria-controls="collapseOne">What is Isumax?</button>
                                                     </h2>
                                                     <div id="collapseOne" class="accordion-collapse collapse show"
                                                         aria-labelledby="headingOne" data-parent="#accordionExample">
-                                                        <div class="accordion-body">Cras vitae ac nunc orci. Purus amet
-                                                            tortor non at phasellus ultricies hendrerit. Eget a, sit
-                                                            morbi nunc sit id massa. Metus, scelerisque volutpat nec sit
-                                                            vel donec. Sagittis, id volutpat erat vel.</div>
+                                                        <div class="accordion-body">Isumax is a freelancing platform that connects skilled professionals with clients looking for quality digital services.</div>
                                                     </div>
                                                 </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingTwo">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                            aria-expanded="false" aria-controls="collapseTwo">Can I
-                                                            cancel at anytime?</button>
+                                                            aria-expanded="false" aria-controls="collapseTwo">How do I become a freelancer on Isumax?</button>
                                                     </h2>
                                                     <div id="collapseTwo" class="accordion-collapse collapse"
                                                         aria-labelledby="headingTwo" data-parent="#accordionExample">
-                                                        <div class="accordion-body">Cras vitae ac nunc orci. Purus amet
-                                                            tortor non at phasellus ultricies hendrerit. Eget a, sit
-                                                            morbi nunc sit id massa. Metus, scelerisque volutpat nec sit
-                                                            vel donec. Sagittis, id volutpat erat vel.</div>
+                                                        <div class="accordion-body">Simply sign up, create a profile, list your services, and start receiving orders from clients worldwide.</div>
                                                     </div>
                                                 </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingThree">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                            aria-expanded="false" aria-controls="collapseThree">How do I
-                                                            get a receipt for my purchase?</button>
+                                                            aria-expanded="false" aria-controls="collapseThree">Is there a registration fee for freelancers?
+                                                        </button>
                                                     </h2>
                                                     <div id="collapseThree" class="accordion-collapse collapse"
                                                         aria-labelledby="headingThree" data-parent="#accordionExample">
-                                                        <div class="accordion-body">Cras vitae ac nunc orci. Purus amet
-                                                            tortor non at phasellus ultricies hendrerit. Eget a, sit
-                                                            morbi nunc sit id massa. Metus, scelerisque volutpat nec sit
-                                                            vel donec. Sagittis, id volutpat erat vel.</div>
+                                                        <div class="accordion-body">No, joining Isumax is completely free! You can create an account and start offering services without any upfront fees.</div>
                                                     </div>
                                                 </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingFour">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                                            aria-expanded="false" aria-controls="collapseFour">Which
-                                                            license do I need?</button>
+                                                            aria-expanded="false" aria-controls="collapseFour">How do I get paid?</button>
                                                     </h2>
                                                     <div id="collapseFour" class="accordion-collapse collapse"
                                                         aria-labelledby="headingFour" data-parent="#accordionExample">
-                                                        <div class="accordion-body">Cras vitae ac nunc orci. Purus amet
-                                                            tortor non at phasellus ultricies hendrerit. Eget a, sit
-                                                            morbi nunc sit id massa. Metus, scelerisque volutpat nec sit
-                                                            vel donec. Sagittis, id volutpat erat vel.</div>
+                                                        <div class="accordion-body">Payments are securely processed through our system, and you can withdraw earnings using available payment methods.</div>
                                                     </div>
                                                 </div>
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingFive">
                                                         <button class="accordion-button collapsed" type="button"
                                                             data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                                            aria-expanded="false" aria-controls="collapseFive">How do I
-                                                            get access to a theme I purchased?</button>
+                                                            aria-expanded="false" aria-controls="collapseFive">Can I set my own prices?</button>
                                                     </h2>
                                                     <div id="collapseFive" class="accordion-collapse collapse"
                                                         aria-labelledby="headingFive" data-parent="#accordionExample">
-                                                        <div class="accordion-body">Cras vitae ac nunc orci. Purus amet
-                                                            tortor non at phasellus ultricies hendrerit. Eget a, sit
-                                                            morbi nunc sit id massa. Metus, scelerisque volutpat nec sit
-                                                            vel donec. Sagittis, id volutpat erat vel.</div>
+                                                        <div class="accordion-body">Yes, freelancers have full control over pricing their services based on experience and market demand.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingFive">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapsesix"
+                                                            aria-expanded="false" aria-controls="collapseFive">Does Isumax promote my services?</button>
+                                                    </h2>
+                                                    <div id="collapsesix" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingFive" data-parent="#accordionExample">
+                                                        <div class="accordion-body">Yes! Our social media team actively promotes freelancer gigs across multiple platforms to help you gain visibility and attract clients.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-item">
+                                                    <h2 class="accordion-header" id="headingFive">
+                                                        <button class="accordion-button collapsed" type="button"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseseven"
+                                                            aria-expanded="false" aria-controls="collapseFive">How does the rating system work?</button>
+                                                    </h2>
+                                                    <div id="collapseseven" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingFive" data-parent="#accordionExample">
+                                                        <div class="accordion-body">Clients can leave reviews and ratings based on their experience, helping you build credibility and attract more buyers.</div>
                                                     </div>
                                                 </div>
                                             </div>
