@@ -1,8 +1,15 @@
 <?php
 
+Route::get('/clear-cache', function() {
+    \Artisan::call('config:clear');
+    \Artisan::call('cache:clear');
+    \Artisan::call('config:cache');
+    return "Cache cleared!";
+});
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Stripe\CheckOutController;
-use App\Http\Controllers\UnauthenticatedController;
+use App\Http\Controllers\Deposits\PaypalController;
 
 
 /*
@@ -16,11 +23,14 @@ use App\Http\Controllers\UnauthenticatedController;
 |
 */
 
+//For Stripe
 Route::post('/create-checkout-session', [CheckOutController::class, 'createCheckoutSession']);
 Route::get('/checkout/success', [CheckOutController::class, 'checkoutSuccess'])->name('checkout.success'); // Success URL
 Route::get('/checkout/cancel', [CheckOutController::class, 'checkoutCancel'])->name('checkout.cancel'); // Cancel URL
 Route::post('/stripe_webhook', [CheckOutController::class, 'handleStripeWebhook']);
-//Route::post('/stripe_webhook', [UnauthenticatedController::class, 'handleWebhook']);
+//For Paypal 
+Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
+Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
 Route::get('/', function () {
     return view('welcome');
 });

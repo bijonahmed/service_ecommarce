@@ -262,42 +262,43 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="content_part">
-                                <h1>A whole world of freelance talent at your fingertips</h1>
+                                <h1>Unlock a World of Freelance Talent at Your Fingertips</h1>
                                 <ul>
                                     <li>
-                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
-                                            <h2>The best for every budget</h2>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-check-circle fa-solid"></i>
+                                            <h2>Find the Best Talent for Every Budget</h2>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
-                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
-                                            aliquam.</p>
+                                        <p>Access a diverse pool of skilled freelancers ready to bring your ideas to
+                                            life—at prices that suit your needs.</p>
                                     </li>
                                     <li>
-                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
-                                            <h2>The best for every budget</h2>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-check-circle fa-solid"></i>
+                                            <h2>Seamless & Secure Transactions</h2>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
-                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
-                                            aliquam.</p>
+                                        <p>Hire confidently with Isumax ensuring trust, transparency, and safe payments
+                                            within the community.</p>
                                     </li>
                                     <li>
-                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
-                                            <h2>The best for every budget</h2>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-check-circle fa-solid"></i>
+                                            <h2>A Marketplace Built for You</h2>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
-                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
-                                            aliquam.</p>
+                                        <p>Whether you're a business, startup, or individual, Isumax connects you with
+                                            top freelancers across various industries.</p>
                                     </li>
                                     <li>
-                                        <div class="d-flex align-items-center"><i class="fa-check-circle fa-solid"></i>
-                                            <h2>The best for every budget</h2>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fa-check-circle fa-solid"></i>
+                                            <h2>Work Smarter, Achieve More</h2>
                                         </div>
-                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sequi illo magni
-                                            recusandae in voluptatibus exercitationem laudantium quae quia corrupti
-                                            aliquam.</p>
+                                        <p>With Freelancer, collaborate easily, and get results efficiently—all on one
+                                            powerful platform.</p>
                                     </li>
                                 </ul>
                             </div>
+
                         </div>
                         <div class="col-md-4 ms-auto">
                             <div class="talent_img text-end"><img src="/freelance_talent.png" alt=""
@@ -352,7 +353,7 @@
                     <div class="row align-items-center wow fadeInUp" data-wow-delay="300ms">
                         <div class="col-lg-9 m-auto">
                             <div class="main-title2 text-center">
-                                <h1>What Clients Say</h1>
+                                <h1> What Our Clients Say</h1>
                                 <span></span>
                             </div>
                         </div>
@@ -367,58 +368,49 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
-                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
-                                                    iure id ipsa.</p>
+                                                <p>“Isumax has transformed the way we connect with top freelancers. The seamless platform, transparent pricing, and skilled professionals have helped us complete projects efficiently and cost-effectively.”</p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-1.jpg" alt="" class="img-fluid">
                                                     </div>
                                                     <div>
                                                         <h4>Jhone smith</h4>
-                                                        <p>Director of Product Marketing o.c Tabber Company.</p>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
-                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
-                                                    iure id ipsa.</p>
+                                                <p>“Finding the right freelancer used to be a hassle, but Isumax made it effortless. The quality of work, speed of delivery, and support system are outstanding. Highly recommended!”</p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-2.jpg" alt="" class="img-fluid">
                                                     </div>
                                                     <div>
-                                                        <h4>Jhone smith</h4>
-                                                        <h6>Director of Product Marketing o.c Tabber Company.</h6>
+                                                        <h4>Sarah Johnson</h4>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque sunt
-                                                    natus laborum molestiae inventore nostrum laboriosam repudiandae
-                                                    iure id ipsa.</p>
+                                                <p>“Isumax helped us scale our business by connecting us with top-tier freelancers. The secure payment system and transparent workflow made the entire process stress-free.”</p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-3.jpg" alt="" class="img-fluid">
                                                     </div>
                                                     <div>
-                                                        <h4>Jhone smith</h4>
-                                                        <p>Director of Product Marketing o.c Tabber Company.</p>
+                                                        <h4> David Lee</h4>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                
-                                    <!--   Navigation Buttons -->
-                                    <div class="swiper-button-next button_next"></div>
-                                    <div class="swiper-button-prev button_prev"></div>
+
+                                <!--   Navigation Buttons -->
+                                <div class="swiper-button-next button_next"></div>
+                                <div class="swiper-button-prev button_prev"></div>
 
 
                             </div>
@@ -428,7 +420,7 @@
             </section>
 
             <!-- partner section start here  -->
-            <section class="partner_sec">
+            <section class="partner_sec d-none">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-3"><img src="/frontend/partner(1).png" alt="" class="img-fluid w-100"></div>
@@ -450,15 +442,15 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="project_content">
-                                <h4>Project management service <strong>Made for your business</strong></h4>
-                                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta, fugit? Voluptatibus fugiat deserunt dolor omnis similique quibusdam, commodi nemo perspiciatis?</p>
+                                <h4>Unlock Endless Opportunities with Isumax!</h4>
+                                <p>Welcome to Isumax, the ultimate freelance marketplace where businesses and skilled professionals connect effortlessly. Whether you're a business owner in search of top-tier talent or a freelancer ready to showcase your expertise, Isumax provides a secure, efficient, and rewarding experience.</p>
                                 <h6>To get started your have</h6>
                                 <ul>
-                                    <li>
-                                        And e-commerce project requiring experting in various fields
-                                    </li>
-                                    <li>A budget excodding $100000</li>
-                                    <li>A budget excodding $100000</li>
+                                    <li>More Digital Categories – Find experts for every task, big or small.</li>
+                                    <li>Transparent Pricing – Pay securely and only for work you approve.</li>
+                                    <li>Fast & Quality Work – Get top-notch results with quick turnarounds.</li>
+                                    <li>Yes-Deal Secure Transactions – Ensuring trust between buyers and sellers.</li>
+                                    <li>Starx Program – Earn exclusive rewards and benefits through our affiliate system.</li>
                                 </ul>
                                 <a href="#" class="btn btn-primary text-white"> Get started</a>
                             </div>

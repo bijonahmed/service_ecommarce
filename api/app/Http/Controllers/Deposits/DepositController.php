@@ -23,12 +23,7 @@ use Illuminate\Http\Request;
 use App\Models\WalletAddress;
 use App\Models\LoanPayHistory;
 use App\Models\WithdrawMethod;
-use App\Models\AttributeValues;
-use App\Models\ProductCategory;
-use App\Models\ProductVarrient;
-use App\Rules\MatchOldPassword;
-use App\Models\addWithDrawMethod;
-use App\Models\ProductAttributes;
+
 use Illuminate\Http\JsonResponse;
 use PhpParser\Node\Stmt\TryCatch;
 use App\Models\TransactionHistory;

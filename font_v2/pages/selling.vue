@@ -52,7 +52,7 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="text-center sec_title text-white">
-                                        <h2>Join our growing freelance community</h2>
+                                        <h2>Isumax Freelance Cummunity </h2>
                                     </div>
                                 </div>
                             </div>
@@ -60,57 +60,58 @@
                                 <div class="col-md-10 m-auto">
                                     <div class="community_container">
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(1).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(1).jpg" alt="" class="img-fluid">
+                                            <div class="text_c">
+                                                <h4>I am</h4>
+                                                <h4>a designer</h4>
+                                            </div>
+                                        </div>
+                                        <div class="member_commu">
+                                            <img src="/frontend/freelance(8).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
                                                 <h4>a Developer</h4>
                                             </div>
                                         </div>
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(2).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(9).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
-                                                <h4>a Developer</h4>
+                                                <h4>a Video Editor</h4>
                                             </div>
                                         </div>
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(1).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(4).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
-                                                <h4>a Developer</h4>
+                                                <h4>a Business Consultant</h4>
                                             </div>
                                         </div>
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(2).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(5).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
-                                                <h4>a Developer</h4>
+                                                <h4>a Social Media Marketer</h4>
                                             </div>
                                         </div>
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(1).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(6).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
-                                                <h4>a Developer</h4>
+                                                <h4>a Virtual Assistant</h4>
                                             </div>
                                         </div>
                                         <div class="member_commu">
-                                            <img src="/frontend/freelance(2).png" alt="" class="img-fluid">
+                                            <img src="/frontend/freelance(10).jpg" alt="" class="img-fluid">
                                             <div class="text_c">
                                                 <h4>I am</h4>
-                                                <h4>a Developer</h4>
-                                            </div>
-                                        </div>
-                                        <div class="member_commu">
-                                            <img src="/frontend/freelance(1).png" alt="" class="img-fluid">
-                                            <div class="text_c">
-                                                <h4>I am</h4>
-                                                <h4>a Developer</h4>
+                                                <h4>a Accountant </h4>
                                             </div>
                                         </div>
                                         <div class="seller_link ">
                                             <i class="fa-solid fa-heart"></i>
-                                            <h1>What's <br> Your Skill?</h1>
+                                            <h1>Now
+                                                <br> Your turn?</h1>
                                             <a href="#">Become a Seller</a>
                                         </div>
                                     </div>
@@ -473,4 +474,17 @@ onMounted(() => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.member_commu img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+@media (max-width: 576px) {
+  .community_container {
+    display: grid;
+    grid-template-columns: repeat(2, 4fr);
+    gap: 20px;
+  }
+}
+</style>

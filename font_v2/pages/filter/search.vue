@@ -7,7 +7,7 @@
                 <Header />
                 <MobileMenu />
                 <div class="body_content">
-                 
+
                     <div class="loading-indicator" v-if="loading" style="text-align: center;">
                         <Loader />
                     </div>
@@ -19,6 +19,7 @@
                             <section class="pt30 pb90">
                                 <div class="container">
                                     <div class="row">
+                                        <!-- <button class="button" @click="fetchData">Test</button> -->
                                         <div class="col-sm-6 col-xl-3" v-for="data in responseData" :key="data.id">
                                             <div class="listing-style1">
                                                 <div class="list-thumb">
@@ -31,10 +32,10 @@
                                                 </div>
                                                 <div class="list-content">
                                                     <p class="list-text body-color fz14 mb-1">{{ categoryName || ''
-                                                        }}</p>
+                                                    }}</p>
                                                     <h5 class="list-title">
                                                         <nuxt-link :to="`/gigs/${data.gig_slug}`">{{ data.name || ''
-                                                            }} </nuxt-link>
+                                                        }} </nuxt-link>
                                                     </h5>
 
                                                     <hr class="my-2">
@@ -176,30 +177,39 @@ const props = defineProps({
 });
 
 
-const fetchData = async (page = 1) => {
+const fetchData = async () => {
     const slugdata = router.currentRoute.value.query.slug;
+    console.log("slugdata: " + slugdata);
+    //  return false; 
     loading.value = true; // Set loading to true at the start
 
     try {
-        const response = await axios.get(`/unauthenticate/userSearch/`, {
-            params: {
-                slug: slugdata,
-                page: page, // Pass the page number
-            },
-        });
-        if (page === 1) {
-            responseData.value = response.data.data;
-        } else {
-            responseData.value.push(...response.data.data);
-        }
+        const response =  await axios.get(`/unauthenticate/userSearch/${slugdata}`);
+        // const response = await axios.get(`https://api.isumax.com/api/unauthenticate/userSearch/`, {
+        //     params: { slug: slugdata, page: page },
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Accept': 'application/json'
+        //     },
+        //     withCredentials: false // Change to `true` if API requires authentication cookies
+        // });
+        responseData.value = response.data.data;
+        // if (page === 1) {
+
+        // } else {
+        //     responseData.value.push(...response.data.data);
+        // }
+
         currentPage.value = response.data.pagination.current_page;
         totalPages.value = response.data.pagination.last_page;
+
     } catch (error) {
         errorMessage.value = error.response ? error.response.data.message : 'An error occurred.';
         console.error('Error fetching data:', error);
     } finally {
         loading.value = false;
     }
+
 };
 const isActive = (slug) => {
     return slug === route.params.slug; // Compare slug with the current route's slug
@@ -207,7 +217,7 @@ const isActive = (slug) => {
 
 onMounted(async () => {
     fetchData();
-   
+
 });
 
 </script>
@@ -253,19 +263,19 @@ onMounted(async () => {
 }
 
 .body_content {
-  padding: 100px;
+    padding: 100px;
 }
 
 @media (max-width: 991.98px) {
-  .body_content {
-    padding: 20px 20px 150px;
-  }
+    .body_content {
+        padding: 20px 20px 150px;
+    }
 }
 
 @media (max-width: 575.98px) {
-  .body_content {
-    padding: 20px 10px;
-  }
+    .body_content {
+        padding: 20px 10px;
+    }
 }
 
 .categories_list_section {

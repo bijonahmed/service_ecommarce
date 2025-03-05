@@ -53,121 +53,115 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="title_sec">
-                                        <h1>YES DEALS</h1>
+                                        <h1>How Yes Deals Works</h1>
                                     </div>
                                     <div class="deals_container">
                                         <div class="deal_content">
                                             <img src="/image/group_crate.png" alt="" class="img-fluid">
-                                            <h4>Group Creation</h4>
-                                            <p>Buyer Action: The buyer creates a
-                                                WhatsApp group and adds the seller and
-                                                "Yes-Deal" as participants.
-                                                Purpose: This ensures that both parties
-                                                and the mediator are in the loop
-                                                throughout the transaction
+                                            <h4>Group Creation & Deal Setup</h4>
+                                            <p class="text-black">
+                                            <ul>
+                                                <li>
+                                                    <p>The buyer creates a WhatsApp group and adds the Seller & Yes-Deal
+                                                        for transparency.</p>
+                                                </li>
+                                                <li>
+                                                    <p>The buyer shares the deal requirements (product details, price,
+                                                        and quantity).</p>
+                                                </li>
+                                                <li>
+                                                    <p>The seller confirms they can fulfill the request.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To ensure both parties and Yes-Deal have a clear
+                                                        understanding before proceeding</p>
+                                                </li>
+                                            </ul>
                                             </p>
                                         </div>
                                         <div class="deal_content">
                                             <img src="/image/BuyerShare.png" alt="" class="img-fluid">
-                                            <h4>BUYER SHARES
-                                                REQUIREMENTS</h4>
-                                            <p>Buyer Action: The buyer lists all the
-                                                requirements for the transaction in the group
-                                                chat, numbered for clarity (e.g., product
-                                                specifications, quantity, and price).
-                                                Purpose: This provides a clear and
-                                                transparent outline of the transaction's
-                                                expectations.
-
+                                            <h4>Buyer Sends Payment to Yes-Deal (Escrow Hold)</h4>
+                                            <p>
+                                            <ul>
+                                                <li>
+                                                    <p>The buyer transfers the payment to Yes-Deal and shares a
+                                                        screenshot in the group.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Yes-Deal verifies the payment before giving the seller a green
+                                                        light.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To securely hold funds and prevent scams before delivery</p>
+                                                </li>
+                                            </ul>
                                             </p>
                                         </div>
                                         <div class="deal_content">
                                             <img src="/image/seller_confirm.png" alt="" class="img-fluid">
-                                            <h4>SELLER CONFIRMS
-                                                REQUIREMENTS</h4>
-                                            <p>Seller Action: The seller responds in
-                                                the group, confirming that they can
-                                                meet the buyer's requirements.
-                                                Purpose: The confirmation assures the
-                                                buyer that the seller has the items or
-                                                services requested and is ready to
-                                                proceed.
-
+                                            <h4>Seller Delivers Product/Service</h4>
+                                            <p>
+                                            <ul>
+                                                <li>
+                                                    <p>The seller delivers the agreed product/service in the WhatsApp
+                                                        group.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To confirm that the product/service is provided as per
+                                                        agreement.</p>
+                                                </li>
+                                            </ul>
                                             </p>
                                         </div>
                                         <div class="deal_content">
                                             <img src="/image/verify_receipt.png" alt="" class="img-fluid">
                                             <h4>Buyer Verifies Receipt</h4>
-                                            <p>Buyer Action: The buyer proceeds to
-                                                make the payment to the "Yes-Deal"
-                                                account and shares a screenshot of
-                                                the transaction in the group.
-                                                Purpose: This step ensures that funds are
-                                                securely held by the mediator (Yes-Deal)
-                                                and are only released after the deal is
-                                                successfully completed.</p>
+                                            
+                                            <ul>
+                                                <li>
+                                                    <p>Buyer verifies that the received product/service matches the
+                                                        agreed terms.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To ensure buyer satisfaction before releasing the payment
+                                                    </p>
+                                                </li>
+                                            </ul>
                                         </div>
                                         <div class="deal_content">
                                             <img src="/image/varified_payment.png" alt="" class="img-fluid">
-                                            <h4>YES-DEAL VERIFIES
-                                                PAYMENT</h4>
-                                            <p>Yes-Deal Action: "Yes-Deal"
-                                                verifies the payment by crosschecking the buyer's screenshot
-                                                with the payment records.
-                                                Purpose: Ensures that the payment
-                                                has been received before the seller
-                                                sends any goods or services.</p>
+                                            <h4>Buyer Confirms Receipt</h4>
+                                            <p>
+                                                <ul>
+                                                    <li>
+                                                        <p>Once the buyer confirms receipt, Yes-Deal releases the payment to the seller.</p>
+                                                    </li>
+                                                    <li>
+                                                        <p>Why? To ensure fair and secure transactions for both parties.</p>
+                                                    </li>
+                                                </ul>
+                                            </p>
                                         </div>
                                         <div class="deal_content">
                                             <img src="/image/deliver.png" alt="" class="img-fluid">
-                                            <h4>SELLER DELIVERS
-                                                PRODUCT/SERVICE</h4>
-                                            <p>Seller Action: After payment is
-                                                confirmed, the seller shares the
-                                                digital product or item(s) in the group.
-                                                Purpose: This confirms that the seller has
-                                                delivered the requested product to the
-                                                buyer.
-                                            </p>
-                                        </div>
-                                        <div class="deal_content">
-                                            <img src="/image/varified.png" alt="" class="img-fluid">
-                                            <h4>PAYMENT MADE TO
-                                                YES-DEAL ACCOUNT</h4>
-                                            <p>Buyer Action: The buyer verifies that the
-                                                received product or service meets the
-                                                listed requirements and is satisfactory.
-                                                Purpose: The buyer confirms that the
-                                                transaction has been completed correctly.
-                                            </p>
-                                        </div>
-                                        <div class="deal_content">
-                                            <img src="/image/fianance_varification.png" alt="" class="img-fluid">
-                                            <h4>FINAL VERIFICATION &
-                                                PAYMENT RELEASE</h4>
-                                            <p>Buyer Action: The buyer verifies that the
-                                                received product or service meets the
-                                                listed requirements and is satisfactory.
-                                                Purpose: The buyer confirms that the
-                                                transaction has been completed correctly.
-                                            </p>
-                                        </div>
-                                        <div class="deal_content">
-                                            <img src="/image/deal_com.png" alt="" class="img-fluid">
-                                            <h4>DEAL COMPLETION
-                                                AND CONFIRMATION</h4>
-                                            <p>Yes-Deal Action: Once payment is
-                                                released,
-                                                "Yes-Deal" sends a final
-                                                confirmation in the group,
-                                                congratulating both parties for a secure
-                                                and successful transaction.
-                                                Purpose: Officially concludes the
-                                                transaction and reinforces trust in the
-                                                service.
+                                            <h4>Yes-Deal Releases Payment to Seller</h4>
+                                            <p>
+                                                <ul>
+                                                    <li>
+                                                        <p>Yes-Deal officially confirms the successful transaction in the group.</p>
+                                                    </li>
+                                                    <li>
+                                                        <p>Both parties receive a final confirmation message from Yes-Deal.</p>
+                                                    </li>
+                                                    <li>
+                                                        <p>Why? To reinforce trust and encourage future secure deals!</p>
+                                                    </li>
+                                                </ul>
 
                                             </p>
                                         </div>
+                                        
                                     </div>
                                 </div>
                             </div>

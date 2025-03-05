@@ -810,6 +810,7 @@ class UserController extends Controller
                 'account_name' => $v->account_name,
                 'account_num'  => $v->account_num,
                 'countryName'  => $v->countryName,
+                'swift_bic'    => $v->swift_bic,
                 'ibn_no'       => $v->ibn_no,
                 'bankName'     => !empty($bankrow) ? $bankrow->name : "",
                 'bank_name'    => !empty($v->bank_name) ? $v->bank_name : "",
@@ -860,13 +861,14 @@ class UserController extends Controller
 
     public function addCryptoWalletAddressBank(Request $request)
     {
+        //dd($request->all());
 
         $validator = Validator::make($request->all(), [
             'countryName'      => 'required',
             'account_name'     => 'required',
             'account_num'      => 'required',
             'ibn_no'           => 'required',
-            'bank_name'        => 'required',
+            'bank_id'          => 'required',
             'swift_bic'        => 'required',
         ]);
 

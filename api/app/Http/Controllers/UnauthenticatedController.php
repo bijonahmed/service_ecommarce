@@ -315,11 +315,12 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
-    public function userSearch(Request $request)
+    public function userSearch($slug)
     {
+      //  dd($slug);
 
-        $search = $request->slug;
-        $page = $request->page;
+        $search = $slug;
+       // $page = $request->page;
         $keywords = explode(' ', $search); // Split search input into keywords
 
         $filterData = Gig::where(function ($query) use ($keywords) {

@@ -19,10 +19,10 @@ use App\Http\Controllers\Cart\CartController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Deposits\DepositController;
-use App\Http\Controllers\Deposits\DropUserController;
+use App\Http\Controllers\Deposits\PaypalController;
 use App\Http\Controllers\Post\PostController;
 use App\Http\Controllers\Payment\PaymentController;
-use App\Http\Controllers\Payment\PaymentIntentController;
+ 
 
 /*
 |--------------------------------------------------------------------------
@@ -255,9 +255,9 @@ Route::group(
         Route::post('updateDepositRequest', [DepositController::class, 'updateDepositRequest']);
         Route::post('updateWithDrawRequest', [DepositController::class, 'updateWithDrawRequest']);
         Route::post('addWithDrawMethod', [DepositController::class, 'addWithDrawMethod']);
-        Route::get('approvedWithdrawRequest/{id}', [DropUserController::class, 'approvedWithdrawRequest']);
         //api 
         Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
+        Route::post('/create-payment-paypal', [PaypalController::class, 'createPaymentPaypal']);
     },
 );
 
@@ -366,8 +366,7 @@ Route::group(
 Route::group(['prefix' => 'unauthenticate'], function () {
 
     //strip
-    Route::get('/stripe/payment-intent/{id}', [PaymentIntentController::class, 'retrievePaymentIntent']);
-
+    //Route::get('/stripe/payment-intent/{id}', [PaymentIntentController::class, 'retrievePaymentIntent']);
     Route::get('allCategory', [UnauthenticatedController::class, 'allCategoryActiveStatus']);
     Route::get('allActiveCategory', [UnauthenticatedController::class, 'allActiveCategory']);
     Route::get('checkContent', [UnauthenticatedController::class, 'checkContent']);
@@ -384,7 +383,7 @@ Route::group(['prefix' => 'unauthenticate'], function () {
     Route::get('filterCategoryesSlug', [UnauthenticatedController::class, 'filterCategoryesSlug']);
     Route::get('findCategorys', [UnauthenticatedController::class, 'findCategorys']);
     Route::get('findgig', [UnauthenticatedController::class, 'findgig']);
-    Route::get('userSearch', [UnauthenticatedController::class, 'userSearch']);
+    Route::get('userSearch/{slug}', [UnauthenticatedController::class, 'userSearch']);
     Route::get('getAllcountrys', [UnauthenticatedController::class, 'getCountry']);
     Route::get('getSettingData', [UnauthenticatedController::class, 'getSettingData']);
 });

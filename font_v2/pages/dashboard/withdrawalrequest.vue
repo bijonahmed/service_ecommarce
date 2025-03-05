@@ -340,16 +340,16 @@
                 <div class="tab-pane fade" id="AddBank" role="tabpanel" aria-labelledby="AddBank-tab">
                   <div class="row">
                     <div class="col-md-5">
-                      <form class="mt-3" @submit.prevent="submitWithdrawalAddressBank()">
+                      <form class="mt-3"  @submit.prevent="submitWithdrawalAddressBank()">
                         <div>
                           <label for="withdrawalMethod" class="form-label">Country:</label>
-                          <select name="" id="" class="form-control">
+                          <select name="" id="" class="form-control" v-model="insertdataBank.countryName">
                             <option value="" selected disabled >Select country</option>
-                            <option value="">Bangladesh</option>
-                            <option value="">Pakistan</option>
-                            <option value="">USA</option>
+                            <option>Bangladesh</option>
+                            <option>Pakistan</option>
+                            <option>USA</option>
                           </select>
-                          <span class="text-danger" v-if="errors.account_name">{{ errors.account_name[0] }}</span>
+                          <span class="text-danger" v-if="errors.countryName">{{ errors.countryName[0] }}</span>
                         </div>
                        
                         <div>
@@ -414,7 +414,7 @@
                             <th scope="col">Account Number</th>
                             <th scope="col">IBN No.</th>
                             <th scope="col">Bank Name</th>
-                            <th scope="col">Branch Name</th>
+                            <th scope="col">SWIFT/BIC</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -423,7 +423,7 @@
                             <td>{{ withdrawal.account_num }}</td>
                             <td>{{ withdrawal.ibn_no }}</td>
                             <td>{{ withdrawal.bankName }}</td>
-                            <td>{{ withdrawal.branchName }}</td>
+                            <td>{{ withdrawal.swift_bic }}</td>
                           </tr>
                           <tr v-if="withDrawaldata.length === 0">
                             <td colspan="5" class="text-center">No Bank data available.</td>
@@ -493,6 +493,7 @@ const insertdatawithdrwal = reactive({
 });
 const insertdataBank = reactive({
   account_name: '',
+  countryName:'',
   account_num: '',
   ibn_no: '',
   bank_id: '',
@@ -562,6 +563,7 @@ const submitWithdrawalAddressBank = () => {
 
   const formData = new FormData();
   formData.append('type', 'bank');
+  formData.append('countryName', insertdataBank.countryName);
   formData.append('account_name', insertdataBank.account_name);
   formData.append('account_num', insertdataBank.account_num);
   formData.append('ibn_no', insertdataBank.ibn_no);

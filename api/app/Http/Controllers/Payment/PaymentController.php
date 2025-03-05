@@ -33,8 +33,7 @@ class PaymentController extends Controller
         }
     }
 
-
-
+ 
 
     public function createPaymentIntent(Request $request)
     {

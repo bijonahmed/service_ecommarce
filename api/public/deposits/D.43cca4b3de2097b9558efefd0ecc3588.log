@@ -1,0 +1,11 @@
+{
+    "depositID": "D.43cca4b3de2097b9558efefd0ecc3588",
+    "email": "buyer1@gmail.com",
+    "product": "Custom Payment",
+    "deposit_amount": 22,
+    "currency": "USD",
+    "payment_method": "Strip",
+    "user_id": 3,
+    "payment_status": "pending",
+    "checkout_url": "https:\/\/checkout.stripe.com\/c\/pay\/cs_live_b1803YWla0aJ6fg7hs1J4IsxdkvQgkOW6GNAJusolvf7Ft1a4GRR8s1VIe#fidkdWxOYHwnPyd1blppbHNgWjA0VDxEcWdXcTdXSTBzPHRVan9UdU5QRHdDQDRGTkc8bH8wPWR2VWFJPTdmVjdQV2JxbVI1aktTSUhRXzVxcXdRaXRWamdzNlVwNU9LSU9KNEpKY3FwUHBcNTVKQ1Q9QnBHaScpJ2N3amhWYHdzYHcnP3F3cGApJ2lkfGpwcVF8dWAnPydocGlxbFpscWBoJyknYGtkZ2lgVWlkZmBtamlhYHd2Jz9xd3BgeCUl"
+}

@@ -62,7 +62,8 @@
                                             aria-labelledby="nav-accountpayment-tab">
                                             <div class="for-hire">
                                                 <h4>For Hiring</h4>
-                                                <p class="text mb30">Are you ready to turn your skills into earnings? At Isumax, we empower talented freelancers like you to showcase your expertise, connect with global clients, and get paid for doing what you love. Whether you're a designer, developer, writer, marketer, or offer any other digital service, Isumax is your platform to grow and succeed.</p>
+                                                <p class="text mb30">"Find the Right Talent for Your Business on Isumax!"
+                                                    Need expert freelancers to get your job done? Isumax connects you with skilled professionals ready to deliver quality work. Post your project, review proposals, and hire the best talent with secure payments and efficient collaboration.</p>
                                                 <nuxt-link to="/sign-up" class="ud-btn btn-thm-border mb25 me-4">Get Started<i
                                                         class="fal fa-arrow-right-long"></i></nuxt-link>
                                             </div>
@@ -71,16 +72,8 @@
                                             aria-labelledby="nav-manageother-tab">
                                             <div class="for-hire">
                                                 <h4>For Freelancing</h4>
-                                                <p class="text mb30">It is a long established fact that a reader will be
-                                                    distracted by the readable content of a page when looking at its
-                                                    layout. The point of using Lorem Ipsum is that it has a more-or-less
-                                                    normal distribution of letters, as opposed to using 'Content here,
-                                                    content here', making it look like readable English.</p>
-                                                <p class="text mb40">Many desktop publishing packages and web page
-                                                    editors now use Lorem Ipsum as their default model text, and a
-                                                    search for 'lorem ipsum' will uncover many web sites still in their
-                                                    infancy. Various versions have evolved over the years, sometimes by
-                                                    accident, sometimes on purpose (injected humour and the like).</p>
+                                                <p class="text mb30">"Turn Your Skills into Earnings on Isumax!"
+                                                    Join Isumax as a freelancer and get access to job opportunities worldwide. Whether you're a designer, developer, writer, or any skilled professional, connect with clients who need your expertise.</p>
                                                     <nuxt-link to="/sign-up" class="ud-btn btn-thm-border mb25 me-4">Get Started<i
                                                         class="fal fa-arrow-right-long"></i></nuxt-link>
                                             </div>
@@ -97,8 +90,8 @@
                             <div class="row wow fadeInUp">
                                 <div class="col-lg-12">
                                     <div class="main-title">
-                                        <h2>How It Works</h2>
-                                        <p class="text">Most viewed and all-time top-selling services</p>
+                                        <h2>How It Works – Start Selling on Isumax</h2>
+                                        <p class="text">Turn your skills into earnings by offering services to clients worldwide!</p>
                                     </div>
                                 </div>
                             </div>
@@ -107,9 +100,8 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-cv"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Sign Up for Free</h4>
-                                            <p class="text">Create a compelling profile showcasing your <br
-                                                    class="d-none d-xxl-block"> skills and expertise.</p>
+                                            <h4 class="title mt10 mb-3">Create a Service Listing</h4>
+                                            <p class="text">Set up your profile, showcase your skills, and list your services with clear descriptions.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -117,8 +109,8 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-web-design"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">List Your Services</h4>
-                                            <p class="text">Add gigs detailing what you offer and set your price</p>
+                                            <h4 class="title mt10 mb-3"> Get Hired by Clients</h4>
+                                            <p class="text">Receive job offers from businesses and individuals looking for experts like you.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -126,8 +118,8 @@
                                     <div class="iconbox-style1 border-less p-0">
                                         <div class="icon before-none"><span class="flaticon-secure"></span></div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Get Hired & Deliver</h4>
-                                            <p class="text">Start receiving orders, complete work, and satisfy your clients.</p>
+                                            <h4 class="title mt10 mb-3">Secure Payments</h4>
+                                            <p class="text">Get paid safely through Isumax with guaranteed payments after project completion.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -136,9 +128,8 @@
                                         <div class="icon before-none"><span class="flaticon-customer-service"></span>
                                         </div>
                                         <div class="details">
-                                            <h4 class="title mt10 mb-3">Get Paid & Grow</h4>
-                                            <p class="text">Receive payments securely and grow your freelancing career.
-                                            </p>
+                                            <h4 class="title mt10 mb-3">Work Flexibly</h4>
+                                            <p class="text">Choose your projects, set your rates, and work on your terms from anywhere.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -162,37 +153,29 @@
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-badge"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Zero Upfront Investment</h4>
-                                                    <p class="text mb-0 fz15">Start earning without any registration fees.</p>
+                                                    <h4 class="mb-1">Proof of Quality </h4>
+                                                    <p class="text mb-0 fz15">– Build trust with verified profiles, ratings, and client reviews.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-money"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Global Exposure</h4>
-                                                    <p class="text mb-0 fz15">Reach clients from around the world looking for your skills.</p>
+                                                    <h4 class="mb-1">No Cost to Start</h4>
+                                                    <p class="text mb-0 fz15"> – Create your freelancer profile and list services for free.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Secure Payments</h4>
-                                                    <p class="text mb-0 fz15">Get paid fairly and on time with our secure payment system.
-                                                    </p>
+                                                    <h4 class="mb-1">Guaranteed Payments</h4>
+                                                    <p class="text mb-0 fz15"> – Secure transactions ensure you get paid for your work.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Flexible Work</h4>
-                                                    <p class="text mb-0 fz15">Be your own boss, set your own rates, and choose projects that fit your expertise.</p>
-                                                </div>
-                                            </div>
-                                            <div class="list-one d-flex align-items-start mb30">
-                                                <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
-                                                <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Exclusive Rewards</h4>
-                                                    <p class="text mb-0 fz15"> – Earn extra through our seller achievements and performance-based bonuses</p>
+                                                    <h4 class="mb-1">24/7 Support</h4>
+                                                    <p class="text mb-0 fz15"> – We’re here to help whenever you need assistance.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -215,11 +198,11 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex justify-content-center">
                                                         <li>
-                                                            <div class="timer">834</div>
+                                                            <div class="timer">1</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>B</span></li>
                                                     </ul>
-                                                    <p class="text mb-0">Total Freelancer</p>
+                                                    <p class="text mb-0">Freelancers on Isumax</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -228,9 +211,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex justify-content-center">
                                                         <li>
-                                                            <div class="timer">732</div>
+                                                            <div class="timer">1</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>B</span></li>
                                                     </ul>
                                                     <p class="text mb-0">Positive Review</p>
                                                 </div>
@@ -241,11 +224,12 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex justify-content-center">
                                                         <li>
-                                                            <div class="timer">90</div>
+                                                            <div class="timer">1</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>B</span></li>
                                                     </ul>
-                                                    <p class="text mb-0">Order recieved</p>
+                                                    <p class="text mb-0"> plus Orders Received
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -254,9 +238,9 @@
                                                 <div class="details">
                                                     <ul class="ps-0 mb-0 d-flex justify-content-center">
                                                         <li>
-                                                            <div class="timer">236</div>
+                                                            <div class="timer">1</div>
                                                         </li>
-                                                        <li><span>M</span></li>
+                                                        <li><span>B</span></li>
                                                     </ul>
                                                     <p class="text mb-0">Projects Completed</p>
                                                 </div>
