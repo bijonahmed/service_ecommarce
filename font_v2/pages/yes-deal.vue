@@ -3,6 +3,12 @@
         <title>iDeal </title>
 
         <body class="bgc-thm1">
+            <!-- whatsapp floating Icon  -->
+            <nuxt-link to="/" class="position-fixed "
+                style="  z-index: 1; right: 10px; max-width: 200px; top: 109px !important;">
+
+                <img src="/image/whatsApp.png" alt="" class="img-fluid w-100">
+            </nuxt-link>
             <div class="wrapper ovh">
                 <Header />
                 <MobileMenu />
@@ -57,7 +63,7 @@
                                     </div>
                                     <div class="deals_container">
                                         <div class="deal_content">
-                                            <img src="/image/group_crate.png" alt="" class="img-fluid">
+                                            <img src="/image/1.jpeg" alt="" class="img-fluid">
                                             <h4>Group Creation & Deal Setup</h4>
                                             <p class="text-black">
                                             <ul>
@@ -80,7 +86,7 @@
                                             </p>
                                         </div>
                                         <div class="deal_content">
-                                            <img src="/image/BuyerShare.png" alt="" class="img-fluid">
+                                            <img src="/image/2.jpeg" alt="" class="img-fluid">
                                             <h4>Buyer Sends Payment to Yes-Deal (Escrow Hold)</h4>
                                             <p>
                                             <ul>
@@ -99,7 +105,7 @@
                                             </p>
                                         </div>
                                         <div class="deal_content">
-                                            <img src="/image/seller_confirm.png" alt="" class="img-fluid">
+                                            <img src="/image/3.jpeg" alt="" class="img-fluid">
                                             <h4>Seller Delivers Product/Service</h4>
                                             <p>
                                             <ul>
@@ -115,9 +121,9 @@
                                             </p>
                                         </div>
                                         <div class="deal_content">
-                                            <img src="/image/verify_receipt.png" alt="" class="img-fluid">
+                                            <img src="/image/4.webp" alt="" class="img-fluid">
                                             <h4>Buyer Verifies Receipt</h4>
-                                            
+
                                             <ul>
                                                 <li>
                                                     <p>Buyer verifies that the received product/service matches the
@@ -130,38 +136,41 @@
                                             </ul>
                                         </div>
                                         <div class="deal_content">
-                                            <img src="/image/varified_payment.png" alt="" class="img-fluid">
+                                            <img src="/image/5.jpeg" alt="" class="img-fluid">
                                             <h4>Buyer Confirms Receipt</h4>
                                             <p>
-                                                <ul>
-                                                    <li>
-                                                        <p>Once the buyer confirms receipt, Yes-Deal releases the payment to the seller.</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Why? To ensure fair and secure transactions for both parties.</p>
-                                                    </li>
-                                                </ul>
+                                            <ul>
+                                                <li>
+                                                    <p>Once the buyer confirms receipt, Yes-Deal releases the payment to
+                                                        the seller.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To ensure fair and secure transactions for both parties.</p>
+                                                </li>
+                                            </ul>
                                             </p>
                                         </div>
                                         <div class="deal_content">
-                                            <img src="/image/deliver.png" alt="" class="img-fluid">
+                                            <img src="/image/6.jpeg" alt="" class="img-fluid">
                                             <h4>Yes-Deal Releases Payment to Seller</h4>
                                             <p>
-                                                <ul>
-                                                    <li>
-                                                        <p>Yes-Deal officially confirms the successful transaction in the group.</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Both parties receive a final confirmation message from Yes-Deal.</p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Why? To reinforce trust and encourage future secure deals!</p>
-                                                    </li>
-                                                </ul>
+                                            <ul>
+                                                <li>
+                                                    <p>Yes-Deal officially confirms the successful transaction in the
+                                                        group.</p>
+                                                </li>
+                                                <li>
+                                                    <p>Both parties receive a final confirmation message from Yes-Deal.
+                                                    </p>
+                                                </li>
+                                                <li>
+                                                    <p>Why? To reinforce trust and encourage future secure deals!</p>
+                                                </li>
+                                            </ul>
 
                                             </p>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -225,13 +234,66 @@
                             </div>
                         </div>
                     </section>
+                    <div class="container mt-4 p-4 bg-white ">
+                    
 
-                    <Footer />
-                    <!-- Our Footer -->
+                    <h2>🔹 Yes-Deal Payment Terms</h2>
+                    <ul>
+                        <li>✔ <strong>Escrow Protection</strong> – Buyer payments are securely held in escrow until the
+                            transaction is successfully completed.</li>
+                        <li>✔ <strong>Secure Transactions</strong> – Funds are only released when the buyer confirms
+                            receipt of the product/service.</li>
+                        <li>✔ <strong>Flat Service Fees:</strong>
+                            <ul>
+                                <li>Buyer Fee: $10 per deal transaction – No extra or hidden charges.</li>
+                                <li>Seller Fee: $15 commission on completed deal transactions.</li>
+                            </ul>
+                        </li>
+                        <li>✔ <strong>Discount on Small Deals:</strong> For deals under $100, service fees are reduced
+                            by 50%.</li>
+                        <li>✔ <strong>No Small Order Fees</strong> – Unlike other platforms, we don’t charge extra for
+                            smaller transactions.</li>
+                        <li>✔ <strong>Full Transparency</strong> – You always see the total amount upfront before making
+                            a payment.</li>
+                    </ul>
 
+                    <h2>🔹 How Payments Work</h2>
+                    <ol>
+                        <li>⿡ <strong>Buyer Sends Payment to Yes-Deal (Escrow Hold)</strong> – Funds are securely stored
+                            until transaction completion.</li>
+                        <li>⿢ <strong>Seller Delivers Product/Service</strong> – The seller provides the agreed service
+                            or product.</li>
+                        <li>⿣ <strong>Buyer Confirms Receipt</strong> – The buyer verifies the delivery and approves the
+                            payment release.</li>
+                        <li>⿤ <strong>Yes-Deal Releases Payment to Seller</strong> – The seller receives their earnings
+                            instantly after approval.</li>
+                    </ol>
+
+                    <h2>🔹 Withdrawal Policy</h2>
+                    <ul>
+                        <li>✔ <strong>Minimum Withdrawal Amount:</strong> $20 (or equivalent in supported currencies).
+                        </li>
+                        <li>✔ <strong>Processing Time:</strong> Withdrawals are processed instantly after approval.</li>
+                        <li>✔ <strong>Withdrawal Methods:</strong>
+                            <ul>
+                                <li>Bank Transfer – Available in supported countries.</li>
+                                <li>Crypto Wallet (USDT, BTC, etc.) – Instant withdrawals for digital payments.</li>
+                                <li>Other Payment Gateways – Based on availability in your region.</li>
+                            </ul>
+                        </li>
+                        <li>✔ <strong>Withdrawal Fees:</strong> No additional Yes-Deal fees, but payment providers may
+                            apply standard transfer fees.</li>
+                        <li>✔ <strong>One Withdrawal Account per User</strong> – You can share one payout method per
+                            deal.</li>
+                    </ul>
                 </div>
+
+                <Footer />
+                <!-- Our Footer -->
+
             </div>
-        </body>
+    </div>
+    </body>
 
     </div>
 </template>

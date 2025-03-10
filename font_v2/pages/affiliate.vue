@@ -23,7 +23,7 @@
                                     <button class="btn btn-primary text-white">Learn more</button>
                                 </div>
                                 <div class="col-md-6">
-                                    <img src="/frontend/Screenshot_1.png" alt="" class="img-fluid">
+                                    <img src="/image/yesDeal.png" alt="" class="img-fluid">
                                 </div>
                             </div>
                         </div>
@@ -42,7 +42,7 @@
                                     </div>
                                     <div class="pograme_container">
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Starter program</h1>
+                                            <h1>ISUMAX  <br> Starter program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$25</h2>
                                             <p>Every month</p>
@@ -57,7 +57,7 @@
                                                 Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Business Program</h1>
+                                            <h1>ISUMAX  <br> Business Program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$100</h2>
                                             <p>Every month</p>
@@ -72,7 +72,7 @@
                                                 Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Boss Program</h1>
+                                            <h1>ISUMAX  <br> Boss Program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$300</h2>
                                             <p>Every month</p>
@@ -87,7 +87,7 @@
                                                 Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Influencer program</h1>
+                                            <h1>ISUMAX  <br> Influencer program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$100</h2>
                                             <p>Every month</p>
@@ -103,7 +103,7 @@
                                                 Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Star program</h1>
+                                            <h1>ISUMAX  <br> Star program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$300</h2>
                                             <p>Every month</p>
@@ -119,7 +119,7 @@
                                                 Details Contact Isumax</h6>
                                         </div>
                                         <div class="programe_box">
-                                            <h1>Affiliate <br> Creator Program</h1>
+                                            <h1>ISUMAX  <br> Creator Program</h1>
                                             <h4>Isumax StarX</h4>
                                             <h2>$50</h2>
                                             <p>Every month</p>
@@ -225,7 +225,7 @@
                                     <div class="text-center sec_title">
                                         <h2>Why join the isumax affiliate Program?</h2>
                                         <h6>Here are a few reasons</h6>
-                                        <p>✔ 20% commission on every sale</p>
+                                        <p>✔ Commission on every sale</p>
                                         <p>✔ Monthly payouts</p>
                                         <p>✔ Access to the lastest promotional materials</p>
                                         <p>✔ relaiable tracking and reporting</p>
@@ -272,14 +272,14 @@
 
                                                 
                                                 <div class="accordion-item">
-                                                    <h2 class="accordion-header" id="head">
+                                                    <h2 class="accordion-header" id="headingTwo">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#item1"
-                                                            aria-expanded="false" aria-controls="head">What is the Isumax Creator
+                                                            data-bs-toggle="collapse" data-bs-target="#item11"
+                                                            aria-expanded="false" aria-controls="headingTwo">What is the Isumax Creator
                                                             Program?</button>
                                                     </h2>
-                                                    <div id="item1" class="accordion-collapse collapse"
-                                                        aria-labelledby="headingTwo" data-parent="#accordionExample"
+                                                    <div id="item11" class="accordion-collapse collapse"
+                                                        aria-labelledby="headingTwo" data-parent="#item1"
                                                        >
                                                         <div class="accordion-body">The Isumax
                                                             Creator Program is designed for influencers, digital
@@ -292,12 +292,12 @@
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="head">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#item2"
-                                                            aria-expanded="false" aria-controls="item2">How can I
+                                                            data-bs-toggle="collapse" data-bs-target="#item22"
+                                                            aria-expanded="false" aria-controls="item22">How can I
                                                             earn money with the Isumax Creator Program?</button>
                                                     </h2>
-                                                    <div id="item2" class="accordion-collapse collapse"
-                                                        aria-labelledby="item2" data-parent="#accordionExample"
+                                                    <div id="item22" class="accordion-collapse collapse"
+                                                        aria-labelledby="item22" data-parent="#accordionExample"
                                                        >
                                                         <div class="accordion-body">Creators earn
                                                             through referrals and engagement. Every time someone signs
@@ -309,12 +309,12 @@
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="heading">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#item3"
+                                                            data-bs-toggle="collapse" data-bs-target="#item33"
                                                             aria-expanded="false" aria-controls="item3"> Who can
                                                             join the Isumax Creator Program?</button>
                                                     </h2>
-                                                    <div id="item3" class="accordion-collapse collapse"
-                                                        aria-labelledby="item3" data-parent="#item3"
+                                                    <div id="item33" class="accordion-collapse collapse"
+                                                        aria-labelledby="item33" data-parent="#item3"
                                                        >
                                                         <div class="accordion-body">We welcome:
                                                             <ul>
@@ -490,10 +490,10 @@
                                                 <div class="accordion-item">
                                                     <h2 class="accordion-header" id="headingFive5">
                                                         <button class="accordion-button collapsed" type="button"
-                                                            data-bs-toggle="collapse" data-bs-target="#collapseFive"
+                                                            data-bs-toggle="collapse" data-bs-target="#collapseFive5"
                                                             aria-expanded="false" aria-controls="collapseFive">Can agencies and teams join?</button>
                                                     </h2>
-                                                    <div id="collapseFive" class="accordion-collapse collapse"
+                                                    <div id="collapseFive5" class="accordion-collapse collapse"
                                                         aria-labelledby="headingFive5" data-parent="#accordionExample"
                                                        >
                                                         <div class="accordion-body">

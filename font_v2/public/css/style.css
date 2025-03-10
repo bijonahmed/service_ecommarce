@@ -13691,6 +13691,7 @@ input:focus-visible {
 
 .posr {
   position: relative;
+  height: 100px;
 }
 
 .vam {
@@ -15016,6 +15017,7 @@ hr {
 
 .deal_content p {
   color: #000;
+  margin-bottom: 5px;
 }
 
 .note_sec {
@@ -15293,4 +15295,7 @@ input[type=number] {
 }
 .ace-responsive-menu .dropdown-item{
   color: #000 !important;
+}
+.deal_content ul{
+  padding: 0;
 }

@@ -146,36 +146,44 @@
                                     <div class="col-xl-5">
                                         <div class="mb30">
                                             <div class="main-title">
-                                                <h2 class="title">Why Sell on Isumax?</h2>
+                                                <h2 class="title">Start Selling Today! </h2>
+                                                <p>Join Isumax and take your freelancing career to new heights!</p>
                                             </div>
                                         </div>
                                         <div class="why-chose-list">
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-badge"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Proof of Quality </h4>
-                                                    <p class="text mb-0 fz15">– Build trust with verified profiles, ratings, and client reviews.</p>
+                                                    <h4 class="mb-1">Zero Upfront Investment </h4>
+                                                    <p class="text mb-0 fz15"> – Start earning without any registration fees.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-money"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">No Cost to Start</h4>
-                                                    <p class="text mb-0 fz15"> – Create your freelancer profile and list services for free.</p>
+                                                    <h4 class="mb-1">Global Exposure </h4>
+                                                    <p class="text mb-0 fz15"> – Reach clients from around the world looking for your skills.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">Guaranteed Payments</h4>
-                                                    <p class="text mb-0 fz15"> – Secure transactions ensure you get paid for your work.</p>
+                                                    <h4 class="mb-1">Secure Payments </h4>
+                                                    <p class="text mb-0 fz15"> – Get paid fairly and on time with our secure payment system.</p>
                                                 </div>
                                             </div>
                                             <div class="list-one d-flex align-items-start mb30">
                                                 <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
                                                 <div class="list-content flex-grow-1 ml20">
-                                                    <h4 class="mb-1">24/7 Support</h4>
-                                                    <p class="text mb-0 fz15"> – We’re here to help whenever you need assistance.</p>
+                                                    <h4 class="mb-1">Flexible Work </h4>
+                                                    <p class="text mb-0 fz15"> – Be your boss, set your rates, and choose projects that fit your expertise.</p>
+                                                </div>
+                                            </div>
+                                            <div class="list-one d-flex align-items-start mb30">
+                                                <!-- <span class="list-icon flex-shrink-0 flaticon-security"></span> -->
+                                                <div class="list-content flex-grow-1 ml20">
+                                                    <h4 class="mb-1">Exclusive Rewards </h4>
+                                                    <p class="text mb-0 fz15"> – Earn extra through our seller achievements and performance-based bonuses.</p>
                                                 </div>
                                             </div>
                                         </div>

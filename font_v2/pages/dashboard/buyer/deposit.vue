@@ -19,33 +19,34 @@
                     </section>
 
                     <!-- Tab Navigation -->
-                    <ul class="nav nav-pills payemnts_opt mt-4" id="paymentTabs" role="tablist"
-                        @click="getStripPaymentList">
+                    <ul class="nav nav-pills payemnts_opt mt-4" id="paymentTabs" role="tablist" @click="getStripPaymentList">
                         <li class="nav-item">
-                            <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe" role="tab">
-                                <div class="paymnt_icon">
-                                    <img src="/payments/stripe.png" alt="" class="img-fluid">
-                                    <!-- <p> Fiat</p> -->
-                                </div>
+                            <a class="nav-link active" id="stripe-tab" data-bs-toggle="pill" href="#stripe"
+                                role="tab">
+                               <div class="paymnt_icon">
+                                <img src="/image/cards.png" alt="" class="img-fluid">
+                                <!-- <p> Fiat</p> -->
+                               </div>
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" id="stripe-tab" data-bs-toggle="pill" href="#paypal" role="tab">
-
+                            <a class="nav-link" id="stripe-tab" data-bs-toggle="pill" href="#paypal"
+                                role="tab">
+                            
                                 <div class="paymnt_icon">
-                                    <img src="/payments/paypal.png" alt="" class="img-fluid">
-                                    <!-- <p> Paypal</p> -->
-                                </div>
+                                <img src="/payments/paypal.png" alt="" class="img-fluid">
+                                <!-- <p> Paypal</p> -->
+                               </div>
                             </a>
                         </li>
-                        <li class="nav-item" @click="getusdtDeposit">
+                        <li class="nav-item  d-none" @click="getusdtDeposit">
                             <a class="nav-link" id="usdt-tab" data-bs-toggle="pill" href="#usdt" role="tab">
-
-                                <div class="paymnt_icon">
-                                    <img src="/payments/crypto.png" alt="" class="img-fluid">
-                                    <!-- <p> Crypto</p> -->
-                                </div>
+                                
+                               <div class="paymnt_icon">
+                                <img src="/payments/crypto.png" alt="" class="img-fluid">
+                                <!-- <p> Crypto</p> -->
+                               </div>
                             </a>
                         </li>
                     </ul>
@@ -57,13 +58,14 @@
                     <div class="tab-content mt-3">
                         <!-- Stripe Payment -->
                         <div class="tab-pane fade show active" id="stripe">
-                            <form @submit.prevent="handlePaymentStripe">
+                            <form @submit.prevent="handlePayment">
                                 <label for="stripeAmount">Deposit Amount</label>
                                 <input type="number" id="stripeAmount" v-model="amount" class="form-control"
                                     placeholder="Enter amount" @keypress="validateKeyPress" />
                                 <button type="submit" class="btn btn-primary w-100 mt-3">
                                     Pay with Stripe
                                 </button>
+
 
                             </form>
 
@@ -120,26 +122,19 @@
                         </div>
 
                         <div class="tab-pane fade" id="paypal">
-                            <form @submit.prevent="paypalHandlePayment">
-                                <label for="usdtAmount">Deposit Amount</label>
-                                <input type="number" id="usdtAmount" class="form-control" v-model="amount"
-                                    placeholder="Enter amount" @keypress="validateKeyPress">
-                                <small v-if="errors.deposit_amount" class="text-danger">
-                                    {{ errors.deposit_amount[0] }}
-                                </small>
-                                <button type="submit" class="btn btn-primary w-100 mt-3"> Pay with paypal</button>
+                                <h1>Paypal....</h1>
+
+
+                                <form @submit.prevent="paypalhandlePayment">
+                                <label for="stripeAmount">Deposit Amount</label>
+                                <input type="number" id="stripeAmount" v-model="amount" class="form-control"
+                                    placeholder="Enter amount" @keypress="validateKeyPress" />
+                                <button type="submit" class="btn btn-primary w-100 mt-3">
+                                    Pay with Paypal
+                                </button>
+
+
                             </form>
-
-
-
-
-
-
-
-
-
-
-
 
 
                         </div>
@@ -239,48 +234,13 @@ const validateKeyPress = (event) => {
     }
 };
 
-const paypalHandlePayment = async () => {
+
+const handlePayment = async () => {
     const amountValue = parseFloat(amount.value); // Convert input to a number
     // Check if the value is not a number or less than the minimum amount
     if (isNaN(amountValue) || amountValue < 0.50) {
         // Show modal with error message
-        showErrorModal("Cannot be zero or a string.");
-        return;
-    }
-    processing.value = true;
-
-    try {
-        const response = await axios.post('/deposit/create-payment-paypal', {
-            amount: parseFloat(amount.value),
-            product: 'Custom Payment', // You can change this dynamically
-            success_url: window.location.origin + "/success", // ✅ Redirect frontend
-            cancel_url: window.location.origin + "/cancel", // ✅ Redirect frontend
-        }, {
-            headers: { 'Content-Type': 'application/json' } // Headers are optional in Axios
-        });
-
-        if (response.data.checkout_url) {
-            window.location.href = response.data.checkout_url; // Redirect to Stripe checkout
-        } else {
-            alert('Failed to initiate checkout.');
-        }
-
-    } catch (error) {
-        console.error(error);
-        alert('Payment failed. Please try again.');
-    }
-
-    processing.value = false;
-};
-
-
-
-const handlePaymentStripe = async () => {
-    const amountValue = parseFloat(amount.value); // Convert input to a number
-    // Check if the value is not a number or less than the minimum amount
-    if (isNaN(amountValue) || amountValue < 0.50) {
-        // Show modal with error message
-        showErrorModal("Cannot be zero or a string.");
+        showErrorModal("Minimum amount required is $0.50 and it cannot be zero or a string.");
         return;
     }
     processing.value = true;
@@ -309,6 +269,61 @@ const handlePaymentStripe = async () => {
     processing.value = false;
 };
 
+const paypalhandlePayment = async () => {
+    errors.value = {}; // Clear previous errors
+
+
+    try {
+        const response = await axios.post('/deposit/create-payment-paypal', {
+            amount: parseFloat(amount.value),
+            product: 'Custom Payment', // You can change this dynamically
+            success_url: window.location.origin + "/success", // ✅ Redirect frontend
+            cancel_url: window.location.origin + "/cancel", // ✅ Redirect frontend
+        }, {
+            headers: { 'Content-Type': 'application/json' } // Headers are optional in Axios
+        });
+
+        if (response.data.checkout_url) {
+            window.location.href = response.data.checkout_url; // Redirect to Stripe checkout
+        } else {
+            alert('Failed to initiate checkout.');
+        }
+
+    } catch (error) {
+        console.error(error);
+        alert('Payment failed. Please try again.');
+    }
+
+
+    // try {
+    //     const response = await axios.post("/deposit/sendRequesUsdtPayment", {
+    //         deposit_amount: amount.value, // Ensure correct key name matches Laravel validation
+    //     });
+
+    //     Swal.fire({
+    //         title: "Success!",
+    //         text: "Payment successful.",
+    //         icon: "success",
+    //         confirmButtonText: "OK",
+    //     });
+
+    //     amount.value = ""; // Reset input field on success
+    //     getusdtDeposit();
+
+    // } catch (error) {
+    //     if (error.response && error.response.status === 422) {
+    //         errors.value = error.response.data.errors; // Store validation errors
+    //     } else {
+    //         console.error("An error occurred:", error);
+    //         Swal.fire({
+    //             title: "Error!",
+    //             text: "There was an error processing your payment. Please try again.",
+    //             icon: "error",
+    //             confirmButtonText: "OK",
+    //         });
+    //     }
+    // }
+};
 
 const usdthandlePayment = async () => {
     errors.value = {}; // Clear previous errors
@@ -344,11 +359,11 @@ const usdthandlePayment = async () => {
 };
 
 const getStatusText = (status) => {
-    if (status == '1') return "succeeded";
-    if (status == 2) return "cancel";
-    if (status == 0) return "Pending";
-    return "Pending"; // Default for status == 0
-}
+        if (status == '1') return "succeeded";
+        if (status == 2) return "cancel";
+        if (status == 0) return "Pending";
+        return "Pending"; // Default for status == 0
+    }
 const getStripPaymentList = async () => {
 
     try {
@@ -540,23 +555,21 @@ button {
 button:hover {
     background-color: #0056b3;
 }
-
-.payemnts_opt .nav-link.active {
+.payemnts_opt  .nav-link.active{
     background-color: #fff;
     border: 1px solid;
     border-color: var(--main);
 }
 
-.payemnts_opt .nav-link img {
+.payemnts_opt  .nav-link img{
     height: 30px;
     margin-right: 5px;
 }
 
-.payemnts_opt .nav-link p {
+.payemnts_opt  .nav-link p{
     margin: 0;
 }
-
-.paymnt_icon {
+.paymnt_icon{
     display: flex;
     align-items: center;
 }

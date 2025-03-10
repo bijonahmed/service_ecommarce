@@ -39,7 +39,7 @@ class PaypalController extends Controller
     }
     public function createPaymentPaypal(Request $request)
     {
-        //  dd($request->all());
+         // dd($request->all());
         
         $validator = Validator::make($request->all(), [
             'amount'           => 'required',
@@ -51,7 +51,7 @@ class PaypalController extends Controller
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $paypalToken = $provider->getAccessToken();
-        dd($paypalToken);
+      //  dd($paypalToken);
         $response = $provider->createOrder([
              "intent" => "CAPTURE",
             "application_context" => [

@@ -314,32 +314,29 @@
                         <div class="col-md-3">
                             <div class="details_content">
                                 <i class="fa-regular fa-grid-2-plus"></i>
-                                <h5>Over 700 categories</h5>
-                                <p>Get results from skilled freelancers from all over the world, for every task, at any
-                                    price point.</p>
+                                <h5>Find Experts in Over 300 Categories</h5>
+                                <p>Connect with skilled freelancers worldwide for any task on any budget.</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="details_content">
                                 <i class="fa-regular fa-handshake"></i>
-                                <h5>Clear, transparent pricing</h5>
-                                <p>Pay per project or by the hour (Pro). Payment only get released when you approve.</p>
+                                <h5>Transparent & Flexible Pricing</h5>
+                                <p>Pay per project or by the hour with Yes-Deal protection—release payment only when satisfied.</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="details_content">
                                 <i class="fa-regular fa-bolt"></i>
-                                <h5>Quality work done faster</h5>
-                                <p>Filter to find ther right freelancers quickly and get great work deliverd in no time,
-                                    every time.</p>
+                                <h5>Get Quality Work Faster</h5>
+                                <p>Easily find the right freelancer and get top-notch results delivered on time, every time.</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="details_content">
                                 <i class="fa-solid fa-life-ring"></i>
-                                <h5>24/7 award-winning suport</h5>
-                                <p>Chat with our team to get your questions answered or resolve any issues with your
-                                    orders.</p>
+                                <h5>24/7 Dedicated Support</h5>
+                                <p>Our support team is always here to assist you with any questions or concerns.</p>
                             </div>
                         </div>
                     </div>

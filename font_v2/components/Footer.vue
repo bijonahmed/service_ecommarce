@@ -14,9 +14,27 @@
           <div class="social-widget text-center text-md-end">
             <div class="social-style1">
               <a class="text-white me-2 fw500 fz17" href="#">Follow us</a>
-              <a :href="fblink" target="_blank" rel="noopener noreferrer">
+              <NuxtLink :to="`https://www.facebook.com/isumax11`" target="_blank" rel="noopener noreferrer">
                 <i class="fab fa-facebook-f list-inline-item"></i>
-              </a>
+              </NuxtLink>
+              <NuxtLink :to="`https://www.instagram.com/isumax11/`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram list-inline-item"></i>
+              </NuxtLink>
+              <NuxtLink :to="`https://www.tiktok.com/@isumax11`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-tiktok list-inline-item"></i>
+              </NuxtLink>
+              <NuxtLink :to="`https://www.pinterest.com/isumax11/`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-pinterest list-inline-item"></i>
+              </NuxtLink>
+              <NuxtLink :to="`https://www.linkedin.com/in/muhammad-nawaz11/`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin list-inline-item"></i>
+              </NuxtLink>
+              <NuxtLink :to="`https://www.x.com/isumax11`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-twitter list-inline-item"></i>
+              </NuxtLink>
+              <NuxtLink :to="`https://discord.gg/By7efT7c`" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-discord list-inline-item"></i>
+              </NuxtLink>
               <!-- <a href="#"><i class="fab fa-twitter list-inline-item"></i></a>
               <a href="#"><i class="fab fa-instagram list-inline-item"></i></a>
               <a href="#"><i class="fab fa-linkedin-in list-inline-item"></i></a> -->
@@ -61,6 +79,7 @@
               <li><nuxt-link to="/selling">Selling on isumax</nuxt-link></li>
               <li><nuxt-link to="/buying">Buying on isumax</nuxt-link></li>
               <li><nuxt-link to="/media">Media & News</nuxt-link></li>
+              <li><nuxt-link to="/payment-terms">Isumax Payment Terms</nuxt-link></li>
             </ul>
           </div>
         </div>

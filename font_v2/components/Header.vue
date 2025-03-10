@@ -517,7 +517,7 @@ header.nav-homepage-style {
   padding: 0px 20px;
   display: list-item;
   position: relative;
-  line-height: 35px;
+  line-height: 25px;
 }
 
 #mega-menu .drop-menu ul li {
@@ -531,5 +531,17 @@ header.nav-homepage-style {
 section {
   padding: 10px 0;
   position: relative;
+}
+#mega-menu .menu li:hover .drop-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(1.8%);
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: 0;
+}
+#mega-menu .menu li:hover .drop-menu::-webkit-scrollbar{
+  width: 0;
+  display: none;
 }
 </style>
