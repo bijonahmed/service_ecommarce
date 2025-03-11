@@ -229,8 +229,8 @@ const categoryData = ref([]);
 
 const fetchCatData = async () => {
     try {
-        loading.value = true;
-        const response = await axios.get("/unauthenticate/allCategory", {
+       // loading.value = true;
+        const response = await axios.get("/unauthenticate/filterallCategory", {
             params: {
                 searchtxt: searchtxt.value,
             }
@@ -240,7 +240,7 @@ const fetchCatData = async () => {
     } catch (error) {
         console.error("Error fetching data:", error);
     } finally {
-        loading.value = false;
+      //  loading.value = false;
     }
 };
 

@@ -69,7 +69,7 @@
                             <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
                           </div>
                           <div class="mb2">
-                            <label class="form-label fw500 dark-color">Invite Code</label>
+                            <label class="form-label fw500 dark-color">Invite Code (Optional)</label>
                             <input type="text" class="form-control" placeholder="Invite Code" v-model="inviteCode">
                             <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
                           </div>

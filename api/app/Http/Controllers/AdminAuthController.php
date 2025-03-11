@@ -92,7 +92,7 @@ class AdminAuthController extends Controller
             }
 
 
-           // Mail::to($user->email)->queue(new VerificationCodeMail($verificationCode));
+            Mail::to($user->email)->queue(new VerificationCodeMail($verificationCode));
 
             // try {
             //     Mail::raw("Your verification code is: $verificationCode", function ($message) use ($user) {
@@ -143,7 +143,7 @@ class AdminAuthController extends Controller
         $user = auth('api')->user();
         $verificationCode = (int) $request->verificationCode; // Cast to integer
 
-        if ($user && $user->verification_code === $verificationCode) {
+        if ($user && $user->verification_code == $verificationCode) {
             $user->verification_code = "";
             $user->verification_code_expires_at = "";
             $user->verification_status = 1; // Set verification status to verified

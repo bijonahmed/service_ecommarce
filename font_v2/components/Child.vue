@@ -25,7 +25,7 @@
                                                 <div class="advance-search-field mb10-sm">
                                                     <div class="box-search">
                                                         <span class="icon far fa-magnifying-glass"></span>
-                                                        <input class="form-control" type="text" name="search"
+                                                        <input class="form-control" type="text" required name="search"
                                                             v-model="filter_name"
                                                             placeholder="What are you looking for?"
                                                             @keydown.enter.prevent />
@@ -157,8 +157,8 @@
                         </button></center>
 
                     <div class="row">
-                        <div v-for="(category, index) in categoryData.slice(0, 8)" :key="index"
-                            class="col-6 col-md-4 col-lg-3 mb-4">
+                        <div v-for="(category, index) in categoryData.slice(0, 30)" :key="index"
+                            class="col-6 col-md-4 col-lg-4 mb-4">
                             <div class="category-item">
                                 <nuxt-link :to="`/category/${category.slug}`" class="category-link">
                                     <span class="category-index">{{ index + 1 }}. </span>
@@ -322,14 +322,16 @@
                             <div class="details_content">
                                 <i class="fa-regular fa-handshake"></i>
                                 <h5>Transparent & Flexible Pricing</h5>
-                                <p>Pay per project or by the hour with Yes-Deal protection—release payment only when satisfied.</p>
+                                <p>Pay per project or by the hour with Yes-Deal protection—release payment only when
+                                    satisfied.</p>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="details_content">
                                 <i class="fa-regular fa-bolt"></i>
                                 <h5>Get Quality Work Faster</h5>
-                                <p>Easily find the right freelancer and get top-notch results delivered on time, every time.</p>
+                                <p>Easily find the right freelancer and get top-notch results delivered on time, every
+                                    time.</p>
                             </div>
                         </div>
                         <div class="col-md-3">
@@ -365,7 +367,10 @@
                                     <div class="swiper-wrapper">
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>“Isumax has transformed the way we connect with top freelancers. The seamless platform, transparent pricing, and skilled professionals have helped us complete projects efficiently and cost-effectively.”</p>
+                                                <p>“Isumax has transformed the way we connect with top freelancers. The
+                                                    seamless platform, transparent pricing, and skilled professionals
+                                                    have helped us complete projects efficiently and cost-effectively.”
+                                                </p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-1.jpg" alt="" class="img-fluid">
@@ -378,7 +383,9 @@
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>“Finding the right freelancer used to be a hassle, but Isumax made it effortless. The quality of work, speed of delivery, and support system are outstanding. Highly recommended!”</p>
+                                                <p>“Finding the right freelancer used to be a hassle, but Isumax made it
+                                                    effortless. The quality of work, speed of delivery, and support
+                                                    system are outstanding. Highly recommended!”</p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-2.jpg" alt="" class="img-fluid">
@@ -391,7 +398,9 @@
                                         </div>
                                         <div class="swiper-slide">
                                             <div class="reviews">
-                                                <p>“Isumax helped us scale our business by connecting us with top-tier freelancers. The secure payment system and transparent workflow made the entire process stress-free.”</p>
+                                                <p>“Isumax helped us scale our business by connecting us with top-tier
+                                                    freelancers. The secure payment system and transparent workflow made
+                                                    the entire process stress-free.”</p>
                                                 <div class="d-flex justify-content-center align-items-center">
                                                     <div class="rounded profile_image">
                                                         <img src="/images/team/team-3.jpg" alt="" class="img-fluid">
@@ -440,16 +449,20 @@
                         <div class="col-md-6">
                             <div class="project_content">
                                 <h4>Unlock Endless Opportunities with Isumax!</h4>
-                                <p>Welcome to Isumax, the ultimate freelance marketplace where businesses and skilled professionals connect effortlessly. Whether you're a business owner in search of top-tier talent or a freelancer ready to showcase your expertise, Isumax provides a secure, efficient, and rewarding experience.</p>
+                                <p>Welcome to Isumax, the ultimate freelance marketplace where businesses and skilled
+                                    professionals connect effortlessly. Whether you're a business owner in search of
+                                    top-tier talent or a freelancer ready to showcase your expertise, Isumax provides a
+                                    secure, efficient, and rewarding experience.</p>
                                 <h6>To get started your have</h6>
                                 <ul>
                                     <li>More Digital Categories – Find experts for every task, big or small.</li>
                                     <li>Transparent Pricing – Pay securely and only for work you approve.</li>
                                     <li>Fast & Quality Work – Get top-notch results with quick turnarounds.</li>
                                     <li>Yes-Deal Secure Transactions – Ensuring trust between buyers and sellers.</li>
-                                    <li>Starx Program – Earn exclusive rewards and benefits through our affiliate system.</li>
+                                    <li>Starx Program – Earn exclusive rewards and benefits through our affiliate
+                                        system.</li>
                                 </ul>
-                                <a href="#" class="btn btn-primary text-white"> Get started</a>
+                                <NuxtLink to="/sign-up" class="btn btn-primary text-white"> Get started</NuxtLink>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -470,9 +483,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+if (process.client) {
+    window.Swal = Swal;
 
+}
 import { useRouter } from 'vue-router';
-import Swal from "sweetalert2";
 const router = useRouter();
 import 'owl.carousel/dist/assets/owl.carousel.css';
 import 'owl.carousel';
@@ -512,6 +528,15 @@ const fetchCatData = async () => {
 
 const fiterbySearch = () => {
     const slug = filter_name.value;
+    if (slug == '') {
+        Swal.fire({
+            //title: 'Successfulluy Request send',
+            text: 'Pelase type anything...',
+            icon: 'error',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    }
     router.push({
         path: '/filter/search',
         query: { slug }

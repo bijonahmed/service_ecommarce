@@ -27,7 +27,7 @@
                           Don't have an account? <nuxt-link to="/sign-up" class="text-thm">Sign Up!</nuxt-link>
                         </p>
                       </div>
-                      <center><span class="text-danger">{{ errors.account }}</span></center>
+
                       <div class="mb20">
                         <label for="email" class="form-label fw600 dark-color">Email Address</label>
                         <input type="email" id="email" class="form-control" placeholder="example@gmail.com"
@@ -38,20 +38,12 @@
                       <div class="mb15">
                         <label for="password" class="form-label fw600 dark-color">Password</label>
                         <div class="position-relative">
-    <input 
-      :id="passwordId" 
-      class="form-control" 
-      placeholder="*******" 
-      :type="isPasswordVisible ? 'text' : 'password'" 
-      v-model="password"
-    />
-    <i 
-      class="fa-solid position-absolute" 
-      :class="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'" 
-      style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);" 
-      @click="togglePassword"
-    ></i>
-  </div>
+                          <input :id="passwordId" class="form-control" placeholder="*******"
+                            :type="isPasswordVisible ? 'text' : 'password'" v-model="password" />
+                          <i class="fa-solid position-absolute" :class="isPasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
+                            style="cursor: pointer; right: 10px; top: 50%; transform: translateY(-50%);"
+                            @click="togglePassword"></i>
+                        </div>
                         <span class="text-danger">{{ errors.password }}</span>
                       </div>
 
@@ -76,14 +68,20 @@
                         <span id="WrongCaptchaError" class="error">{{ captchaError }}</span>
                         <span class="text-danger">{{ errors.userCapInput }}</span>
                       </div>
-<!-- 
+                      <!-- 
                       <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
                         <a class="fz14 ff-heading" href="#">Lost your password?</a>
                       </div> -->
 
+                      <div class="checkbox-style1 d-block d-sm-flex align-items-center justify-content-between mb20">
+                        <nuxt-link class="fz14 ff-heading" to="/forget-password">Lost your password?</nuxt-link>
+                      </div> 
+
                       <div class="d-grid mb20">
                         <button class="ud-btn btn-thm default-box-shadow2" type="submit">Login</button>
                       </div>
+
+                      <center><span class="text-danger">{{ errors.account }}</span></center>
                     </div>
                   </div>
                 </div>
@@ -214,7 +212,7 @@ async function login() {
       loading.value = false;
       return;
     }
-   
+
   } catch (error) {
     loading.value = false;
     // If the request fails, display the error messages

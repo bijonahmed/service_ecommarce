@@ -160,7 +160,7 @@
                           <label for="input-meta-description-1" class="col-sm-2 col-form-label">Status</label>
                           <div class="col-sm-10">
                             <select class="form-control form-select-sm" aria-label=".form-select-sm example"
-                              name="status" id="status">
+                              name="status" id="status" v-model="insertdata.status">
                               <option selected value="1">Active</option>
                               <option value="0">Inactive</option>
                             </select>

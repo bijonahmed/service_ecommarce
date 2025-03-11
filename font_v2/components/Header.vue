@@ -189,7 +189,7 @@
                       to="/dashboard/buyer/orders"><i class="fa fa-cart-shopping"></i>&nbsp;Orders</nuxt-link></li>
 
                   <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
-                      to="/dashboard/buyer/withdraw"><i class="fas fa-dollar-sign"></i>&nbsp;Withdraw</nuxt-link></li>
+                      to="/dashboard/buyer/withdrawalrequest"><i class="fas fa-dollar-sign"></i>&nbsp;Withdraw</nuxt-link></li>
 
                   <li v-if="isLoggedIn && userStore.role_id == 3"><nuxt-link class="dropdown-item"
                       to="/dashboard/buyer/setting"><i class="fa-solid fa-cogs"></i>&nbsp;Settings</nuxt-link></li>

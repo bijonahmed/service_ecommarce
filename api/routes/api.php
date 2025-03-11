@@ -15,7 +15,7 @@ use App\Http\Controllers\Setting\SettingController;
 use App\Http\Controllers\UnauthenticatedController;
 use App\Http\Controllers\Brands\BrandsController;
 use App\Http\Controllers\Product\ProductController;
-use App\Http\Controllers\Cart\CartController;
+use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\Order\OrderController;
 use App\Http\Controllers\Chat\ChatController;
 use App\Http\Controllers\Deposits\DepositController;
@@ -105,8 +105,8 @@ Route::group(
         Route::post('updateprofileFrontendSeller', [AuthController::class, 'updateprofileFrontendSeller']);
         Route::post('updatePassword', [AuthController::class, 'changesPassword']);
         Route::get('showProfileData', [AuthController::class, 'showProfileData']);
-        Route::post('password/email', [ForgotPasswordController::class, 'sendPasswordResetEmail']);
-        Route::post('password/reset', [ResetPasswordController::class, 'updatePassword']);
+        Route::post('password/email', [ForgotPasswordController::class, 'forgetPassword']);
+        Route::post('password/reset', [ForgotPasswordController::class, 'reset']);
     },
 );
 Route::group(
@@ -368,6 +368,7 @@ Route::group(['prefix' => 'unauthenticate'], function () {
     //strip
     //Route::get('/stripe/payment-intent/{id}', [PaymentIntentController::class, 'retrievePaymentIntent']);
     Route::get('allCategory', [UnauthenticatedController::class, 'allCategoryActiveStatus']);
+    Route::get('filterallCategory', [UnauthenticatedController::class, 'filterallCategory']);
     Route::get('allActiveCategory', [UnauthenticatedController::class, 'allActiveCategory']);
     Route::get('checkContent', [UnauthenticatedController::class, 'checkContent']);
     Route::get('checkGetList', [UnauthenticatedController::class, 'checkGetList']);

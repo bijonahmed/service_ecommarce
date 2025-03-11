@@ -63,8 +63,6 @@
                                         <div class="tab-pane fade active show" id="custom-tabs-three-home"
                                             role="tabpanel" aria-labelledby="custom-tabs-three-home-tab">
                                             <!-- General  -->
-
-
                                             <ul>
                                                 <!-- Top-Level Categories -->
                                                 <li v-for="category in filterUniqueCategories(categories)"
@@ -121,8 +119,8 @@
                                             <!-- General  -->
                                             <ul>
                                                 <li v-for="category in Inacategories" :key="category.id">
-                                                    <span class="badge bg-danger">{{ category.name }} <span
-                                                            @click="editCategory(category.id)"><i
+                                                    <span class="badge bg-danger" @click="editCategory(category.id)">{{ category.name }} <span
+                                                            ><i
                                                                 class="bx bx-edit"></i></span></span>
 
                                                 </li>
@@ -196,13 +194,14 @@ const fetchData = async () => {
 
 const fetchInacCatData = async () => {
     try {
-        const response = axios.get('/category/getInacCategoryList');
-        Inacategories.value = response.data;
-
+        const response = await axios.get('/category/getInacCategoryList'); // Add 'await' here
+        console.log("=====", response); // Logs the full response object
+        Inacategories.value = response.data; // Access response data properly
     } catch (error) {
-        console.error(error);
+        console.error("Error fetching data:", error);
     }
 };
+
 
 onMounted(async () => {
     await fetchData();

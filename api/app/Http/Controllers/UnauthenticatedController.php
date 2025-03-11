@@ -315,12 +315,27 @@ class UnauthenticatedController extends Controller
         return response()->json($categories);
     }
 
+    public function filterallCategory(Request $request)
+    {
+        $searchtxt = $request->searchtxt;
+        $categories = Categorys::where('status', 1)
+            ->where(function ($query) use ($searchtxt) {
+                $query->where('name', 'LIKE', '%' . $searchtxt . '%'); // Add more fields as necessary
+            })
+            ->get();
+        return response()->json($categories);
+    }
+
+
+
+
+
     public function userSearch($slug)
     {
-      //  dd($slug);
+        //  dd($slug);
 
         $search = $slug;
-       // $page = $request->page;
+        // $page = $request->page;
         $keywords = explode(' ', $search); // Split search input into keywords
 
         $filterData = Gig::where(function ($query) use ($keywords) {

@@ -4,11 +4,15 @@
 
         <body class="bgc-thm1">
             <!-- whatsapp floating Icon  -->
-            <nuxt-link to="/" class="position-fixed "
+            <div class="position-fixed "
                 style="  z-index: 1; right: 10px; max-width: 200px; top: 109px !important;">
 
-                <img src="/image/whatsApp.png" alt="" class="img-fluid w-100">
-            </nuxt-link>
+                <a href="https://wa.me/+447949238473" target="_blank">
+                    <img src="/image/whatsApp.png" alt="" class="img-fluid w-100">
+                </a>
+
+
+            </div>
             <div class="wrapper ovh">
                 <Header />
                 <MobileMenu />
@@ -235,65 +239,76 @@
                         </div>
                     </section>
                     <div class="container mt-4 p-4 bg-white ">
-                    
 
-                    <h2>🔹 Yes-Deal Payment Terms</h2>
-                    <ul>
-                        <li>✔ <strong>Escrow Protection</strong> – Buyer payments are securely held in escrow until the
-                            transaction is successfully completed.</li>
-                        <li>✔ <strong>Secure Transactions</strong> – Funds are only released when the buyer confirms
-                            receipt of the product/service.</li>
-                        <li>✔ <strong>Flat Service Fees:</strong>
-                            <ul>
-                                <li>Buyer Fee: $10 per deal transaction – No extra or hidden charges.</li>
-                                <li>Seller Fee: $15 commission on completed deal transactions.</li>
-                            </ul>
-                        </li>
-                        <li>✔ <strong>Discount on Small Deals:</strong> For deals under $100, service fees are reduced
-                            by 50%.</li>
-                        <li>✔ <strong>No Small Order Fees</strong> – Unlike other platforms, we don’t charge extra for
-                            smaller transactions.</li>
-                        <li>✔ <strong>Full Transparency</strong> – You always see the total amount upfront before making
-                            a payment.</li>
-                    </ul>
 
-                    <h2>🔹 How Payments Work</h2>
-                    <ol>
-                        <li>⿡ <strong>Buyer Sends Payment to Yes-Deal (Escrow Hold)</strong> – Funds are securely stored
-                            until transaction completion.</li>
-                        <li>⿢ <strong>Seller Delivers Product/Service</strong> – The seller provides the agreed service
-                            or product.</li>
-                        <li>⿣ <strong>Buyer Confirms Receipt</strong> – The buyer verifies the delivery and approves the
-                            payment release.</li>
-                        <li>⿤ <strong>Yes-Deal Releases Payment to Seller</strong> – The seller receives their earnings
-                            instantly after approval.</li>
-                    </ol>
+                        <h2>🔹 Yes-Deal Payment Terms</h2>
+                        <ul>
+                            <li>✔ <strong>Escrow Protection</strong> – Buyer payments are securely held in escrow until
+                                the
+                                transaction is successfully completed.</li>
+                            <li>✔ <strong>Secure Transactions</strong> – Funds are only released when the buyer confirms
+                                receipt of the product/service.</li>
+                            <li>✔ <strong>Flat Service Fees:</strong>
+                                <ul>
+                                    <li>Buyer Fee: $10 per deal transaction – No extra or hidden charges.</li>
+                                    <li>Seller Fee: $15 commission on completed deal transactions.</li>
+                                </ul>
+                            </li>
+                            <li>✔ <strong>Discount on Small Deals:</strong> For deals under $100, service fees are
+                                reduced
+                                by 50%.</li>
+                            <li>✔ <strong>No Small Order Fees</strong> – Unlike other platforms, we don’t charge extra
+                                for
+                                smaller transactions.</li>
+                            <li>✔ <strong>Full Transparency</strong> – You always see the total amount upfront before
+                                making
+                                a payment.</li>
+                        </ul>
 
-                    <h2>🔹 Withdrawal Policy</h2>
-                    <ul>
-                        <li>✔ <strong>Minimum Withdrawal Amount:</strong> $20 (or equivalent in supported currencies).
-                        </li>
-                        <li>✔ <strong>Processing Time:</strong> Withdrawals are processed instantly after approval.</li>
-                        <li>✔ <strong>Withdrawal Methods:</strong>
-                            <ul>
-                                <li>Bank Transfer – Available in supported countries.</li>
-                                <li>Crypto Wallet (USDT, BTC, etc.) – Instant withdrawals for digital payments.</li>
-                                <li>Other Payment Gateways – Based on availability in your region.</li>
-                            </ul>
-                        </li>
-                        <li>✔ <strong>Withdrawal Fees:</strong> No additional Yes-Deal fees, but payment providers may
-                            apply standard transfer fees.</li>
-                        <li>✔ <strong>One Withdrawal Account per User</strong> – You can share one payout method per
-                            deal.</li>
-                    </ul>
+                        <h2>🔹 How Payments Work</h2>
+                        <ol>
+                            <li>⿡ <strong>Buyer Sends Payment to Yes-Deal (Escrow Hold)</strong> – Funds are securely
+                                stored
+                                until transaction completion.</li>
+                            <li>⿢ <strong>Seller Delivers Product/Service</strong> – The seller provides the agreed
+                                service
+                                or product.</li>
+                            <li>⿣ <strong>Buyer Confirms Receipt</strong> – The buyer verifies the delivery and approves
+                                the
+                                payment release.</li>
+                            <li>⿤ <strong>Yes-Deal Releases Payment to Seller</strong> – The seller receives their
+                                earnings
+                                instantly after approval.</li>
+                        </ol>
+
+                        <h2>🔹 Withdrawal Policy</h2>
+                        <ul>
+                            <li>✔ <strong>Minimum Withdrawal Amount:</strong> $20 (or equivalent in supported
+                                currencies).
+                            </li>
+                            <li>✔ <strong>Processing Time:</strong> Withdrawals are processed instantly after approval.
+                            </li>
+                            <li>✔ <strong>Withdrawal Methods:</strong>
+                                <ul>
+                                    <li>Bank Transfer – Available in supported countries.</li>
+                                    <li>Crypto Wallet (USDT, BTC, etc.) – Instant withdrawals for digital payments.</li>
+                                    <li>Other Payment Gateways – Based on availability in your region.</li>
+                                </ul>
+                            </li>
+                            <li>✔ <strong>Withdrawal Fees:</strong> No additional Yes-Deal fees, but payment providers
+                                may
+                                apply standard transfer fees.</li>
+                            <li>✔ <strong>One Withdrawal Account per User</strong> – You can share one payout method per
+                                deal.</li>
+                        </ul>
+                    </div>
+
+                    <Footer />
+                    <!-- Our Footer -->
+
                 </div>
-
-                <Footer />
-                <!-- Our Footer -->
-
             </div>
-    </div>
-    </body>
+        </body>
 
     </div>
 </template>

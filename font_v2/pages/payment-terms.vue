@@ -16,11 +16,9 @@
                                     <div class="my-5"></div>
                                     <h1 class="text-center">Isumax Payment Terms</h1>
                                     <h1>What is a Service Fee?</h1>
-                                    <p>At Isumax, security is at the core of everything we do. Our advanced safety
-                                        measures, robust
-                                        verification processes, and dedicated support ensure a fraud-free, transparent,
-                                        and secure
-                                        experience for freelancers, businesses, and buyers.</p>
+                                    <p>At Isumax, we prioritize fair earnings for freelancers and affordable hiring for businesses.
+                                     Our fees are among the lowest worldwide, ensuring a win-win for everyone!
+                                     </p>
 
                                     <h2>💳 What is a Service Fee?</h2>
                                     <p>The service fee is a small charge applied at the time of purchase, covering

@@ -24,11 +24,11 @@
                                             <div class="listing-style1">
                                                 <div class="list-thumb">
                                                     <!-- Dynamically set the image source -->
-                                                    <img class="w-100"
+                                                    <nuxt-link :to="`/gigs/${data.gig_slug}`"><img class="w-100"
                                                         :src="data.thumbnail_images ? data.thumbnail_images : '/images/listings/category-1.jpg'"
-                                                        alt="Listing Image">
-                                                    <a href="#" class="listing-fav fz12"><span
-                                                            class="far fa-heart"></span></a>
+                                                        alt="Listing Image"></nuxt-link>
+                                                    <!-- <a href="#" class="listing-fav fz12"><span
+                                                            class="far fa-heart"></span></a> -->
                                                 </div>
                                                 <div class="list-content">
                                                     <p class="list-text body-color fz14 mb-1">{{ categoryName || ''

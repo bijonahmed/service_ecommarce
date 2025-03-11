@@ -454,10 +454,9 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router';
 const router = useRouter();
-
+import Swal from 'sweetalert2';
 if (process.client) {
   window.Swal = Swal;
 
