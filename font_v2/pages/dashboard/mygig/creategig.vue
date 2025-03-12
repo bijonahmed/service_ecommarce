@@ -141,85 +141,86 @@
                           <span class="text-danger" v-if="errors.delivery_day">{{ errors.delivery_day[0] }}</span>
                         </div>
                       </div>
-                      
-
-                    <div class="row multiple_pack">
-                      <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
-                        <b><u>Basic</u></b><br>
-                        <label for="basic_price">Price:</label>
-                        <input type="text" id="basic_price" class="form-control" placeholder="Enter price"
-                          v-model="basic_price" @input="validateInput" min="0">
-                        <span class="text-danger" v-if="errors.basic_price">{{ errors.basic_price[0] }}</span>
-
-                        <label for="basic_description">Short Description:</label>
 
 
-                        <textarea class="form-control" @input="checkCharLimit('basic_description')" maxlength="200"
-                          v-model="basic_description" placeholder="Basic Description (max 200 characters)"></textarea>
-                        <small>Characters: {{ basicCharCount }}/200</small>
+                      <div class="row multiple_pack">
+                        <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
+                          <b><u>Basic</u></b><br>
+                          <label for="basic_price">Price:</label>
+                          <input type="text" id="basic_price" class="form-control" placeholder="Enter price"
+                            v-model="basic_price" @input="validateInput" min="0">
+                          <span class="text-danger" v-if="errors.basic_price">{{ errors.basic_price[0] }}</span>
 
-                        <label for="basic_delivery_days">Delivery Days:</label>
-                        <input type="text" id="basic_delivery_days" class="form-control"
-                          placeholder="Enter delivery days" v-model="basic_delivery_days" @input="validateInput"
-                          min="0">
+                          <label for="basic_description">Short Description:</label>
 
-                        <label for="source_file_basic">Source File:</label>
-                        <select id="source_file_basic" class="form-control" v-model="source_file">
-                          <option value="Yes">Yes</option>
-                          <option value="no">No</option>
-                        </select>
+
+                          <textarea class="form-control" @input="checkCharLimit('basic_description')" maxlength="200"
+                            v-model="basic_description" placeholder="Basic Description (max 200 characters)"></textarea>
+                          <small>Characters: {{ basicCharCount }}/200</small>
+
+                          <label for="basic_delivery_days">Delivery Days:</label>
+                          <input type="text" id="basic_delivery_days" class="form-control"
+                            placeholder="Enter delivery days" v-model="basic_delivery_days" @input="validateInput"
+                            min="0">
+
+                          <label for="source_file_basic">Source File:</label>
+                          <select id="source_file_basic" class="form-control" v-model="source_file">
+                            <option value="Yes">Yes</option>
+                            <option value="no">No</option>
+                          </select>
+                        </div>
+
+                        <div class="col-3" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
+                          <b><u>Standard</u></b><br>
+                          <label for="standard_price">Price:</label>
+                          <input type="text" id="standard_price" class="form-control" placeholder="Enter price"
+                            v-model="standard_price" @input="validateInput" min="0">
+                          <span class="text-danger" v-if="errors.standard_price">{{ errors.standard_price[0] }}</span>
+
+                          <label for="standard_description">Short Description:</label>
+                          <textarea class="form-control" v-model="stn_descrition"
+                            @input="checkCharLimit('stn_description')" maxlength="200"
+                            placeholder="STN Description (max 200 characters)"></textarea>
+
+                          <small>Characters: {{ stnCharCount }}/200</small>
+
+                          <label for="standard_delivery_days">Delivery Days:</label>
+                          <input type="text" id="standard_delivery_days" class="form-control"
+                            placeholder="Enter delivery days" v-model="stn_delivery_days" @input="validateInput"
+                            min="0">
+
+                          <label for="source_file_standard">Source File:</label>
+                          <select id="source_file_standard" class="form-control" v-model="stn_source_file">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
+
+                        <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
+                          <b><u>Premium</u></b><br>
+                          <label for="premium_price">Price:</label>
+                          <input type="text" id="premium_price" class="form-control" placeholder="Enter price"
+                            v-model="premium_price" @input="validateInput" min="0">
+                          <span class="text-danger" v-if="errors.premium_price">{{ errors.premium_price[0] }}</span>
+
+                          <label for="premium_description">Short Description:</label>
+                          <textarea class="form-control" @input="checkCharLimit('premium_description')" maxlength="200"
+                            placeholder="Premium Description (max 200 characters)"
+                            v-model="premium_description"></textarea>
+                          <small>Characters: {{ premiumCharCount }}/200</small>
+
+                          <label for="premium_delivery_days">Delivery Days:</label>
+                          <input type="text" id="premium_delivery_days" class="form-control"
+                            placeholder="Enter delivery days" v-model="premium_delivery_days" @input="validateInput"
+                            min="0">
+
+                          <label for="source_file_premium">Source File:</label>
+                          <select id="source_file_premium" class="form-control" v-model="premium_source_file">
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                          </select>
+                        </div>
                       </div>
-
-                      <div class="col-3" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
-                        <b><u>Standard</u></b><br>
-                        <label for="standard_price">Price:</label>
-                        <input type="text" id="standard_price" class="form-control" placeholder="Enter price"
-                          v-model="standard_price" @input="validateInput" min="0">
-                        <span class="text-danger" v-if="errors.standard_price">{{ errors.standard_price[0] }}</span>
-
-                        <label for="standard_description">Short Description:</label>
-                        <textarea class="form-control" v-model="stn_descrition"
-                          @input="checkCharLimit('stn_description')" maxlength="200"
-                          placeholder="STN Description (max 200 characters)"></textarea>
-
-                        <small>Characters: {{ stnCharCount }}/200</small>
-
-                        <label for="standard_delivery_days">Delivery Days:</label>
-                        <input type="text" id="standard_delivery_days" class="form-control"
-                          placeholder="Enter delivery days" v-model="stn_delivery_days" @input="validateInput" min="0">
-
-                        <label for="source_file_standard">Source File:</label>
-                        <select id="source_file_standard" class="form-control" v-model="stn_source_file">
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-
-                      <div class="col-4" style="background-color: #f7f7f7; margin-left: 10px; border-radius: 10px;">
-                        <b><u>Premium</u></b><br>
-                        <label for="premium_price">Price:</label>
-                        <input type="text" id="premium_price" class="form-control" placeholder="Enter price"
-                          v-model="premium_price" @input="validateInput" min="0">
-                        <span class="text-danger" v-if="errors.premium_price">{{ errors.premium_price[0] }}</span>
-
-                        <label for="premium_description">Short Description:</label>
-                        <textarea class="form-control" @input="checkCharLimit('premium_description')" maxlength="200"
-                          placeholder="Premium Description (max 200 characters)"
-                          v-model="premium_description"></textarea>
-                        <small>Characters: {{ premiumCharCount }}/200</small>
-
-                        <label for="premium_delivery_days">Delivery Days:</label>
-                        <input type="text" id="premium_delivery_days" class="form-control"
-                          placeholder="Enter delivery days" v-model="premium_delivery_days" @input="validateInput"
-                          min="0">
-
-                        <label for="source_file_premium">Source File:</label>
-                        <select id="source_file_premium" class="form-control" v-model="premium_source_file">
-                          <option value="Yes">Yes</option>
-                          <option value="No">No</option>
-                        </select>
-                      </div>
-                    </div>
 
 
 
@@ -245,7 +246,7 @@
                     </div>
 
                     <div class="row d-flex">
-                      
+
                       <!-- Thumbnail Image Upload -->
                       <div class="col-sm-6">
                         <label class="heading-color ff-heading fw500 mb10">Thumbnail Image</label>
@@ -277,7 +278,7 @@
                       </div>
                     </div>
 
-                    <div class="row">
+                    <div class="row d-none">
                       <div class="col-sm-12">
                         <label class="">Status</label>
                         <select class="form-control" v-model="status">
@@ -384,6 +385,7 @@ import { useRoute } from 'vue-router';
 import axios from 'axios';
 import { useRouter } from 'vue-router';
 import Swal from "sweetalert2";
+import { allLocales } from '@faker-js/faker';
 
 const router = useRouter();
 const categoryData = ref([]);
@@ -683,6 +685,18 @@ const submitForm = async () => {
       if (error.response.status === 422) {
         // Capture validation errors from the server
         errors.value = error.response.data.errors; // Assuming errors is a reactive variable
+
+        console.log("GigLimit:", errors.value.gig_limit); // Corrected logging
+
+        if (errors.value.gig_limit) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Gig Limit Reached',
+            text: errors.value.gig_limit, // Directly show the message from the backend
+          });
+        }
+
+
       } else {
         // Handle other types of errors here
         console.error('An error occurred:', error.response.data);

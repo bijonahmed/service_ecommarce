@@ -34,8 +34,10 @@
 
                                 <div class="col-lg-2 col-md-2 col-sm-6 mb-2">
                                     <select v-model="selectedFilter" class="form-control" @change="filterData">
+                                        <option value="">All Status</option>
                                         <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
+                                        <option value="0">Draft</option>
+                                        <option value="2">Reject</option>
                                     </select>
                                 </div>
 
@@ -73,16 +75,27 @@
                                                     <td class="text-left">{{ item.gigName }}</td>
                                                     <td class="text-left"><img :src="item.thumbnail_images"></td>
                                                     <td class="text-center">
-                                                        <span v-if="(item.status == 1)"> Active </span>
-                                                        <span v-else> Inactive </span>
+                                                        <div>
+                                                            <span v-if="item.status == 1"
+                                                                :style="{ backgroundColor: 'green', color: 'white', padding: '5px' }">
+                                                                Active
+                                                            </span>
+                                                            <span v-else-if="item.status == 0"
+                                                                :style="{ backgroundColor: 'gray', color: 'white', padding: '5px' }">
+                                                                Draft
+                                                            </span>
+                                                            <span v-else
+                                                                :style="{ backgroundColor: 'red', color: 'white', padding: '5px' }">
+                                                                Reject
+                                                            </span>
+                                                        </div>
                                                     </td>
                                                     <td>
                                                         <center>
-                                                            <!-- <button type="button"><i class="fas fa-edit"
-                                                                    @click="edit(item.id)"></i></button> -->
-
-                                                            <button type="button"><i class="fas fa-trash"
-                                                                    @click="deleteGig(item.id)"></i></button>
+                                                            <button type="button"><i class="fas fa-search-plus"
+                                                                    @click="preview(item.slug)"></i></button>
+                                                            <!-- <button type="button"><i class="fas fa-trash"
+                                                                    @click="deleteGig(item.slug)"></i></button> -->
                                                         </center>
                                                     </td>
                                                 </tr>
@@ -146,7 +159,7 @@ const totalRecords = ref(0);
 const totalPages = ref(0);
 const productdata = ref([]);
 const searchQuery = ref(""); // Add a ref for the search query
-const selectedFilter = ref(1); // Add a ref for the search query
+const selectedFilter = ref(0); // Add a ref for the search query
 
 const fetchData = async (page) => {
     try {
@@ -224,7 +237,7 @@ const deleteGig = async (id) => {
 // Define a method to handle previewing
 const preview = (id) => {
     router.push({
-        path: '/post/preview',
+        path: '/gig/preview',
         query: {
             parameter: id
         }

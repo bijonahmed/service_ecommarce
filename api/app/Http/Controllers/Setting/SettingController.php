@@ -1228,13 +1228,13 @@ class SettingController extends Controller
             'name'        => 'required',
             'email'       => 'required',
             'currency'    => 'required',
-
             'register_bonus'     => 'required',
             'level_1_bonus'      => 'required',
             'level_2_bonus'      => 'required',
             'level_3_bonus'      => 'required',
             'level_4_bonus'      => 'required',
             'level_5_bonus'      => 'required',
+            'gig_limit'          => 'required',
             'service_fee'        => 'required',
 
 
@@ -1259,9 +1259,9 @@ class SettingController extends Controller
             'level_3_bonus'          => !empty($request->level_3_bonus) ? $request->level_3_bonus : "",
             'level_4_bonus'          => !empty($request->level_4_bonus) ? $request->level_4_bonus : "",
             'level_5_bonus'          => !empty($request->level_5_bonus) ? $request->level_5_bonus : "",
-
-            'service_fee'      => !empty($request->service_fee) ? $request->service_fee : "",
-            'register_bonus'              => !empty($request->register_bonus) ? $request->register_bonus : 0,
+            'gig_limit'              => !empty($request->gig_limit) ? $request->gig_limit : "",
+            'service_fee'            => !empty($request->service_fee) ? $request->service_fee : "",
+            'register_bonus'         => !empty($request->register_bonus) ? $request->register_bonus : 0,
 
         );
 

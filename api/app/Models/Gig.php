@@ -35,6 +35,7 @@ class Gig extends Model
         'stn_descrition',
         'stn_delivery_days',
         'language_name',
+        'reason_descriptoin',
         'language_type',
         'stn_source_file',
         'premium_price',

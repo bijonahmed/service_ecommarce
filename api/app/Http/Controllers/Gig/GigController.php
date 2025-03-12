@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Gig;
 use App\Models\GigImagesHistory;
 use App\Models\GigWishList;
+use App\Models\Setting;
 use Intervention\Image\Facades\Image; // Import Intervention Image
 
 class GigController extends Controller
@@ -49,6 +50,85 @@ class GigController extends Controller
             return response()->json(['message' => 'No images found for the provided gig ID.'], 404);
         }
     }
+
+
+
+
+
+    public function getgitrowCheckAdmin(Request $request)
+    {
+        $slug = $request->slug;
+
+        try {
+            $row = Gig::where('gig_slug', $slug)
+                //->where('user_id', $this->userid)
+                ->firstOrFail();
+
+            $data = [
+                'id' => $row->id,
+                'category_id' => $row->category_id,
+                'subcategory_id' => $row->subcategory_id,
+                'insubcategory_Id' => $row->insubcategory_Id,
+                'name' => $row->name,
+                'gig_slug' => $row->gig_slug,
+                'thumbnail_images' => !empty($row->thumbnail_images) ? url($row->thumbnail_images) : '',
+                'types' => (int) $row->types,
+                'gig_description' => $row->gig_description, //strip_tags(str_replace(["\r", "\n"], ' ', $row->gig_description)),
+                'price' => $row->price,
+                'delivery_day' => $row->delivery_day,
+                'basic_price' => $row->basic_price,
+                'basic_description' => $row->basic_description,
+                'basic_delivery_days' => $row->basic_delivery_days,
+                'source_file' => $row->source_file,
+
+                'order_rules' => $row->order_rules,
+
+                'standard_price' => $row->standard_price,
+                'stn_descrition' => $row->stn_descrition,
+                'stn_delivery_days' => $row->stn_delivery_days,
+                'stn_source_file' => $row->stn_source_file,
+                'premium_price' => $row->premium_price,
+                'premium_description' => $row->premium_description,
+                'premium_delivery_days' => $row->premium_delivery_days,
+                'premium_source_file' => $row->premium_source_file,
+                'reason_descriptoin' => $row->reason_descriptoin ?? "",
+                'status' => $row->status,
+            ];
+
+            $rdata['data'] = $data;
+            $rdata['subcategory'] = Categorys::where('parent_id', $row->category_id)
+                ->where('status', 1)
+                ->get();
+            $rdata['inSubcatData'] = Categorys::where('parent_id', $row->subcategory_id)
+                ->where('status', 1)
+                ->get();
+
+            $imgHistory = GigImagesHistory::where('gig_id', $row->id)->get();
+
+            $imgData = [];
+            foreach ($imgHistory as $v) {
+                $imgData[] = [
+                    'id' => $v->id,
+                    'url' => !empty($v->image_path) ? url($v->image_path) : '',
+                ];
+            }
+
+            $rdata['imgHisttory'] = $imgData;
+            // Proceed with other logic or return the data
+            return response()->json($rdata);
+        } catch (\Exception $e) {
+            // Handle the exception and return an error message
+            return response()->json(
+                [
+                    'error' => 'Gig not found or an error occurred',
+                    'message' => $e->getMessage(),
+                ],
+                500,
+            );
+        }
+    }
+
+
 
     public function getgitrow(Request $request)
     {
@@ -122,6 +202,38 @@ class GigController extends Controller
         }
     }
 
+
+    public function adminCheckApproval(Request $request)
+    {
+
+        $validator = Validator::make(
+            $request->all(),
+            [
+                'id' => 'required',
+                'status' => 'required',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()], 422);
+        }
+
+        $data['status'] = $request->status;
+        $data['reason_descriptoin'] = !empty($request->reason_descriptoin) ? $request->reason_descriptoin : "";
+
+
+        $gigid          = (int) $request->id;
+        $gig            = Gig::find($gigid);
+        $gig->update($data);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Gig update successfully',
+            'data' => $gig,
+        ]);
+    }
+
+
     public function updateGig(Request $request)
     {
         // dd($request->all());
@@ -134,7 +246,7 @@ class GigController extends Controller
                 'type' => 'required|string',
                 'thumbnail_images' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'status' => 'required',
+                //'status' => 'required',
                 'order_rules' => 'required',
                 'gig_description' => 'required|max:1200',
             ],
@@ -217,7 +329,7 @@ class GigController extends Controller
         $data['subcategory_id'] = !empty($request->subcategory_id) ? $request->subcategory_id : null;
         $data['insubcategory_Id'] = !empty($request->insubcategory_Id) ? $request->insubcategory_Id : null;
         $data['types'] = $request->type;
-        $data['status'] = $request->status;
+        $data['status'] = 0;//$request->status;
         $data['gig_slug'] = Str::slug($request->name);
         // Ensure unique gig_slug
         $slugExists = Gig::where('gig_slug', $data['gig_slug'])->exists();
@@ -283,7 +395,7 @@ class GigController extends Controller
                 'type' => 'required|string',
                 'thumbnail_images' => 'nullable|image|mimes:jpeg,png,jpg,gif',
                 'images.*' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-                'status' => 'required',
+              //  'status' => 'required',
                 'order_rules' => 'required',
                 'gig_description' => 'required',
                 'thumbnail_images' => 'required',
@@ -308,6 +420,20 @@ class GigController extends Controller
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()], 422);
         }
+
+
+        $chkPoint = Gig::where('user_id', $this->userid)->count();
+
+        $settingrow = Setting::find(1);
+        //dd($settingrow->gig_limit);
+        $giglimit = $settingrow->gig_limit ?? 0;
+
+
+        if ($chkPoint >= $giglimit) {
+            return response()->json(['errors' => ['gig_limit' => "Maximum gig allowed only {$giglimit}"]], 422);
+        }
+
+
         // Now add conditional validation for the price field
         if ($request->type == '1') {
             $request->validate(
@@ -367,7 +493,7 @@ class GigController extends Controller
         $data['subcategory_id'] = !empty($request->subcategory_id) ? $request->subcategory_id : null;
         $data['insubcategory_Id'] = !empty($request->insubcategory_Id) ? $request->insubcategory_Id : null;
         $data['types'] = $request->type;
-        $data['status'] = $request->status;
+        $data['status'] = 0;//$request->status;
         $data['gig_slug'] = Str::slug($request->name);
         // Ensure unique gig_slug
         $slugExists = Gig::where('gig_slug', $data['gig_slug'])->exists();
@@ -432,12 +558,10 @@ class GigController extends Controller
 
     public function deleteGigAdmin($gigid)
     {
-
-        $updated = Gig::where('id', $gigid)
-            ->delete();
+        $updated = Gig::where('id', $gigid)->update(['status' => 2]);
 
         if ($updated) {
-            return response()->json(['message' => 'Gig delete successfully.']);
+            return response()->json(['message' => 'Gig updated successfully.']);
         } else {
             return response()->json(['message' => 'Gig not found or you do not have permission to update this gig.'], 404);
         }
@@ -511,6 +635,7 @@ class GigController extends Controller
                     'gig_slug'          => $v->gig_slug,
                     'price'             => $v->price,
                     'types'             => $v->types,
+                    'reason_descriptoin'=> $v->reason_descriptoin ?? "",
                     'basic_price'       => $v->basic_price ?? 0,
                     'standard_price'    => $v->standard_price ?? 0,
                     'premium_price'     => $v->premium_price ?? 0,
@@ -537,9 +662,6 @@ class GigController extends Controller
 
     public function getAllGigForAdmin(Request $request)
     {
-
-
-
         $page = $request->input('page', 1);
         $pageSize = $request->input('pageSize', 10);
 
@@ -567,6 +689,7 @@ class GigController extends Controller
                 'id'            => $item->id,
                 'sellerName'    => $item->sellerName,
                 'categoryName'  => $item->categoryName,
+                'slug'          => $item->gig_slug,
                 'gigName'       => $item->gigName,
                 'thumbnail_images' => !empty($item->thumbnail_images) ? url($item->thumbnail_images) : "",
                 'status'           => $item->status,

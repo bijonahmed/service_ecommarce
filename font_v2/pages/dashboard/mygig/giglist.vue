@@ -97,8 +97,14 @@
                                                     <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span
                                                             class="badge bg-primary rounded-pill p-2">Preview</span></nuxt-link>
                                                 </span>
-                                                <span v-else>
-                                                    <span class="badge bg-danger rounded-pill">Not Publish</span>
+
+                                                <span v-if="gig.status == 2">
+                                                    <nuxt-link :to="`/gigs/${gig.gig_slug}`"><span
+                                                            class="badge bg-danger rounded-pill p-2">reject[{{ gig.reason_descriptoin }}]</span></nuxt-link>
+                                                </span>
+
+                                                <span v-if="gig.status == 0">
+                                                    <span class="badge bg-secondary rounded-pill">Pending</span>
                                                 </span>
                                             </div>
                                         </div>

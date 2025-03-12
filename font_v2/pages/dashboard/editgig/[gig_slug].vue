@@ -281,7 +281,7 @@
                         </div>
                       </div>
 
-                      <div class="row">
+                      <div class="row d-none">
                         <div class="col-sm-12">
                           <label class="">Status</label>
                           <select class="form-control" v-model="status">

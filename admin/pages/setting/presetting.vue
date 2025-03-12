@@ -64,7 +64,7 @@
                                                         placeholder="Company name" />
                                                     <span class="text-danger" v-if="errors.name">{{
                                                         errors.name[0]
-                                                    }}</span>
+                                                        }}</span>
                                                 </div>
                                             </div>
 
@@ -302,6 +302,25 @@
 
 
                                             <div class="row mb-3">
+                                                <label for="inputEnterYourName" class="col-sm-3 col-form-label">GIG
+                                                    Limit</label>
+
+                                                <div class="col-sm-9">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control address"
+                                                            v-model="insertdata.gig_limit"
+                                                            @keypress="isNumber($event)" />
+                                                        <span class="input-group-text">@</span>
+                                                    </div>
+                                                    <span class="text-danger" v-if="errors.gig_limit">{{
+                                                        errors.gig_limit[0] }}</span>
+                                                </div>
+
+                                            </div>
+
+
+
+                                            <div class="row mb-3">
                                                 <label for="inputEnterYourName" class="col-sm-3 col-form-label">New
                                                     Member Register
                                                     Bonus</label>
@@ -375,7 +394,7 @@ const insertdata = reactive({
     maximum_supply: "",
     total_supply: "",
     register_bonus: "",
-
+    gig_limit: "",
     level_1_bonus: "",
     level_2_bonus: "",
     level_3_bonus: "",
@@ -452,6 +471,7 @@ const saveData = () => {
     formData.append("forSellerCommission", insertdata.forSellerCommission);
     formData.append("register_bonus", insertdata.register_bonus);
     formData.append("website", insertdata.website);
+    formData.append("gig_limit", insertdata.gig_limit);
     const headers = {
         "Content-Type": "multipart/form-data",
     };
@@ -510,7 +530,7 @@ const loadingRow = () => {
         insertdata.website = response.data.data.website;
         insertdata.telegram = response.data.data.telegram;
         insertdata.register_bonus = response.data.data.register_bonus;
-
+        insertdata.gig_limit = response.data.data.gig_limit;
         insertdata.level_1_bonus = response.data.data.level_1_bonus;
         insertdata.level_2_bonus = response.data.data.level_2_bonus;
         insertdata.level_3_bonus = response.data.data.level_3_bonus;
