@@ -10,6 +10,7 @@ Route::get('/clear-cache', function() {
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Stripe\CheckOutController;
 use App\Http\Controllers\Deposits\PaypalController;
+use App\Http\Controllers\UnauthenticatedController;
 
 
 /*
@@ -22,7 +23,7 @@ use App\Http\Controllers\Deposits\PaypalController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
+Route::get('active-account', [UnauthenticatedController::class, 'activeAccount'])->name('activeAccount');
 //For Stripe
 Route::post('/create-checkout-session', [CheckOutController::class, 'createCheckoutSession']);
 Route::get('/checkout/success', [CheckOutController::class, 'checkoutSuccess'])->name('checkout.success'); // Success URL
@@ -31,6 +32,7 @@ Route::post('/stripe_webhook', [CheckOutController::class, 'handleStripeWebhook'
 //For Paypal 
 Route::get('paypal/payment/success', [PayPalController::class, 'paymentSuccess'])->name('paypal.payment.success');
 Route::get('paypal/payment/cancel', [PayPalController::class, 'paymentCancel'])->name('paypal.payment/cancel');
+
 Route::get('/', function () {
     return view('welcome');
 });

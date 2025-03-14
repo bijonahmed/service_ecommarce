@@ -636,4 +636,31 @@ class UnauthenticatedController extends Controller
         $data['categoryData']    = $data['category_details'];
         return response()->json($data);
     }
+
+    public function activeAccount(Request $request)
+    {
+
+        $token          = $request->query('token'); // Get the token parameter
+        $email          = $request->query('email'); // Get the email parameter
+        $current_domain = $request->query('current_domain'); // Get the current domain
+
+        //echo "$current_domain";exit;
+        // Find the user with the given email and status = 0
+        $chkUser = User::where('email', $email)->where('status', 0)->first();
+
+        $data = []; // Initialize an empty array
+
+        if ($chkUser) {
+            $chkUser->update(['status' => 1]); // Update user status to 1
+            $data['status'] = 1;
+            $data['message'] = 'Account activated successfully.';
+        } else {
+            $data['status'] = 0;
+            $data['message'] = 'Invalid or already activated account.';
+        }
+
+        // Redirect back to the original domain with response data as query parameters
+        $queryParams = http_build_query($data);
+        return redirect()->to($current_domain);
+    }
 }

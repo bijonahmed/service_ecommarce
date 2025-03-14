@@ -18,11 +18,9 @@
                   </div>
                 </div>
               </div>
-              <center>
-                <div class="loading-indicator" v-if="loading" style="text-align: center;">
-                  <Loader />
-                </div>
-              </center>
+              <div class="loading-indicator" v-if="loading" style="text-align: center;">
+                <Loader />
+              </div>
 
               <div class="row wow fadeInRight" data-wow-delay="300ms">
                 <div class="col-xl-6 mx-auto">
@@ -47,6 +45,7 @@
                         </button>
                       </li>
                     </ul>
+
 
                     <!-- Tab content -->
                     <div class="tab-content" id="myTabContent">
@@ -112,9 +111,12 @@
                           <br />
                           <div class="d-grid mb20">
                             <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
-                              v-if="!hasInvalidChars && !isEmailFormat">Create Account <i
-                                class="fal fa-arrow-right-long"></i></button>
+                              v-if="!hasInvalidChars && !isEmailFormat">
+                              {{ isSubmitting ? 'Please wait...' : 'Create Account' }}
+                              <i class="fal fa-arrow-right-long" v-if="!isSubmitting"></i>
+                            </button>
                           </div>
+
 
                         </form>
                         <!-- Additional Buyer Fields -->
@@ -171,8 +173,8 @@
                           <div class="mb15">
                             <label class="form-label fw500 dark-color">Confirm Password</label>
                             <div class="position-relative">
-                              <input :type="issellrePasswordVisible ? 'text' : 'password'" class="form-control" placeholder="*******"
-                                v-model="confirmPassword">
+                              <input :type="issellrePasswordVisible ? 'text' : 'password'" class="form-control"
+                                placeholder="*******" v-model="confirmPassword">
 
                               <i class="fa-solid position-absolute"
                                 :class="issellrePasswordVisible ? 'fa-eye' : 'fa-eye-slash'"
@@ -190,12 +192,19 @@
 
 
                           <br />
-                          <div class="d-grid mb20">
+                          <!-- <div class="d-grid mb20">
                             <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
                               v-if="!hasInvalidChars && !isEmailFormat">Create Account <i
                                 class="fal fa-arrow-right-long"></i></button>
+                          </div> -->
+                          sdfsfsdfsdf
+                          <div class="d-grid mb20">
+                            ------- <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
+                              v-if="!hasInvalidChars && !isEmailFormat">
+                              {{ isSubmitting ? 'Please wait...' : 'Create Account' }}
+                              <i class="fal fa-arrow-right-long" v-if="!isSubmitting"></i>
+                            </button>
                           </div>
-
                         </form>
                         <!-- Additional Seller Fields -->
                       </div>
@@ -207,80 +216,6 @@
                   </div>
                 </div>
               </div>
-
-
-
-              <!-- <div class="row wow fadeInRight" data-wow-delay="300ms">
-                  <div class="col-xl-6 mx-auto">
-                    <div class="log-reg-form search-modal form-style1 bgc-white p50 p30-sm default-box-shadow1 bdrs12">
-                      <div class="mb30">
-                        <h4>Let's create your account!</h4>
-                        <p class="text mt20">Already have an account? <nuxt-link to="/sign-in" class="text-thm">Log
-                            In!</nuxt-link></p>
-                      </div>
-                      <div v-if="slug_error" class="error">{{ slug_error.slugerror }}</div>
-                      <div class="mb2">
-                        <label class="form-label fw500 dark-color">Name</label>
-                        <input type="text" class="form-control" placeholder="Jons" v-model="name" @blur="validateName">
-                        <span class="text-danger" v-if="errors.name">{{ errors.name[0] }}</span>
-                        <div v-if="nameError" class="error">{{ nameError }}</div>
-                      </div>
-                      <div class="mb2">
-
-                        <label class="form-label fw500 dark-color">Country</label>
-                        <select class="form-control" v-model="country_1">
-                          <option value="" disabled>Select your country</option>
-                          <option v-for="country in countryData" :key="country.id" :value="country.id">
-                            {{ country.countryname }}
-                          </option>
-                        </select>
-                        <span class="text-danger" v-if="errors.country_1">{{ errors.country_1[0] }}</span>
-                      </div>
-
-                      <div class="mb2">
-                        <label class="form-label fw500 dark-color">Email</label>
-                        <input type="text" class="form-control" placeholder="example@gmail.com" v-model="email">
-                        <span class="text-danger" v-if="errors.email">{{ errors.email[0] }}</span>
-                      </div>
-
-                      <div class="mb2">
-                        <label class="form-label fw500 dark-color">Type</label>
-                        <select class="form-control" v-model="userType">
-                          <option value="" disabled selected>Select your type</option>
-                          <option v-for="type in userTypes" :key="type.value" :value="type.value">
-                            {{ type.text }}
-                          </option>
-                        </select>
-                        <span class="text-danger" v-if="errors.userType">{{ errors.userType[0] }}</span>
-                      </div>
-
-                      <div class="mb2">
-                        <label class="form-label fw500 dark-color">Invite Code</label>
-                        <input type="text" class="form-control" placeholder="Invite Code" v-model="inviteCode">
-                        <span class="text-danger" v-if="errors.inviteCode">{{ errors.inviteCode[0] }}</span>
-                      </div>
-
-
-                      <div class="mb15">
-                        <label class="form-label fw500 dark-color">Password</label>
-                        <input type="password" class="form-control" placeholder="*******" v-model="password">
-                        <span class="text-danger" v-if="errors.password">{{ errors.password[0] }}</span>
-                      </div>
-
-                      <div class="mb15">
-                        <label class="form-label fw500 dark-color">Confirm Password</label>
-                        <input type="password" class="form-control" placeholder="*******" v-model="confirmPassword">
-                        <span class="text-danger" v-if="errors.password_confirmation">{{ errors.password_confirmation[0]
-                          }}</span>
-                      </div>
-                      <div class="d-grid mb20">
-                        <button class="ud-btn btn-thm default-box-shadow2 btn-action style-1" type="submit"
-                          v-if="!hasInvalidChars && !isEmailFormat">Create
-                          Account <i class="fal fa-arrow-right-long"></i></button>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
             </div>
 
           </section>
@@ -325,6 +260,7 @@ const isrePasswordVisible = ref(false);
 const issellPasswordVisible = ref(false);
 const issellrePasswordVisible = ref(false);
 const passwordId = 'password';
+const currentDomain = ref(`${window.location.origin}/sign-in`);
 
 const togglePassword = () => {
   isPasswordVisible.value = !isPasswordVisible.value;
@@ -338,6 +274,19 @@ const togglesellPassword = () => {
 };
 const togglesellrePassword = () => {
   issellrePasswordVisible.value = !issellrePasswordVisible.value;
+};
+
+const isSubmitting = ref(false);
+
+const handleSubmit = () => {
+  if (!isSubmitting.value) {
+    isSubmitting.value = true;
+
+    // Simulate form submission or API call
+    setTimeout(() => {
+      isSubmitting.value = false; // Reset after success/failure
+    }, 3000);
+  }
 };
 
 // Computed property to check if name is in email format
@@ -418,6 +367,7 @@ const registerForSeller = async () => {
   errors.value = {}; // Clear previous errors
   slug_error.value = ""; // Reset slug error
   try {
+    loading.value = true;
     await userStore.register(
       name.value,
       email.value,
@@ -425,6 +375,7 @@ const registerForSeller = async () => {
       inviteCode.value,
       sellerType.value,
       password.value,
+      currentDomain.value,
       confirmPassword.value
     );
     Swal.fire({
@@ -464,6 +415,8 @@ const registerForSeller = async () => {
 
       console.error("Unexpected error: ", error);
     }
+  } finally {
+    loading.value = false;
   }
 
 
@@ -474,6 +427,7 @@ const registerForBuyer = async () => {
   errors.value = {}; // Clear previous errors
   slug_error.value = ""; // Reset slug error
   try {
+    loading.value = true;
     await userStore.register(
       name.value,
       email.value,
@@ -481,6 +435,7 @@ const registerForBuyer = async () => {
       inviteCode.value,
       buyerType.value,
       password.value,
+      currentDomain.value,
       confirmPassword.value
     );
     Swal.fire({
@@ -520,6 +475,8 @@ const registerForBuyer = async () => {
 
       console.error("Unexpected error: ", error);
     }
+  } finally {
+    loading.value = false;
   }
 };
 

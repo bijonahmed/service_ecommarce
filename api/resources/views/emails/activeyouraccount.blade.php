@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reset Password - Isumax.com</title>
+    <title>Active Account - Isumax.com</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -52,14 +52,15 @@
 </head>
 <body>
     <div class="container">
-        <h2>Reset Your Password</h2>
-        <p>We received a request to reset your password for your <span class="company-name">Isumax.com</span> account.</p>
-        <p>Click the button below to reset your password:</p>
-        <a href="{{ $resetUrl }}" class="button" style="color:white">Reset Password</a>
-        <p>If you did not request a password reset, please ignore this email.</p>
+        <h2>Activate Your Account</h2>
+        <p>We received a request to activate your <span class="company-name">Isumax.com</span> account.</p>
+        <p>Click the button below to complete your account activation:</p>
+        <a href="{{ $acdata }}" class="button" style="color:white">Activate Account</a>
+        <p>If you did not request this activation, please ignore this email.</p>
         <div class="footer">
             <p>&copy; {{ date('Y') }} Isumax.com. All rights reserved.</p>
         </div>
     </div>
+    
 </body>
 </html>

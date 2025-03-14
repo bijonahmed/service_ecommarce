@@ -10,6 +10,10 @@ use App\Models\Country;
 use App\Models\Profession;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Mail\ActiveAccountEmail;
+use PhpParser\Node\Stmt\TryCatch;
+use Illuminate\Support\Facades\Validator as FacadesValidator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException; // Import the ValidationException class
@@ -80,45 +84,6 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    /* This method now no need.
-    public function login(Request $request)
-    {
-        // Validate the input
-        $this->validateLogin($request);
-
-        // Retrieve credentials
-        $credentials = $request->only('email', 'password');
-
-        // Attempt to authenticate the user
-        if (!$token = auth('api')->attempt($credentials)) {
-            return response()->json([
-                'errors' => [
-                    'account' => [
-                        "Invalid username or password"
-                    ]
-                ]
-            ], 422);
-        }
-
-        // Check the user's status
-        $user = auth('api')->user(); 
-        //dd($user);
-        if ($user->status == 0) {
-            // If the status is 0, return an error response
-            auth('api')->logout(); // Log the user out if they're authenticated
-            return response()->json([
-                'errors' => [
-                    'account' => [
-                        "Your account is inactive. Please contact support."
-                    ]
-                ]
-            ], 403); // Forbidden
-        }
-
-        return $this->respondWithToken($token);
-    }
-        */
-
 
     protected function respondWithToken($token)
     {
@@ -138,9 +103,12 @@ class AuthController extends Controller
         ]);
     }
 
+
+    //For Buyer
     public function register(Request $request)
     {
-        //dd($request->all());
+       // dd($request->all());
+
         $this->validate($request, [
             'name'      => 'required',
             'country_1' => 'required',
@@ -152,6 +120,7 @@ class AuthController extends Controller
             'password' => "Password dosen't match",
         ]);
 
+        $current_domain = $request->currentDomain;
         $ipaddress = request()->ip();
         $t = microtime(true);
         $createTimeStamp =  strtok($t, '.');
@@ -194,7 +163,7 @@ class AuthController extends Controller
                 'slug'          => $slug,
                 'email'         => $request->email,
                 'role_id'       => $request->userType,
-                'status'        => 1,
+                'status'        => 0,
                 'country_1'     => $request->country_1,
                 'ip'            => $ipaddress,
                 'invite_code'   => $inviteCode,
@@ -204,10 +173,25 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
             ]);
             // Get the token
+
+            $token = Str::random(60);
+            $apidomain = url('active-account');
+            $queryParams = http_build_query([
+                'token'          => $token,
+                'email'          => $request->email,
+                'current_domain' => $request->currentDomain
+            ]);
+            $customLink = "$apidomain/?$queryParams";
+
+            // Send email
+            Mail::to($request->email)->queue(new ActiveAccountEmail($customLink));
+
             $token = auth('api')->login($user);
             return $this->respondWithToken($token);
         }
     }
+
+
 
     public function registerSeller(Request $request)
     {

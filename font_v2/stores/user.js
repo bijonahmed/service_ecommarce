@@ -46,7 +46,7 @@ export const useUserStore = defineStore("user", {
         });
     },
 
-    async register(name,email,country_1,inviteCode,userType,password,confirmPassword) {
+    async register(name,email,country_1,inviteCode,userType,password,currentDomain,confirmPassword) {
       await $axios.post("/auth/register", {
         name: name,
         email: email,
@@ -54,6 +54,7 @@ export const useUserStore = defineStore("user", {
         inviteCode: inviteCode,
         userType: userType,
         password: password,
+        currentDomain: currentDomain,
         password_confirmation: confirmPassword,
       });
     },
